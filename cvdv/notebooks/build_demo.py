@@ -193,8 +193,29 @@ ax.bar(x + 0.2, piv['seed+parity'], 0.4, color=OURS, label='ours, certified ε �
 ax.set_xticks(x); ax.set_xticklabels([b.replace('_small', '') for b in piv.index], rotation=20)
 ax.set_yscale('log'); ax.set_ylabel('duration after routing'); ax.legend(frameon=False, fontsize=7, loc='lower left', bbox_to_anchor=(0, 1.0), ncol=2); plt.show()"""))
 
-cells.append(md(r"""Reading: Kerr and Bose-Hubbard win clearly (n² via parity rule). Z2-Higgs loses on duration because our ISA has
-no conditional beam splitter (built from 3 gates). Heisenberg loses because the seed Pauli gadget's ancilla
+cells.append(md(r"""Same comparison in **gate counts** (Genesis reports both). 2-op gates (qubit–oscillator or oscillator–oscillator)
+dominate both runtime and error on hardware, so they are shown separately from 1-op gates."""))
+
+cells.append(code(r"""gc = snap[snap.compiler.isin(['Genesis (uncertified)', 'seed+parity'])]
+fig, axs = plt.subplots(1, 3, figsize=(9, 2.8), gridspec_kw=dict(wspace=0.45))
+labels = {'Genesis (uncertified)': 'Genesis (no error bound)', 'seed+parity': 'ours, certified ε ≤ 1e-3 (n ≤ 3)'}
+for ax, col, ttl in zip(axs, ['two_op', 'one_op', None], ['2-op gates', '1-op gates', 'total gates']):
+    p = gc.assign(total=gc.one_op + gc.two_op).pivot(index='benchmark', columns='compiler', values=col or 'total')
+    x = np.arange(len(p))
+    for k, (cname, color) in enumerate([('Genesis (uncertified)', GEN), ('seed+parity', OURS)]):
+        ax.bar(x + (k - 0.5) * 0.4, p[cname], 0.4, color=color, label=labels[cname])
+    ax.set_yscale('log'); ax.set_title(ttl, loc='left'); ax.set_xticks(x)
+    ax.set_xticklabels([b.replace('_small', '') for b in p.index], rotation=35, ha='right')
+axs[0].set_ylabel('gate count (routed circuit)')
+axs[0].legend(frameon=False, fontsize=7, loc='lower left', bbox_to_anchor=(0, 1.12), ncol=2)
+plt.show()
+t = gc.assign(total=gc.one_op + gc.two_op).pivot(index='benchmark', columns='compiler', values=['two_op', 'one_op', 'total'])
+ratio = (t.xs('seed+parity', axis=1, level=1) / t.xs('Genesis (uncertified)', axis=1, level=1)).round(2)
+ratio.columns = [f'{c} ratio ours/Genesis' for c in ratio.columns]; display(ratio)"""))
+
+cells.append(md(r"""Reading: Kerr (0.02× gates) and Bose-Hubbard (0.61×) win on both metrics (n² via parity rule). Z2-Higgs uses
+fewer gates than Genesis (0.83×) but has a longer duration: our ISA has no conditional beam splitter, so it is built
+from 3 gates in series (CP·BS·CP†), which lengthens the critical path even though the count drops. Heisenberg loses because the seed Pauli gadget's ancilla
 oscillator shuttles between qubit sites — a routing-aware rule is an open LLM target. **Caveat:** at the Genesis
 benchmark angles the parity rule is exact for all n; generic angles are the real test (next section)."""))
 
