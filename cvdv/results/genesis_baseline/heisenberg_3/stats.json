@@ -1,0 +1,15 @@
+{
+    "output/logical_heisenberg_3.cvdvqasm_depth_sum_simulated_annealing_tsp_qbstuck": {
+        "single op gate count": 4248,
+        "multi op gate count": 2952,
+        "total gate count": 7200,
+        "depth": 7074.0,
+        "matching_time": 0.1961498260498047,
+        "mapping_time": 13.504219055175781,
+        "total_time": 13.700370073318481,
+        "pstrings_count": 237,
+        "non_pstring_initial_gate_count": 0,
+        "intermediate_qbit_count": 60,
+        "intermediate_qmode_count": 0
+    }
+}

@@ -1,0 +1,206 @@
+{
+ "gadget": [
+  {
+   "pauli": "ZIII",
+   "min_vacuum_return": 1.0,
+   "process_overlap": {
+    "exp(c P) [spec]": 0.9928086358538664,
+    "exp(+2i|c|^2 P)": 1.0000000000000002,
+    "exp(-2i|c|^2 P)": 0.935896823677935
+   }
+  },
+  {
+   "pauli": "ZZII",
+   "min_vacuum_return": 0.23692775868211477
+  },
+  {
+   "pauli": "ZZZI",
+   "min_vacuum_return": 1.0000000000000018,
+   "process_overlap": {
+    "exp(c P) [spec]": 0.886994922779285,
+    "exp(+2i|c|^2 P)": 0.9358968236779359,
+    "exp(-2i|c|^2 P)": 1.0000000000000009
+   }
+  },
+  {
+   "pauli": "ZZZZ",
+   "min_vacuum_return": 0.2369277586821134
+  },
+  {
+   "pauli": "XIII",
+   "min_vacuum_return": 1.0,
+   "process_overlap": {
+    "exp(c P) [spec]": 0.9928086358538663,
+    "exp(+2i|c|^2 P)": 1.0,
+    "exp(-2i|c|^2 P)": 0.9358968236779349
+   }
+  },
+  {
+   "pauli": "XXII",
+   "min_vacuum_return": 0.6184638793410572
+  },
+  {
+   "pauli": "XXXI",
+   "min_vacuum_return": 1.0000000000000004,
+   "process_overlap": {
+    "exp(c P) [spec]": 0.8869949227792845,
+    "exp(+2i|c|^2 P)": 0.9358968236779353,
+    "exp(-2i|c|^2 P)": 1.0000000000000004
+   }
+  },
+  {
+   "pauli": "YYII",
+   "min_vacuum_return": 0.6184638793410572
+  },
+  {
+   "pauli": "YZII",
+   "min_vacuum_return": 0.6184638793410573
+  },
+  {
+   "pauli": "XYZI",
+   "min_vacuum_return": 1.0000000000000004,
+   "process_overlap": {
+    "exp(c P) [spec]": 0.8869949227792846,
+    "exp(+2i|c|^2 P)": 0.9358968236779353,
+    "exp(-2i|c|^2 P)": 1.0000000000000004
+   }
+  }
+ ],
+ "n2_scaling": [
+  {
+   "theta": 0.4,
+   "infid_strict": 0.857813163450882,
+   "infid_sys": 0.5542203881293007
+  },
+  {
+   "theta": 0.2,
+   "infid_strict": 0.33461574414747597,
+   "infid_sys": 0.23478556793755967
+  },
+  {
+   "theta": 0.1,
+   "infid_strict": 0.09283031068843217,
+   "infid_sys": 0.07378989237300893
+  },
+  {
+   "theta": 0.05,
+   "infid_strict": 0.023406476023486777,
+   "infid_sys": 0.02050021815157621
+  },
+  {
+   "theta": 0.025,
+   "infid_strict": 0.005790706090673892,
+   "infid_sys": 0.00539027534894021
+  }
+ ],
+ "terms": [
+  {
+   "benchmark": "boseHubbard_small",
+   "term": "exp(prod((1.5707963j),sum(prod(dagger(b(0)),b(1)),prod(dagger(b(1)),b(0)))))",
+   "n_ops": 1,
+   "two_op": 1,
+   "check": {
+    "8": {
+     "max_infid_strict": 1.9984014443252818e-15,
+     "max_infid_sys": 1.9984014443252818e-15,
+     "max_leak": 0.0
+    },
+    "12": {
+     "max_infid_strict": 2.220446049250313e-15,
+     "max_infid_sys": 2.220446049250313e-15,
+     "max_leak": 0.0
+    }
+   }
+  },
+  {
+   "benchmark": "boseHubbard_small",
+   "term": "exp(prod((-0.78539815j),dagger(b(0)),b(0),dagger(b(0)),b(0)))",
+   "n_ops": 20,
+   "two_op": 6,
+   "check": {
+    "8": {
+     "max_infid_strict": 0.7156103008978655,
+     "max_infid_sys": 0.576208018913341,
+     "max_leak": 0.0
+    },
+    "12": {
+     "max_infid_strict": 0.7156103008978655,
+     "max_infid_sys": 0.576208018913341,
+     "max_leak": 0.0
+    }
+   }
+  },
+  {
+   "benchmark": "boseHubbard_small",
+   "term": "exp(prod((0.78539815j),dagger(b(0)),b(0)))",
+   "n_ops": 1,
+   "two_op": 0,
+   "check": {
+    "8": {
+     "max_infid_strict": 4.440892098500626e-16,
+     "max_infid_sys": 4.440892098500626e-16,
+     "max_leak": 0.0
+    },
+    "12": {
+     "max_infid_strict": 4.440892098500626e-16,
+     "max_infid_sys": 4.440892098500626e-16,
+     "max_leak": 0.0
+    }
+   }
+  },
+  {
+   "benchmark": "boseHubbard_small",
+   "term": "exp(prod((1.5707963j),dagger(b(0)),b(0)))",
+   "n_ops": 1,
+   "two_op": 0,
+   "check": {
+    "8": {
+     "max_infid_strict": 4.440892098500626e-16,
+     "max_infid_sys": 4.440892098500626e-16,
+     "max_leak": 0.0
+    },
+    "12": {
+     "max_infid_strict": 4.440892098500626e-16,
+     "max_infid_sys": 4.440892098500626e-16,
+     "max_leak": 0.0
+    }
+   }
+  },
+  {
+   "benchmark": "z2Higgs_small",
+   "term": "exp(prod((-1.5707963j),dagger(b(0)),b(0),dagger(b(0)),b(0)))",
+   "n_ops": 20,
+   "two_op": 6,
+   "check": {
+    "8": {
+     "max_infid_strict": 0.7952328734819094,
+     "max_infid_sys": 0.7483196103048944,
+     "max_leak": 0.0
+    },
+    "12": {
+     "max_infid_strict": 0.7952328734819094,
+     "max_infid_sys": 0.7483196103048944,
+     "max_leak": 0.0
+    }
+   }
+  },
+  {
+   "benchmark": "z2Higgs_small",
+   "term": "exp(prod((1.5707963j),sigma(3, 0),sum(prod(dagger(b(0)),b(1)),prod(dagger(b(1)),b(0)))))",
+   "n_ops": 1,
+   "two_op": 1,
+   "check": {
+    "8": {
+     "max_infid_strict": 1.5543122344752192e-15,
+     "max_infid_sys": 1.5543122344752192e-15,
+     "max_leak": 0.0
+    },
+    "12": {
+     "max_infid_strict": 1.5543122344752192e-15,
+     "max_infid_sys": 1.5543122344752192e-15,
+     "max_leak": 0.0
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+    "output/logical_hubbardHolstein_small.cvdvqasm_depth_sum_simulated_annealing_tsp_qbstuck": {
+        "single op gate count": 3646,
+        "multi op gate count": 2409,
+        "total gate count": 6055,
+        "depth": 38641.0,
+        "matching_time": 2.4294559955596924,
+        "mapping_time": 1.2577919960021973,
+        "total_time": 3.6872479915618896,
+        "pstrings_count": 108,
+        "non_pstring_initial_gate_count": 20,
+        "intermediate_qbit_count": 8,
+        "intermediate_qmode_count": 4
+    }
+}
