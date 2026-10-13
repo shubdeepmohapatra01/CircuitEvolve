@@ -56,7 +56,8 @@ Genesis Table 5 (final gate count / duration), the numbers to beat:
 | Heisenberg 20/40/60 | 20/40/60 | 0 | 0 (77/157/237 Pauli) | 2218/4676/7200 | 4122/4398/7074 |
 
 Table 4 (20 molecular Pauli-string benchmarks, LiH…C2, JW/BK) is a routing study: threshold
-accepting vs Christofides, ~3–7 % duration reduction. It exercises L2 only; low value for a rule-
+accepting vs Christofides: the qumode-SWAP threshold variant reduces duration by 3.2–6.6 % on all 20 rows,
+while the floating-qubit variant ranges from +5.1 % to −21.9 % (often worse than Christofides). It exercises L2 only; low value for a rule-
 discovery study.
 
 ### Our fitness (lexicographic, CLAUDE.md invariant 3 carried over)
