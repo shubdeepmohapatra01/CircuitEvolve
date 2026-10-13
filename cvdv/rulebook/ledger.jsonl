@@ -1,0 +1,10 @@
+{"rule": "rule_n__R", "kind": "n", "origin": "genesis-derived", "added": "2026-10-13", "note": "base"}
+{"rule": "rule_hop__BS", "kind": "hop", "origin": "genesis-derived", "added": "2026-10-13", "note": "base"}
+{"rule": "rule_z_n__CR", "kind": "z_n", "origin": "genesis-derived", "added": "2026-10-13", "note": "base"}
+{"rule": "rule_z_hop__cp_conj", "kind": "z_hop", "origin": "genesis-derived", "added": "2026-10-13", "note": "base"}
+{"rule": "rule_disp__D", "kind": "disp", "origin": "genesis-derived", "added": "2026-10-13", "note": "base"}
+{"rule": "rule_pauli__rot", "kind": "pauli", "origin": "genesis-derived", "added": "2026-10-13", "note": "base"}
+{"rule": "rule_pauli__qumode_commutator", "kind": "pauli", "origin": "genesis-derived", "added": "2026-10-13", "note": "base"}
+{"rule": "rule_pauli_disp__cd", "kind": "pauli_disp", "origin": "genesis-derived", "added": "2026-10-13", "note": "base"}
+{"rule": "rule_n2__group_commutator", "kind": "n2", "origin": "genesis-derived", "added": "2026-10-13", "note": "base"}
+{"rule": "rule_n2__parity_exact", "kind": "n2", "origin": "llm-session", "added": "2026-10-13", "evidence": {"exact_n_max": 3, "exact_all_n_at_theta_multiple_of": "pi/4", "two_op": 3, "one_op": 6}}
