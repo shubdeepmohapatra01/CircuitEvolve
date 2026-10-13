@@ -7,7 +7,7 @@ Genesis' `src.main` unchanged, adding a seed and a dump of the final qumode mapp
 ## 1. Metrics reproduce
 
 `src/cvdv/metrics.py` (1-op, 2-op, duration with latency 1 / 20) is an independent re-implementation.
-It equals Genesis' own `--stats` output on all 19 compiled outputs (13 full-size Table-5 benchmarks in `genesis_table5_repro.csv` plus the 6 `*_small` instances); hubbardHolstein_1 had not finished compiling.
+It equals Genesis' own `--stats` output on all 20 compiled outputs (the 14 full-size Table-5 benchmarks in `genesis_table5_repro.csv` plus the 6 `*_small` instances).
 
 Against the paper's Table 5:
 * IR columns (#gates in IR, #Pauli strings) match exactly for every row.
@@ -15,7 +15,7 @@ Against the paper's Table 5:
   for heisenberg_1. Other rows differ by 1–12 % in both directions because Genesis' router uses
   networkx simulated-annealing TSP with `seed=None`; repeated runs differ. Baselines from here on
   use the seeded runner and the best of several seeds.
-* hubbardHolstein_1 (688,011 gates in the paper) was still compiling after > 45 min.
+* hubbardHolstein_1 took 41 min to compile: 684,810 gates / duration 4,472,584 vs the paper's 688,011 / 4,509,157.
 
 Gate origin (`genesis_gate_origin.csv`): share of final gates produced by L1 synthesis
 (the rest is multi-Pauli gadgets + routing SWAPs): Kerr 69 %, Z2-Higgs 56–62 %, Bose-Hubbard 13–28 %,
