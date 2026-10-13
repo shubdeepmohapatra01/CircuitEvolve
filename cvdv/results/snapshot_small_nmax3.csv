@@ -1,0 +1,16 @@
+benchmark,compiler,one_op,two_op,duration,eps_bound,note
+kerr_small,Genesis (uncertified),453.0,142.0,3032.0,,physical
+kerr_small,seed,,,,,"infeasible: no rule meets eps share 1.00e-03 for n2(('qm', 0),)(0.785398"
+kerr_small,seed+parity,8.0,3.0,66.0,1.8831439276774915e-15,bound valid; 0.0s
+boseHubbard_small,Genesis (uncertified),72.0,40.0,438.0,,physical
+boseHubbard_small,seed,,,,,"infeasible: no rule meets eps share 2.50e-04 for n2(('qm', 0),)(0.785398"
+boseHubbard_small,seed+parity,40.0,28.0,371.0,7.532575710709968e-15,bound valid; 2.1s
+z2Higgs_small,Genesis (uncertified),78.0,41.0,321.0,,physical
+z2Higgs_small,seed,,,,,"infeasible: no rule meets eps share 2.50e-04 for n2(('qm', 0),)(1.570796"
+z2Higgs_small,seed+parity,61.0,38.0,458.0,1.2354531555937515e-14,bound valid; 253.9s
+heisenberg_small,Genesis (uncertified),184.0,136.0,1810.0,,physical
+heisenberg_small,seed,264.0,166.0,3449.0,8.808202882146958e-15,bound valid; 0.0s
+heisenberg_small,seed+parity,264.0,166.0,3449.0,8.808202882146958e-15,bound valid; 0.0s
+electronicVibration_small,Genesis (uncertified),568.0,306.0,5502.0,,physical
+electronicVibration_small,seed,562.0,329.0,5431.0,1.7774970442470714e-10,bound: displacement terms; 0.1s
+electronicVibration_small,seed+parity,562.0,329.0,5431.0,1.7774970442470714e-10,bound: displacement terms; 0.0s
