@@ -7,7 +7,7 @@ Genesis' `src.main` unchanged, adding a seed and a dump of the final qumode mapp
 ## 1. Metrics reproduce
 
 `src/cvdv/metrics.py` (1-op, 2-op, duration with latency 1 / 20) is an independent re-implementation.
-It equals Genesis' own `--stats` output on all 17 compiled benchmarks (`genesis_table5_repro.csv`).
+It equals Genesis' own `--stats` output on all 19 compiled outputs (13 full-size Table-5 benchmarks in `genesis_table5_repro.csv` plus the 6 `*_small` instances); hubbardHolstein_1 had not finished compiling.
 
 Against the paper's Table 5:
 * IR columns (#gates in IR, #Pauli strings) match exactly for every row.

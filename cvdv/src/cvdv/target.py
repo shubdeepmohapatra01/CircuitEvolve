@@ -83,6 +83,8 @@ def _wires(e, acc):
         acc.add(("qm", int(args[0][1].real)))
     elif head == "sigma":
         acc.add(("q", int(args[1][1].real)))
+    elif head == "paulistring":
+        acc.update(("q", i) for i, ch in enumerate(args[0][1]) if ch != "I")
     elif isinstance(args, list):
         for a in args:
             _wires(a, acc)
@@ -115,6 +117,13 @@ class Term:
             if head == "sigma":
                 k, q = int(args[0][1].real), int(args[1][1].real)
                 return embed(PAULI["XYZ"[k - 1]], ("q", q))
+            if head == "paulistring":
+                out = None
+                for i, ch in enumerate(args[0][1]):
+                    if ch != "I":
+                        m = embed(PAULI[ch], ("q", i))
+                        out = m if out is None else out @ m
+                return out
             vals = [ev(a) for a in args]
             if head == "dagger":
                 v = vals[0]
