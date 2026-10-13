@@ -1,0 +1,6 @@
+circuit,pipeline,lowering,eps_rz,qubits,cx,rz_count,rz_distinct,t_fixed,t_gridsynth,t_count,t_per_rz,published_rz,published_t,rz_diff_pct,t_diff_pct,eps_total_bound,k_hist,rounded_angles,max_gridsynth_dist,cliffordrz_unitary_dist,stage1_s,gridsynth_s
+add_17,"gate-level, per-U3 parameter ZSX (paper convention)",,1e-09,17,232,251,14,72,23448,23520,93.42,251,23562,0.0,-0.18,2.51e-07,null,793,4.935371951461942e-10,,0.6,1.5
+hhl_6,"gate-level, per-U3 parameter ZSX (paper convention)",,1e-09,6,220,243,61,129,22758,22887,93.65,243,22571,0.0,1.4,2.43e-07,null,609,4.99609263628558e-10,7.920447413176958e-15,0.0,1.7
+mult_16,"gate-level, per-U3 parameter ZSX (paper convention)",,1e-09,16,1128,1079,11,224,100348,100572,93.0,1079,100678,0.0,-0.11,1.0790000000000002e-06,null,2713,3.8693643713737706e-10,,0.1,1.2
+qft_32,"gate-level, per-U3 parameter ZSX (paper convention)",,1e-09,32,1040,1395,60,93,132252,132345,94.8,1080,101480,29.17,30.41,1.395e-06,null,2979,5.000011577371733e-10,,0.1,1.6
+shor_16,"gate-level, per-U3 parameter ZSX (paper convention)","qiskit transpile opt0 -> u3,cx (ccp via cp/cx identity)",1e-09,16,5692,4678,42,1507,435600,437107,93.12,816,74797,473.28,484.39,4.678e-06,null,17309,4.935371951461942e-10,,1.2,1.4

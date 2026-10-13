@@ -1,0 +1,4 @@
+circuit,n,input_pipeline,input_t,input_rz,input_t_raw,input_t_canonical,after_classical_pass_t,output_t,output_rz,t_saved,rz_saved,n_blocks,n_structures,llm_calls,reflect_calls,programs,parse_errors,verified,improving,rules_added,llm_blocks,library_blocks,whole_check,whole_dist,error_bound,seconds
+tfim_4,4,tket,9200,100,9200,9200,9200,9200,100,0,0,38,8,10,2,11,2,4,0,0,0,0,unitary,1.760653255415746e-14,1.0000002198598934e-07,138.4
+heisenberg_4,4,pyzx,8340,90,8340,8340,8340,8340,90,0,0,46,43,14,1,21,3,10,0,0,0,0,unitary,1.2326340606009584e-14,9.000001368535582e-08,165.6
+qft_5,5,pyzx,1124,12,1124,1124,1124,1124,12,0,0,12,12,6,1,7,3,4,0,0,0,0,unitary,3.5474628542534834e-12,1.2003547524944289e-08,83.5

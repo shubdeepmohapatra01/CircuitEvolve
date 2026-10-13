@@ -1,0 +1,12 @@
+{
+ "version": "evolve_opt-split-v1",
+ "date": "2026-10-11",
+ "fast": ["qft_8", "qpe_8", "grover_5", "mult_8", "tfim_6", "qae_11"],
+ "dev": ["qft_8", "qft_16", "qpe_6", "qpe_8", "qae_11", "qae_13", "heisenberg_6", "heisenberg_8",
+         "tfim_6", "tfim_8", "hubbard_8", "grover_5", "qml_4", "qml_13", "shor_12",
+         "mult_8", "hhl_8"],
+ "eval": ["add_17", "hhl_6", "mult_16", "qft_32", "shor_16"],
+ "eval_transfer_families": ["add"],
+ "eval_transfer": ["add_17", "add_41", "add_65"],
+ "eval_pattern": "^(add_\\d+|hhl_6|mult_16|qft_32|shor_16)$"
+}

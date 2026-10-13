@@ -1,0 +1,96 @@
+{
+ "blinded": false,
+ "next_id": 4,
+ "settings": {
+  "ab_fraction": 0.5,
+  "min_exposure": 8,
+  "max_exposure": 40,
+  "z_promote": 1.64,
+  "min_pass_with": 3,
+  "z_retire": -1.0,
+  "evidence": "improvement",
+  "banned_words": []
+ },
+ "rules": [
+  {
+   "id": "R1",
+   "text": "tools.block_optimize requires block_size in {2,3,4} and 4 <= max_gates <= 200 (default max_gates may be too low for block_size=4). When calling block_optimize with block_size>2, pass an explicit max_gates>=4*block_size to avoid ToolError.",
+   "status": "candidate",
+   "created_call": 8,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 0,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 0,
+   "without_prompts": 0,
+   "without_improvements": 0
+  },
+  {
+   "id": "R2",
+   "text": "Before submitting a diff, ensure the SEARCH block text appears verbatim exactly once in the parent program; copy it character-for-character from the parent rather than retyping from memory.",
+   "status": "candidate",
+   "created_call": 8,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 0,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 0,
+   "without_prompts": 0,
+   "without_improvements": 0
+  },
+  {
+   "id": "R3",
+   "text": "Stacking many best-of candidates (fa,fb,fc,fd,fbest...) rarely beats a focused chain of fold_resynth -> block_optimize(fold_resynth) -> block_optimize(pyzx) on the single running best; prefer narrowing to the current best before branching further.",
+   "status": "candidate",
+   "created_call": 8,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 0,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 0,
+   "without_prompts": 0,
+   "without_improvements": 0
+  }
+ ],
+ "history": [
+  {
+   "call": 8,
+   "op": "add",
+   "id": "R1",
+   "status": "candidate",
+   "text": "tools.block_optimize requires block_size in {2,3,4} and 4 <= max_gates <= 200 (default max_gates may be too low for block_size=4). When calling block_optimize with block_size>2, pass an explicit max_gates>=4*block_size to avoid ToolError.",
+   "supersedes": null
+  },
+  {
+   "call": 8,
+   "op": "add",
+   "id": "R2",
+   "status": "candidate",
+   "text": "Before submitting a diff, ensure the SEARCH block text appears verbatim exactly once in the parent program; copy it character-for-character from the parent rather than retyping from memory.",
+   "supersedes": null
+  },
+  {
+   "call": 8,
+   "op": "add",
+   "id": "R3",
+   "status": "candidate",
+   "text": "Stacking many best-of candidates (fa,fb,fc,fd,fbest...) rarely beats a focused chain of fold_resynth -> block_optimize(fold_resynth) -> block_optimize(pyzx) on the single running best; prefer narrowing to the current best before branching further.",
+   "supersedes": null
+  }
+ ]
+}

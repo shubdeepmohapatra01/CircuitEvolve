@@ -1,0 +1,6 @@
+circuit,pipeline,lowering,eps_rz,qubits,cx,rz_count,rz_distinct,t_fixed,t_gridsynth,t_count,t_per_rz,published_rz,published_t,rz_diff_pct,t_diff_pct,eps_total_bound,k_hist,rounded_angles,max_gridsynth_dist,cliffordrz_unitary_dist,stage1_s,gridsynth_s
+add_17,"gate-level, min RZ per merged 1q run",,1e-09,17,232,251,14,72,23448,23520,93.42,251,23562,0.0,-0.18,2.51e-07,"[97, 251, 0, 0]",72,4.935371951461942e-10,,0.8,1.3
+hhl_6,"gate-level, min RZ per merged 1q run",,1e-09,6,220,215,55,129,20182,20311,93.87,243,22571,-11.52,-10.01,2.15e-07,"[129, 95, 60, 0]",129,4.996088669305965e-10,2.2124060818460458e-14,0.4,1.7
+mult_16,"gate-level, min RZ per merged 1q run",,1e-09,16,1128,1079,11,224,100348,100572,93.0,1079,100678,0.0,-0.11,1.0790000000000002e-06,"[185, 1079, 0, 0]",224,3.8693643713737706e-10,,7.2,1.2
+qft_32,"gate-level, min RZ per merged 1q run",,1e-09,32,1040,1386,56,93,131556,131649,94.92,1080,101480,28.33,29.73,1.3860000000000002e-06,"[72, 1386, 0, 0]",93,5.000006086520493e-10,,0.8,1.6
+shor_16,"gate-level, min RZ per merged 1q run","qiskit transpile opt0 -> u3,cx (ccp via cp/cx identity)",1e-09,16,5692,4629,56,1504,430982,432486,93.1,816,74797,467.28,478.21,4.629e-06,"[2226, 4629, 0, 0]",1504,4.935371951461942e-10,,73.5,1.8

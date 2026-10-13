@@ -1,0 +1,13 @@
+20:14:40 [control_greedy_s2_120] eval 10/120: best fast 0.96256 best dev 0.97373
+20:23:01 [control_greedy_s2_120] eval 20/120: best fast 0.96180 best dev 0.97373
+20:27:46 [control_greedy_s2_120] eval 30/120: best fast 0.96180 best dev 0.97354
+20:33:16 [control_greedy_s2_120] eval 40/120: best fast 0.96180 best dev 0.97354
+20:40:53 [control_greedy_s2_120] eval 50/120: best fast 0.96162 best dev 0.97354
+20:48:22 [control_greedy_s2_120] eval 60/120: best fast 0.95242 best dev 0.97153
+20:52:32 [control_greedy_s2_120] eval 70/120: best fast 0.95242 best dev 0.97153
+20:57:46 [control_greedy_s2_120] eval 80/120: best fast 0.95242 best dev 0.96278
+21:03:33 [control_greedy_s2_120] eval 90/120: best fast 0.95076 best dev 0.96278
+21:08:57 [control_greedy_s2_120] eval 100/120: best fast 0.95076 best dev 0.96278
+21:17:58 [control_greedy_s2_120] eval 110/120: best fast 0.95076 best dev 0.96175
+21:26:07 [control_greedy_s2_120] eval 120/120: best fast 0.94991 best dev 0.96175
+21:26:07 done: best dev 0.96175

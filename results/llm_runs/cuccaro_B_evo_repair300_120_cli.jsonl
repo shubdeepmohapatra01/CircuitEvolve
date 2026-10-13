@@ -1,0 +1,120 @@
+{"call": 4, "blinded": false, "feedback": true, "prompt_chars": 2452, "error": "cli: timeout"}
+{"call": 4, "blinded": false, "feedback": true, "prompt_chars": 2452, "error": "cli: timeout"}
+{"call": 4, "blinded": false, "feedback": true, "prompt_chars": 2452, "verdicts": ["pass", "pass", "pass", "pass"], "parse_errors": [], "best": [4.0, 32, 26, 18, 22], "response": "All four replace the pair of 7\u2011T Toffolis with Gidney's temporary\u2011AND: a 4\u2011T compute into a clean per\u2011slice work wire, and a 0\u2011T measurement\u2011based uncompute (X\u2011basis measure + classically controlled CZ fixup, plus a conditional X to return the ancilla to |0>). Cost: 3n+2 qubits instead of 2n+2, which only matters after T\u2011count lexicographically.\n\n**1. Gidney AND on the Cuccaro carry chain (4 T/bit, 32 T at n=8).** XOR the incoming carry into both `a` and `b`, AND them into the fresh work wire, then XOR the carry back in so `cout = MAJ(a,b,c)`; the backward pass un\u2011ANDs for free and leaves the sum in `b`.\n\n```python\nFWD = (\n    G('cx', 'pc', 'a'),\n    G('cx', 'pc', 'b'),\n    G('h', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('h', 'cout'),\n    G('s', 'cout'),\n    G('cx', 'pc', 'cout'),\n)\nTOP = (\n    G('cx', 'cout', 'z'),\n)\nBWD = (\n    G('cx', 'pc', 'cout'),\n    G('h', 'cout'),\n    G('measure', 'cout', label='m'),\n    G('cz', 'a', 'b', cond='m'),\n    G('x', 'cout', cond='m'),\n    G('cx', 'pc', 'a'),\n    G('cx', 'a', 'b'),\n)\n```\n\n**2. MAJ identity `c' = a \u2295 (a\u2295b)(a\u2295c)`, borrowing the previous work wire (4 T/bit, 32 T at n=8).** Register `a` is never touched at all \u2014 only `b` and the previous carry wire are temporarily XORed \u2014 which shortens the critical path into the AND by one CNOT.\n\n```python\nFWD = (\n    G('cx', 'a', 'b'),\n    G('cx', 'a', 'pc'),\n    G('h', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('cx', 'pc', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('cx', 'pc', 'cout'),\n    G('h', 'cout'),\n    G('s', 'cout'),\n    G('cx', 'a', 'cout'),\n)\nTOP = (\n    G('cx', 'cout', 'z'),\n)\nBWD = (\n    G('cx', 'a', 'cout'),\n    G('h', 'cout'),\n    G('measure', 'cout', label='m'),\n    G('cz', 'pc', 'b', cond='m'),\n    G('x', 'cout', cond='m'),\n    G('cx', 'a', 'pc'),\n    G('cx', 'pc', 'b'),\n)\n```\n\n**3. Same MAJ identity, but perturbing `a` instead of the carry wire (4 T/bit, 32 T at n=8).** Keeping the previous work wire pristine lets the two carry\u2011injection CNOTs onto `cout` commute with the AND block, which gives the scheduler more freedom for T\u2011depth.\n\n```python\nFWD = (\n    G('cx', 'a', 'b'),\n    G('cx', 'pc', 'a'),\n    G('h', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('h', 'cout'),\n    G('s', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('cx', 'pc', 'cout'),\n)\nTOP = (\n    G('cx', 'cout', 'z'),\n)\nBWD = (\n    G('cx', 'pc', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('h', 'cout'),\n    G('measure', 'cout', label='m'),\n    G('cz', 'a', 'b', cond='m'),\n    G('x', 'cout', cond='m'),\n    G('cx', 'pc', 'a'),\n    G('cx', 'pc', 'b'),\n)\n```\n\n**4. Measurement\u2011free fallback (8 T/bit, 64 T at n=8).** Identical to #1 but the AND is undone by the exact inverse of the 4\u2011T compute, so it needs no classical control at all \u2014 worth having in case the verifier only accepts `cond` on `cz`, in which case #1\u2013#3 are rejected and this still halves the current 14 T/bit.\n\n```python\nFWD = (\n    G('cx', 'pc', 'a'),\n    G('cx', 'pc', 'b'),\n    G('h', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('h', 'cout'),\n    G('s', 'cout'),\n    G('cx', 'pc', 'cout'),\n)\nTOP = (\n    G('cx', 'cout', 'z'),\n)\nBWD = (\n    G('cx', 'pc', 'cout'),\n    G('sdg', 'cout'),\n    G('h', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('cx', 'a', 'cout'),\n    G('t', 'cout'),\n    G('cx', 'b', 'cout'),\n    G('tdg', 'cout'),\n    G('h', 'cout'),\n    G('cx', 'pc', 'a'),\n    G('cx', 'a', 'b'),\n)\n```\n\nOne assumption worth flagging: #1\u2013#3 use `G('x', 'cout', cond='m')` to return the measured work wire to |0>. The prompt only illustrated `cond` on `cz`, but with a non-reset measurement there is no way to satisfy the clean-ancilla requirement using conditional `cz` alone \u2014 if the verifier rejects conditional `x`, #4 is the one that survives."}
+{"call": 4, "blinded": false, "feedback": true, "prompt_chars": 2452, "error": "cli: timeout"}
+{"call": 8, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: timeout"}
+{"call": 8, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: timeout"}
+{"call": 8, "blinded": false, "feedback": true, "prompt_chars": 3965, "error": "cli: timeout"}
+{"call": 8, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: timeout"}
+{"call": 12, "blinded": false, "feedback": true, "prompt_chars": 3965, "error": "cli: timeout"}
+{"call": 12, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 12, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: timeout"}
+{"call": 12, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 16, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 16, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: timeout"}
+{"call": 16, "blinded": false, "feedback": true, "prompt_chars": 3965, "error": "cli: timeout"}
+{"call": 16, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: timeout"}
+{"call": 20, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: timeout"}
+{"call": 20, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: timeout"}
+{"call": 20, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: timeout"}
+{"call": 20, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: timeout"}
+{"call": 24, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 24, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: timeout"}
+{"call": 24, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: timeout"}
+{"call": 24, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: timeout"}
+{"call": 28, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 28, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: timeout"}
+{"call": 28, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: timeout"}
+{"call": 28, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: timeout"}
+{"call": 32, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: timeout"}
+{"call": 32, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: timeout"}
+{"call": 32, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 32, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: timeout"}
+{"call": 36, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 36, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: timeout"}
+{"call": 36, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: timeout"}
+{"call": 36, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 40, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: timeout"}
+{"call": 40, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 40, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: timeout"}
+{"call": 40, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 44, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: timeout"}
+{"call": 44, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: timeout"}
+{"call": 44, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: timeout"}
+{"call": 44, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: timeout"}
+{"call": 48, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 48, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 48, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 48, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 52, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 52, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 52, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 52, "blinded": false, "feedback": true, "prompt_chars": 3965, "error": "cli: exit 1: "}
+{"call": 56, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 56, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 56, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 56, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 60, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 60, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 60, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 60, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 64, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 64, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 64, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 64, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 68, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 68, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 68, "blinded": false, "feedback": true, "prompt_chars": 3965, "error": "cli: exit 1: "}
+{"call": 68, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 72, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 72, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 72, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 72, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 76, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 76, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 76, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 76, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 80, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 80, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 80, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 80, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 84, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 84, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 84, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 84, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 88, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 88, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 88, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 88, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 92, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 92, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 92, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 92, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 96, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 96, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 96, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 96, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 100, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 100, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 100, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 100, "blinded": false, "feedback": true, "prompt_chars": 3965, "error": "cli: exit 1: "}
+{"call": 104, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 104, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 104, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 104, "blinded": false, "feedback": true, "prompt_chars": 3965, "error": "cli: exit 1: "}
+{"call": 108, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 108, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 108, "blinded": false, "feedback": true, "prompt_chars": 3836, "error": "cli: exit 1: "}
+{"call": 108, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 112, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 112, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 112, "blinded": false, "feedback": true, "prompt_chars": 3965, "error": "cli: exit 1: "}
+{"call": 112, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 116, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 116, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 116, "blinded": false, "feedback": true, "prompt_chars": 3914, "error": "cli: exit 1: "}
+{"call": 116, "blinded": false, "feedback": true, "prompt_chars": 4610, "error": "cli: exit 1: "}
+{"call": 120, "blinded": false, "feedback": true, "prompt_chars": 3965, "error": "cli: exit 1: "}
+{"call": 120, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 120, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}
+{"call": 120, "blinded": false, "feedback": true, "prompt_chars": 4329, "error": "cli: exit 1: "}

@@ -1,0 +1,13 @@
+circuit,pipeline,status,eps_rz,wall_s,qubits,cx,rz_count,rz_distinct,t_fixed,t_gridsynth,t_count,eps_total_bound,published_bygate_rz,published_bygate_t,t_vs_published_bygate_pct,opt_s,pipeline_s,unitary_dist,extra,error
+add_17,pyzx,ok,1e-09,0.6,17.0,290.0,112.0,48.0,28.0,10480.0,10508.0,1.1200000000000001e-07,251.0,23562.0,-55.4,0.2,0.3,,"{""other_gates"": {""CZ"": 37}, ""zx_tcount"": 140}",
+hhl_6,pyzx,ok,1e-09,7.8,6.0,222.0,174.0,70.0,70.0,16292.0,16362.0,1.7400000000000002e-07,243.0,22571.0,-27.51,0.3,0.4,0.0,"{""other_gates"": {""CZ"": 7}, ""zx_tcount"": 244}",
+mult_16,pyzx,ok,1e-09,3.5,16.0,846.0,351.0,68.0,120.0,32618.0,32738.0,3.51e-07,1079.0,100678.0,-67.48,2.6,3.2,,"{""other_gates"": {""CZ"": 54}, ""zx_tcount"": 471}",
+qft_32,pyzx,err,1e-09,0.2,,,,,,,,,,,,,,,,"TypeError: Phase expression '9.587379924285257e-05' contains unbound variables
+_.py"", line 432, in from_qasm
+    return p.parse(s)
+           ^^^^^^^^^^
+  File ""/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv/lib/python3.11/site-packages/pyzx/circuit/qasmparser.py"", line 94, in parse
+    self.gates.extend(self.parse_command(c, self.registers))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/shubdeepmohapatra/Documents/CircuitEvolve/e"
+shor_16,pyzx,ok,1e-09,95.6,16.0,5334.0,1525.0,259.0,507.0,140820.0,141327.0,1.525e-06,816.0,74797.0,88.95,80.7,95.0,,"{""other_gates"": {""CZ"": 62}, ""zx_tcount"": 2032}",

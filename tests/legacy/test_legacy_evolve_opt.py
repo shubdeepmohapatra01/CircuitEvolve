@@ -1,0 +1,385 @@
+"""Optimizer-program evolution (circuitevolve/evolve_opt): split, static checks, sandbox, parent-side
+verification, planted bad programs, fitness, diff parsing, evolution loop and control with fake backends.
+Development circuits only (qml_4, grover_5); no LLM calls."""
+import json
+import math
+
+import pytest
+
+from circuitevolve.legacy.evolve_opt import ERROR_BUDGET, split
+from circuitevolve.legacy.evolve_opt import evaluate as ev
+from circuitevolve.legacy.evolve_opt.evolve import parse_response, run_evolution
+from circuitevolve.legacy.evolve_opt.programs import (SEED_GENOME, SEED_PROGRAM, genome_source, mutate_genome,
+                                              random_genome)
+from circuitevolve.legacy.evolve_opt.sandbox import StaticCheckError, run_program, static_check
+from circuitevolve.legacy.evolve_opt.toolbox import ops_from_json, ops_to_json
+from circuitevolve.search.playbook import Playbook
+
+C = "qml_4"          # n = 4, 38 gates: the cheapest dev circuit
+C2 = "grover_5"
+
+
+def _prog(body: str) -> str:
+    return "def optimize(circ, tools, budget):\n" + "".join(f"    {l}\n" for l in body.strip().splitlines())
+
+
+# ------------------------------------------------------------------ split
+def test_split_disjoint_and_eval_refused():
+    s = split.load_split()
+    assert set(s["fast"]) <= set(s["dev"])
+    assert not set(s["dev"]) & (set(s["eval"]) | set(s["eval_transfer"]))
+    assert not any(n.startswith("add_") for n in s["dev"])
+    for nm in ("add_17", "add_41", "add_65", "hhl_6", "mult_16", "qft_32", "shor_16"):
+        with pytest.raises(PermissionError):
+            split.check_dev(nm)
+        with pytest.raises(PermissionError):
+            ev.evaluate_circuit(SEED_PROGRAM, nm)
+    with pytest.raises(PermissionError):
+        split.check_dev("qft_64")            # not eval, but not in dev either
+
+
+# ------------------------------------------------------------------ static checks
+BAD_STATIC = {
+    "import": "import os\n" + _prog("return tools.lower(circ)"),
+    "import_in_body": _prog("import os\nreturn tools.lower(circ)"),
+    "dunder_attr": _prog("x = circ.__class__\nreturn tools.lower(circ)"),
+    "private_attr": _prog("return circ._ops"),
+    "tools_private": _prog("tools._ledger = 0\nreturn tools.lower(circ)"),
+    "tools_unknown": _prog("return tools.system(circ)"),
+    "open": _prog("open('x')\nreturn tools.lower(circ)"),
+    "eval": _prog("eval('1')\nreturn tools.lower(circ)"),
+    "exec": _prog("exec('1')\nreturn tools.lower(circ)"),
+    "getattr": _prog("f = getattr(tools, 'lower')\nreturn f(circ)"),
+    "compile": _prog("compile('1', 'a', 'exec')\nreturn tools.lower(circ)"),
+    "attr_on_other": _prog("x = budget.copy\nreturn tools.lower(circ).ops"),
+    "attr_store": _prog("budget.x = 1\nreturn tools.lower(circ)"),
+    "class": "class A:\n    pass\n" + _prog("return tools.lower(circ)"),
+    "no_optimize": "def f(circ, tools, budget):\n    return tools.lower(circ)\n",
+    "bad_signature": "def optimize(circ, tools):\n    return tools.lower(circ)\n",
+    "dunder_string": _prog("x = '__import__'\nreturn tools.lower(circ)"),
+    "rebind_tools": _prog("t = tools\ntools = 1\nreturn t.lower(circ)"),
+    "toplevel_call": "x = len([1])\n" + _prog("return tools.lower(circ)"),
+    "with": _prog("with x:\n    pass\nreturn tools.lower(circ)"),
+    "global": _prog("global x\nreturn tools.lower(circ)"),
+    "syntax": "def optimize(circ, tools, budget)\n    return 1\n",
+}
+
+
+@pytest.mark.parametrize("name", sorted(BAD_STATIC))
+def test_static_check_rejects(name):
+    with pytest.raises(StaticCheckError):
+        static_check(BAD_STATIC[name])
+
+
+def test_static_check_accepts_seed_and_control_programs():
+    static_check(SEED_PROGRAM)
+    import random
+    rng = random.Random(1)
+    for _ in range(20):
+        static_check(genome_source(random_genome(rng)))
+    static_check(_prog("best = tools.lower(circ)\nfor p in tools.tket_passes()[:2]:\n    try:\n"
+                       "        best = tools.best(best, tools.tket(best, p))\n    except Exception:\n        pass\n"
+                       "xs = [1, 2]\nxs.append(3)\nreturn best"))
+
+
+def test_static_rejected_program_never_runs():
+    r = ev.evaluate_program(BAD_STATIC["import"], [C])
+    assert not r["fitness"]["valid"] and "static check" in r["results"][C]["reason"]
+
+
+# ------------------------------------------------------------------ sandbox runtime limits
+def test_infinite_loop_killed():
+    n, orig = ev.original(C)
+    t = __import__("time").time()
+    r = run_program(_prog("while True:\n    pass\nreturn tools.lower(circ)"), n, orig, dict(time_s=5), wall_s=4)
+    assert not r["ok"] and "wall-time" in r["error"] and __import__("time").time() - t < 30
+
+
+def test_memory_hog_killed():
+    n, orig = ev.original(C)
+    src = _prog("xs = []\nwhile True:\n    xs.append([0] * 1000000)\nreturn tools.lower(circ)")
+    r = run_program(src, n, orig, dict(time_s=60), wall_s=60, mem_mb=400)
+    assert not r["ok"] and ("memory" in r["error"] or "MemoryError" in r["error"])
+
+
+def test_restricted_builtins_at_runtime():
+    # names not in the builtin whitelist are unavailable even if the static check were bypassed
+    n, orig = ev.original(C)
+    r = run_program(_prog("return tools.lower(circ)"), n, orig, dict(time_s=30), wall_s=60)
+    assert r["ok"]
+    from circuitevolve.legacy.evolve_opt.sandbox import SAFE_BUILTINS
+    assert "open" not in SAFE_BUILTINS and "__import__" not in SAFE_BUILTINS
+
+
+@pytest.mark.parametrize("body,why", [
+    ("return circ", "Clifford+Rz tool output"),                    # raw input returned
+    ("return 5", "not a circuit handle"),
+    ("return [tools.lower(circ)]", "not a circuit handle"),
+    ("x = 1 / 0\nreturn tools.lower(circ)", "ZeroDivisionError"),
+])
+def test_bad_return_values_rejected(body, why):
+    r = ev.evaluate_circuit(_prog(body), C, use_cache=False)
+    assert not r["valid"] and why in r["reason"]
+
+
+def test_time_budget_enforced():
+    src = _prog("c = tools.lower(circ)\nwhile True:\n    c = tools.phase_fold(tools.resynth_1q(c))\n"
+                "    tools.canonicalize(c)\nreturn c")
+    n, orig = ev.original(C)
+    r = run_program(src, n, orig, dict(time_s=0.5), wall_s=60, cache=False)
+    assert not r["ok"] and "BudgetError" in r["error"]
+
+
+# ------------------------------------------------------------------ parent-side verification
+@pytest.fixture(scope="module")
+def good_out():
+    n, orig = ev.original(C)
+    r = run_program(_prog("return tools.pyzx_full_reduce(tools.lower(circ))"), n, orig, dict(time_s=60), wall_s=120)
+    assert r["ok"]
+    return r
+
+
+def test_seed_program_valid_and_not_worse_than_best_classical():
+    ref = ev.baseline([C, C2])
+    r = ev.evaluate_program(SEED_PROGRAM, [C, C2], ref, workers=2)
+    f = r["fitness"]
+    assert f["valid"], f
+    assert all(f["ratios"][nm] <= 1.0 + 1e-12 for nm in (C, C2))
+    for nm in (C, C2):
+        x = r["results"][nm]
+        assert x["check"]["method"] == "unitary" and x["check"]["dist"] < 1e-8 and x["bound"] <= ERROR_BUDGET
+
+
+def test_wrong_output_rejected(good_out):
+    ops = ops_from_json(good_out["ops"])
+    i = next(k for k, o in enumerate(ops) if o[0] == "cx")
+    dropped = dict(good_out, ops=ops_to_json(ops[:i] + ops[i + 1:]))
+    assert not ev.verify_output(C, dropped)["valid"]
+    j = next(k for k, o in enumerate(ops) if o[0] == "rz")
+    g, qs, a = ops[j]
+    wrong = dict(good_out, ops=ops_to_json(ops[:j] + [(g, qs, -a)] + ops[j + 1:]))
+    assert not ev.verify_output(C, wrong)["valid"]
+    swapped = dict(good_out, ops=ops_to_json([(g2, tuple(3 - q for q in q2), a2) for g2, q2, a2 in ops]))
+    assert not ev.verify_output(C, swapped)["valid"]
+
+
+def test_illegal_ops_rejected(good_out):
+    for bad in ([["u3", [0], [0.1, 0.2, 0.3]]], [["cx", [0, 0], None]], [["rz", [7], 0.3]],
+                [["rz", [0], float("nan")]], [["ccx", [0, 1, 2], None]]):
+        assert not ev.verify_output(C, dict(good_out, ops=good_out["ops"] + bad))["valid"]
+
+
+def test_error_budget_exceeded_rejected(good_out):
+    """An output whose true distance exceeds the budget is rejected even if the child's ledger lies."""
+    ops = ops_from_json(good_out["ops"])
+    j = next(k for k, o in enumerate(ops) if o[0] == "rz")
+    g, qs, a = ops[j]
+    for delta, ok in ((1e-7, True), (5e-6, False)):      # distance 2 sin(delta/4) ~ delta/2
+        out = dict(good_out, ops=ops_to_json(ops[:j] + [(g, qs, a + delta)] + ops[j + 1:]), ledger=0.0)
+        rec = ev.verify_output(C, out)
+        assert rec["valid"] is ok, (delta, rec.get("bound"), rec.get("reason"))
+
+
+def test_statevector_ledger_lie_rejected():
+    """n > 10 (statevector check): an approximation not on the ledger is caught."""
+    nm = "qae_11"
+    n, orig = ev.original(nm)
+    r = run_program(_prog("return tools.lower(circ)"), n, orig, dict(time_s=60), wall_s=120)
+    assert r["ok"]
+    assert ev.verify_output(nm, r)["valid"]
+    ops = ops_from_json(r["ops"])
+    j = next(k for k, o in enumerate(ops) if o[0] == "rz")
+    g, qs, a = ops[j]
+    lie = dict(r, ops=ops_to_json(ops[:j] + [(g, qs, a + 1e-4)] + ops[j + 1:]), ledger=0.0)
+    rec = ev.verify_output(nm, lie)
+    assert not rec["valid"] and "statevector distance" in rec["reason"]
+
+
+def test_approx_round_respects_budget():
+    src = _prog("c = tools.pyzx_full_reduce(tools.lower(circ))\nreturn tools.approx_round(c, 1.0)")
+    r = ev.evaluate_circuit(src, C, use_cache=False)
+    assert r["valid"] and r["bound"] <= ERROR_BUDGET and r["ledger"] <= ERROR_BUDGET
+
+
+def test_every_exact_tool_is_verified_exact():
+    body = ("c = tools.lower(circ)\nouts = [tools.pyzx_full_reduce(c), tools.pyzx_teleport_reduce(c), "
+            "tools.pyzx_basic(c), tools.pyzx_clifford_simp(c), tools.phase_fold(c), tools.resynth_1q(c), "
+            "tools.fold_resynth(c), tools.canonicalize(c), tools.block_optimize(c), "
+            "tools.block_optimize(c, method='tket', block_size=2, max_gates=20, passes=['KAKDecomposition'])]\n"
+            "for p in tools.tket_passes():\n    outs.append(tools.tket(circ, p))\n"
+            "return tools.best(outs)")
+    r = ev.evaluate_circuit(_prog(body), C, use_cache=False)
+    assert r["valid"], r.get("reason")
+
+
+# ------------------------------------------------------------------ fitness
+def test_fitness_lexicographic():
+    ref = {"a": dict(t=100), "b": dict(t=200)}
+    good = {"a": dict(valid=True, cost=dict(t=90), charged_s=5), "b": dict(valid=True, cost=dict(t=200), charged_s=5)}
+    slow = {"a": dict(valid=True, cost=dict(t=90), charged_s=50), "b": dict(valid=True, cost=dict(t=200), charged_s=5)}
+    bad = {"a": dict(valid=True, cost=dict(t=1), charged_s=1), "b": dict(valid=False, reason="x")}
+    fg, fs, fb = (ev.fitness(x, ["a", "b"], ref) for x in (good, slow, bad))
+    assert math.isclose(fg["geomean"], math.sqrt(0.9))
+    assert tuple(fg["key"]) < tuple(fs["key"]) < tuple(fb["key"])
+    assert not fb["valid"] and fb["geomean"] == float("inf")
+
+
+# ------------------------------------------------------------------ diff parsing
+def test_parse_response_diff_and_rewrite():
+    parent = SEED_PROGRAM
+    d = ("Use teleport.\n<<<<<<< SEARCH\n    a = tools.pyzx_full_reduce(tools.lower(circ))\n=======\n"
+         "    a = tools.pyzx_teleport_reduce(tools.lower(circ))\n>>>>>>> REPLACE\n")
+    r = parse_response(d, parent)
+    assert r["kind"] == "diff" and "teleport_reduce" in r["source"] and r["error"] is None
+    static_check(r["source"])
+    r = parse_response(d.replace("a = tools.pyzx_full", "zz = tools.pyzx_full"), parent)
+    assert r["source"] is None and "found 0 times" in r["error"]
+    rw = "Here:\n```python\n" + _prog("return tools.lower(circ)") + "```\n```text\n(8, 8)\n```"
+    r = parse_response(rw, parent)
+    assert r["kind"] == "rewrite" and "def optimize" in r["source"]
+    assert parse_response("nothing", parent)["source"] is None
+    assert parse_response(RuntimeError("api: x"), parent)["error"].startswith("llm error")
+
+
+# ------------------------------------------------------------------ playbook evidence gate (measured improvement)
+def test_playbook_gate_counts_improvements_not_passes():
+    pb = Playbook(min_exposure=8)                     # default evidence = "improvement"
+    assert pb.evidence == "improvement"
+    passer, improver = pb.add("passes but never improves"), pb.add("improves")
+    for _ in range(12):
+        pb.record([passer.id], [improver.id], 1, 1, False)    # passer shown: valid, no improvement
+        pb.record([improver.id], [passer.id], 1, 1, True)     # improver shown: improvement
+    ch = dict((rid, new) for rid, new, _ in pb.update_status(30))
+    assert ch == {improver.id: "active", passer.id: "retired"}
+    # the legacy raw-pass gate would not separate them (identical pass rates)
+    old = Playbook(min_exposure=8, evidence="pass")
+    a, b = old.add("a"), old.add("b")
+    for _ in range(12):
+        old.record([a.id], [b.id], 1, 1, False)
+        old.record([b.id], [a.id], 1, 1, True)
+    assert old.update_status(30) == [] or all(new == "retired" for _, new, _ in old.update_status(30))
+
+
+def test_playbook_evidence_persists(tmp_path):
+    pb = Playbook()
+    r = pb.add("x")
+    pb.record([r.id], [], 1, 1, True)
+    pb.save(tmp_path / "p.json")
+    pb2 = Playbook.load(tmp_path / "p.json")
+    assert pb2.evidence == "improvement" and pb2.get(r.id).with_prompts == 1
+
+
+# ------------------------------------------------------------------ control genomes
+def test_genomes_compile_and_mutate():
+    import random
+    rng = random.Random(0)
+    g = SEED_GENOME
+    for _ in range(30):
+        g = mutate_genome(g, rng)
+        static_check(genome_source(g))
+
+
+# ------------------------------------------------------------------ evolution loop end-to-end (fake backend)
+def _fake_backend():
+    """Deterministic fake LLM: cycles through a diff, a rewrite, garbage, a forbidden import, a duplicate."""
+    from collections import Counter
+    outs = [
+        "<<<<<<< SEARCH\n    folded = tools.fold_resynth(tools.canonicalize(best))\n=======\n"
+        "    folded = tools.fold_resynth(tools.canonicalize(best))\n    folded = tools.best(folded, tools.pyzx_full_reduce(folded))\n"
+        ">>>>>>> REPLACE\n",
+        "```python\n" + _prog("return tools.tket(circ, 'FullPeepholeOptimise')") + "```",
+        "I think the answer is (8, 8).",
+        "```python\nimport os\n" + _prog("return tools.lower(circ)") + "```",
+        "```python\n" + _prog("return tools.tket(circ, 'FullPeepholeOptimise')") + "```",
+        '```json\n[{"op": "add", "text": "Try pyzx after folding."}]\n```',
+    ]
+    st = Counter()
+
+    def complete(prompts):
+        res = []
+        for p in prompts:
+            st["calls"] += 1
+            if "You maintain a playbook" in p:
+                res.append(outs[5])
+            else:
+                st["proposer"] += 1
+                res.append(outs[(st["proposer"] - 1) % 5])
+        return res
+    complete.stats = st
+    return complete
+
+
+def test_evolution_loop_end_to_end(tmp_path):
+    fast, dev = [C], [C, C2]
+    s = run_evolution("t_loop", _fake_backend(), n_calls=6, seed=0, batch=3, n_islands=2, reflect_every=3,
+                      migrate_every=3, workers=2, time_s=60, fast_names=fast, dev_names=dev, out_root=tmp_path,
+                      log=lambda *a: None)
+    out = tmp_path / "t_loop"
+    lines = [json.loads(l) for l in (out / "calls.jsonl").read_text().splitlines()]
+    kinds = [l["kind"] for l in lines]
+    assert kinds.count("proposer") == 6 and kinds.count("reflector") >= 1 and kinds[0] == "seed"
+    st = s["stats"]
+    assert st["proposer_calls"] == 6 and st["parse_errors"] >= 1 and st["static_errors"] >= 1
+    assert st["duplicates"] >= 1
+    assert s["best"]["dev"]["valid"] and s["seed_program"]["dev"]["valid"]
+    assert tuple(s["best"]["dev"]["key"]) <= tuple(s["seed_program"]["dev"]["key"])
+    assert (out / "best_program.py").exists() and (out / "playbook.json").exists()
+    with pytest.raises(FileExistsError):
+        run_evolution("t_loop", _fake_backend(), n_calls=1, fast_names=fast, dev_names=dev, out_root=tmp_path)
+    pb = Playbook.load(out / "playbook.json")
+    assert any(r.text == "Try pyzx after folding." for r in pb.rules)
+
+
+def test_control_end_to_end(tmp_path):
+    from circuitevolve.legacy.evolve_opt.control import run_control
+    for mode in ("random", "greedy"):
+        s = run_control(f"t_{mode}", mode, n_evals=3, seed=0, workers=2, time_s=60, fast_names=[C],
+                        dev_names=[C, C2], out_root=tmp_path, log=lambda *a: None)
+        assert s["best"]["dev"]["valid"] and s["n_evals"] == 3
+        assert len((tmp_path / f"t_{mode}" / "evals.jsonl").read_text().splitlines()) == 4
+
+
+def test_parallel_evaluation_matches_serial():
+    """Regression: verification inside parallel threads returned wrong distances before it was serialised."""
+    names = ["qml_4", "grover_5", "qft_8", "mult_8"]
+    r1 = ev.evaluate_program(SEED_PROGRAM, names, workers=1, use_cache=False)
+    r4 = ev.evaluate_program(SEED_PROGRAM, names, workers=4, use_cache=False)
+    for nm in names:
+        assert r1["results"][nm]["valid"] and r4["results"][nm]["valid"]
+        assert r1["results"][nm]["check"]["dist"] == r4["results"][nm]["check"]["dist"]
+
+
+def test_spawning_does_not_corrupt_verification():
+    """Regression: forking subprocesses in other threads while numpy verifies gave wrong distances."""
+    import subprocess
+    import threading
+    from circuitevolve.blocks import verify_block as vb
+    from circuitevolve.legacy.evolve_opt.sandbox import NUMERIC_LOCK
+    n, orig = ev.original("qft_8")
+    r = run_program(SEED_PROGRAM, n, orig, dict(time_s=60), wall_s=120)
+    A, B = ops_from_json(orig), ops_from_json(r["ops"])
+    stop = []
+
+    def spam():
+        while not stop:
+            with NUMERIC_LOCK:
+                p = subprocess.Popen(["/bin/echo"], stdout=subprocess.DEVNULL)
+            p.wait()
+    ths = [threading.Thread(target=spam) for _ in range(2)]
+    [t.start() for t in ths]
+    try:
+        for _ in range(5):
+            with NUMERIC_LOCK:
+                assert vb.circuit_check(A, B, n)["dist"] < 1e-8
+    finally:
+        stop.append(1)
+        [t.join() for t in ths]
+
+
+def test_playbook_with_improvements_only_counted_as_candidate():
+    pb = Playbook()
+    r = pb.add("x")
+    pb.record([r.id], [], 1, 1, True)
+    r.status = "active"
+    pb.record([], [], 1, 1, True)
+    assert r.with_improvements == 1 and r.improvements == 2 and r.with_prompts == 1

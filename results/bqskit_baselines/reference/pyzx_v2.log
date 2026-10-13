@@ -1,0 +1,7 @@
+{"circuit": "add_17", "pipeline": "pyzx", "status": "ok", "rz_count": 112, "t_count": 10508, "wall_s": 0.6, "unitary_dist": null}
+{"circuit": "hhl_6", "pipeline": "pyzx", "status": "ok", "rz_count": 174, "t_count": 16362, "wall_s": 8.5, "unitary_dist": 0.0}
+{"circuit": "mult_16", "pipeline": "pyzx", "status": "ok", "rz_count": 351, "t_count": 32738, "wall_s": 3.7, "unitary_dist": null}
+{"circuit": "qft_32", "pipeline": "pyzx", "status": "ok", "rz_count": 470, "t_count": 44167, "wall_s": 13.7, "unitary_dist": null}
+{"circuit": "shor_16", "pipeline": "pyzx", "status": "ok", "rz_count": 1525, "t_count": 141327, "wall_s": 93.3, "unitary_dist": null}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/reference/pyzx_eval_v2.csv
+EXIT 0

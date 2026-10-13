@@ -1,0 +1,13 @@
+circuit,family,form,block_size,qubits,gates,rotations_total,n_blocks,rot_per_block_mean,rot_per_block_median,rot_per_block_max,frac_blocks_no_rotation,n_struct,n_unitary,struct_per_block,eval_circuit,seconds
+qft_8,qft,cliffordrz,2,8,160,63,32,1.969,2.0,3,0.156,6,15,0.188,False,0.1
+qft_8,qft,cliffordrz,3,8,160,63,18,3.5,3.5,6,0.167,11,14,0.611,False,0.1
+qft_8,qft,u3cx,2,8,146,63,32,1.969,2.0,3,0.156,4,15,0.125,False,0.0
+qft_8,qft,u3cx,3,8,146,63,18,3.5,3.5,6,0.167,11,14,0.611,False,0.1
+tfim_4,tfim,cliffordrz,2,4,590,100,60,1.667,1.5,3,0.0,9,9,0.15,False,0.2
+tfim_4,tfim,cliffordrz,3,4,590,100,40,2.5,2.5,4,0.0,9,9,0.225,False,0.3
+tfim_4,tfim,u3cx,2,4,304,140,60,2.333,2.5,3,0.0,3,9,0.05,False,0.1
+tfim_4,tfim,u3cx,3,4,304,140,38,3.684,5.0,8,0.0,5,8,0.132,False,0.1
+shor_12,shor,cliffordrz,2,12,5113,1457,1378,1.057,1.0,3,0.44,56,125,0.041,False,21.0
+shor_12,shor,cliffordrz,3,12,5113,1457,512,2.846,2.0,10,0.217,72,105,0.141,False,21.6
+shor_12,shor,u3cx,2,12,5659,1486,1378,1.078,1.0,3,0.44,24,125,0.017,False,1.9
+shor_12,shor,u3cx,3,12,5659,1486,518,2.869,2.0,11,0.214,46,114,0.089,False,2.9

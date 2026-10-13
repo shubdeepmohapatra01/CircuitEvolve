@@ -1,0 +1,13 @@
+20:13:57 [control_random_s1_120] eval 10/120: best fast 0.96365 best dev 0.97624
+20:18:01 [control_random_s1_120] eval 20/120: best fast 0.96365 best dev 0.97463
+20:28:54 [control_random_s1_120] eval 30/120: best fast 0.96284 best dev 0.97340
+20:41:49 [control_random_s1_120] eval 40/120: best fast 0.96284 best dev 0.97062
+20:46:10 [control_random_s1_120] eval 50/120: best fast 0.96284 best dev 0.97062
+20:50:22 [control_random_s1_120] eval 60/120: best fast 0.96284 best dev 0.97062
+20:57:30 [control_random_s1_120] eval 70/120: best fast 0.96284 best dev 0.97062
+21:01:06 [control_random_s1_120] eval 80/120: best fast 0.96284 best dev 0.96790
+21:18:49 [control_random_s1_120] eval 90/120: best fast 0.96284 best dev 0.96790
+21:20:38 [control_random_s1_120] eval 100/120: best fast 0.96284 best dev 0.96790
+21:24:50 [control_random_s1_120] eval 110/120: best fast 0.96284 best dev 0.96790
+21:31:37 [control_random_s1_120] eval 120/120: best fast 0.96284 best dev 0.96790
+21:31:37 done: best dev 0.96790

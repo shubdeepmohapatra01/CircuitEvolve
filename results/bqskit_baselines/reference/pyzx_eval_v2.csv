@@ -1,0 +1,6 @@
+circuit,pipeline,status,eps_rz,wall_s,qubits,cx,rz_count,rz_distinct,t_fixed,t_gridsynth,t_count,eps_total_bound,published_bygate_rz,published_bygate_t,t_vs_published_bygate_pct,opt_s,pipeline_s,unitary_dist,extra
+add_17,pyzx,ok,1e-09,0.6,17,290,112,48,28,10480,10508,1.1200000000000001e-07,251,23562,-55.4,0.2,0.3,,"{""other_gates"": {""CZ"": 37}, ""zx_tcount"": 140}"
+hhl_6,pyzx,ok,1e-09,8.5,6,222,174,70,70,16292,16362,1.7400000000000002e-07,243,22571,-27.51,0.4,0.4,0.0,"{""other_gates"": {""CZ"": 7}, ""zx_tcount"": 244}"
+mult_16,pyzx,ok,1e-09,3.7,16,846,351,68,120,32618,32738,3.51e-07,1079,100678,-67.48,2.7,3.4,,"{""other_gates"": {""CZ"": 54}, ""zx_tcount"": 471}"
+qft_32,pyzx,ok,1e-09,13.7,32,1767,470,66,33,44134,44167,4.7000000000000005e-07,1080,101480,-56.48,3.2,13.3,,"{""other_gates"": {""CZ"": 86}, ""zx_tcount"": 503}"
+shor_16,pyzx,ok,1e-09,93.3,16,5334,1525,259,507,140820,141327,1.525e-06,816,74797,88.95,78.4,92.6,,"{""other_gates"": {""CZ"": 62}, ""zx_tcount"": 2032}"

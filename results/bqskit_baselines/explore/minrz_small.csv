@@ -1,0 +1,3 @@
+circuit,pipeline,lowering,eps_rz,qubits,cx,rz_count,rz_distinct,t_fixed,t_gridsynth,t_count,t_per_rz,published_rz,published_t,rz_diff_pct,t_diff_pct,eps_total_bound,k_hist,rounded_angles,max_gridsynth_dist,cliffordrz_unitary_dist,stage1_s,gridsynth_s
+qft_8,"gate-level, min RZ per merged 1q run",,1e-09,8,68,63,12,21,5874,5895,93.24,,,,,6.300000000000001e-08,"[15, 63, 0, 0]",21,4.935371951461942e-10,2.2081941859618073e-15,1.0,1.3
+hhl_6,"gate-level, min RZ per merged 1q run",,1e-09,6,220,215,55,129,20182,20311,93.87,243.0,22571.0,-11.52,-10.01,2.15e-07,"[129, 95, 60, 0]",129,4.996088669305965e-10,2.2124060818460458e-14,0.4,1.6

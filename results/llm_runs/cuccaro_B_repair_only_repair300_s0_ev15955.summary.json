@@ -1,0 +1,45 @@
+{
+ "tag": "cuccaro_B_repair_only_repair300_s0_ev15955",
+ "row": "cuccaro_B",
+ "arm": "repair_only",
+ "seed": 0,
+ "eval_budget": 15955,
+ "repair": 300,
+ "matched_to": "cuccaro_B_evo_repair300_s0_60_api",
+ "stats": {
+  "pseudo_calls": 25,
+  "evals": 15955,
+  "seconds": 0.7,
+  "best": [
+   14.0,
+   112,
+   18,
+   64,
+   7
+  ],
+  "archive_cells": 5,
+  "verifier_digest": "60f4fe547646b2ca",
+  "proposals": 96,
+  "fail_L1": 75,
+  "fail_L0": 13,
+  "repaired": 7,
+  "accepted": 11,
+  "raw_pass": 4,
+  "fail_L2": 4,
+  "duplicate": 4
+ },
+ "trajectory": [
+  [
+   0,
+   1,
+   14.0
+  ],
+  [
+   25,
+   15955,
+   14.0
+  ]
+ ],
+ "best_source": "FWD = (\n    G('cx', 'a', 'b'),\n    G('cx', 'a', 'pa'),\n    G('ccx', 'pa', 'b', 'a'),\n)\nTOP = (\n    G('cx', 'a', 'z'),\n)\nBWD = (\n    G('ccx', 'pa', 'b', 'a'),\n    G('cx', 'a', 'pa'),\n    G('cx', 'pa', 'b'),\n)\n",
+ "wall_seconds": 0.7
+}

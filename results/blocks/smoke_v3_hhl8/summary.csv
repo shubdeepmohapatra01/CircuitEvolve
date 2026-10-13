@@ -1,0 +1,2 @@
+circuit,n,input_pipeline,best_classical_pipeline,input_t,input_rz,input_t_raw,input_t_canonical,after_classical_pass_t,output_t,output_rz,t_saved,rz_saved,n_blocks,n_structures,llm_calls,reflect_calls,programs,parse_errors,verified,improving,rules_added,llm_blocks,library_blocks,whole_check,whole_dist,error_bound,seconds
+hhl_8,8,tket,tket,54914,587,54914,54914,48307,48307,517,6607,70,84,42,5,0,4,0,0,0,0,0,0,unitary,2.7872127838154476e-13,5.170002883337421e-07,106.6

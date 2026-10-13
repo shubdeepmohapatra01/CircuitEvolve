@@ -1,0 +1,49 @@
+method,n,t_count,t_depth,qubits,cnot,measurements,gates,verified,seconds
+naive Cuccaro,1,14,8,4,17,0,35,True,0.0
+naive Cuccaro,2,28,16,6,33,0,69,True,0.0
+naive Cuccaro,3,42,24,8,49,0,103,True,0.0
+naive Cuccaro,4,56,32,10,65,0,137,True,0.0
+naive Cuccaro,5,70,40,12,81,0,171,True,0.0
+naive Cuccaro,6,84,48,14,97,0,205,True,0.0
+naive Cuccaro,7,98,56,16,113,0,239,True,0.0
+naive Cuccaro,8,112,64,18,129,0,273,True,0.0
+naive Cuccaro,9,126,72,20,145,0,307,True,0.0
+naive Cuccaro,10,140,80,22,161,0,341,True,0.0
+naive Cuccaro,11,154,88,24,177,0,375,True,0.0
+naive Cuccaro,12,168,96,26,193,0,409,True,0.0
+naive Cuccaro,13,182,104,28,209,0,443,True,0.0
+naive Cuccaro,14,196,112,30,225,0,477,True,0.0
+naive Cuccaro,15,210,120,32,241,0,511,True,0.0
+naive Cuccaro,16,224,128,34,257,0,545,True,0.0
+pyzx full_reduce,1,8,5,4,4,0,58,True,0.01
+pyzx full_reduce,2,16,11,6,16,0,113,True,0.16
+pyzx full_reduce,3,24,20,8,34,0,175,True,2.45
+pyzx full_reduce,4,32,22,10,42,0,219,True,55.23
+pyzx full_reduce,5,40,31,12,62,0,284,True,39.06
+pyzx full_reduce,6,48,41,14,55,0,315,False,0.06
+pyzx full_reduce,7,56,43,16,65,0,374,False,0.09
+pyzx full_reduce,8,64,53,18,71,0,427,False,0.11
+pyzx full_reduce,9,72,59,20,80,0,464,False,0.13
+pyzx full_reduce,10,80,63,22,101,0,541,False,0.19
+pyzx full_reduce,11,88,72,24,91,0,562,False,0.25
+pyzx full_reduce,12,96,74,26,115,0,624,False,0.6
+pyzx full_reduce,13,104,83,28,134,0,684,False,0.56
+pyzx full_reduce,14,112,87,30,141,0,727,False,0.55
+pyzx full_reduce,15,120,96,32,165,0,790,False,0.8
+pyzx full_reduce,16,128,101,34,165,0,860,False,1.13
+Gidney temporary AND,1,4,2,3,7,0,14,True,0.0
+Gidney temporary AND,2,8,3,6,18,1,36,True,0.0
+Gidney temporary AND,3,12,4,9,30,2,59,True,0.01
+Gidney temporary AND,4,16,5,12,42,3,82,True,0.05
+Gidney temporary AND,5,20,6,15,54,4,105,True,0.01
+Gidney temporary AND,6,24,7,18,66,5,128,True,0.02
+Gidney temporary AND,7,28,8,21,78,6,151,True,0.03
+Gidney temporary AND,8,32,9,24,90,7,174,True,0.05
+Gidney temporary AND,9,36,10,27,102,8,197,True,0.09
+Gidney temporary AND,10,40,11,30,114,9,220,True,0.08
+Gidney temporary AND,11,44,12,33,126,10,243,True,0.09
+Gidney temporary AND,12,48,13,36,138,11,266,True,0.1
+Gidney temporary AND,13,52,14,39,150,12,289,True,0.11
+Gidney temporary AND,14,56,15,42,162,13,312,True,0.11
+Gidney temporary AND,15,60,16,45,174,14,335,True,0.12
+Gidney temporary AND,16,64,17,48,186,15,358,True,0.13

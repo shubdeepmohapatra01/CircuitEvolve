@@ -1,0 +1,7 @@
+{"circuit": "add_17", "pipeline": "tket+minrz", "status": "ok", "rz_count": 189, "t_count": 17721, "wall_s": 2.6, "unitary_dist": null}
+{"circuit": "hhl_6", "pipeline": "tket+minrz", "status": "ok", "rz_count": 87, "t_count": 8168, "wall_s": 2.4, "unitary_dist": null}
+{"circuit": "mult_16", "pipeline": "tket+minrz", "status": "ok", "rz_count": 1044, "t_count": 97306, "wall_s": 13.2, "unitary_dist": null}
+{"circuit": "qft_32", "pipeline": "tket+minrz", "status": "ok", "rz_count": 933, "t_count": 88329, "wall_s": 6.4, "unitary_dist": null}
+{"circuit": "shor_16", "pipeline": "tket+minrz", "status": "ok", "rz_count": 3480, "t_count": 325074, "wall_s": 78.2, "unitary_dist": null}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/reference/tket_eval_v2.csv
+EXIT 0

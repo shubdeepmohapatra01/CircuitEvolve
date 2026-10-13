@@ -1,0 +1,126 @@
+{
+ "tag": "cuccaro_B_evo_s0_16_api",
+ "row": "cuccaro_B",
+ "arm": "evo",
+ "repair": 0,
+ "seed": 0,
+ "k": 4,
+ "batch": 4,
+ "backend": "api",
+ "format_rules": true,
+ "stats": {
+  "calls": 16,
+  "evals": 49,
+  "seconds": 172.6,
+  "best": [
+   14.0,
+   112,
+   18,
+   64,
+   7
+  ],
+  "archive_cells": 1,
+  "verifier_digest": "60f4fe547646b2ca",
+  "parse_error": 1,
+  "proposals": 55,
+  "fail_L1": 48,
+  "duplicate": 7,
+  "backend": {
+   "calls": 16,
+   "input_tokens": 36088,
+   "output_tokens": 31102,
+   "ok": 16
+  }
+ },
+ "trajectory": [
+  [
+   0,
+   1,
+   14.0
+  ],
+  [
+   4,
+   5,
+   14.0
+  ],
+  [
+   4,
+   9,
+   14.0
+  ],
+  [
+   4,
+   13,
+   14.0
+  ],
+  [
+   4,
+   17,
+   14.0
+  ],
+  [
+   8,
+   21,
+   14.0
+  ],
+  [
+   8,
+   23,
+   14.0
+  ],
+  [
+   8,
+   27,
+   14.0
+  ],
+  [
+   8,
+   28,
+   14.0
+  ],
+  [
+   12,
+   32,
+   14.0
+  ],
+  [
+   12,
+   33,
+   14.0
+  ],
+  [
+   12,
+   36,
+   14.0
+  ],
+  [
+   12,
+   39,
+   14.0
+  ],
+  [
+   16,
+   40,
+   14.0
+  ],
+  [
+   16,
+   43,
+   14.0
+  ],
+  [
+   16,
+   46,
+   14.0
+  ],
+  [
+   16,
+   49,
+   14.0
+  ]
+ ],
+ "best_source": "FWD = (\n    G('cx', 'a', 'b'),\n    G('cx', 'a', 'pa'),\n    G('ccx', 'pa', 'b', 'a'),\n)\nTOP = (\n    G('cx', 'a', 'z'),\n)\nBWD = (\n    G('ccx', 'pa', 'b', 'a'),\n    G('cx', 'a', 'pa'),\n    G('cx', 'pa', 'b'),\n)\n",
+ "playbook": null,
+ "playbook_frozen": false,
+ "wall_seconds": 172.6
+}

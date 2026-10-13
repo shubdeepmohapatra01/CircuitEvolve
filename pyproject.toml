@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "circuitevolve"
+version = "0.1.0"
+description = "Verifier-first harness for LLM-assisted discovery of fault-tolerant circuit constructions"
+requires-python = ">=3.11"
+dependencies = ["numpy", "pyzx", "pandas", "matplotlib"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+# block optimizer (circuitevolve/blocks): BQSKit partitioning, TKET/pyzx baselines, gridsynth T counting
+blocks = ["bqskit==1.2.1", "pytket==2.18.5", "pygridsynth==2.0.0", "qiskit==2.5.2", "scipy", "mpmath"]
+
+[tool.setuptools.packages.find]
+include = ["circuitevolve*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

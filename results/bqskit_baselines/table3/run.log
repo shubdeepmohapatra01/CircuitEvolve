@@ -1,0 +1,36 @@
+cp gates 391
+{"circuit": "add_17", "rz_count": 251, "published_rz": 251, "t_count": 23520, "published_t": 23562, "t_diff_pct": -0.18, "cliffordrz_unitary_dist": null}
+{"circuit": "hhl_6", "rz_count": 243, "published_rz": 243, "t_count": 22887, "published_t": 22571, "t_diff_pct": 1.4, "cliffordrz_unitary_dist": 7.920447413176958e-15}
+{"circuit": "mult_16", "rz_count": 1079, "published_rz": 1079, "t_count": 100572, "published_t": 100678, "t_diff_pct": -0.11, "cliffordrz_unitary_dist": null}
+{"circuit": "qft_32", "rz_count": 1395, "published_rz": 1080, "t_count": 132345, "published_t": 101480, "t_diff_pct": 30.41, "cliffordrz_unitary_dist": null}
+{"circuit": "shor_16", "rz_count": 4678, "published_rz": 816, "t_count": 437107, "published_t": 74797, "t_diff_pct": 484.39, "cliffordrz_unitary_dist": null}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/table3/paramzsx_qseed.csv
+{"circuit": "aqft32_d17_u3cx", "rz_count": 1080, "published_rz": null, "t_count": 101049, "published_t": null, "t_diff_pct": null, "cliffordrz_unitary_dist": null}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/table3/paramzsx_aqft32_d17.csv
+{"circuit": "add_17", "rz_count": 251, "published_rz": 251, "t_count": 23520, "published_t": 23562, "t_diff_pct": -0.18, "cliffordrz_unitary_dist": null}
+{"circuit": "hhl_6", "rz_count": 215, "published_rz": 243, "t_count": 20311, "published_t": 22571, "t_diff_pct": -10.01, "cliffordrz_unitary_dist": 2.2124060818460458e-14}
+{"circuit": "mult_16", "rz_count": 1079, "published_rz": 1079, "t_count": 100572, "published_t": 100678, "t_diff_pct": -0.11, "cliffordrz_unitary_dist": null}
+{"circuit": "qft_32", "rz_count": 1386, "published_rz": 1080, "t_count": 131649, "published_t": 101480, "t_diff_pct": 29.73, "cliffordrz_unitary_dist": null}
+{"circuit": "shor_16", "rz_count": 4629, "published_rz": 816, "t_count": 432486, "published_t": 74797, "t_diff_pct": 478.21, "cliffordrz_unitary_dist": null}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/table3/minrz_qseed.csv
+{"circuit": "aqft32_d17_u3cx", "rz_count": 1080, "published_rz": null, "t_count": 101049, "published_t": null, "t_diff_pct": null, "cliffordrz_unitary_dist": null}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/table3/minrz_aqft32_d17.csv
+{"circuit": "add_17", "rz_count": 486, "published_rz": 251, "t_count": 45774, "published_t": 23562, "t_diff_pct": 94.27, "stage1_s": 3.2}
+{"circuit": "hhl_6", "rz_count": 132, "published_rz": 243, "t_count": 12476, "published_t": 22571, "t_diff_pct": -44.73, "stage1_s": 2.2}
+{"circuit": "mult_16", "rz_count": 2129, "published_rz": 1079, "t_count": 199392, "published_t": 100678, "t_diff_pct": 98.05, "stage1_s": 12.3}
+{"circuit": "qft_32", "rz_count": 1723, "published_rz": 1080, "t_count": 161772, "published_t": 101480, "t_diff_pct": 59.41, "stage1_s": 13.7}
+{"circuit": "shor_16", "rz_count": 9327, "published_rz": 816, "t_count": 874349, "published_t": 74797, "t_diff_pct": 1068.96, "stage1_s": 67.0}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/table3/bqskitft_shipped_seed0.csv
+{"circuit": "add_17", "rz_count": 484, "published_rz": 251, "t_count": 45554, "published_t": 23562, "t_diff_pct": 93.34, "stage1_s": 3.1}
+{"circuit": "hhl_6", "rz_count": 134, "published_rz": 243, "t_count": 12650, "published_t": 22571, "t_diff_pct": -43.95, "stage1_s": 2.3}
+{"circuit": "mult_16", "rz_count": 2129, "published_rz": 1079, "t_count": 199386, "published_t": 100678, "t_diff_pct": 98.04, "stage1_s": 13.6}
+{"circuit": "qft_32", "rz_count": 1723, "published_rz": 1080, "t_count": 161734, "published_t": 101480, "t_diff_pct": 59.38, "stage1_s": 12.2}
+{"circuit": "shor_16", "rz_count": 9325, "published_rz": 816, "t_count": 874132, "published_t": 74797, "t_diff_pct": 1068.67, "stage1_s": 66.4}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/table3/bqskitft_shipped_seed1.csv
+{"circuit": "add_17", "rz_count": 484, "published_rz": 251, "t_count": 45592, "published_t": 23562, "t_diff_pct": 93.5, "stage1_s": 3.2}
+{"circuit": "hhl_6", "rz_count": 129, "published_rz": 243, "t_count": 12128, "published_t": 22571, "t_diff_pct": -46.27, "stage1_s": 2.2}
+{"circuit": "mult_16", "rz_count": 2129, "published_rz": 1079, "t_count": 199416, "published_t": 100678, "t_diff_pct": 98.07, "stage1_s": 12.3}
+{"circuit": "qft_32", "rz_count": 1685, "published_rz": 1080, "t_count": 158466, "published_t": 101480, "t_diff_pct": 56.15, "stage1_s": 11.7}
+{"circuit": "shor_16", "rz_count": 9294, "published_rz": 816, "t_count": 871590, "published_t": 74797, "t_diff_pct": 1065.27, "stage1_s": 62.5}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/table3/bqskitft_shipped_seed2.csv
+EXIT 0

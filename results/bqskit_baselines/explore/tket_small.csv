@@ -1,0 +1,12 @@
+circuit,pipeline,status,eps_rz,wall_s,qubits,cx,rz_count,rz_distinct,t_fixed,t_gridsynth,t_count,eps_total_bound,published_bygate_rz,published_bygate_t,t_vs_published_bygate_pct,opt_s,pipeline_s,unitary_dist,extra,error
+qft_8,tket,ok,1e-09,0.8,8.0,56.0,48.0,18.0,15.0,4478.0,4493.0,4.8000000000000006e-08,,,,0.3,0.3,2.603333895388683e-15,"{""implicit_perm"": true}",
+qft_8,tket+minrz,ok,1e-09,1.6,8.0,56.0,48.0,18.0,15.0,4478.0,4493.0,4.8000000000000006e-08,,,,0.1,0.1,,{},
+hhl_6,tket,ok,1e-09,1.1,6.0,174.0,89.0,72.0,102.0,8250.0,8352.0,8.9e-08,243.0,22571.0,-63.0,0.7,0.7,2.3757732687944747e-14,"{""implicit_perm"": false}",
+hhl_6,tket+minrz,ok,1e-09,2.4,6.0,174.0,87.0,73.0,102.0,8066.0,8168.0,8.700000000000001e-08,243.0,22571.0,-63.81,0.5,0.5,,{},
+shor_12,tket,err,1e-09,0.3,,,,,,,,,,,,,,,,"QASMParseError: Cannot parse gate of type: ccu1
+Line:22. 
+deepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv/lib/python3.11/site-packages/lark/parsers/lalr_parser.py"", line 88, in parse
+    return self.parse_from_state(parser_state)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv/lib/python3.11/site-packages/lark/parsers/lalr_parser.py"", line 105, in parse_from_state
+    return state."

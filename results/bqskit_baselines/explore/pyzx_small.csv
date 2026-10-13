@@ -1,0 +1,3 @@
+circuit,pipeline,status,eps_rz,wall_s,qubits,cx,rz_count,rz_distinct,t_fixed,t_gridsynth,t_count,eps_total_bound,published_bygate_rz,published_bygate_t,t_vs_published_bygate_pct,opt_s,pipeline_s,unitary_dist,extra
+qft_8,pyzx,ok,1e-09,4.7,8,85,33,18,9,3082,3091,3.3000000000000004e-08,,,,0.0,0.0,0.0,"{""other_gates"": {""CZ"": 7}, ""zx_tcount"": 42}"
+hhl_6,pyzx,ok,1e-09,7.6,6,222,174,70,70,16292,16362,1.7400000000000002e-07,243.0,22571.0,-27.51,0.3,0.4,0.0,"{""other_gates"": {""CZ"": 7}, ""zx_tcount"": 244}"

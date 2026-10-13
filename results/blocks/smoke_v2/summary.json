@@ -1,0 +1,517 @@
+{
+ "tag": "smoke_v2",
+ "plan": {
+  "tfim_4": 12,
+  "heisenberg_4": 14,
+  "qft_5": 10
+ },
+ "block_size": 3,
+ "max_gates": 40,
+ "k": 3,
+ "batch": 4,
+ "reflect_every": 8,
+ "frozen_digest": "bc3eac23a403dbc594265a91ebb9f0ff12672dc913c56c5cf5d9d950c2a242c6",
+ "backend": {
+  "failed": 0,
+  "ok": 34,
+  "output_tokens": 77431,
+  "calls": 34,
+  "input_tokens": 50512,
+  "truncated": 11
+ },
+ "wall_s": 387.5,
+ "circuits": {
+  "tfim_4": {
+   "circuit": "tfim_4",
+   "n": 4,
+   "input_pipeline": "tket",
+   "block_size": 3,
+   "max_gates": 40,
+   "classical": {
+    "minrz": {
+     "raw": {
+      "t": 9200,
+      "t_fixed": 0,
+      "t_gs": 9200,
+      "rz": 100,
+      "cx": 120,
+      "gates": 590
+     },
+     "canonical": {
+      "t": 9200,
+      "t_fixed": 0,
+      "t_gs": 9200,
+      "rz": 100,
+      "cx": 120,
+      "gates": 590
+     }
+    },
+    "pyzx": {
+     "raw": {
+      "t": 9200,
+      "t_fixed": 0,
+      "t_gs": 9200,
+      "rz": 100,
+      "cx": 183,
+      "gates": 380
+     },
+     "canonical": {
+      "t": 9200,
+      "t_fixed": 0,
+      "t_gs": 9200,
+      "rz": 100,
+      "cx": 183,
+      "gates": 380
+     }
+    },
+    "tket": {
+     "raw": {
+      "t": 9200,
+      "t_fixed": 0,
+      "t_gs": 9200,
+      "rz": 100,
+      "cx": 100,
+      "gates": 435
+     },
+     "canonical": {
+      "t": 9200,
+      "t_fixed": 0,
+      "t_gs": 9200,
+      "rz": 100,
+      "cx": 100,
+      "gates": 435
+     }
+    }
+   },
+   "input_cost": {
+    "t": 9200,
+    "t_fixed": 0,
+    "t_gs": 9200,
+    "rz": 100,
+    "cx": 100,
+    "gates": 435
+   },
+   "input_cost_raw": {
+    "t": 9200,
+    "t_fixed": 0,
+    "t_gs": 9200,
+    "rz": 100,
+    "cx": 100,
+    "gates": 435
+   },
+   "input_cost_canonical": {
+    "t": 9200,
+    "t_fixed": 0,
+    "t_gs": 9200,
+    "rz": 100,
+    "cx": 100,
+    "gates": 435
+   },
+   "after_classical_pass": {
+    "t": 9200,
+    "t_fixed": 0,
+    "t_gs": 9200,
+    "rz": 100,
+    "cx": 100,
+    "gates": 431
+   },
+   "output_cost": {
+    "t": 9200,
+    "t_fixed": 0,
+    "t_gs": 9200,
+    "rz": 100,
+    "cx": 100,
+    "gates": 431
+   },
+   "t_saved": 0,
+   "rz_saved": 0,
+   "t_saved_classical_pass": 0,
+   "n_blocks": 38,
+   "n_structures": 8,
+   "classical_pass_blocks": 2,
+   "library_blocks": 0,
+   "llm_blocks": 0,
+   "rules_used": [],
+   "input_dist_to_original": 2.1194978978477624e-14,
+   "sum_block_dist": 7.910103594081714e-16,
+   "error_bound": 1.0000002198598934e-07,
+   "whole_circuit_check": {
+    "method": "unitary",
+    "n": 4,
+    "dist": 1.760653255415746e-14,
+    "fro": 1.541553428212646e-14
+   },
+   "llm_stats": {
+    "calls": 10,
+    "reflect_calls": 2,
+    "llm_errors": 0,
+    "programs": 11,
+    "parse_errors": 2,
+    "verified": 4,
+    "improving": 0,
+    "rules_added": 0,
+    "structures_tried": 5,
+    "structures_eligible": 5
+   },
+   "seconds": 138.4
+  },
+  "heisenberg_4": {
+   "circuit": "heisenberg_4",
+   "n": 4,
+   "input_pipeline": "pyzx",
+   "block_size": 3,
+   "max_gates": 40,
+   "classical": {
+    "minrz": {
+     "raw": {
+      "t": 8340,
+      "t_fixed": 0,
+      "t_gs": 8340,
+      "rz": 90,
+      "cx": 180,
+      "gates": 594
+     },
+     "canonical": {
+      "t": 8340,
+      "t_fixed": 0,
+      "t_gs": 8340,
+      "rz": 90,
+      "cx": 180,
+      "gates": 594
+     }
+    },
+    "pyzx": {
+     "raw": {
+      "t": 8340,
+      "t_fixed": 0,
+      "t_gs": 8340,
+      "rz": 90,
+      "cx": 116,
+      "gates": 281
+     },
+     "canonical": {
+      "t": 8340,
+      "t_fixed": 0,
+      "t_gs": 8340,
+      "rz": 90,
+      "cx": 116,
+      "gates": 281
+     }
+    },
+    "tket": {
+     "raw": {
+      "t": 8340,
+      "t_fixed": 0,
+      "t_gs": 8340,
+      "rz": 90,
+      "cx": 154,
+      "gates": 582
+     },
+     "canonical": {
+      "t": 8340,
+      "t_fixed": 0,
+      "t_gs": 8340,
+      "rz": 90,
+      "cx": 154,
+      "gates": 582
+     }
+    }
+   },
+   "input_cost": {
+    "t": 8340,
+    "t_fixed": 0,
+    "t_gs": 8340,
+    "rz": 90,
+    "cx": 116,
+    "gates": 281
+   },
+   "input_cost_raw": {
+    "t": 8340,
+    "t_fixed": 0,
+    "t_gs": 8340,
+    "rz": 90,
+    "cx": 116,
+    "gates": 281
+   },
+   "input_cost_canonical": {
+    "t": 8340,
+    "t_fixed": 0,
+    "t_gs": 8340,
+    "rz": 90,
+    "cx": 116,
+    "gates": 281
+   },
+   "after_classical_pass": {
+    "t": 8340,
+    "t_fixed": 0,
+    "t_gs": 8340,
+    "rz": 90,
+    "cx": 116,
+    "gates": 281
+   },
+   "output_cost": {
+    "t": 8340,
+    "t_fixed": 0,
+    "t_gs": 8340,
+    "rz": 90,
+    "cx": 116,
+    "gates": 281
+   },
+   "t_saved": 0,
+   "rz_saved": 0,
+   "t_saved_classical_pass": 0,
+   "n_blocks": 46,
+   "n_structures": 43,
+   "classical_pass_blocks": 0,
+   "library_blocks": 0,
+   "llm_blocks": 0,
+   "rules_used": [],
+   "input_dist_to_original": 1.3685355805415206e-14,
+   "sum_block_dist": 0,
+   "error_bound": 9.000001368535582e-08,
+   "whole_circuit_check": {
+    "method": "unitary",
+    "n": 4,
+    "dist": 1.2326340606009584e-14,
+    "fro": 7.357400139118389e-15
+   },
+   "llm_stats": {
+    "calls": 14,
+    "reflect_calls": 1,
+    "llm_errors": 0,
+    "programs": 21,
+    "parse_errors": 3,
+    "verified": 10,
+    "improving": 0,
+    "rules_added": 0,
+    "structures_tried": 14,
+    "structures_eligible": 20
+   },
+   "seconds": 165.6
+  },
+  "qft_5": {
+   "circuit": "qft_5",
+   "n": 5,
+   "input_pipeline": "pyzx",
+   "block_size": 3,
+   "max_gates": 40,
+   "classical": {
+    "minrz": {
+     "raw": {
+      "t": 1686,
+      "t_fixed": 12,
+      "t_gs": 1674,
+      "rz": 18,
+      "cx": 26,
+      "gates": 61
+     },
+     "canonical": {
+      "t": 1686,
+      "t_fixed": 12,
+      "t_gs": 1674,
+      "rz": 18,
+      "cx": 26,
+      "gates": 61
+     }
+    },
+    "pyzx": {
+     "raw": {
+      "t": 1124,
+      "t_fixed": 6,
+      "t_gs": 1118,
+      "rz": 12,
+      "cx": 34,
+      "gates": 61
+     },
+     "canonical": {
+      "t": 1124,
+      "t_fixed": 6,
+      "t_gs": 1118,
+      "rz": 12,
+      "cx": 34,
+      "gates": 61
+     }
+    },
+    "tket": {
+     "raw": {
+      "t": 1405,
+      "t_fixed": 9,
+      "t_gs": 1396,
+      "rz": 15,
+      "cx": 26,
+      "gates": 55
+     },
+     "canonical": {
+      "t": 1405,
+      "t_fixed": 9,
+      "t_gs": 1396,
+      "rz": 15,
+      "cx": 26,
+      "gates": 55
+     }
+    }
+   },
+   "input_cost": {
+    "t": 1124,
+    "t_fixed": 6,
+    "t_gs": 1118,
+    "rz": 12,
+    "cx": 34,
+    "gates": 61
+   },
+   "input_cost_raw": {
+    "t": 1124,
+    "t_fixed": 6,
+    "t_gs": 1118,
+    "rz": 12,
+    "cx": 34,
+    "gates": 61
+   },
+   "input_cost_canonical": {
+    "t": 1124,
+    "t_fixed": 6,
+    "t_gs": 1118,
+    "rz": 12,
+    "cx": 34,
+    "gates": 61
+   },
+   "after_classical_pass": {
+    "t": 1124,
+    "t_fixed": 6,
+    "t_gs": 1118,
+    "rz": 12,
+    "cx": 34,
+    "gates": 61
+   },
+   "output_cost": {
+    "t": 1124,
+    "t_fixed": 6,
+    "t_gs": 1118,
+    "rz": 12,
+    "cx": 34,
+    "gates": 61
+   },
+   "t_saved": 0,
+   "rz_saved": 0,
+   "t_saved_classical_pass": 0,
+   "n_blocks": 12,
+   "n_structures": 12,
+   "classical_pass_blocks": 0,
+   "library_blocks": 0,
+   "llm_blocks": 0,
+   "rules_used": [],
+   "input_dist_to_original": 3.547524944287734e-12,
+   "sum_block_dist": 0,
+   "error_bound": 1.2003547524944289e-08,
+   "whole_circuit_check": {
+    "method": "unitary",
+    "n": 5,
+    "dist": 3.5474628542534834e-12,
+    "fro": 1.6296228422285173e-12
+   },
+   "llm_stats": {
+    "calls": 6,
+    "reflect_calls": 1,
+    "llm_errors": 0,
+    "programs": 7,
+    "parse_errors": 3,
+    "verified": 4,
+    "improving": 0,
+    "rules_added": 0,
+    "structures_tried": 3,
+    "structures_eligible": 3
+   },
+   "seconds": 83.5
+  }
+ },
+ "rows": [
+  {
+   "circuit": "tfim_4",
+   "n": 4,
+   "input_pipeline": "tket",
+   "input_t": 9200,
+   "input_rz": 100,
+   "input_t_raw": 9200,
+   "input_t_canonical": 9200,
+   "after_classical_pass_t": 9200,
+   "output_t": 9200,
+   "output_rz": 100,
+   "t_saved": 0,
+   "rz_saved": 0,
+   "n_blocks": 38,
+   "n_structures": 8,
+   "llm_calls": 10,
+   "reflect_calls": 2,
+   "programs": 11,
+   "parse_errors": 2,
+   "verified": 4,
+   "improving": 0,
+   "rules_added": 0,
+   "llm_blocks": 0,
+   "library_blocks": 0,
+   "whole_check": "unitary",
+   "whole_dist": 1.760653255415746e-14,
+   "error_bound": 1.0000002198598934e-07,
+   "seconds": 138.4
+  },
+  {
+   "circuit": "heisenberg_4",
+   "n": 4,
+   "input_pipeline": "pyzx",
+   "input_t": 8340,
+   "input_rz": 90,
+   "input_t_raw": 8340,
+   "input_t_canonical": 8340,
+   "after_classical_pass_t": 8340,
+   "output_t": 8340,
+   "output_rz": 90,
+   "t_saved": 0,
+   "rz_saved": 0,
+   "n_blocks": 46,
+   "n_structures": 43,
+   "llm_calls": 14,
+   "reflect_calls": 1,
+   "programs": 21,
+   "parse_errors": 3,
+   "verified": 10,
+   "improving": 0,
+   "rules_added": 0,
+   "llm_blocks": 0,
+   "library_blocks": 0,
+   "whole_check": "unitary",
+   "whole_dist": 1.2326340606009584e-14,
+   "error_bound": 9.000001368535582e-08,
+   "seconds": 165.6
+  },
+  {
+   "circuit": "qft_5",
+   "n": 5,
+   "input_pipeline": "pyzx",
+   "input_t": 1124,
+   "input_rz": 12,
+   "input_t_raw": 1124,
+   "input_t_canonical": 1124,
+   "after_classical_pass_t": 1124,
+   "output_t": 1124,
+   "output_rz": 12,
+   "t_saved": 0,
+   "rz_saved": 0,
+   "n_blocks": 12,
+   "n_structures": 12,
+   "llm_calls": 6,
+   "reflect_calls": 1,
+   "programs": 7,
+   "parse_errors": 3,
+   "verified": 4,
+   "improving": 0,
+   "rules_added": 0,
+   "llm_blocks": 0,
+   "library_blocks": 0,
+   "whole_check": "unitary",
+   "whole_dist": 3.5474628542534834e-12,
+   "error_bound": 1.2003547524944289e-08,
+   "seconds": 83.5
+  }
+ ],
+ "n_rules": 0
+}

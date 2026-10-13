@@ -1,0 +1,22 @@
+{'circuit': 'add_17', 'candidate': 'bygate_paramzsx', 'status': 'ok', 'qubits': 17, 'min_overlap': np.float64(0.9999999999999942), 'one_minus_overlap': np.float64(5.773159728050814e-15), 'nstates': 2, 'seconds': 1.9}
+{'circuit': 'add_17', 'candidate': 'bygate_minrz', 'status': 'ok', 'qubits': 17, 'min_overlap': np.float64(0.9999999999999928), 'one_minus_overlap': np.float64(7.216449660063518e-15), 'nstates': 2, 'seconds': 0.9}
+{'circuit': 'add_17', 'candidate': 'tket', 'status': 'ok', 'qubits': 17, 'min_overlap': np.float64(0.999999999999995), 'one_minus_overlap': np.float64(4.9960036108132044e-15), 'nstates': 2, 'seconds': 0.9}
+{'circuit': 'add_17', 'candidate': 'pyzx', 'status': 'ok', 'qubits': 17, 'min_overlap': np.float64(0.9999999999999947), 'one_minus_overlap': np.float64(5.329070518200751e-15), 'nstates': 2, 'seconds': 0.9}
+{'circuit': 'add_17', 'candidate': 'shipped/{stem}_bqskitft_shipped_seed0.qasm', 'status': 'ok', 'qubits': 17, 'min_overlap': np.float64(0.9999999999999932), 'one_minus_overlap': np.float64(6.772360450213455e-15), 'nstates': 2, 'seconds': 1.6}
+{'circuit': 'hhl_6', 'candidate': 'bygate_paramzsx', 'status': 'ok', 'qubits': 6, 'min_overlap': np.float64(0.9999999999999947), 'one_minus_overlap': np.float64(5.329070518200751e-15), 'nstates': 2, 'seconds': 0.0}
+{'circuit': 'hhl_6', 'candidate': 'bygate_minrz', 'status': 'ok', 'qubits': 6, 'min_overlap': np.float64(0.9999999999999767), 'one_minus_overlap': np.float64(2.3314683517128287e-14), 'nstates': 2, 'seconds': 0.0}
+{'circuit': 'hhl_6', 'candidate': 'tket', 'status': 'ok', 'qubits': 6, 'min_overlap': np.float64(0.9999999999999989), 'one_minus_overlap': np.float64(1.1102230246251565e-15), 'nstates': 2, 'seconds': 0.0}
+{'circuit': 'hhl_6', 'candidate': 'pyzx', 'status': 'ok', 'qubits': 6, 'min_overlap': np.float64(0.9999999999999928), 'one_minus_overlap': np.float64(7.216449660063518e-15), 'nstates': 2, 'seconds': 0.0}
+{'circuit': 'hhl_6', 'candidate': 'shipped/{stem}_bqskitft_shipped_seed0.qasm', 'status': 'ok', 'qubits': 6, 'min_overlap': np.float64(0.9999999999999944), 'one_minus_overlap': np.float64(5.551115123125783e-15), 'nstates': 2, 'seconds': 0.0}
+{'circuit': 'mult_16', 'candidate': 'bygate_paramzsx', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.9999999999999949), 'one_minus_overlap': np.float64(5.10702591327572e-15), 'nstates': 2, 'seconds': 2.2}
+{'circuit': 'mult_16', 'candidate': 'bygate_minrz', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.9999999999999905), 'one_minus_overlap': np.float64(9.547918011776346e-15), 'nstates': 2, 'seconds': 1.2}
+{'circuit': 'mult_16', 'candidate': 'tket', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.9999999999999858), 'one_minus_overlap': np.float64(1.4210854715202004e-14), 'nstates': 2, 'seconds': 1.2}
+{'circuit': 'mult_16', 'candidate': 'pyzx', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.999999999999985), 'one_minus_overlap': np.float64(1.4988010832439613e-14), 'nstates': 2, 'seconds': 1.0}
+{'circuit': 'mult_16', 'candidate': 'shipped/{stem}_bqskitft_shipped_seed0.qasm', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.9999999999999991), 'one_minus_overlap': np.float64(8.881784197001252e-16), 'nstates': 2, 'seconds': 2.2}
+{'circuit': 'shor_16', 'candidate': 'bygate_paramzsx', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.9999999999999205), 'one_minus_overlap': np.float64(7.949196856316121e-14), 'nstates': 2, 'seconds': 9.0}
+{'circuit': 'shor_16', 'candidate': 'bygate_minrz', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.9999999999998879), 'one_minus_overlap': np.float64(1.1213252548714081e-13), 'nstates': 2, 'seconds': 3.3}
+{'circuit': 'shor_16', 'candidate': 'tket', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.9999999999999345), 'one_minus_overlap': np.float64(6.550315845288424e-14), 'nstates': 2, 'seconds': 2.7}
+{'circuit': 'shor_16', 'candidate': 'pyzx', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.9999999999999175), 'one_minus_overlap': np.float64(8.248957072964913e-14), 'nstates': 2, 'seconds': 3.1}
+{'circuit': 'shor_16', 'candidate': 'shipped/{stem}_bqskitft_shipped_seed0.qasm', 'status': 'ok', 'qubits': 16, 'min_overlap': np.float64(0.9999999999998774), 'one_minus_overlap': np.float64(1.2256862191861728e-13), 'nstates': 2, 'seconds': 7.2}
+wrote /Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/reference/verify_eval.csv
+EXIT 0

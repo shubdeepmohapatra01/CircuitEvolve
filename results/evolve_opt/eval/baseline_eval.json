@@ -1,0 +1,254 @@
+{
+ "add_17": {
+  "best": "pyzx",
+  "candidates": {
+   "minrz": {
+    "check": 1.461627275887563e-15,
+    "cx": 232,
+    "method": "statevector",
+    "rz": 251,
+    "t": 23520,
+    "t_canonical": 23520,
+    "t_raw": 23520
+   },
+   "pyzx": {
+    "check": 7.692337400285891e-12,
+    "cx": 327,
+    "method": "statevector",
+    "rz": 112,
+    "t": 10508,
+    "t_canonical": 10508,
+    "t_raw": 10508
+   },
+   "tket": {
+    "check": 8.911897983859914e-15,
+    "cx": 224,
+    "method": "statevector",
+    "rz": 189,
+    "t": 17721,
+    "t_canonical": 17721,
+    "t_raw": 17721
+   }
+  },
+  "n": 17,
+  "rz": 112,
+  "seconds": 17.1,
+  "t": 10508
+ },
+ "add_41": {
+  "best": "pyzx",
+  "candidates": {
+   "minrz": {
+    "check": null,
+    "cx": 1300,
+    "method": "skipped",
+    "rz": 1709,
+    "t": 160030,
+    "t_canonical": 160030,
+    "t_raw": 160030
+   },
+   "pyzx": {
+    "check": null,
+    "cx": 2425,
+    "method": "skipped",
+    "rz": 646,
+    "t": 60468,
+    "t_canonical": 60468,
+    "t_raw": 60468
+   },
+   "tket": {
+    "check": null,
+    "cx": 1280,
+    "method": "skipped",
+    "rz": 1197,
+    "t": 112069,
+    "t_canonical": 112069,
+    "t_raw": 112069
+   }
+  },
+  "n": 41,
+  "rz": 646,
+  "seconds": 190.1,
+  "t": 60468
+ },
+ "add_65": {
+  "best": "pyzx",
+  "candidates": {
+   "minrz": {
+    "check": null,
+    "cx": 3232,
+    "method": "skipped",
+    "rz": 4410,
+    "t": 419544,
+    "t_canonical": 419544,
+    "t_raw": 419544
+   },
+   "pyzx": {
+    "check": null,
+    "cx": 6423,
+    "method": "skipped",
+    "rz": 1414,
+    "t": 132728,
+    "t_canonical": 132728,
+    "t_raw": 132728
+   },
+   "tket": {
+    "check": null,
+    "cx": 3074,
+    "method": "skipped",
+    "rz": 2943,
+    "t": 278031,
+    "t_canonical": 278031,
+    "t_raw": 278031
+   }
+  },
+  "n": 65,
+  "rz": 1414,
+  "seconds": 1456.8,
+  "t": 132728
+ },
+ "hhl_6": {
+  "best": "tket",
+  "candidates": {
+   "minrz": {
+    "check": 2.3391453814782558e-14,
+    "cx": 220,
+    "method": "unitary",
+    "rz": 215,
+    "t": 20311,
+    "t_canonical": 20311,
+    "t_raw": 20311
+   },
+   "pyzx": {
+    "check": 5.709494299963029e-11,
+    "cx": 229,
+    "method": "unitary",
+    "rz": 174,
+    "t": 16362,
+    "t_canonical": 16362,
+    "t_raw": 16362
+   },
+   "tket": {
+    "check": 2.6336662939934227e-14,
+    "cx": 174,
+    "method": "unitary",
+    "rz": 89,
+    "t": 8352,
+    "t_canonical": 8352,
+    "t_raw": 8352
+   }
+  },
+  "n": 6,
+  "rz": 89,
+  "seconds": 14.6,
+  "t": 8352
+ },
+ "mult_16": {
+  "best": "pyzx",
+  "candidates": {
+   "minrz": {
+    "check": 7.78779497379912e-15,
+    "cx": 1128,
+    "method": "statevector",
+    "rz": 1079,
+    "t": 100572,
+    "t_canonical": 100572,
+    "t_raw": 100572
+   },
+   "pyzx": {
+    "check": 1.4261042945984735e-11,
+    "cx": 900,
+    "method": "statevector",
+    "rz": 349,
+    "t": 32617,
+    "t_canonical": 32617,
+    "t_raw": 32617
+   },
+   "tket": {
+    "check": 1.796232712039784e-14,
+    "cx": 1108,
+    "method": "statevector",
+    "rz": 1076,
+    "t": 100408,
+    "t_canonical": 100408,
+    "t_raw": 100408
+   }
+  },
+  "n": 16,
+  "rz": 349,
+  "seconds": 51.6,
+  "t": 32617
+ },
+ "qft_32": {
+  "best": "pyzx",
+  "candidates": {
+   "minrz": {
+    "check": null,
+    "cx": 1040,
+    "method": "skipped",
+    "rz": 1386,
+    "t": 131649,
+    "t_canonical": 131649,
+    "t_raw": 131649
+   },
+   "pyzx": {
+    "check": null,
+    "cx": 1853,
+    "method": "skipped",
+    "rz": 470,
+    "t": 44167,
+    "t_canonical": 44167,
+    "t_raw": 44167
+   },
+   "tket": {
+    "check": null,
+    "cx": 1010,
+    "method": "skipped",
+    "rz": 935,
+    "t": 88445,
+    "t_canonical": 88445,
+    "t_raw": 88445
+   }
+  },
+  "n": 32,
+  "rz": 470,
+  "seconds": 40.8,
+  "t": 44167
+ },
+ "shor_16": {
+  "best": "pyzx",
+  "candidates": {
+   "minrz": {
+    "check": 1.0063826584352508e-14,
+    "cx": 5692,
+    "method": "statevector",
+    "rz": 4629,
+    "t": 432486,
+    "t_canonical": 432486,
+    "t_raw": 432486
+   },
+   "pyzx": {
+    "check": 2.5902270914796418e-11,
+    "cx": 5396,
+    "method": "statevector",
+    "rz": 1508,
+    "t": 140843,
+    "t_canonical": 140843,
+    "t_raw": 140843
+   },
+   "tket": {
+    "check": 5.838972732415824e-14,
+    "cx": 4577,
+    "method": "statevector",
+    "rz": 3584,
+    "t": 334794,
+    "t_canonical": 334794,
+    "t_raw": 334794
+   }
+  },
+  "n": 16,
+  "rz": 1508,
+  "seconds": 586.5,
+  "t": 140843
+ }
+}

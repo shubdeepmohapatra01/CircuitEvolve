@@ -1,0 +1,5 @@
+circuit,candidate,status,qubits,min_overlap,one_minus_overlap,nstates,seconds
+hhl_6,bygate_paramzsx,ok,6,0.9999999999999947,5.329070518200751e-15,2,0.1
+hhl_6,bygate_minrz,ok,6,0.9999999999999767,2.3314683517128287e-14,2,0.0
+hhl_6,tket,ok,6,0.9999999999999989,1.1102230246251565e-15,2,0.0
+hhl_6,pyzx,ok,6,0.9999999999999928,7.216449660063518e-15,2,0.0

@@ -1,0 +1,25 @@
+seed_program             shor_16   valid=False T=None rz=None bound=None charged=None wall=349.17 reason=BudgetError: time budget exceeded (348.3 s > 300 s charged CPU) line 7
+best_classical_program   shor_16   valid=False T=None rz=None bound=None charged=None wall=350.21 reason=BudgetError: time budget exceeded (349.4 s > 300 s charged CPU) line 3
+llm_v2_s2                shor_16   valid=False T=None rz=None bound=None charged=None wall=348.53 reason=BudgetError: time budget exceeded (347.7 s > 300 s charged CPU) line 8
+llm_v1_s0                shor_16   valid=False T=None rz=None bound=None charged=None wall=351.45 reason=BudgetError: time budget exceeded (350.5 s > 300 s charged CPU) line 8
+control_greedy_s2        shor_16   valid=False T=None rz=None bound=None charged=None wall=355.3 reason=BudgetError: time budget exceeded (354.3 s > 300 s charged CPU) line 14
+seed_program             mult_16   valid=True T=32617 rz=349 bound=3.59e-07 charged=28.883072999999996 wall=29.54 reason=None
+best_classical_program   mult_16   valid=True T=32617 rz=349 bound=3.59e-07 charged=25.945481 wall=0.43 reason=None
+llm_v2_s2                mult_16   valid=True T=32617 rz=349 bound=3.590064305687223e-07 charged=78.10727100000003 wall=52.94 reason=None
+llm_v1_s0                mult_16   valid=True T=32617 rz=349 bound=3.590031245724746e-07 charged=75.99340299999997 wall=42.09 reason=None
+control_greedy_s2        mult_16   valid=True T=32617 rz=349 bound=3.59e-07 charged=52.727892999999995 wall=27.68 reason=None
+seed_program             qft_32    valid=True T=44167 rz=470 bound=4.800000000000001e-07 charged=37.802405 wall=38.59 reason=None
+best_classical_program   qft_32    valid=True T=44167 rz=470 bound=4.800000000000001e-07 charged=37.562118999999996 wall=0.43 reason=None
+llm_v2_s2                qft_32    valid=True T=44167 rz=470 bound=4.800000000000001e-07 charged=105.48516299999999 wall=68.73 reason=None
+llm_v1_s0                qft_32    valid=True T=44167 rz=470 bound=4.800000000000001e-07 charged=113.533852 wall=55.48 reason=None
+control_greedy_s2        qft_32    valid=True T=44167 rz=470 bound=4.800000000000001e-07 charged=126.68501 wall=89.86 reason=None
+seed_program             hhl_6     valid=True T=7685 rz=82 bound=8.200002832117657e-08 charged=6.647762 wall=7.54 reason=None
+best_classical_program   hhl_6     valid=True T=8352 rz=89 bound=8.900002633666294e-08 charged=5.559182 wall=6.09 reason=None
+llm_v2_s2                hhl_6     valid=True T=6568 rz=70 bound=7.006190808201156e-08 charged=32.390575999999996 wall=31.52 reason=None
+llm_v1_s0                hhl_6     valid=True T=6192 rz=66 bound=6.606095678168569e-08 charged=35.57930599999999 wall=33.66 reason=None
+control_greedy_s2        hhl_6     valid=True T=6192 rz=66 bound=6.6075887648351e-08 charged=23.326106000000003 wall=18.4 reason=None
+seed_program             add_17    valid=True T=10508 rz=112 bound=1.22e-07 charged=2.915121 wall=0.42 reason=None
+best_classical_program   add_17    valid=True T=10508 rz=112 bound=1.22e-07 charged=2.8803680000000003 wall=1.08 reason=None
+llm_v2_s2                add_17    valid=True T=10508 rz=112 bound=1.2200000271716145e-07 charged=14.409358999999997 wall=11.51 reason=None
+llm_v1_s0                add_17    valid=True T=10508 rz=112 bound=1.22e-07 charged=17.795178000000007 wall=14.42 reason=None
+control_greedy_s2        add_17    valid=True T=10508 rz=112 bound=1.22e-07 charged=11.860647000000002 wall=9.63 reason=None

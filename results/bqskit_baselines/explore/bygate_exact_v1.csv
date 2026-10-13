@@ -1,0 +1,9 @@
+circuit,pipeline,lowering,eps_rz,qubits,cx,rz_count,rz_distinct,t_fixed,t_gridsynth,t_count,t_per_rz,published_rz,published_t,rz_diff_pct,t_diff_pct,eps_total_bound,k_hist,rounded_angles,max_gridsynth_dist,cliffordrz_unitary_dist,stage1_s,gridsynth_s
+qft_8,exact gate-level (min RZ per 1q run),,1e-09,8,68,63,12,21,5874,5895,93.24,,,,,6.300000000000001e-08,"[15, 63, 0, 0]",21,4.935371951461942e-10,0.0,0.7,1.4
+hhl_6,exact gate-level (min RZ per 1q run),,1e-09,6,220,215,55,129,20182,20311,93.87,243.0,22571.0,-11.52,-10.01,2.15e-07,"[129, 95, 60, 0]",129,4.996088669305965e-10,0.0,0.4,1.5
+add_17,exact gate-level (min RZ per 1q run),,1e-09,17,232,251,14,72,23448,23520,93.42,251.0,23562.0,0.0,-0.18,2.51e-07,"[97, 251, 0, 0]",72,4.935371951461942e-10,,0.2,1.1
+mult_16,exact gate-level (min RZ per 1q run),,1e-09,16,1128,1079,11,224,100348,100572,93.0,1079.0,100678.0,0.0,-0.11,1.0790000000000002e-06,"[185, 1079, 0, 0]",224,3.8693643713737706e-10,,7.0,1.1
+qft_32,exact gate-level (min RZ per 1q run),,1e-09,32,1040,936,26,93,87708,87801,93.71,1080.0,101480.0,-13.33,-13.48,9.36e-07,"[522, 936, 0, 0]",93,4.963730103731653e-10,,0.7,1.2
+shor_16,exact gate-level (min RZ per 1q run),"qiskit transpile opt0 -> u3,cx (ccp via cp/cx identity)",1e-09,16,5692,4629,56,1504,430982,432486,93.1,816.0,74797.0,467.28,478.21,4.629e-06,"[2226, 4629, 0, 0]",1504,4.935371951461942e-10,,70.1,1.4
+aqft32_d17_hrzcx,exact gate-level (min RZ per 1q run),,1e-09,32,830,936,26,93,87708,87801,93.71,,,,,9.36e-07,"[207, 936, 0, 0]",93,4.96373010362354e-10,,0.5,1.2
+aqft32_d17_u3cx,exact gate-level (min RZ per 1q run),,1e-09,32,830,936,26,93,87708,87801,93.71,,,,,9.36e-07,"[207, 936, 0, 0]",93,4.963730103731653e-10,,0.6,0.0

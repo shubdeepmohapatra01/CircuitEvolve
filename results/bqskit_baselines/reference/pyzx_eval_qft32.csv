@@ -1,0 +1,2 @@
+circuit,pipeline,status,eps_rz,wall_s,qubits,cx,rz_count,rz_distinct,t_fixed,t_gridsynth,t_count,eps_total_bound,published_bygate_rz,published_bygate_t,t_vs_published_bygate_pct,opt_s,pipeline_s,unitary_dist,extra
+qft_32,pyzx,ok,1e-09,13.8,32,1767,470,66,33,44134,44167,4.7000000000000005e-07,1080,101480,-56.48,3.1,13.4,,"{""other_gates"": {""CZ"": 86}, ""zx_tcount"": 503}"
