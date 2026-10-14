@@ -1,0 +1,15 @@
+{
+    "output/logical_z2Higgs_small.cvdvqasm_depth_sum_simulated_annealing_tsp_qbstuck": {
+        "single op gate count": 78,
+        "multi op gate count": 41,
+        "total gate count": 119,
+        "depth": 321.0,
+        "matching_time": 35.12759876251221,
+        "mapping_time": 0.00225830078125,
+        "total_time": 35.12985920906067,
+        "pstrings_count": 3,
+        "non_pstring_initial_gate_count": 83,
+        "intermediate_qbit_count": 4,
+        "intermediate_qmode_count": 4
+    }
+}

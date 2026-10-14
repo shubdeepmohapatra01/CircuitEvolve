@@ -153,3 +153,17 @@ def rule_n2__parity_exact(t, g, r):
     g.h(a)
     g.CR(-m.pi, a, md)
     g.h(a)
+
+
+# ---------------------------------------------------------------------------------------------
+# @provenance: genesis-derived | 2026-10-13 | native-gate rules for the Genesis Table-2 ISA (CBS, RB)
+def rule_z_hop__CBS(t, g, r):
+    # H = θ Z (e^{iφ} a†b + h.c.)  ->  CBS(2θ, φ) = exp(-iθ σz (e^{iφ} a†b + h.c.))
+    g.CBS(2 * t.theta, t.phi, t.q[0], t.m[0], t.m[1])
+
+
+def rule_pauli_disp__RB(t, g, r):
+    # exp(X (α a† - α* a)) = RB(θ) with RB(θ) = exp(-i σx (θ a† + θ* a)),  θ = iα
+    if len(t.q) != 1 or t.label != "X":
+        raise ValueError("RB covers single-qubit X only")
+    g.RB(1j * t.alpha, t.q[0], t.m[0])

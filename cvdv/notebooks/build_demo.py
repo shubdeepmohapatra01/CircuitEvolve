@@ -170,7 +170,7 @@ for rn, fn in RULES['n2']:
 cmp_rows.append({'rule': 'Genesis n² rule', 'gates': 20, '2-op': 6, 'duration': None, 'eps(n<=3, θ=π/4)': 'infidelity 0.72 (n<=2)'})
 display(pd.DataFrame(cmp_rows))"""))
 
-cells.append(md(r"""## 6. Benchmarks: certified compile vs Genesis (small instances, n_max = 3, ε = 1e-3)
+cells.append(md(r"""## 6. Benchmarks: certified compile vs Genesis on two gate sets (small instances, n_max = 3, ε = 1e-3)
 Our logical circuit is routed with **Genesis' own router** (same options), only its SWAP phase is corrected
 (BS(π,0)·R(−π/2)⊗R(−π/2)). Live: compile + route + independently verify Heisenberg."""))
 
@@ -184,40 +184,63 @@ phys_bad, info_bad = RT.route(ops, fix_swaps=False)
 r_bad = verify.verify(tl, phys_bad, N=14, n_probes=2, final_map=info_bad['final_map'])
 print(f"same circuit with Genesis' original SWAP: infidelity = {r_bad['max_infid_strict']:.3f}")"""))
 
-cells.append(code(r"""snap = pd.read_csv(os.path.join(RES, 'snapshot_small_nmax3.csv'))
-display(snap)
-piv = snap[snap.compiler.isin(['Genesis (uncertified)', 'seed+parity'])].pivot(index='benchmark', columns='compiler', values='duration')
-fig, ax = plt.subplots(figsize=(6, 2.6)); x = np.arange(len(piv))
-ax.bar(x - 0.2, piv['Genesis (uncertified)'], 0.4, color=GEN, label='Genesis (no error bound)')
-ax.bar(x + 0.2, piv['seed+parity'], 0.4, color=OURS, label='ours, certified ε ≤ 1e-3 (n ≤ 3)')
-ax.set_xticks(x); ax.set_xticklabels([b.replace('_small', '') for b in piv.index], rotation=20)
-ax.set_yscale('log'); ax.set_ylabel('duration after routing'); ax.legend(frameon=False, fontsize=7, loc='lower left', bbox_to_anchor=(0, 1.0), ncol=2); plt.show()"""))
+cells.append(md(r"""### Two target gate sets
+| | phase-space + BS (Liu et al.) | Genesis Table 2 |
+|---|---|---|
+| 1-op | qubit rotations, R(θ), D(α) | same |
+| 2-op | BS, CR, CP, CD | BS, CR, CP, CD, **CBS** (conditional beam splitter, qubit + 2 modes), **RB** (Rabi) |
 
-cells.append(md(r"""Same comparison in **gate counts** (Genesis reports both). 2-op gates (qubit–oscillator or oscillator–oscillator)
-dominate both runtime and error on hardware, so they are shown separately from 1-op gates."""))
+Without CBS, σz·hopping is built as CP·BS(2θ, φ+π/2)·CP† (3 two-op gates in series); with CBS it is one gate.
+RB covers single-qubit X·displacement terms (none occur in the small benchmarks).
+Genesis Table 2 prints RB(θ) = exp[−iσx(θa† − θ*a)], which is not unitary; we use exp[−iσx(θa† + θ*a)].
 
-cells.append(code(r"""gc = snap[snap.compiler.isin(['Genesis (uncertified)', 'seed+parity'])]
-fig, axs = plt.subplots(1, 3, figsize=(9, 2.8), gridspec_kw=dict(wspace=0.45))
-labels = {'Genesis (uncertified)': 'Genesis (no error bound)', 'seed+parity': 'ours, certified ε ≤ 1e-3 (n ≤ 3)'}
-for ax, col, ttl in zip(axs, ['two_op', 'one_op', None], ['2-op gates', '1-op gates', 'total gates']):
-    p = gc.assign(total=gc.one_op + gc.two_op).pivot(index='benchmark', columns='compiler', values=col or 'total')
-    x = np.arange(len(p))
-    for k, (cname, color) in enumerate([('Genesis (uncertified)', GEN), ('seed+parity', OURS)]):
-        ax.bar(x + (k - 0.5) * 0.4, p[cname], 0.4, color=color, label=labels[cname])
-    ax.set_yscale('log'); ax.set_title(ttl, loc='left'); ax.set_xticks(x)
-    ax.set_xticklabels([b.replace('_small', '') for b in p.index], rotation=35, ha='right')
-axs[0].set_ylabel('gate count (routed circuit)')
-axs[0].legend(frameon=False, fontsize=7, loc='lower left', bbox_to_anchor=(0, 1.12), ncol=2)
-plt.show()
-t = gc.assign(total=gc.one_op + gc.two_op).pivot(index='benchmark', columns='compiler', values=['two_op', 'one_op', 'total'])
-ratio = (t.xs('seed+parity', axis=1, level=1) / t.xs('Genesis (uncertified)', axis=1, level=1)).round(2)
-ratio.columns = [f'{c} ratio ours/Genesis' for c in ratio.columns]; display(ratio)"""))
+**Run-to-run variation.** Genesis' router iterates over Python sets, so its output depends on the process hash seed
+(`PYTHONHASHSEED`). Both compilers are run under the same 8 hash seeds; bars show the median, error bars min–max.
+All of our circuits carry certified ε ≤ 1e-3 on n ≤ 3; Genesis' carry no bound."""))
 
-cells.append(md(r"""Reading: Kerr (0.02× gates) and Bose-Hubbard (0.61×) win on both metrics (n² via parity rule). Z2-Higgs uses
-fewer gates than Genesis (0.83×) but has a longer duration: our ISA has no conditional beam splitter, so it is built
-from 3 gates in series (CP·BS·CP†), which lengthens the critical path even though the count drops. Heisenberg loses because the seed Pauli gadget's ancilla
-oscillator shuttles between qubit sites — a routing-aware rule is an open LLM target. **Caveat:** at the Genesis
-benchmark angles the parity rule is exact for all n; generic angles are the real test (next section)."""))
+cells.append(code(r"""cmp = pd.read_csv(os.path.join(RES, 'compare_isas_small_nmax3.csv'))
+cmp['who'] = np.where(cmp.compiler == 'Genesis', 'Genesis', 'ours · ' + cmp.isa)
+summ = cmp.groupby(['benchmark', 'who'])[['duration', 'two_op', 'total']].agg(['median', 'min', 'max'])
+display(summ.round(1))
+print('hash seeds per configuration:', cmp.groupby(['benchmark', 'who']).size().unique())
+
+def isa_figure(ours_label, color, title):
+    benches = ['kerr_small', 'boseHubbard_small', 'z2Higgs_small', 'heisenberg_small', 'electronicVibration_small']
+    fig, axs = plt.subplots(1, 3, figsize=(9.5, 2.9), gridspec_kw=dict(wspace=0.45))
+    for ax, col, ttl in zip(axs, ['duration', 'two_op', 'total'], ['duration (critical path)', '2-op gates', 'total gates']):
+        x = np.arange(len(benches))
+        for k, (who, c, lab) in enumerate([('Genesis', GEN, 'Genesis (no error bound)'), (ours_label, color, f'{ours_label} (ε ≤ 1e-3, n ≤ 3)')]):
+            st = summ.xs(who, level='who')[col].loc[benches]
+            ax.bar(x + (k - 0.5) * 0.4, st['median'], 0.4, color=c, label=lab,
+                   yerr=[st['median'] - st['min'], st['max'] - st['median']], capsize=2, error_kw=dict(lw=0.8))
+        ax.set_yscale('log'); ax.set_title(ttl, loc='left'); ax.set_xticks(x)
+        ax.set_xticklabels([b.replace('_small', '') for b in benches], rotation=35, ha='right')
+    axs[0].set_ylabel('median over 8 hash seeds')
+    axs[0].legend(frameon=False, fontsize=7, loc='lower left', bbox_to_anchor=(0, 1.12), ncol=2)
+    fig.suptitle(title, x=0.06, y=1.13, ha='left', fontsize=10, fontweight='bold')
+    plt.show()"""))
+
+cells.append(md(r"""#### Plot A — ours on the **phase-space + BS** gate set vs Genesis"""))
+cells.append(code(r"""isa_figure('ours · phase-space + BS', OURS, 'A. phase-space + BS (no CBS / RB)')"""))
+
+cells.append(md(r"""#### Plot B — ours on the **Genesis Table 2** gate set (adds CBS, RB) vs Genesis — like-for-like gate set"""))
+cells.append(code(r"""isa_figure('ours · Genesis Table 2', '#1f78b4', 'B. Genesis Table 2 gate set (with CBS / RB)')
+med = summ.xs('median', axis=1, level=1)
+rat = pd.DataFrame({isa: (med.xs(f'ours · {isa}', level='who') / med.xs('Genesis', level='who')).round(2).stack()
+                    for isa in ['phase-space + BS', 'Genesis Table 2']}).unstack()
+display(rat)"""))
+
+cells.append(md(r"""**Reading**
+* **Kerr** (0.02× gates, 0.02× duration) and **Bose-Hubbard** (≈0.6× gates, ≈0.85× duration) win on both gate sets — the
+  parity n² rule.
+* **Z2-Higgs** is the only benchmark where the gate set matters: with CBS our σz·hopping terms become single gates, so the
+  median duration drops from 510 (phase-space + BS) to 366, and gates from 105 to 93 (Genesis: 301 / 119). We use fewer
+  gates than Genesis on both sets but remain slower in duration.
+* **Heisenberg** (1.34× gates, 1.9× duration) is identical on both gate sets: it is limited by our Pauli-string gadget,
+  whose ancilla oscillator shuttles between qubit sites — an open LLM target.
+* **Electron-vibration** is a tie within the routing spread.
+* Genesis' router alone moves results by up to ±30 % (Bose-Hubbard duration 371–500 for one identical logical circuit),
+  so single-run comparisons, including Genesis' published Table 5, carry that uncertainty."""))
 
 cells.append(md(r"""## 7. Automated LLM campaign (pilot): n² at generic angles
 Instances: θ ∈ {0.03, 0.137, −0.25, 0.4} × n_max ∈ {5, 7, 15}, ε_share = 1e-4. Mutator: reasoning-class LLM,

@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
-from cvdv import certify as C, compiler as CO, library as L, terms as T, unit_terms as UT  # noqa: E402
+from cvdv import certify as C, compiler as CO, isa as ISA, library as L, terms as T, unit_terms as UT  # noqa: E402
 
 SEED = open(os.path.join(os.path.dirname(__file__), "..", "libraries", "seed.py")).read()
 DETECT = 1e-6   # a planted bug must give eps above this
@@ -176,3 +176,27 @@ def test_static_check_rejects(src):
         for fns in rules.values():
             for _, fn in fns:
                 fn(None, None, 1)
+
+
+PDISP_X = UT.pauli_disp("X", 0.25 - 0.1j)
+
+
+@pytest.mark.parametrize("kind,H,body,good", [
+    ("z_hop", ZHOP, "g.CBS(2 * t.theta, t.phi, t.q[0], t.m[0], t.m[1])", True),
+    ("z_hop", ZHOP, "g.CBS(t.theta, t.phi, t.q[0], t.m[0], t.m[1])", False),           # half angle
+    ("z_hop", ZHOP, "g.CBS(2 * t.theta, -t.phi, t.q[0], t.m[0], t.m[1])", False),      # phase sign
+    ("pauli_disp", PDISP_X, "g.RB(1j * t.alpha, t.q[0], t.m[0])", True),
+    ("pauli_disp", PDISP_X, "g.RB(t.alpha, t.q[0], t.m[0])", False),                   # missing i
+], ids=["CBS ok", "CBS half angle", "CBS phase sign", "RB ok", "RB missing i"])
+def test_genesis_isa_gates(kind, H, body, good):
+    rules = L.load(one(body, kind))
+    part = T.classify(H)[0]
+    nq = max([w[1] + 1 for w in H.wires() if w[0] == "q"], default=0)
+    nm = max([w[1] + 1 for w in H.wires() if w[0] == "qm"], default=0)
+    comp = CO.Compiler(rules, n_max=3, n_sys_q=nq, n_sys_m=nm, isa=ISA.GENESIS)
+    ops = comp.emit(part, rules[kind][0][1], 1)
+    cert = C.certify(H, ops, part.kind, n_max=3)
+    assert (cert["reliable"] and cert["eps"] < PASS) if good else cert["eps"] > DETECT, cert
+    # the same rule must be refused under the phase-space ISA
+    comp_ps = CO.Compiler(rules, n_max=3, n_sys_q=nq, n_sys_m=nm, isa=ISA.PS_BS)
+    assert comp_ps.evaluate(part, H, rules[kind][0][1], 1) is None

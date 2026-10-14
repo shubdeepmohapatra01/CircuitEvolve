@@ -1,0 +1,15 @@
+{
+    "output/logical_kerr_small.cvdvqasm_depth_sum_simulated_annealing_tsp_qbstuck": {
+        "single op gate count": 453,
+        "multi op gate count": 142,
+        "total gate count": 595,
+        "depth": 3032.0,
+        "matching_time": 168.67984628677368,
+        "mapping_time": 0.013620853424072266,
+        "total_time": 168.69346809387207,
+        "pstrings_count": 0,
+        "non_pstring_initial_gate_count": 409,
+        "intermediate_qbit_count": 19,
+        "intermediate_qmode_count": 1
+    }
+}

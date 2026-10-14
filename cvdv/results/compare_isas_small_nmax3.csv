@@ -1,0 +1,121 @@
+benchmark,compiler,isa,one_op,two_op,total,duration,eps_bound,hashseed,two_op_gate_types,seconds
+kerr_small,Genesis,Genesis Table 2,453,142,595,3032,,0,,
+kerr_small,ours,phase-space + BS,8,3,11,66,1.8831439276774915e-15,0,CP CR,0.5
+kerr_small,ours,Genesis Table 2,8,3,11,66,1.8831439276774915e-15,0,CP CR,0.0
+boseHubbard_small,Genesis,Genesis Table 2,76,42,118,461,,0,,
+boseHubbard_small,ours,phase-space + BS,44,30,74,393,7.532575710709968e-15,0,BS CP CR,54.7
+boseHubbard_small,ours,Genesis Table 2,44,30,74,393,7.532575710709968e-15,0,BS CP CR,24.0
+z2Higgs_small,Genesis,Genesis Table 2,78,41,119,301,,0,,
+z2Higgs_small,ours,phase-space + BS,61,38,99,458,1.2354531555937515e-14,0,BS CP CR,174.5
+z2Higgs_small,ours,Genesis Table 2,61,32,93,376,3.8910803975869684e-15,0,BS CBS CP CR,454.3
+heisenberg_small,Genesis,Genesis Table 2,184,136,320,1810,,0,,
+heisenberg_small,ours,phase-space + BS,264,166,430,3449,8.808202882146958e-15,0,BS CP CR,1.0
+heisenberg_small,ours,Genesis Table 2,264,166,430,3449,8.808202882146958e-15,0,BS CP CR,0.0
+electronicVibration_small,Genesis,Genesis Table 2,566,305,871,5358,,0,,
+electronicVibration_small,ours,phase-space + BS,554,325,879,5701,1.7774970442470714e-10,0,BS CD CP CR,2.7
+electronicVibration_small,ours,Genesis Table 2,554,325,879,5701,1.7774970442470714e-10,0,BS CD CP CR,1.6
+kerr_small,Genesis,Genesis Table 2,453,142,595,3032,,1,,
+kerr_small,ours,phase-space + BS,8,3,11,66,1.8831439276774915e-15,1,CP CR,0.5
+kerr_small,ours,Genesis Table 2,8,3,11,66,1.8831439276774915e-15,1,CP CR,0.0
+boseHubbard_small,Genesis,Genesis Table 2,72,40,112,439,,1,,
+boseHubbard_small,ours,phase-space + BS,40,28,68,371,7.532575710709968e-15,1,BS CP CR,53.9
+boseHubbard_small,ours,Genesis Table 2,40,28,68,371,7.532575710709968e-15,1,BS CP CR,25.2
+z2Higgs_small,Genesis,Genesis Table 2,78,41,119,301,,1,,
+z2Higgs_small,ours,phase-space + BS,65,40,105,479,1.2354531555937515e-14,1,BS CP CR,181.2
+z2Higgs_small,ours,Genesis Table 2,63,33,96,314,3.8910803975869684e-15,1,BS CBS CP CR,454.3
+heisenberg_small,Genesis,Genesis Table 2,184,136,320,1810,,1,,
+heisenberg_small,ours,phase-space + BS,264,166,430,3449,8.808202882146958e-15,1,BS CP CR,0.3
+heisenberg_small,ours,Genesis Table 2,264,166,430,3449,8.808202882146958e-15,1,BS CP CR,0.0
+electronicVibration_small,Genesis,Genesis Table 2,568,306,874,5399,,1,,
+electronicVibration_small,ours,phase-space + BS,560,328,888,5411,1.7774970442470714e-10,1,BS CD CP CR,0.7
+electronicVibration_small,ours,Genesis Table 2,560,328,888,5411,1.7774970442470714e-10,1,BS CD CP CR,0.1
+kerr_small,Genesis,Genesis Table 2,453,142,595,3032,,2,,
+kerr_small,ours,phase-space + BS,8,3,11,66,1.8831439276774915e-15,2,CP CR,0.5
+kerr_small,ours,Genesis Table 2,8,3,11,66,1.8831439276774915e-15,2,CP CR,0.0
+boseHubbard_small,Genesis,Genesis Table 2,72,40,112,439,,2,,
+boseHubbard_small,ours,phase-space + BS,40,28,68,371,7.532575710709968e-15,2,BS CP CR,54.8
+boseHubbard_small,ours,Genesis Table 2,40,28,68,371,7.532575710709968e-15,2,BS CP CR,24.9
+z2Higgs_small,Genesis,Genesis Table 2,78,41,119,321,,2,,
+z2Higgs_small,ours,phase-space + BS,61,38,99,458,1.2354531555937515e-14,2,BS CP CR,181.5
+z2Higgs_small,ours,Genesis Table 2,61,32,93,355,3.8910803975869684e-15,2,BS CBS CP CR,453.5
+heisenberg_small,Genesis,Genesis Table 2,184,136,320,1810,,2,,
+heisenberg_small,ours,phase-space + BS,264,166,430,3449,8.808202882146958e-15,2,BS CP CR,0.3
+heisenberg_small,ours,Genesis Table 2,264,166,430,3449,8.808202882146958e-15,2,BS CP CR,0.0
+electronicVibration_small,Genesis,Genesis Table 2,566,305,871,5358,,2,,
+electronicVibration_small,ours,phase-space + BS,560,328,888,5370,1.7774970442470714e-10,2,BS CD CP CR,0.7
+electronicVibration_small,ours,Genesis Table 2,560,328,888,5370,1.7774970442470714e-10,2,BS CD CP CR,0.1
+kerr_small,Genesis,Genesis Table 2,453,142,595,3032,,3,,
+kerr_small,ours,phase-space + BS,8,3,11,66,1.8831439276774915e-15,3,CP CR,0.5
+kerr_small,ours,Genesis Table 2,8,3,11,66,1.8831439276774915e-15,3,CP CR,0.0
+boseHubbard_small,Genesis,Genesis Table 2,76,42,118,441,,3,,
+boseHubbard_small,ours,phase-space + BS,44,30,74,372,7.532575710709968e-15,3,BS CP CR,54.9
+boseHubbard_small,ours,Genesis Table 2,44,30,74,372,7.532575710709968e-15,3,BS CP CR,24.2
+z2Higgs_small,Genesis,Genesis Table 2,76,40,116,279,,3,,
+z2Higgs_small,ours,phase-space + BS,65,40,105,458,1.2354531555937515e-14,3,BS CP CR,178.5
+z2Higgs_small,ours,Genesis Table 2,63,33,96,335,3.8910803975869684e-15,3,BS CBS CP CR,453.6
+heisenberg_small,Genesis,Genesis Table 2,184,136,320,1810,,3,,
+heisenberg_small,ours,phase-space + BS,264,166,430,3449,8.808202882146958e-15,3,BS CP CR,1.5
+heisenberg_small,ours,Genesis Table 2,264,166,430,3449,8.808202882146958e-15,3,BS CP CR,0.2
+electronicVibration_small,Genesis,Genesis Table 2,566,305,871,5420,,3,,
+electronicVibration_small,ours,phase-space + BS,562,329,891,5453,1.7774970442470714e-10,3,BS CD CP CR,1.5
+electronicVibration_small,ours,Genesis Table 2,562,329,891,5453,1.7774970442470714e-10,3,BS CD CP CR,0.9
+kerr_small,Genesis,Genesis Table 2,453,142,595,3032,,4,,
+kerr_small,ours,phase-space + BS,8,3,11,66,1.8831439276774915e-15,4,CP CR,0.5
+kerr_small,ours,Genesis Table 2,8,3,11,66,1.8831439276774915e-15,4,CP CR,0.0
+boseHubbard_small,Genesis,Genesis Table 2,80,44,124,616,,4,,
+boseHubbard_small,ours,phase-space + BS,48,32,80,500,7.532575710709968e-15,4,BS CP CR,55.0
+boseHubbard_small,ours,Genesis Table 2,48,32,80,500,7.532575710709968e-15,4,BS CP CR,25.1
+z2Higgs_small,Genesis,Genesis Table 2,78,41,119,301,,4,,
+z2Higgs_small,ours,phase-space + BS,65,40,105,624,1.2354531555937515e-14,4,BS CP CR,180.7
+z2Higgs_small,ours,Genesis Table 2,59,31,90,481,3.8910803975869684e-15,4,BS CBS CP CR,453.0
+heisenberg_small,Genesis,Genesis Table 2,184,136,320,1810,,4,,
+heisenberg_small,ours,phase-space + BS,264,166,430,3449,8.808202882146958e-15,4,BS CP CR,0.3
+heisenberg_small,ours,Genesis Table 2,264,166,430,3449,8.808202882146958e-15,4,BS CP CR,0.2
+electronicVibration_small,Genesis,Genesis Table 2,570,307,877,5500,,4,,
+electronicVibration_small,ours,phase-space + BS,554,325,879,5101,1.7774970442470714e-10,4,BS CD CP CR,0.7
+electronicVibration_small,ours,Genesis Table 2,554,325,879,5101,1.7774970442470714e-10,4,BS CD CP CR,0.7
+kerr_small,Genesis,Genesis Table 2,453,142,595,3032,,5,,
+kerr_small,ours,phase-space + BS,8,3,11,66,1.8831439276774915e-15,5,CP CR,0.5
+kerr_small,ours,Genesis Table 2,8,3,11,66,1.8831439276774915e-15,5,CP CR,0.0
+boseHubbard_small,Genesis,Genesis Table 2,72,40,112,438,,5,,
+boseHubbard_small,ours,phase-space + BS,40,28,68,371,7.532575710709968e-15,5,BS CP CR,55.3
+boseHubbard_small,ours,Genesis Table 2,40,28,68,371,7.532575710709968e-15,5,BS CP CR,24.5
+z2Higgs_small,Genesis,Genesis Table 2,76,40,116,279,,5,,
+z2Higgs_small,ours,phase-space + BS,67,41,108,602,1.2354531555937515e-14,5,BS CP CR,180.2
+z2Higgs_small,ours,Genesis Table 2,63,33,96,314,3.8910803975869684e-15,5,BS CBS CP CR,455.1
+heisenberg_small,Genesis,Genesis Table 2,184,136,320,1810,,5,,
+heisenberg_small,ours,phase-space + BS,264,166,430,3449,8.808202882146958e-15,5,BS CP CR,0.6
+heisenberg_small,ours,Genesis Table 2,264,166,430,3449,8.808202882146958e-15,5,BS CP CR,0.0
+electronicVibration_small,Genesis,Genesis Table 2,570,307,877,5460,,5,,
+electronicVibration_small,ours,phase-space + BS,554,325,879,5390,1.7774970442470714e-10,5,BS CD CP CR,0.1
+electronicVibration_small,ours,Genesis Table 2,554,325,879,5390,1.7774970442470714e-10,5,BS CD CP CR,0.1
+kerr_small,Genesis,Genesis Table 2,453,142,595,3032,,6,,
+kerr_small,ours,phase-space + BS,8,3,11,66,1.8831439276774915e-15,6,CP CR,0.5
+kerr_small,ours,Genesis Table 2,8,3,11,66,1.8831439276774915e-15,6,CP CR,0.0
+boseHubbard_small,Genesis,Genesis Table 2,72,40,112,439,,6,,
+boseHubbard_small,ours,phase-space + BS,40,28,68,371,7.532575710709968e-15,6,BS CP CR,55.0
+boseHubbard_small,ours,Genesis Table 2,40,28,68,371,7.532575710709968e-15,6,BS CP CR,25.4
+z2Higgs_small,Genesis,Genesis Table 2,78,41,119,321,,6,,
+z2Higgs_small,ours,phase-space + BS,67,41,108,666,1.2354531555937515e-14,6,BS CP CR,181.1
+z2Higgs_small,ours,Genesis Table 2,59,31,90,440,3.8910803975869684e-15,6,BS CBS CP CR,452.3
+heisenberg_small,Genesis,Genesis Table 2,184,136,320,1810,,6,,
+heisenberg_small,ours,phase-space + BS,264,166,430,3449,8.808202882146958e-15,6,BS CP CR,0.3
+heisenberg_small,ours,Genesis Table 2,264,166,430,3449,8.808202882146958e-15,6,BS CP CR,0.1
+electronicVibration_small,Genesis,Genesis Table 2,568,306,874,5400,,6,,
+electronicVibration_small,ours,phase-space + BS,550,323,873,5618,1.7774970442470714e-10,6,BS CD CP CR,1.1
+electronicVibration_small,ours,Genesis Table 2,550,323,873,5618,1.7774970442470714e-10,6,BS CD CP CR,0.3
+kerr_small,Genesis,Genesis Table 2,453,142,595,3032,,7,,
+kerr_small,ours,phase-space + BS,8,3,11,66,1.8831439276774915e-15,7,CP CR,0.5
+kerr_small,ours,Genesis Table 2,8,3,11,66,1.8831439276774915e-15,7,CP CR,0.0
+boseHubbard_small,Genesis,Genesis Table 2,76,42,118,460,,7,,
+boseHubbard_small,ours,phase-space + BS,44,30,74,373,7.532575710709968e-15,7,BS CP CR,55.0
+boseHubbard_small,ours,Genesis Table 2,44,30,74,373,7.532575710709968e-15,7,BS CP CR,24.4
+z2Higgs_small,Genesis,Genesis Table 2,76,40,116,279,,7,,
+z2Higgs_small,ours,phase-space + BS,65,40,105,542,1.2354531555937515e-14,7,BS CP CR,176.8
+z2Higgs_small,ours,Genesis Table 2,61,32,93,461,3.8910803975869684e-15,7,BS CBS CP CR,456.9
+heisenberg_small,Genesis,Genesis Table 2,184,136,320,1810,,7,,
+heisenberg_small,ours,phase-space + BS,264,166,430,3449,8.808202882146958e-15,7,BS CP CR,0.5
+heisenberg_small,ours,Genesis Table 2,264,166,430,3449,8.808202882146958e-15,7,BS CP CR,0.1
+electronicVibration_small,Genesis,Genesis Table 2,564,304,868,5318,,7,,
+electronicVibration_small,ours,phase-space + BS,558,327,885,5516,1.7774970442470714e-10,7,BS CD CP CR,1.5
+electronicVibration_small,ours,Genesis Table 2,558,327,885,5516,1.7774970442470714e-10,7,BS CD CP CR,0.4

@@ -140,3 +140,6 @@ class Builder:
     def CR(self, th, q, qm): self._add("CR", (th,), q, qm)
     def CP(self, q, qm): self._add("CP", (), q, qm)
     def CD(self, al, q, qm): self._add("CD", (al,), q, qm)
+    # Genesis Table-2 extras (ISA GENESIS only; rejected by the compiler under PS_BS)
+    def CBS(self, th, ph, q, a, b): self._add("CBS", (th, ph), q, a, b)
+    def RB(self, th, q, qm): self._add("RB", (th,), q, qm)

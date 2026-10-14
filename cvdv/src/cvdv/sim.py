@@ -9,7 +9,8 @@ Gate conventions follow Genesis Table 2 (Chen et al., ISCA'25), which match Liu 
     CP          exp(-i π/2 σz n)
     CD(α)       exp(σz (α a† - α* a))
     CBS(θ, φ)   exp(-i θ/2 σz (e^{iφ} a† b + e^{-iφ} a b†))
-    RB(θ)       exp(-i σx (θ a† - θ* a))
+    RB(θ)       exp(-i σx (θ a† + θ* a))   [Genesis Table 2 prints θa† - θ*a, which is not unitary;
+                                            we use the Hermitian-generator form of Liu et al.]
     r(θ, φ)     exp(-i θ/2 (cos φ σx + sin φ σy));  rx, ry, rz standard;  h x y z s sdg t tdg
 
 Operand order is the CVDV-QASM order: qubits first, then qumodes (CBS: q, qm_a, qm_b; BS: a, b).
@@ -124,7 +125,7 @@ def _gate_cached(name, params, nq, nm, N, pad, r_with_qubit):
         G = kron(Z, th * a.conj().T - np.conj(th) * a)
         return keep_block(expm(G), (2, M), (2, N))
     if name == "RB":
-        G = -1j * kron(X, th * a.conj().T - np.conj(th) * a)
+        G = -1j * kron(X, th * a.conj().T + np.conj(th) * a)  # unitary form (see docstring)
         return keep_block(expm(G), (2, M), (2, N))
     if name in ("BS", "CBS"):
         phi = params[1].real if len(params) > 1 else 0.0

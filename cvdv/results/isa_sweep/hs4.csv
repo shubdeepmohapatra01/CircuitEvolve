@@ -1,0 +1,16 @@
+benchmark,compiler,isa,one_op,two_op,total,duration,eps_bound,hashseed,two_op_gate_types,seconds
+kerr_small,Genesis,Genesis Table 2,453,142,595,3032,,4,,
+kerr_small,ours,phase-space + BS,8,3,11,66,1.8831439276774915e-15,4,CP CR,0.5
+kerr_small,ours,Genesis Table 2,8,3,11,66,1.8831439276774915e-15,4,CP CR,0.0
+boseHubbard_small,Genesis,Genesis Table 2,80,44,124,616,,4,,
+boseHubbard_small,ours,phase-space + BS,48,32,80,500,7.532575710709968e-15,4,BS CP CR,55.0
+boseHubbard_small,ours,Genesis Table 2,48,32,80,500,7.532575710709968e-15,4,BS CP CR,25.1
+z2Higgs_small,Genesis,Genesis Table 2,78,41,119,301,,4,,
+z2Higgs_small,ours,phase-space + BS,65,40,105,624,1.2354531555937515e-14,4,BS CP CR,180.7
+z2Higgs_small,ours,Genesis Table 2,59,31,90,481,3.8910803975869684e-15,4,BS CBS CP CR,453.0
+heisenberg_small,Genesis,Genesis Table 2,184,136,320,1810,,4,,
+heisenberg_small,ours,phase-space + BS,264,166,430,3449,8.808202882146958e-15,4,BS CP CR,0.3
+heisenberg_small,ours,Genesis Table 2,264,166,430,3449,8.808202882146958e-15,4,BS CP CR,0.2
+electronicVibration_small,Genesis,Genesis Table 2,570,307,877,5500,,4,,
+electronicVibration_small,ours,phase-space + BS,554,325,879,5101,1.7774970442470714e-10,4,BS CD CP CR,0.7
+electronicVibration_small,ours,Genesis Table 2,554,325,879,5101,1.7774970442470714e-10,4,BS CD CP CR,0.7

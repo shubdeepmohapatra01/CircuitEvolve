@@ -1,0 +1,10 @@
+kerr_small phase-space + BS {'one_op': 8, 'two_op': 3, 'total': 11, 'duration': 66} 1.9e-15 ['CP', 'CR'] 0.5
+kerr_small Genesis Table 2 {'one_op': 8, 'two_op': 3, 'total': 11, 'duration': 66} 1.9e-15 ['CP', 'CR'] 0.0
+boseHubbard_small phase-space + BS {'one_op': 44, 'two_op': 30, 'total': 74, 'duration': 393} 7.5e-15 ['BS', 'CP', 'CR'] 54.7
+boseHubbard_small Genesis Table 2 {'one_op': 44, 'two_op': 30, 'total': 74, 'duration': 393} 7.5e-15 ['BS', 'CP', 'CR'] 24.0
+z2Higgs_small phase-space + BS {'one_op': 61, 'two_op': 38, 'total': 99, 'duration': 458} 1.2e-14 ['BS', 'CP', 'CR'] 174.5
+z2Higgs_small Genesis Table 2 {'one_op': 61, 'two_op': 32, 'total': 93, 'duration': 376} 3.9e-15 ['BS', 'CBS', 'CP', 'CR'] 454.3
+heisenberg_small phase-space + BS {'one_op': 264, 'two_op': 166, 'total': 430, 'duration': 3449} 8.8e-15 ['BS', 'CP', 'CR'] 1.0
+heisenberg_small Genesis Table 2 {'one_op': 264, 'two_op': 166, 'total': 430, 'duration': 3449} 8.8e-15 ['BS', 'CP', 'CR'] 0.0
+electronicVibration_small phase-space + BS {'one_op': 554, 'two_op': 325, 'total': 879, 'duration': 5701} 1.8e-10 ['BS', 'CD', 'CP', 'CR'] 2.7
+electronicVibration_small Genesis Table 2 {'one_op': 554, 'two_op': 325, 'total': 879, 'duration': 5701} 1.8e-10 ['BS', 'CD', 'CP', 'CR'] 1.6

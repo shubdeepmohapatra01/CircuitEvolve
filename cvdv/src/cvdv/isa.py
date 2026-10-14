@@ -34,6 +34,6 @@ def check(ops, isa=PS_BS):
             z = complex(p)
             if z != z or abs(z) == float("inf"):
                 bad.append((i, f"{o.name}: non-finite parameter"))
-        if o.name not in ("D", "CD") and any(abs(complex(p).imag) > 1e-12 for p in o.params):
+        if o.name not in ("D", "CD", "RB") and any(abs(complex(p).imag) > 1e-12 for p in o.params):
             bad.append((i, f"{o.name}: complex parameter"))
     return bad

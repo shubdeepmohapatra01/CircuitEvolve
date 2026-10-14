@@ -31,9 +31,10 @@ def load_rules(path=SEED_LIB):
     return L.load(open(path).read())
 
 
-def compile_bench(name, rules, eps=1e-3, n_max=2, r_max=4096, log=None):
+def compile_bench(name, rules, eps=1e-3, n_max=2, r_max=4096, log=None, isa=None):
     tl = intermediate(name)
     nq, nm = sys_sizes(tl)
-    comp = CO.Compiler(rules, n_max=n_max, n_sys_q=nq, n_sys_m=nm, r_max=r_max, log=log)
+    kw = {} if isa is None else {"isa": isa}
+    comp = CO.Compiler(rules, n_max=n_max, n_sys_q=nq, n_sys_m=nm, r_max=r_max, log=log, **kw)
     ops, rep = comp.compile_step(tl, eps_total=eps)
     return tl, ops, rep, comp
