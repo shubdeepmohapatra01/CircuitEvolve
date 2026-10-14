@@ -195,7 +195,7 @@ RB covers single-qubit X·displacement terms (none occur in the small benchmarks
 Genesis Table 2 prints RB(θ) = exp[−iσx(θa† − θ*a)], which is not unitary; we use exp[−iσx(θa† + θ*a)].
 
 **Run-to-run variation.** Genesis' router iterates over Python sets, so its output depends on the process hash seed
-(`PYTHONHASHSEED`). Both compilers are run under the same 8 hash seeds; bars show the median, error bars min–max.
+(`PYTHONHASHSEED`). Both compilers are run under the same 8 hash seeds; bars show the median (min–max ranges are in the summary table).
 All of our circuits carry certified ε ≤ 1e-3 on n ≤ 3; Genesis' carry no bound."""))
 
 cells.append(code(r"""cmp = pd.read_csv(os.path.join(RES, 'compare_isas_small_nmax3.csv'))
@@ -211,8 +211,7 @@ def isa_figure(ours_label, color, title):
         x = np.arange(len(benches))
         for k, (who, c, lab) in enumerate([('Genesis', GEN, 'Genesis (no error bound)'), (ours_label, color, f'{ours_label} (ε ≤ 1e-3, n ≤ 3)')]):
             st = summ.xs(who, level='who')[col].loc[benches]
-            ax.bar(x + (k - 0.5) * 0.4, st['median'], 0.4, color=c, label=lab,
-                   yerr=[st['median'] - st['min'], st['max'] - st['median']], capsize=2, error_kw=dict(lw=0.8))
+            ax.bar(x + (k - 0.5) * 0.4, st['median'], 0.4, color=c, label=lab)
         ax.set_yscale('log'); ax.set_title(ttl, loc='left'); ax.set_xticks(x)
         ax.set_xticklabels([b.replace('_small', '') for b in benches], rotation=35, ha='right')
     axs[0].set_ylabel('median over 8 hash seeds')
