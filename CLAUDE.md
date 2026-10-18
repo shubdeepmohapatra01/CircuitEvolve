@@ -3,9 +3,17 @@
 A verifier-first harness for **LLM-assisted discovery of fault-tolerant circuit constructions**. The
 LLM is a mutation operator inside a search loop; an exact verifier decides what survives.
 
-## Current work: the window core (read `docs/CORE.md` first)
+## Current work: the unified engine (read `docs/ENGINE.md` first; window specifics in `docs/CORE.md`)
 
-ONE pipeline in `circuitevolve/core/` with three parts plus a simple selection loop, for fault-tolerant
+Since 2026-10-18 there is ONE generic, domain-blind pipeline in `circuitevolve/engine/` (loop, plugin
+contract, tier-0 router, playbook tiers, `optimize()` entry point) with domains as plugins under
+`circuitevolve/domains/`: `dv_windows` (the stage-1 window core below, behaviorally identical —
+golden-equivalence-gated) and `cvdv` (the frozen CV-DV certified compiler, wrapped in place).
+The engine owns acceptance, the error-ledger protocol, playbook credit, logging and integrity;
+plugins own select/mutate/verify/measure. `core/loop.py` is now a thin shim; everything below about
+the window core still holds and runs unchanged.
+
+The window core (`circuitevolve/core/` + the `dv_windows` plugin), for fault-tolerant
 (Clifford+T) circuit optimization compared against BQSKit-FT (skill `bqskit-ft-reference-baseline`):
 
 | Part | File | What it does |
@@ -80,7 +88,14 @@ proposer -> P5 experiment arms -> P6 transfer. P0-P3 use no LLM.
 
 ```
 circuitevolve/
-  core/        THE pipeline: circuit.py, mutator.py, verifier.py, metric.py, ledger.py, loop.py (docs/CORE.md)
+  engine/      THE generic pipeline (docs/ENGINE.md): loop.py (domain-blind EvolveLoop), plugin.py
+               (DomainPlugin contract), router.py (tier-0, deterministic), run.py (optimize() entry),
+               graduate.py (hash-checked graduated-rule library), reflector.py (point-2 seam),
+               ledger.py / playbook.py (re-exports of the implementations below)
+  domains/     dv_windows/ (window core as plugin), cvdv/ (frozen CV-DV compiler wrapped in place),
+               dv_arith/ reserved (point 3)
+  core/        window-core parts: circuit.py, mutator.py, verifier.py, metric.py, ledger.py (docs/CORE.md);
+               loop.py = back-compat shim over the engine
   llm_backends.py  make_api_backend (host.llm, thinking off), make_cli_backend, make_batch_merger
   locks.py     NUMERIC_LOCK - one process-wide lock: never fork while numpy verification runs
   integrity.py digest of the frozen verifier files, checked at start/end of every run
@@ -95,7 +110,9 @@ circuitevolve/
 experiments/   run scripts (window_run.py for the core; others legacy); bqskit_baselines/ = Baselines track
 tests/         core + frozen suites; tests/legacy/ for the archived stacks
 results/       append-only outputs (window_runs/ for the core)
-playbooks/     mutable playbooks (window_v0.json for the core)
+playbooks/     mutable playbooks: router.json (tier 0), families/ (tier 1: dv.windows, cvdv.bosonic),
+               graduated/ (hash-checked executable rules, empty until the first graduation);
+               window_v0.json / dev_v1.json etc. = stage-1 originals (unchanged)
 ```
 
 ## Commands

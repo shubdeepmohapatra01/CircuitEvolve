@@ -309,3 +309,10 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
 - Gates (run in env cvdv-opt): engine loop ACCEPTS scripted rule_n2__parity_exact via the frozen certifier (3 two-op / 6 one-op per n2 term, charge 0); boseHubbard_small via the plugin measure path + Genesis routing reproduces the compare_isas hashseed-0 ours row EXACTLY (44/30/74/393, eps_bound 7.53e-15); cvdv acceptance 33 passed before AND after; check_frozen.sh all OK; venv suite 325 passed + 2 expected skips (qutip-gated); zero-accept optimize reproduces the rulebook compile.
 - Documented deviations: existing cvdv metric has no ancilla component (followed the code); global/final check = bound_valid AND eps_bound <= eps_total (every compile re-certifies from scratch, so the windowed bound does not apply); input_check 0.0 (avoids double-counting the start certificate).
 - Built by a sub-agent; files reviewed; no frozen/engine/dv_windows files touched.
+
+## 2026-10-18 engine refactor P1.5 (docs + sweep) — POINT 1 COMPLETE
+
+- `docs/ENGINE.md`: architecture, plugin contract, tiers, routing, run examples, deferred seams (points 2-3).
+- CLAUDE.md: current-work section + layout updated for engine/ + domains/ + playbook tiers; window-core section unchanged and still accurate.
+- Root-level exploratory PNGs (7) moved to results/figures_archive/ (git mv, history preserved).
+- Final state: suite 325 passed + 2 qutip-gated skips; dv frozen digest bc3eac23 unchanged; cvdv FROZEN.sha256 all OK; BASELINE_MANIFEST guard green (126 files intact). Phases P1.0-P1.5 all complete.
