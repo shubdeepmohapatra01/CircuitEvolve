@@ -274,3 +274,11 @@
   6c/6d/7 and the takeaways (result files unchanged; results/window_runs/stage1/control_pmerge.json kept). Section 3 gains a
   four-baseline plot; section 6d and 7 figures are now drawn in the notebook from the CSVs (old PNGs no longer displayed).
   Figures render via show_fig() (explicit PNG) because the in-process runner has no inline backend.
+
+## 2026-10-18 engine refactor P1.0 (safety net)
+
+- Pre-refactor snapshot commit 6c7d7ca (v2 stack, stage-1 runs, nam_arith, cvdv rulebook).
+- Suites green before refactor: main 295 passed; cvdv acceptance 33 passed (env cvdv-opt).
+- `results/engine/BASELINE_MANIFEST.json`: 126 baseline-critical files hashed (bqskit_baselines CSVs + stage-1 TKET inputs, v2 baselines/eval/frozen tier-2 libraries, stage-1 window-run outputs, ablation report, cvdv results + rulebook, all playbooks); dv frozen digest bc3eac23... and cvdv FROZEN.sha256 recorded. Permanent guard: `tests/engine/test_manifest.py`.
+- Golden behavior fixture `tests/engine/golden_dv.json` (scripted-LLM WindowLoop run: 2 accepts T 242->202->200, 1 llm error, 1 decline, reflector add) + equivalence test `tests/engine/test_golden_dv.py` — the P1.2 gate.
+- No frozen file, baseline, or result was modified.
