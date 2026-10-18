@@ -337,3 +337,9 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
 - Dev replay (results/engine/graduation_pmerge.json, verifier digest bc3eac23): stage-1 at 1e-3, total T 87821 -> 80555 (-8.27%); merge-rich circuits qft_8 2391->2115, qpe_8 14761->12597, qae_13 7821->6683, hhl_8 35450->31762 (-10.4..-14.7%, matching the ablation range); 0 merges on TKET-saturated heisenberg_6/tfim_6/hubbard_8/qml_13; max merge distance 1.4e-15; all whole-circuit checks ok; no risers -> KEEP.
 - optimize() pre-opt stage: graduated passes run before the loop (default on; graduated=off for baseline-exact runs); gains reported in a separate pre_opt section, never as LLM gains; the loop input check charges the measured aggregate distance.
 - Gates: B0 identity unchanged with graduated=off; graduated=on zero-accept == replay record exactly (qft_8, tfim_6); tamper/refusal tests; suite 340 passed.
+
+## 2026-10-18 playbook overhaul P2.4 (campaign protocol + end-to-end dry run)
+
+- docs/P2_CAMPAIGN.md: the binding contract for the first real-LLM campaign (run separately, budget-approved). Dev {qft_8, heisenberg_6, hubbard_8, qml_13, hhl_8} / held-out {qpe_8, qae_13, tfim_6} at 1e-3 (+1e-5 corroboration arm); arms A seeded-learning / B placebo / C none mirroring ablation v1 as comparator; G1 pass ON in all arms, gains attributed separately and NEVER to the playbook (its replay touched all 8 circuits); power floor >=40 calls/circuit/arm with honest MDE ~5pp on 3 held-out circuits; freeze procedure (SHA playbooks+graduated, reflector off on held-out, model pinned); futility stop.
+- tests/engine/test_p2_dryrun.py: ONE fake-LLM optimize() run exercising the whole P2 stack - G1 pre-opt merge (rz 3->2), seeded rules in proposer prompts (A/B-sampled), scripted t;t->s accept on the post-pass circuit (approx path, q-grid dust charge), anatomy block in the reflector prompt, family playbook file untouched (tmp copy), ledger bound holds.
+- Suite 341 passed.
