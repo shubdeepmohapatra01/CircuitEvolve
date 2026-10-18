@@ -55,14 +55,17 @@ def optimize(source, eps: float, complete, *, manifest: dict | None = None, tag:
     if bindings[0].lifted_source is not None:          # P3.4: stages run on the lifted form
         current = bindings[0].lifted_source
     for i, b in enumerate(bindings):
+        # multi-stage tagged runs: one append-only log per STAGE (tag_s<i>_<method>);
+        # single-stage runs keep the bare tag (pre-/1 behavior bit-exact)
+        stage_tag = tag if (tag is None or len(bindings) == 1) else f"{tag}_s{i}_{b.method}"
         if b.plugin == "dv_windows":
-            summ = _run_dv_windows(current, eps, complete, b, tag=tag, playbook_path=playbook_path,
+            summ = _run_dv_windows(current, eps, complete, b, tag=stage_tag, playbook_path=playbook_path,
                                    runs_dir=runs_dir, tket=("off" if is_stage1 else tket),
                                    staged=(i > 0), **kw)
         elif b.plugin == "cvdv":
-            summ = _run_cvdv(current, eps, complete, b, tag=tag, **kw)
+            summ = _run_cvdv(current, eps, complete, b, tag=stage_tag, **kw)
         elif b.plugin == "reconstruction":
-            summ = _run_reconstruction(current, eps, complete, b, tag=tag,
+            summ = _run_reconstruction(current, eps, complete, b, tag=stage_tag,
                                        playbook_path=playbook_path, runs_dir=runs_dir,
                                        manifest=manifest, **kw)
         elif b.plugin is None:

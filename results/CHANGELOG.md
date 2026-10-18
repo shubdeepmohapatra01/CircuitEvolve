@@ -551,3 +551,11 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   recovery is 0 - recorded as a finding, with the macro-expanded base set added for the
   realistic lift target). All real-LLM work remains budget-gated and NOT executed
   (engine_ab_candidates.py refuses without explicit approval; lift_llm spotter is a stub).
+
+## 2026-10-18 post-P3 fix: per-stage tags for tagged cascade runs
+
+- Tagged multi-stage runs collided on the append-only run log (both stages opened
+  <tag>.jsonl; the second refused). optimize() now logs one file per STAGE:
+  <tag>_s<i>_<method>.jsonl. Single-stage tagged runs keep the bare tag (pre-/1 behavior
+  bit-exact; golden/B0 untouched). Found during a demo dry run. Suite 371+2; digest
+  bc3eac23 unchanged.
