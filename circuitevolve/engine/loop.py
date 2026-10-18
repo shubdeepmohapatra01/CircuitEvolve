@@ -19,6 +19,7 @@ import time
 from pathlib import Path
 
 from .plugin import DomainPlugin, Member
+from .reflector import build_reflector_input, render_anatomy
 
 BASE_STATS = ("proposal_calls", "reflect_calls", "llm_errors", "declined", "candidates", "parse_errors",
               "verified", "rejected_verifier", "rejected_metric", "rejected_ledger", "rejected_whole",
@@ -48,8 +49,10 @@ class EvolveLoop:
             self.stats[f"accepted_{a}"] = 0
         self.stats.update(plugin.stats_template())
         self.feedback: list = []
-        self.improvements: list = []       # for the reflector: plugin.improvement_entry tuples
+        self.improvements: list = []       # for the reflector: plugin.improvement_entry tuples + anatomy
         self.failures: list = []           # (candidate text, reason)
+        self.anatomy: list = []            # AcceptAnatomy per accept (P2.1)
+        self._fail_mark = 0                # failures consumed by the last reflection
         self._new_evidence = 0
         self._log = None
 
@@ -214,7 +217,11 @@ class EvolveLoop:
                     self.stats["accepted_t_reduced"] += int(improved)
                     rec.update(accepted=True, action=action, charge=v["charge"],
                                **self.plugin.accept_record(cur_cost, cost))
-                    self.improvements.append(self.plugin.improvement_entry(task, c, label, cur_cost, cost))
+                    anatomy = self.plugin.accept_anatomy(task, c, label, v, cur_cost, cost, shown)
+                    anatomy.call = rec["call"]
+                    self.anatomy.append(anatomy)
+                    pf, cf, ps, cs = self.plugin.improvement_entry(task, c, label, cur_cost, cost)
+                    self.improvements.append((pf, cf, ps, cs + "\n" + render_anatomy(anatomy)))
                     self.feedback.append(self.plugin.accept_feedback(label, v, cur_cost, cost))
                     cur_state, cur_ledger, cur_cost = new_state, led, cost
                     changed = True
@@ -241,7 +248,9 @@ class EvolveLoop:
             self.stats["reflect_skipped_no_evidence"] += 1
             return
         stats = {k: v for k, v in self.stats.items() if not k.startswith("_")}
-        prompt = self.pb.reflect_prompt(self.task_text, self.improvements[-4:], self.failures[-6:], stats)
+        imp, fails, stats = build_reflector_input(self.improvements, self.failures[self._fail_mark:], stats)
+        self._fail_mark = len(self.failures)
+        prompt = self.pb.reflect_prompt(self.task_text, imp[-4:], fails, stats)
         (resp,) = self.reflect_complete([prompt])
         self.calls += 1
         self.stats["reflect_calls"] += 1

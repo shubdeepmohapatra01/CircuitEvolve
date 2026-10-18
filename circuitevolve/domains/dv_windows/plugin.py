@@ -221,6 +221,29 @@ class DvWindowsPlugin(DomainPlugin):
         return (old["t"], new["t"], window_text(task.w.ops),
                 (label + "\n" if label else "") + window_text(cand))
 
+    def accept_anatomy(self, task: WindowRef, cand, label, verdict, old, new, rules_shown):
+        """Rotation diff with Pauli frames (P2.1): which rz vanished, which frames they carried,
+        and whether a removed angle was absorbed by an equal-frame partner — the raw material
+        for merge-shaped rules the stage-1 reflector never got to see."""
+        from collections import Counter
+
+        from ...core.mutator import rotation_paulis
+
+        a = super().accept_anatomy(task, cand, label, verdict, old, new, rules_shown)
+        a.action = "window" if label is None else "fix"
+        k = task.w.k
+        pp, cp = rotation_paulis(task.w.ops, k), rotation_paulis(cand, k)
+        parent = Counter((pp.get(i, "?"), round(ang, 10)) for i, (g, _, ang) in enumerate(task.w.ops) if g == "rz")
+        child = Counter((cp.get(i, "?"), round(ang, 10)) for i, (g, _, ang) in enumerate(cand) if g == "rz")
+        removed = list((parent - child).elements())
+        added = list((child - parent).elements())
+        merged = sorted({p for p, _ in removed} & {p for p, _ in added})
+        a.detail = dict(rz_before=sum(parent.values()), rz_after=sum(child.values()),
+                        removed=[dict(P=p, angle=ang) for p, ang in removed[:6]],
+                        added=[dict(P=p, angle=ang) for p, ang in added[:6]],
+                        merged_frames=merged)
+        return a
+
     def stats_template(self) -> dict:
         return dict(refit_failed=0, rotations_removed_window=0, rotations_removed_fix=0)
 

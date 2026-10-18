@@ -143,6 +143,16 @@ class DomainPlugin(ABC):
     def improvement_entry(self, task, cand, label, old, new) -> tuple:
         return (old[self.primary], new[self.primary], "", label or "")
 
+    def accept_anatomy(self, task, cand, label, verdict, old, new, rules_shown):
+        """Structured record of WHAT an accept did, for the reflector (P2.1). Override with
+        domain detail (Pauli frames of merged rotations, term kinds, ...); the default carries
+        the metric-level facts only."""
+        from .reflector import AcceptAnatomy
+        return AcceptAnatomy(call=0, family=self.name, action="", rules_shown=list(rules_shown),
+                             mode=verdict["mode"], distance=float(verdict["dist"]),
+                             charge=float(verdict["charge"]),
+                             primary_before=old[self.primary], primary_after=new[self.primary])
+
     def stats_template(self) -> dict:
         """Domain counters merged into the engine's base stats (per-action counters
         are added by the engine from self.actions)."""

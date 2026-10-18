@@ -316,3 +316,10 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
 - CLAUDE.md: current-work section + layout updated for engine/ + domains/ + playbook tiers; window-core section unchanged and still accurate.
 - Root-level exploratory PNGs (7) moved to results/figures_archive/ (git mv, history preserved).
 - Final state: suite 325 passed + 2 qutip-gated skips; dv frozen digest bc3eac23 unchanged; cvdv FROZEN.sha256 all OK; BASELINE_MANIFEST guard green (126 files intact). Phases P1.0-P1.5 all complete.
+
+## 2026-10-18 playbook overhaul P2.1 (accept-anatomy reflector input)
+
+- `plugin.accept_anatomy()` hook (default: metric-level facts); DV impl: rotation multiset diff with Pauli frames (reuses core/mutator.rotation_paulis), removed/added angles, equal-frame-merge flag.
+- Engine collects AcceptAnatomy per accept; the rendered anatomy block (action, mode, distance, charge, frames, deltas, rules shown) is appended to each accepted-improvement entry the reflector reads.
+- Failure stream COMPRESSED at reflect time: rejections since the last reflection grouped by numeric-normalized reason class, <= 4 groups with counts + 1 example each (was: raw last-6 stream).
+- Proposer prompts, acceptance, credit, and all pinned record fields untouched: golden fixture passes UNCHANGED. Gates: 5 new anatomy tests green (merge anatomy frames/angles, anatomy in reflect prompt, x5-grouped rejection line, compression bound, compact render); full suite green.
