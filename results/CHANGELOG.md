@@ -343,3 +343,9 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
 - docs/P2_CAMPAIGN.md: the binding contract for the first real-LLM campaign (run separately, budget-approved). Dev {qft_8, heisenberg_6, hubbard_8, qml_13, hhl_8} / held-out {qpe_8, qae_13, tfim_6} at 1e-3 (+1e-5 corroboration arm); arms A seeded-learning / B placebo / C none mirroring ablation v1 as comparator; G1 pass ON in all arms, gains attributed separately and NEVER to the playbook (its replay touched all 8 circuits); power floor >=40 calls/circuit/arm with honest MDE ~5pp on 3 held-out circuits; freeze procedure (SHA playbooks+graduated, reflector off on held-out, model pinned); futility stop.
 - tests/engine/test_p2_dryrun.py: ONE fake-LLM optimize() run exercising the whole P2 stack - G1 pre-opt merge (rz 3->2), seeded rules in proposer prompts (A/B-sampled), scripted t;t->s accept on the post-pass circuit (approx path, q-grid dust charge), anatomy block in the reflector prompt, family playbook file untouched (tmp copy), ledger bound holds.
 - Suite 341 passed.
+
+## 2026-10-18 playbook overhaul P2.5 (docs + close) - POINT 2 COMPLETE
+
+- ENGINE.md: point-2 section (anatomy, seeds incl. harvest numbers, G1 graduation, campaign contract); phase log updated. CLAUDE.md layout line updated.
+- Final state: suite 341 passed + 2 qutip-gated skips; dv frozen digest bc3eac23 unchanged; cvdv FROZEN.sha256 all OK; BASELINE_MANIFEST guard green. Phases P2.1-P2.5 complete.
+- What point 2 changed, in one line each: the reflector reads accept anatomy + grouped rejections; both family playbooks are seeded (primer + certified literature); the first rule graduated to verified code (G1, -8.27% dev T, separate attribution); the first-campaign contract is frozen in docs/P2_CAMPAIGN.md.

@@ -88,16 +88,35 @@ s = optimize({"benchmark": "boseHubbard_small"}, 1e-3, complete, n_calls=8)
 s["routing"]   # {'family': ..., 'contract': ..., 'reason': ..., 'playbook': ...}
 ```
 
-## Deferred seams (built as interfaces, implemented later)
+## Point 2 (built 2026-10-18): the feedback stack
 
-- **Point 2**: accept-anatomy reflector input (`engine/reflector.py: AcceptAnatomy`,
-  `build_reflector_input`), graduation authoring + dev-replay promotion (`engine/graduate.py`),
-  playbook seeding campaigns, the offline literature harvester.
-- **Point 3**: LLM triage fallback on NeedsTriage, the `arithmetic` family (`domains/dv_arith`
-  wrapping v2/tier1), per-family dev/held-out splits sized for power.
+- **Accept anatomy** (`engine/reflector.py`): every accept yields an `AcceptAnatomy` record
+  (DV: rotation multiset diff with Pauli frames, equal-frame-merge flag); the rendered block is
+  appended to the improvement entries the reflector reads, and rejections are COMPRESSED into
+  <= 4 reason-class groups with counts. Proposer prompts and acceptance untouched.
+- **Seeds** (P2.2): dv.windows has 8 FTQC-primer seeds (R29-R36); cvdv.bosonic has 6 rulebook
+  seeds + 2 literature-harvest seeds (R7 CD-loop Pauli gadget — halves 2-op cost on the Genesis
+  loss case; R8 pauli_hop basis conjugation), both certified EXACT through the frozen path
+  before entry (results/engine/harvest_cvdv_2026-10-18.{md,json}). Seeds are candidates under
+  the unchanged A/B machinery — they earn ACTIVE or retire like any rule.
+- **Graduation** (`engine/graduate.py`): promote() freezes an executable rule (active rule, or
+  candidate ONLY with documented independent evidence); hash-checked load; kind="pass" applies
+  in optimize()'s pre-opt stage. **G1 = same_pauli_merge** (from seed R29 + ablation-control
+  evidence): dev replay total T 87821 -> 80555 (-8.27%; -10.4..-14.7% on merge-rich circuits,
+  0 merges on TKET-saturated ones), every application re-verified at 1e-12. `graduated="off"`
+  keeps baseline-exact runs; pre_opt gains are reported in their own section, never as LLM
+  gains.
+- **Campaign contract**: docs/P2_CAMPAIGN.md (dev/held-out split, arms, power floor, freeze
+  procedure). The first real-LLM campaign is a separate budget-approved step.
+
+## Deferred to point 3
+
+LLM triage fallback on NeedsTriage, the `arithmetic` family (`domains/dv_arith` wrapping
+v2/tier1), raw term-list CV-DV input, per-family splits beyond dv.windows.
 
 ## Phase log (gates in results/CHANGELOG.md)
 
-P1.0 safety net 9c14c13 | P1.1+P1.2 extraction + dv_windows d25948f | P1.4 router + tiers
-7286dd0 | P1.3 cvdv plugin + P1.5 docs: this commit. Suite growth 295 -> 325+ tests; dv frozen
-digest bc3eac23 and cvdv FROZEN.sha256 unchanged throughout.
+P1: safety net 9c14c13 | extraction + dv_windows d25948f | router + tiers 7286dd0 | cvdv plugin
+b1abf1f | docs 08bcb28. P2: anatomy 0510056 | seeds 8ddfe12 | graduation 85d707c | campaign +
+dry run 3ff350d | docs: this commit. Suite growth 295 -> 341+ tests; dv frozen digest bc3eac23
+and cvdv FROZEN.sha256 unchanged throughout.

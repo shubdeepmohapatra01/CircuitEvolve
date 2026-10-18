@@ -110,9 +110,10 @@ circuitevolve/
 experiments/   run scripts (window_run.py for the core; others legacy); bqskit_baselines/ = Baselines track
 tests/         core + frozen suites; tests/legacy/ for the archived stacks
 results/       append-only outputs (window_runs/ for the core)
-playbooks/     mutable playbooks: router.json (tier 0), families/ (tier 1: dv.windows, cvdv.bosonic),
-               graduated/ (hash-checked executable rules, empty until the first graduation);
-               window_v0.json / dev_v1.json etc. = stage-1 originals (unchanged)
+playbooks/     mutable playbooks: router.json (tier 0), families/ (tier 1: dv.windows incl. 8 primer
+               seeds, cvdv.bosonic incl. 2 certified harvest seeds), graduated/ (hash-checked
+               executable rules; G1 = same_pauli_merge, dev replay -8.27% T, every application
+               re-verified); window_v0.json / dev_v1.json etc. = stage-1 originals (unchanged)
 ```
 
 ## Commands
