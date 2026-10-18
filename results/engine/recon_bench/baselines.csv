@@ -1,0 +1,55 @@
+circuit,split,arm,contract,t_count,qubits,ancillas,source,notes
+cuccaro_4,dev,naive_T,exact,56,10,0,computed here: 7*toffolis + t_like on the raw form,
+cuccaro_4,dev,B0_tket,exact,48,10,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",no v2 tket_fpo_logical record
+cuccaro_4,dev,B1_pyzx,exact,32,10,0,results/v2/tier1/dev_results.csv,recorded v2 pyzx full_reduce arm
+cuccaro_4,dev,control_exact,exact,32,10,0,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V3, global_pass pyzx"
+cuccaro_4,dev,control_relaxed,relaxed,16,14,4,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V2, global_pass pyzx"
+rc_adder_6,dev,naive_T,exact,77,14,0,computed here: 7*toffolis + t_like on the raw form,
+rc_adder_6,dev,B0_tket,exact,59,14,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",no v2 tket_fpo_logical record
+rc_adder_6,dev,B1_pyzx,exact,47,14,0,results/v2/tier1/dev_results.csv,recorded v2 pyzx full_reduce arm
+rc_adder_6,dev,control_exact,exact,47,14,0,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V1, global_pass pyzx"
+rc_adder_6,dev,control_relaxed,relaxed,40,16,2,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V2, global_pass pyzx"
+cuccaro_8,dev,naive_T,exact,112,18,0,computed here: 7*toffolis + t_like on the raw form,
+cuccaro_8,dev,B0_tket,exact,96,18,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",no v2 tket_fpo_logical record
+cuccaro_8,dev,B1_pyzx,exact,64,18,0,results/v2/tier1/dev_results.csv,recorded v2 pyzx full_reduce arm
+cuccaro_8,dev,control_exact,exact,64,18,0,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V1, global_pass pyzx"
+cuccaro_8,dev,control_relaxed,relaxed,32,26,8,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V2, global_pass pyzx"
+gf2^4_mult,held-out,naive_T,exact,112,12,0,computed here: 7*toffolis + t_like on the raw form,
+gf2^4_mult,held-out,B0_tket,exact,96,12,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",no v2 tket_fpo_logical record
+gf2^4_mult,held-out,B1_pyzx,exact,68,12,0,results/v2/tier1/dev_results.csv,recorded v2 pyzx full_reduce arm
+gf2^4_mult,held-out,control_exact,exact,68,12,0,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V1, global_pass pyzx"
+gf2^4_mult,held-out,control_relaxed,relaxed,64,13,1,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V2, global_pass pyzx"
+barenco_tof_5,dev,naive_T,exact,84,9,0,computed here: 7*toffolis + t_like on the raw form,
+barenco_tof_5,dev,B0_tket,exact,72,9,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",no v2 tket_fpo_logical record
+barenco_tof_5,dev,B1_pyzx,exact,40,9,0,results/v2/tier1/dev_results.csv,recorded v2 pyzx full_reduce arm
+barenco_tof_5,dev,control_exact,exact,40,9,0,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V1, global_pass pyzx"
+barenco_tof_5,dev,control_relaxed,relaxed,36,13,4,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V2, global_pass pyzx"
+tof_5,dev,naive_T,exact,49,9,0,computed here: 7*toffolis + t_like on the raw form,
+tof_5,dev,B0_tket,exact,43,9,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",no v2 tket_fpo_logical record
+tof_5,dev,B1_pyzx,exact,31,9,0,results/v2/tier1/dev_results.csv,recorded v2 pyzx full_reduce arm
+tof_5,dev,control_exact,exact,31,9,0,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V4, global_pass pyzx"
+tof_5,dev,control_relaxed,relaxed,16,10,1,results/v2/tier1/dev_results.csv,"v2 deterministic control variant V2, global_pass pyzx"
+adder_8,held-out,naive_T,exact,399,24,0,computed here: 7*toffolis + t_like on the raw form,
+adder_8,held-out,B0_tket,exact,361,24,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",v2 cross-ref tket_fpo_logical_T=361 (results/v2/eval/eval_results.csv)
+adder_8,held-out,B1_pyzx,exact,173,24,0,results/v2/eval/eval_results.csv,recorded v2 pyzx full_reduce arm
+adder_8,held-out,control_exact,exact,173,24,0,results/v2/eval/eval_results.csv,"v2 deterministic control variant V3, global_pass pyzx"
+adder_8,held-out,control_relaxed,relaxed,180,29,5,results/v2/eval/eval_results.csv,"v2 deterministic control variant V2, global_pass pyzx"
+cuccaro_16,held-out,naive_T,exact,224,34,0,computed here: 7*toffolis + t_like on the raw form,
+cuccaro_16,held-out,B0_tket,exact,192,34,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",v2 cross-ref tket_fpo_logical_T=192 (results/v2/eval/eval_results.csv)
+cuccaro_16,held-out,B1_pyzx,exact,128,34,0,results/v2/eval/eval_results.csv,recorded v2 pyzx full_reduce arm
+cuccaro_16,held-out,control_exact,exact,128,34,0,results/v2/eval/eval_results.csv,"v2 deterministic control variant V3, global_pass pyzx"
+cuccaro_16,held-out,control_relaxed,relaxed,64,50,16,results/v2/eval/eval_results.csv,"v2 deterministic control variant V2, global_pass pyzx"
+qcla_adder_10,held-out,naive_T,exact,238,36,0,computed here: 7*toffolis + t_like on the raw form,
+qcla_adder_10,held-out,B0_tket,exact,212,36,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",no v2 tket_fpo_logical record
+qcla_adder_10,held-out,B1_pyzx,exact,162,36,0,results/v2/bench_runs/run2/qcla_adder_10.json,recorded v2 pyzx full_reduce arm
+qcla_adder_10,held-out,control_blocked,,,,,results/v2/eval/eval_results.csv,"BLOCKED (verifier coverage, not a refutation): the recognizer's ccx-normalized logical circuit keeps unfused h/ccz gates, so the reference is not permutation-like and n > 14 makes the frozen exact che"
+barenco_tof_10,held-out,naive_T,exact,224,19,0,computed here: 7*toffolis + t_like on the raw form,
+barenco_tof_10,held-out,B0_tket,exact,192,19,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",v2 cross-ref tket_fpo_logical_T=192 (results/v2/eval/eval_results.csv)
+barenco_tof_10,held-out,B1_pyzx,exact,100,19,0,results/v2/eval/eval_results.csv,recorded v2 pyzx full_reduce arm
+barenco_tof_10,held-out,control_exact,exact,100,19,0,results/v2/eval/eval_results.csv,"v2 deterministic control variant V1, global_pass pyzx"
+barenco_tof_10,held-out,control_relaxed,relaxed,96,28,9,results/v2/eval/eval_results.csv,"v2 deterministic control variant V2, global_pass pyzx"
+mod_adder_1024,held-out,naive_T,exact,1995,28,0,computed here: 7*toffolis + t_like on the raw form,
+mod_adder_1024,held-out,B0_tket,exact,1711,28,0,"computed here: decomposed twin (same pass sequence as the v2 tket_fpo_logical arm, raw form)",v2 cross-ref tket_fpo_logical_T=1711 (results/v2/eval/eval_results.csv)
+mod_adder_1024,held-out,B1_pyzx,exact,1011,28,0,results/v2/eval/eval_results.csv,recorded v2 pyzx full_reduce arm
+mod_adder_1024,held-out,control_exact,exact,1011,28,0,results/v2/eval/eval_results.csv,"v2 deterministic control variant V3, global_pass pyzx"
+mod_adder_1024,held-out,control_relaxed,relaxed,660,29,1,results/v2/eval/eval_results.csv,"v2 deterministic control variant V2, global_pass pyzx"

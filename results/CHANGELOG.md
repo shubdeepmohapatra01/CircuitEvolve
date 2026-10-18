@@ -360,3 +360,30 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
 - Housekeeping: 7 routing-log rows appended by post-P2 dry runs (results/engine/routing_log.jsonl)
   were sitting uncommitted; committed here unmodified (append-only, no existing row touched).
 - No code changes in this commit.
+
+## 2026-10-18 method cascade P3.1 (reconstruction benchmark suite)
+
+- experiments/engine_recon_bench.py (deterministic, no LLM) scanned 48 candidates (40 nam_arith
+  MANIFEST rows incl. generated cuccaro_* + 8 stage-1 rotation inputs); 40 fire the predicate
+  `pairs>=1 OR mcx>=1 OR naive_t_share>=0.2` (naive_t_share = 7*toffolis/(7*toffolis+t_like), raw
+  form); suite = the 11 plan-named circuits (all fire). Evidence for every candidate (incl. the
+  29 firing-but-uncurated and the 8 non-firing stage-1 inputs) preserved in
+  results/engine/recon_bench/MANIFEST.json with source sha256s.
+- Open decision 2 settled: tof_5, rc_adder_6, qcla_adder_10, mod_adder_1024, gf2^4_mult all enter
+  from benchmarks/nam_arith/logical/ (present there; provenance = MANIFEST.csv rows).
+- Decomposed twins (lifting stress set): TKET pass sequence of blocks/classical.tket_optimise via
+  the v2_bench_common.tket_arm adapter (ccz -> h ccx h; FullPeepholeOptimise -> AutoRebase{CX,H,Rz}
+  -> RemoveRedundancies) + emit_rz lowering to named Clifford+T gates; every twin equivalence-
+  checked (sparse 24-trial pair check; ZX identity where sparse support exceeded the cap:
+  cuccaro_16, qcla_adder_10). Twin T-counts match recorded v2 tket_fpo_logical where available
+  (adder_8 361, cuccaro_16 192, barenco_tof_10 192, mod_adder_1024 1711).
+- baselines.csv (54 rows): naive_T computed; B0_tket = twin T-count (computed, cross-referenced);
+  B1_pyzx + deterministic-control exact/relaxed rows COPIED from verified v2 records
+  (results/v2/tier1/dev_results.csv, results/v2/eval/eval_results.csv, bench_runs JSON fallback),
+  per-row provenance; relaxed column separate. qcla_adder_10 control bar recorded as BLOCKED
+  (v2 verifier coverage), not invented - circuit stays in the suite (twin + features valid).
+- Stage-1 and general-angle candidates (shor_12 u1 angles) scanned counts-only (exact-IR parser
+  is pi/4-grid); recorded with reason, kept=false.
+- Gate: tests/engine/test_recon_bench.py (6 tests: feature reproduction on cuccaro_4 + rc_adder_6,
+  suite membership, twin + source sha256, baselines shape); suite 347 passed + 2 skips; digest
+  bc3eac23 unchanged; no existing file modified.
