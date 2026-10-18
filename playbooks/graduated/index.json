@@ -1,0 +1,9 @@
+{
+ "format": "circuitevolve.engine.graduated/0",
+ "provenance": "P1.4: empty library; first graduation lands in point 2",
+ "families": {
+  "dv.windows": [],
+  "cvdv.bosonic": []
+ },
+ "index_sha256_of_entries": "941dd149747b52218447e7577ad1cf63339935fe6bb216175617d252ae5261eb"
+}

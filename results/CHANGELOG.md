@@ -289,3 +289,11 @@
 - NEW `circuitevolve/domains/dv_windows/`: the stage-1 window core as a plugin (select = T-cost-ranked windows, mutate = literal window/fix prompts, verify = frozen verify_window, measure = BqskitTMetric); verify/check callables late-bind through core/loop.py (monkeypatch surface preserved).
 - `core/loop.py` is now a 4.5KB shim (was 22.7KB): WindowLoop(EvolveLoop) with identical constructor, run(), TASK_TEXT, RUNS, _choose_windows/_member/ledger0 surfaces.
 - Gates: golden equivalence test PASSED unchanged (identical accepts/charges/prompt hashes/stats vs pre-refactor fixture); full suite 306 passed (300 + 6 new contract tests); dv frozen digest bc3eac23 unchanged; cvdv untouched.
+
+## 2026-10-18 engine refactor P1.4 (router v0 + playbook tiers + optimize entry point)
+
+- `engine/router.py`: deterministic tier-0 routing (literal QASM scan, no eval): terms -> cvdv.bosonic; 0 Toffolis + non-Clifford rz -> dv.windows; else NeedsTriage (LLM triage + arithmetic family land in point 3). Every decision appended to results/engine/routing_log.jsonl.
+- `engine/run.py`: optimize(source, eps, complete) - stage-1 name / QASM / terms, no domain named; summary gains a routing section. B0-identity gate through the routed path: tests/engine/test_optimize_b0.py (qft_8, tfim_6 == B0 t_count_canon).
+- Playbook tiers (machinery only, content copied verbatim): playbooks/router.json; families/dv.windows.json = byte-identical dev_v1.json copy; families/cvdv.bosonic.json = 6 cvdv rulebook insights as seed rules; graduated/index.json = EMPTY hash-checked library (tamper + file-drift tests).
+- `engine/{graduate,reflector,recognize}.py`: graduation formats/provenance/loader, the point-2 reflector seam (AcceptAnatomy), recognizer re-export.
+- Gates: engine suite 30 passed; full suite green; frozen digests unchanged; originals (dev_v1.json, cvdv rulebook) untouched.

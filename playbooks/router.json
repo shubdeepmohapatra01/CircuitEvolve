@@ -1,0 +1,28 @@
+{
+ "format": "circuitevolve.engine.router/0",
+ "provenance": "P1.4 initial table. dv.windows playbook copied from playbooks/dev_v1.json; cvdv.bosonic converted from cvdv/rulebook/playbook.md (texts verbatim). Routing: deterministic features only; LLM triage fallback + arithmetic family land in point 3.",
+ "families": {
+  "dv.windows": {
+   "plugin": "dv_windows",
+   "contract": "approx",
+   "precondition": "QASM, 0 Toffolis, >=1 non-Clifford rz (rotation-dominated)",
+   "playbook": "playbooks/families/dv.windows.json",
+   "graduated": []
+  },
+  "cvdv.bosonic": {
+   "plugin": "cvdv",
+   "contract": "certified_subspace",
+   "precondition": "Hamiltonian term input",
+   "playbook": "playbooks/families/cvdv.bosonic.json",
+   "graduated": []
+  },
+  "arithmetic": {
+   "plugin": null,
+   "contract": "relaxed",
+   "status": "reserved",
+   "precondition": "Toffoli-dominated QASM (reserved until dv_arith lands, point 3)",
+   "playbook": "playbooks/families/arith.relaxed.json",
+   "graduated": []
+  }
+ }
+}
