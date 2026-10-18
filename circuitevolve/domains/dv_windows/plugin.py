@@ -65,13 +65,15 @@ class DvWindowsPlugin(DomainPlugin):
 
     def __init__(self, circ: Circuit, original_ops, metric: BqskitTMetric, *, check_whole: bool = True,
                  refit_multistarts: int = 8, seeded_ties: bool = False, seed: int = 0,
-                 verify_fn: Callable | None = None, check_fn: Callable | None = None):
+                 verify_fn: Callable | None = None, check_fn: Callable | None = None,
+                 max_candidates: int = 3):
         self.circ, self.n, self.original = circ, circ.n, original_ops
         self.meta = circ.meta
         self.metric = metric
         self.check_whole = check_whole
         self.refit_multistarts = refit_multistarts
         self.seed, self.seeded_ties = seed, seeded_ties
+        self.max_candidates = int(max_candidates)      # P3.5: proposal-side knob, fixed per run
         self._verify = verify_fn
         self._check = check_fn
         if verify_fn is None or check_fn is None:
@@ -132,10 +134,10 @@ class DvWindowsPlugin(DomainPlugin):
     def build_prompt(self, task: WindowRef, rules, feedback, allowance) -> str:
         t = WindowTask(local_ops=task.w.ops, k=task.w.k, eps_rz=task.eps_rz, allowance=allowance,
                        t_rot=task.t_rot, t_fixed=task.t_fixed, rules=rules, feedback=feedback)
-        return build_prompt(t)
+        return build_prompt(t, self.max_candidates)
 
     def parse(self, text: str):
-        props, perr = extract_proposals(text)
+        props, perr = extract_proposals(text, self.max_candidates)
         declined = perr == [DECLINED]
         if declined:
             perr = []

@@ -43,14 +43,15 @@ class WindowLoop(EvolveLoop):
                  feedback_len: int = 6, runs_dir: Path | None = None, check_whole: bool = True,
                  window_fraction: float = 0.5, per_rewrite_fraction: float = 0.25, max_tokens_note: str = "",
                  ledger_rule: str = "v1", pool_fraction: float = 0.25, refit_multistarts: int = 8,
-                 seeded_ties: bool = False):
+                 seeded_ties: bool = False, max_candidates: int = 3):
         self.circ, self.n, self.original = circ, circ.n, original_ops
         # acceptance and reported T use eps_rz = ledger.eps_synth / N_Rz of the circuit's OWN ledger (v1: unspent
         # window budget returns to synthesis; v0: fixed eps/2)
         self.metric = BqskitTMetric(eps)
         plugin = DvWindowsPlugin(circ, original_ops, self.metric, check_whole=check_whole,
                                  refit_multistarts=refit_multistarts, seeded_ties=seeded_ties, seed=seed,
-                                 verify_fn=_late_verify, check_fn=_late_check)
+                                 verify_fn=_late_verify, check_fn=_late_check,
+                                 max_candidates=max_candidates)
         ledger0 = Ledger(eps, rule=ledger_rule, window_fraction=window_fraction, pool_fraction=pool_fraction,
                          per_rewrite_fraction=per_rewrite_fraction)
         super().__init__(plugin, eps, complete, ledger0, reflect_complete=reflect_complete, playbook=playbook,

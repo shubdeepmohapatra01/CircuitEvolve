@@ -499,3 +499,23 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   the angle-only arm on the same decomposed input; (c) lift NEVER fires when ccx is present
   (raw path routes without lift evidence, bit-identical behavior). Suite 366 passed + 2 skips;
   digest bc3eac23 unchanged.
+
+## 2026-10-18 method cascade P3.5 (candidates-per-call knob + 3v5 A/B harness)
+
+- max_candidates threaded end to end on the proposal side ONLY (invariant 7: acceptance,
+  verification and the ledger untouched): core/mutator.py already parameterized the prompt
+  text ({maxc}) and both parser caps; dv_windows plugin now carries the knob
+  (DvWindowsPlugin(max_candidates=...), used in build_prompt + extract_proposals) and
+  WindowLoop exposes it as a constructor kwarg (default 3). Fixed within any run/arm.
+- Gates: golden fixture byte-identical at default 3 (test_golden_dv, unchanged, in suite);
+  tests/engine/test_max_candidates.py (4 tests): default cap 3; 5-cap parses 5 of 6 blocks;
+  prompt wording moves 'at most 3 blocks' -> 'at most 5 blocks' and differs in NOTHING else;
+  WindowLoop threads the knob into the live plugin. Suite 370 passed + 2 skips; digest
+  bc3eac23 unchanged.
+- experiments/engine_ab_candidates.py: 3v5 A/B harness per docs/P2_CAMPAIGN.md conventions
+  (arms fixed per run, P2 dev set qft_8/heisenberg_6/hubbard_8/qml_13/hhl_8 @ 1e-3, shared
+  per-circuit seeds across arms, playbook FROZEN during the A/B, graduated ON both arms,
+  >= 12 calls/circuit/arm, paired per-circuit report appended under
+  results/engine/ab_candidates/). BUDGET-GATED: the script refuses to run without
+  --yes-i-have-approval; real-LLM execution requires explicit user approval and is NOT part
+  of P3 execution (committed not run).
