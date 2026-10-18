@@ -1,0 +1,17 @@
+{
+ "circuit": "qft_8",
+ "arm": "B2",
+ "eps": 0.001,
+ "t_count_canon": 2391,
+ "t_fixed_canon": 15,
+ "t_gridsynth_canon": 2376,
+ "n_rz_canon": 48,
+ "n_rz_asrun": 48,
+ "eps_per_rz": 2.0833333333333333e-05,
+ "cx_canon": 68,
+ "state_dist_vs_orig_canon": 5.4863524373797455e-05,
+ "t_count_asrun": 2423,
+ "source_run": "runs_v2",
+ "output": "qft_8_B2_e3_canon.qasm.gz",
+ "gridsynth": "pygridsynth 2.0.0"
+}

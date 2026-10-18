@@ -1,0 +1,1 @@
+{"circuit": "hhl_8", "arm": "B2ft", "eps": 1e-05, "status": "ok", "t_count": 106272, "n_rz": 1264, "cx": 369, "runtime_s": 108.1, "state_dist_vs_orig": 2.592687639362912e-07, "error": null}

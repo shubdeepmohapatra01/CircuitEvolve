@@ -1,0 +1,277 @@
+{
+ "description": "The stage-1 prompt shows each rotation's Pauli frame P (core/mutator.rotation_paulis) and the merge rule. This\ncontrol applies that rule exhaustively and greedily, with no LLM: repeat { partition into windows (same\nwindows() as the loop); in every window merge the first pair of synthesized rz with equal P and a commuting path\n(angle a_i +- a_j at the earlier op, the later op deleted) } until no window changes. Every merge goes through the\nfrozen verifier (core/verifier.verify_window at allowance 1e-12) and is charged its measured distance under ledger\nv1; the final circuit is checked against the ORIGINAL qseed circuit. T is reported under the same metric as the\nloop (eps_rz = eps_synth / N_Rz). A separate gridsynth cache directory is used so this can run next to the loop.",
+ "rows": [
+  {
+   "name": "qft_8",
+   "eps": 0.001,
+   "t": 2115,
+   "rz": 43,
+   "cx": 68,
+   "merges": 5,
+   "passes": 3,
+   "window_spent": 1.1139092198502597e-15,
+   "bound": 0.0009997558593761138,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 4.482787807050596e-15
+   },
+   "seconds": 1.7
+  },
+  {
+   "name": "qpe_8",
+   "eps": 0.001,
+   "t": 12597,
+   "rz": 224,
+   "cx": 268,
+   "merges": 23,
+   "passes": 3,
+   "window_spent": 1.6632457096853152e-14,
+   "bound": 0.0009997558593916325,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 9.685486008241907e-14
+   },
+   "seconds": 2.6
+  },
+  {
+   "name": "qae_13",
+   "eps": 0.001,
+   "t": 6683,
+   "rz": 126,
+   "cx": 156,
+   "merges": 19,
+   "passes": 7,
+   "window_spent": 1.1010127128652302e-14,
+   "bound": 0.00099975585938601,
+   "final_check": {
+    "ok": true,
+    "method": "statevector",
+    "dist": 2.1499022519263734e-13
+   },
+   "seconds": 1.6
+  },
+  {
+   "name": "heisenberg_6",
+   "eps": 0.001,
+   "t": 8200,
+   "rz": 150,
+   "cx": 274,
+   "merges": 0,
+   "passes": 1,
+   "window_spent": 0.0,
+   "bound": 0.001,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 2.5529261167505838e-14
+   },
+   "seconds": 0.4
+  },
+  {
+   "name": "tfim_6",
+   "eps": 0.001,
+   "t": 8560,
+   "rz": 160,
+   "cx": 180,
+   "merges": 0,
+   "passes": 1,
+   "window_spent": 0.0,
+   "bound": 0.001,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 3.560675668908507e-14
+   },
+   "seconds": 0.3
+  },
+  {
+   "name": "hubbard_8",
+   "eps": 0.001,
+   "t": 4312,
+   "rz": 84,
+   "cx": 389,
+   "merges": 0,
+   "passes": 1,
+   "window_spent": 0.0,
+   "bound": 0.001,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 2.3280540980184537e-14
+   },
+   "seconds": 1.8
+  },
+  {
+   "name": "qml_13",
+   "eps": 0.001,
+   "t": 6326,
+   "rz": 118,
+   "cx": 152,
+   "merges": 0,
+   "passes": 1,
+   "window_spent": 0.0,
+   "bound": 0.001,
+   "final_check": {
+    "ok": true,
+    "method": "statevector",
+    "dist": 9.041913897279408e-15
+   },
+   "seconds": 1.7
+  },
+  {
+   "name": "hhl_8",
+   "eps": 0.001,
+   "t": 31762,
+   "rz": 525,
+   "cx": 497,
+   "merges": 58,
+   "passes": 5,
+   "window_spent": 3.800537994802071e-14,
+   "bound": 0.0009997558594130053,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 3.1915712996938657e-13
+   },
+   "seconds": 12.9
+  },
+  {
+   "name": "qft_8",
+   "eps": 1e-05,
+   "t": 2913,
+   "rz": 43,
+   "cx": 68,
+   "merges": 5,
+   "passes": 3,
+   "window_spent": 1.1139092198502597e-15,
+   "bound": 9.99755859486391e-06,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 4.482787807050596e-15
+   },
+   "seconds": 0.6
+  },
+  {
+   "name": "qpe_8",
+   "eps": 1e-05,
+   "t": 17099,
+   "rz": 224,
+   "cx": 268,
+   "merges": 23,
+   "passes": 3,
+   "window_spent": 1.6632457096853152e-14,
+   "bound": 9.997558610382456e-06,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 9.685486008241907e-14
+   },
+   "seconds": 2.8
+  },
+  {
+   "name": "qae_13",
+   "eps": 1e-05,
+   "t": 9433,
+   "rz": 126,
+   "cx": 156,
+   "merges": 19,
+   "passes": 7,
+   "window_spent": 1.1010127128652302e-14,
+   "bound": 9.997558604760127e-06,
+   "final_check": {
+    "ok": true,
+    "method": "statevector",
+    "dist": 2.1499022519263734e-13
+   },
+   "seconds": 1.9
+  },
+  {
+   "name": "heisenberg_6",
+   "eps": 1e-05,
+   "t": 11200,
+   "rz": 150,
+   "cx": 274,
+   "merges": 0,
+   "passes": 1,
+   "window_spent": 0.0,
+   "bound": 1e-05,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 2.5529261167505838e-14
+   },
+   "seconds": 0.4
+  },
+  {
+   "name": "tfim_6",
+   "eps": 1e-05,
+   "t": 11840,
+   "rz": 160,
+   "cx": 180,
+   "merges": 0,
+   "passes": 1,
+   "window_spent": 0.0,
+   "bound": 1e-05,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 3.560675668908507e-14
+   },
+   "seconds": 0.3
+  },
+  {
+   "name": "hubbard_8",
+   "eps": 1e-05,
+   "t": 6000,
+   "rz": 84,
+   "cx": 389,
+   "merges": 0,
+   "passes": 1,
+   "window_spent": 0.0,
+   "bound": 1e-05,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 2.3280540980184537e-14
+   },
+   "seconds": 2.1
+  },
+  {
+   "name": "qml_13",
+   "eps": 1e-05,
+   "t": 8716,
+   "rz": 118,
+   "cx": 152,
+   "merges": 0,
+   "passes": 1,
+   "window_spent": 0.0,
+   "bound": 1e-05,
+   "final_check": {
+    "ok": true,
+    "method": "statevector",
+    "dist": 9.041913897279408e-15
+   },
+   "seconds": 2.1
+  },
+  {
+   "name": "hhl_8",
+   "eps": 1e-05,
+   "t": 42286,
+   "rz": 525,
+   "cx": 497,
+   "merges": 58,
+   "passes": 5,
+   "window_spent": 3.800537994802071e-14,
+   "bound": 9.997558631755379e-06,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 3.1915712996938657e-13
+   },
+   "seconds": 14.7
+  }
+ ]
+}

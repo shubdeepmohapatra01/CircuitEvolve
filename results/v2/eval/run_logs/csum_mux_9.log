@@ -1,0 +1,1 @@
+{"circuit": "csum_mux_9", "seconds": 96.4, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 84, false], ["tier1_control", "relaxed", 112, false], ["tier2_final", "exact", 84, false], ["tier2_lexsec", "exact", 84, false], ["tier1+tier2_final", "exact", 84, false], ["tier1+tier2_lexsec", "exact", 84, false]]}

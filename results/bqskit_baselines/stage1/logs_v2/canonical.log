@@ -1,0 +1,124 @@
+distinct (theta, eps) pairs: 18439
+0 2
+2000 10
+4000 17
+6000 24
+8000 32
+10000 38
+12000 42
+14000 46
+16000 51
+18000 55
+gridsynth done 56 s
+{'circuit': 'qft_8', 'arm': 'B0', 'eps': 0.001, 't_count_asrun': 2403, 't_count_canon': 2391, 'n_rz_canon': 48, 'n_rz_asrun': 48, 'state_dist_vs_orig_canon': 5.4863524373797455e-05}
+{'circuit': 'qft_8', 'arm': 'B1', 'eps': 0.001, 't_count_asrun': 1577, 't_count_canon': 1577, 'n_rz_canon': 33, 'n_rz_asrun': 33, 'state_dist_vs_orig_canon': 6.198120388405064e-05}
+{'circuit': 'qft_8', 'arm': 'B2', 'eps': 0.001, 't_count_asrun': 2423, 't_count_canon': 2391, 'n_rz_canon': 48, 'n_rz_asrun': 48, 'state_dist_vs_orig_canon': 5.4863524373797455e-05}
+{'circuit': 'qft_8', 'arm': 'B3', 'eps': 0.001, 't_count_asrun': 2230, 't_count_canon': 2226, 'n_rz_canon': 38, 'n_rz_asrun': 38, 'state_dist_vs_orig_canon': 5.8513298812248445e-06}
+{'circuit': 'qft_8', 'arm': 'B2ft', 'eps': 0.001, 't_count_asrun': 2183, 't_count_canon': 2167, 'n_rz_canon': 44, 'n_rz_asrun': 44, 'state_dist_vs_orig_canon': 5.266518370869853e-05}
+{'circuit': 'qft_8', 'arm': 'B3m', 'eps': 0.001, 't_count_asrun': 2196, 't_count_canon': 2164, 'n_rz_canon': 39, 'n_rz_asrun': 39, 'state_dist_vs_orig_canon': 1.0936609441276878e-05}
+{'circuit': 'qft_8', 'arm': 'B3g', 'eps': 0.001, 't_count_asrun': 2057, 't_count_canon': 2029, 'n_rz_canon': 39, 'n_rz_asrun': 39, 'state_dist_vs_orig_canon': 2.417217785732847e-05}
+{'circuit': 'qft_8', 'arm': 'B0', 'eps': 1e-05, 't_count_asrun': 3321, 't_count_canon': 3299, 'n_rz_canon': 48, 'n_rz_asrun': 48, 'state_dist_vs_orig_canon': 7.546812133982068e-07}
+{'circuit': 'qft_8', 'arm': 'B1', 'eps': 1e-05, 't_count_asrun': 2229, 't_count_canon': 2219, 'n_rz_canon': 33, 'n_rz_asrun': 33, 'state_dist_vs_orig_canon': 5.516682945468373e-07}
+{'circuit': 'qft_8', 'arm': 'B2', 'eps': 1e-05, 't_count_asrun': 3321, 't_count_canon': 3299, 'n_rz_canon': 48, 'n_rz_asrun': 48, 'state_dist_vs_orig_canon': 7.546812133982068e-07}
+{'circuit': 'qft_8', 'arm': 'B3', 'eps': 1e-05, 't_count_asrun': 2307, 't_count_canon': 2297, 'n_rz_canon': 39, 'n_rz_asrun': 39, 'state_dist_vs_orig_canon': 6.144694351637705e-06}
+{'circuit': 'qft_8', 'arm': 'B2ft', 'eps': 1e-05, 't_count_asrun': 3055, 't_count_canon': 3029, 'n_rz_canon': 44, 'n_rz_asrun': 44, 'state_dist_vs_orig_canon': 6.633921293662808e-07}
+{'circuit': 'qft_8', 'arm': 'B3m', 'eps': 1e-05, 't_count_asrun': 2992, 't_count_canon': 2988, 'n_rz_canon': 39, 'n_rz_asrun': 39, 'state_dist_vs_orig_canon': 1.3943503392058687e-07}
+{'circuit': 'qft_8', 'arm': 'B3g', 'eps': 1e-05, 't_count_asrun': 2876, 't_count_canon': 2866, 'n_rz_canon': 39, 'n_rz_asrun': 39, 'state_dist_vs_orig_canon': 2.5031589714780553e-07}
+{'circuit': 'qpe_8', 'arm': 'B0', 'eps': 0.001, 't_count_asrun': 14803, 't_count_canon': 14761, 'n_rz_canon': 257, 'n_rz_asrun': 257, 'state_dist_vs_orig_canon': 3.209974892148334e-05}
+{'circuit': 'qpe_8', 'arm': 'B1', 'eps': 0.001, 't_count_asrun': 11521, 't_count_canon': 11485, 'n_rz_canon': 206, 'n_rz_asrun': 206, 'state_dist_vs_orig_canon': 3.6723103545959066e-05}
+{'circuit': 'qpe_8', 'arm': 'B2', 'eps': 0.001, 't_count_asrun': 14781, 't_count_canon': 14761, 'n_rz_canon': 257, 'n_rz_asrun': 257, 'state_dist_vs_orig_canon': 3.6381542226487176e-05}
+{'circuit': 'qpe_8', 'arm': 'B3', 'eps': 0.001, 't_count_asrun': 39605, 't_count_canon': 39565, 'n_rz_canon': 560, 'n_rz_asrun': 560, 'state_dist_vs_orig_canon': 0.00010853567792057913}
+{'circuit': 'qpe_8', 'arm': 'B2ft', 'eps': 0.001, 't_count_asrun': 27664, 't_count_canon': 27510, 'n_rz_canon': 460, 'n_rz_asrun': 460, 'state_dist_vs_orig_canon': 7.697359572821664e-05}
+{'circuit': 'qpe_8', 'arm': 'B3m', 'eps': 0.001, 't_count_asrun': 35813, 't_count_canon': 35763, 'n_rz_canon': 533, 'n_rz_asrun': 533, 'state_dist_vs_orig_canon': 1.1766518793681987e-05}
+{'circuit': 'qpe_8', 'arm': 'B3g', 'eps': 0.001, 't_count_asrun': 8050, 't_count_canon': 8020, 'n_rz_canon': 134, 'n_rz_asrun': 134, 'state_dist_vs_orig_canon': 1.598254845567534e-05}
+{'circuit': 'qpe_8', 'arm': 'B0', 'eps': 1e-05, 't_count_asrun': 19927, 't_count_canon': 19853, 'n_rz_canon': 257, 'n_rz_asrun': 257, 'state_dist_vs_orig_canon': 2.9459520167388884e-07}
+{'circuit': 'qpe_8', 'arm': 'B1', 'eps': 1e-05, 't_count_asrun': 15677, 't_count_canon': 15651, 'n_rz_canon': 206, 'n_rz_asrun': 206, 'state_dist_vs_orig_canon': 4.713510550174003e-07}
+{'circuit': 'qpe_8', 'arm': 'B2', 'eps': 1e-05, 't_count_asrun': 19899, 't_count_canon': 19853, 'n_rz_canon': 257, 'n_rz_asrun': 257, 'state_dist_vs_orig_canon': 4.94466491774511e-07}
+{'circuit': 'qpe_8', 'arm': 'B3', 'eps': 1e-05, 't_count_asrun': 41662, 't_count_canon': 41604, 'n_rz_canon': 588, 'n_rz_asrun': 588, 'state_dist_vs_orig_canon': 2.5850223681027985e-06}
+{'circuit': 'qpe_8', 'arm': 'B2ft', 'eps': 1e-05, 't_count_asrun': 49860, 't_count_canon': 49608, 'n_rz_canon': 612, 'n_rz_asrun': 612, 'state_dist_vs_orig_canon': 3.8741325938620077e-07}
+{'circuit': 'qpe_8', 'arm': 'B3m', 'eps': 1e-05, 't_count_asrun': 53426, 't_count_canon': 53264, 'n_rz_canon': 605, 'n_rz_asrun': 605, 'state_dist_vs_orig_canon': 1.4326175035590365e-07}
+{'circuit': 'qpe_8', 'arm': 'B3g', 'eps': 1e-05, 't_count_asrun': 10399, 't_count_canon': 10391, 'n_rz_canon': 130, 'n_rz_asrun': 130, 'state_dist_vs_orig_canon': 1.1553936900517561e-07}
+{'circuit': 'qae_13', 'arm': 'B0', 'eps': 0.001, 't_count_asrun': 7891, 't_count_canon': 7821, 'n_rz_canon': 145, 'n_rz_asrun': 145, 'state_dist_vs_orig_canon': 3.260231201607436e-05}
+{'circuit': 'qae_13', 'arm': 'B1', 'eps': 0.001, 't_count_asrun': 4565, 't_count_canon': 4527, 'n_rz_canon': 88, 'n_rz_asrun': 88, 'state_dist_vs_orig_canon': 3.7946775572894026e-05}
+{'circuit': 'qae_13', 'arm': 'B2', 'eps': 0.001, 't_count_asrun': 7987, 't_count_canon': 7821, 'n_rz_canon': 145, 'n_rz_asrun': 145, 'state_dist_vs_orig_canon': 3.260231201607436e-05}
+{'circuit': 'qae_13', 'arm': 'B3', 'eps': 0.001, 't_count_asrun': 7524, 't_count_canon': 7516, 'n_rz_canon': 119, 'n_rz_asrun': 119, 'state_dist_vs_orig_canon': 3.450774243072142e-06}
+{'circuit': 'qae_13', 'arm': 'B2ft', 'eps': 0.001, 't_count_asrun': 7483, 't_count_canon': 7335, 'n_rz_canon': 136, 'n_rz_asrun': 136, 'state_dist_vs_orig_canon': 4.091166547013019e-05}
+{'circuit': 'qae_13', 'arm': 'B3m', 'eps': 0.001, 't_count_asrun': 7085, 't_count_canon': 7069, 'n_rz_canon': 117, 'n_rz_asrun': 117, 'state_dist_vs_orig_canon': 7.656545531282543e-06}
+{'circuit': 'qae_13', 'arm': 'B3g', 'eps': 0.001, 't_count_asrun': 6935, 't_count_canon': 6909, 'n_rz_canon': 119, 'n_rz_asrun': 119, 'state_dist_vs_orig_canon': 1.2880416735003983e-05}
+{'circuit': 'qae_13', 'arm': 'B0', 'eps': 1e-05, 't_count_asrun': 11017, 't_count_canon': 11017, 'n_rz_canon': 145, 'n_rz_asrun': 145, 'state_dist_vs_orig_canon': 4.097534052376406e-07}
+{'circuit': 'qae_13', 'arm': 'B1', 'eps': 1e-05, 't_count_asrun': 6405, 't_count_canon': 6361, 'n_rz_canon': 88, 'n_rz_asrun': 88, 'state_dist_vs_orig_canon': 4.4136039293780324e-07}
+{'circuit': 'qae_13', 'arm': 'B2', 'eps': 1e-05, 't_count_asrun': 11021, 't_count_canon': 11017, 'n_rz_canon': 145, 'n_rz_asrun': 145, 'state_dist_vs_orig_canon': 4.097534052376406e-07}
+{'circuit': 'qae_13', 'arm': 'B3', 'eps': 1e-05, 't_count_asrun': 7527, 't_count_canon': 7515, 'n_rz_canon': 119, 'n_rz_asrun': 119, 'state_dist_vs_orig_canon': 3.6781617101718194e-06}
+{'circuit': 'qae_13', 'arm': 'B2ft', 'eps': 1e-05, 't_count_asrun': 10509, 't_count_canon': 10505, 'n_rz_canon': 139, 'n_rz_asrun': 139, 'state_dist_vs_orig_canon': 3.674079276574712e-07}
+{'circuit': 'qae_13', 'arm': 'B3m', 'eps': 1e-05, 't_count_asrun': 9602, 't_count_canon': 9534, 'n_rz_canon': 118, 'n_rz_asrun': 118, 'state_dist_vs_orig_canon': 7.871242497336276e-08}
+{'circuit': 'qae_13', 'arm': 'B3g', 'eps': 1e-05, 't_count_asrun': 9241, 't_count_canon': 9237, 'n_rz_canon': 119, 'n_rz_asrun': 119, 'state_dist_vs_orig_canon': 1.4998968784907793e-07}
+{'circuit': 'heisenberg_6', 'arm': 'B0', 'eps': 0.001, 't_count_asrun': 8200, 't_count_canon': 8200, 'n_rz_canon': 150, 'n_rz_asrun': 150, 'state_dist_vs_orig_canon': 0.00012258364142751183}
+{'circuit': 'heisenberg_6', 'arm': 'B1', 'eps': 0.001, 't_count_asrun': 8200, 't_count_canon': 8200, 'n_rz_canon': 150, 'n_rz_asrun': 150, 'state_dist_vs_orig_canon': 9.264426014056656e-05}
+{'circuit': 'heisenberg_6', 'arm': 'B2', 'eps': 0.001, 't_count_asrun': 8200, 't_count_canon': 8200, 'n_rz_canon': 150, 'n_rz_asrun': 150, 'state_dist_vs_orig_canon': 0.00012258364142612676}
+{'circuit': 'heisenberg_6', 'arm': 'B3', 'eps': 0.001, 't_count_asrun': 10128, 't_count_canon': 10128, 'n_rz_canon': 152, 'n_rz_asrun': 152, 'state_dist_vs_orig_canon': 1.2749799845808134e-05}
+{'circuit': 'heisenberg_6', 'arm': 'B2ft', 'eps': 0.001, 't_count_asrun': 10682, 't_count_canon': 10664, 'n_rz_canon': 190, 'n_rz_asrun': 190, 'state_dist_vs_orig_canon': 6.893511085298177e-05}
+{'circuit': 'heisenberg_6', 'arm': 'B3m', 'eps': 0.001, 't_count_asrun': 9136, 't_count_canon': 9136, 'n_rz_canon': 152, 'n_rz_asrun': 152, 'state_dist_vs_orig_canon': 2.2657950580637164e-05}
+{'circuit': 'heisenberg_6', 'arm': 'B3g', 'eps': 0.001, 't_count_asrun': 8600, 't_count_canon': 8600, 'n_rz_canon': 150, 'n_rz_asrun': 150, 'state_dist_vs_orig_canon': 5.117291376461626e-05}
+{'circuit': 'heisenberg_6', 'arm': 'B0', 'eps': 1e-05, 't_count_asrun': 11400, 't_count_canon': 11200, 'n_rz_canon': 150, 'n_rz_asrun': 150, 'state_dist_vs_orig_canon': 9.320167189957903e-07}
+{'circuit': 'heisenberg_6', 'arm': 'B1', 'eps': 1e-05, 't_count_asrun': 11400, 't_count_canon': 11200, 'n_rz_canon': 150, 'n_rz_asrun': 150, 'state_dist_vs_orig_canon': 5.411002869844507e-07}
+{'circuit': 'heisenberg_6', 'arm': 'B2', 'eps': 1e-05, 't_count_asrun': 11400, 't_count_canon': 11200, 'n_rz_canon': 150, 'n_rz_asrun': 150, 'state_dist_vs_orig_canon': 9.320167189432107e-07}
+{'circuit': 'heisenberg_6', 'arm': 'B3', 'eps': 1e-05, 't_count_asrun': 10128, 't_count_canon': 10128, 'n_rz_canon': 152, 'n_rz_asrun': 152, 'state_dist_vs_orig_canon': 1.2749799845808134e-05}
+{'circuit': 'heisenberg_6', 'arm': 'B2ft', 'eps': 1e-05, 't_count_asrun': 14926, 't_count_canon': 14524, 'n_rz_canon': 192, 'n_rz_asrun': 192, 'state_dist_vs_orig_canon': 7.792742859147542e-07}
+{'circuit': 'heisenberg_6', 'arm': 'B3m', 'eps': 1e-05, 't_count_asrun': 12572, 't_count_canon': 12572, 'n_rz_canon': 152, 'n_rz_asrun': 152, 'state_dist_vs_orig_canon': 2.0544094821148643e-07}
+{'circuit': 'heisenberg_6', 'arm': 'B3g', 'eps': 1e-05, 't_count_asrun': 12000, 't_count_canon': 12000, 'n_rz_canon': 150, 'n_rz_asrun': 150, 'state_dist_vs_orig_canon': 5.568070048344334e-07}
+{'circuit': 'tfim_6', 'arm': 'B0', 'eps': 0.001, 't_count_asrun': 8560, 't_count_canon': 8560, 'n_rz_canon': 160, 'n_rz_asrun': 160, 'state_dist_vs_orig_canon': 5.7362856332480577e-05}
+{'circuit': 'tfim_6', 'arm': 'B1', 'eps': 0.001, 't_count_asrun': 8560, 't_count_canon': 8560, 'n_rz_canon': 160, 'n_rz_asrun': 160, 'state_dist_vs_orig_canon': 5.287156499601564e-05}
+{'circuit': 'tfim_6', 'arm': 'B2', 'eps': 0.001, 't_count_asrun': 8560, 't_count_canon': 8560, 'n_rz_canon': 160, 'n_rz_asrun': 160, 'state_dist_vs_orig_canon': 5.7362856331446946e-05}
+{'circuit': 'tfim_6', 'arm': 'B3', 'eps': 0.001, 't_count_asrun': 12992, 't_count_canon': 12990, 'n_rz_canon': 197, 'n_rz_asrun': 197, 'state_dist_vs_orig_canon': 4.629313094990569e-06}
+{'circuit': 'tfim_6', 'arm': 'B2ft', 'eps': 0.001, 't_count_asrun': 10766, 't_count_canon': 10746, 'n_rz_canon': 196, 'n_rz_asrun': 196, 'state_dist_vs_orig_canon': 5.407813801027978e-05}
+{'circuit': 'tfim_6', 'arm': 'B3m', 'eps': 0.001, 't_count_asrun': 12594, 't_count_canon': 12592, 'n_rz_canon': 197, 'n_rz_asrun': 197, 'state_dist_vs_orig_canon': 1.4879151628719132e-05}
+{'circuit': 'tfim_6', 'arm': 'B3g', 'eps': 0.001, 't_count_asrun': 9600, 't_count_canon': 9600, 'n_rz_canon': 160, 'n_rz_asrun': 160, 'state_dist_vs_orig_canon': 3.4308237716539864e-05}
+{'circuit': 'tfim_6', 'arm': 'B0', 'eps': 1e-05, 't_count_asrun': 11840, 't_count_canon': 11840, 'n_rz_canon': 160, 'n_rz_asrun': 160, 'state_dist_vs_orig_canon': 6.5836759211802e-07}
+{'circuit': 'tfim_6', 'arm': 'B1', 'eps': 1e-05, 't_count_asrun': 11840, 't_count_canon': 11840, 'n_rz_canon': 160, 'n_rz_asrun': 160, 'state_dist_vs_orig_canon': 4.1593049346992544e-07}
+{'circuit': 'tfim_6', 'arm': 'B2', 'eps': 1e-05, 't_count_asrun': 11840, 't_count_canon': 11840, 'n_rz_canon': 160, 'n_rz_asrun': 160, 'state_dist_vs_orig_canon': 6.583675902957768e-07}
+{'circuit': 'tfim_6', 'arm': 'B3', 'eps': 1e-05, 't_count_asrun': 12744, 't_count_canon': 12742, 'n_rz_canon': 193, 'n_rz_asrun': 193, 'state_dist_vs_orig_canon': 4.476020979636024e-06}
+{'circuit': 'tfim_6', 'arm': 'B2ft', 'eps': 1e-05, 't_count_asrun': 14812, 't_count_canon': 14810, 'n_rz_canon': 197, 'n_rz_asrun': 197, 'state_dist_vs_orig_canon': 6.541939748629017e-07}
+{'circuit': 'tfim_6', 'arm': 'B3m', 'eps': 1e-05, 't_count_asrun': 16534, 't_count_canon': 16448, 'n_rz_canon': 196, 'n_rz_asrun': 196, 'state_dist_vs_orig_canon': 1.5102694234884935e-07}
+{'circuit': 'tfim_6', 'arm': 'B3g', 'eps': 1e-05, 't_count_asrun': 12400, 't_count_canon': 12400, 'n_rz_canon': 160, 'n_rz_asrun': 160, 'state_dist_vs_orig_canon': 3.3808248346885225e-07}
+{'circuit': 'hubbard_8', 'arm': 'B0', 'eps': 0.001, 't_count_asrun': 4466, 't_count_canon': 4312, 'n_rz_canon': 84, 'n_rz_asrun': 84, 'state_dist_vs_orig_canon': 6.060600882714659e-05}
+{'circuit': 'hubbard_8', 'arm': 'B1', 'eps': 0.001, 't_count_asrun': 4450, 't_count_canon': 4312, 'n_rz_canon': 84, 'n_rz_asrun': 84, 'state_dist_vs_orig_canon': 4.938750809432879e-05}
+{'circuit': 'hubbard_8', 'arm': 'B2', 'eps': 0.001, 't_count_asrun': 4312, 't_count_canon': 4312, 'n_rz_canon': 84, 'n_rz_asrun': 84, 'state_dist_vs_orig_canon': 6.060600882707619e-05}
+{'circuit': 'hubbard_8', 'arm': 'B3', 'eps': 0.001, 't_count_asrun': 7636, 't_count_canon': 7588, 'n_rz_canon': 119, 'n_rz_asrun': 119, 'state_dist_vs_orig_canon': 3.5373697190118184e-06}
+{'circuit': 'hubbard_8', 'arm': 'B2ft', 'eps': 0.001, 't_count_asrun': 4502, 't_count_canon': 4470, 'n_rz_canon': 85, 'n_rz_asrun': 85, 'state_dist_vs_orig_canon': 4.994846205090462e-05}
+{'circuit': 'hubbard_8', 'arm': 'B3m', 'eps': 0.001, 't_count_asrun': 5782, 't_count_canon': 5774, 'n_rz_canon': 97, 'n_rz_asrun': 97, 'state_dist_vs_orig_canon': 8.40871265064543e-06}
+{'circuit': 'hubbard_8', 'arm': 'B3g', 'eps': 0.001, 't_count_asrun': 4712, 't_count_canon': 4712, 'n_rz_canon': 84, 'n_rz_asrun': 84, 'state_dist_vs_orig_canon': 1.3211832971992196e-05}
+{'circuit': 'hubbard_8', 'arm': 'B0', 'eps': 1e-05, 't_count_asrun': 6016, 't_count_canon': 6000, 'n_rz_canon': 84, 'n_rz_asrun': 84, 'state_dist_vs_orig_canon': 3.9425326696459976e-07}
+{'circuit': 'hubbard_8', 'arm': 'B1', 'eps': 1e-05, 't_count_asrun': 6016, 't_count_canon': 6000, 'n_rz_canon': 84, 'n_rz_asrun': 84, 'state_dist_vs_orig_canon': 4.586379776538071e-07}
+{'circuit': 'hubbard_8', 'arm': 'B2', 'eps': 1e-05, 't_count_asrun': 6016, 't_count_canon': 6000, 'n_rz_canon': 84, 'n_rz_asrun': 84, 'state_dist_vs_orig_canon': 3.9425326655215533e-07}
+{'circuit': 'hubbard_8', 'arm': 'B3', 'eps': 1e-05, 't_count_asrun': 6470, 't_count_canon': 6434, 'n_rz_canon': 102, 'n_rz_asrun': 102, 'state_dist_vs_orig_canon': 3.915145694432266e-06}
+{'circuit': 'hubbard_8', 'arm': 'B2ft', 'eps': 1e-05, 't_count_asrun': 7608, 't_count_canon': 7606, 'n_rz_canon': 105, 'n_rz_asrun': 105, 'state_dist_vs_orig_canon': 5.036813985660659e-07}
+{'circuit': 'hubbard_8', 'arm': 'B3m', 'eps': 1e-05, 't_count_asrun': 9214, 't_count_canon': 9214, 'n_rz_canon': 114, 'n_rz_asrun': 114, 'state_dist_vs_orig_canon': 8.257526152834432e-08}
+{'circuit': 'hubbard_8', 'arm': 'B3g', 'eps': 1e-05, 't_count_asrun': 6392, 't_count_canon': 6368, 'n_rz_canon': 84, 'n_rz_asrun': 84, 'state_dist_vs_orig_canon': 1.861348216679049e-07}
+{'circuit': 'qml_13', 'arm': 'B0', 'eps': 0.001, 't_count_asrun': 6350, 't_count_canon': 6326, 'n_rz_canon': 118, 'n_rz_asrun': 118, 'state_dist_vs_orig_canon': 3.387260042277426e-05}
+{'circuit': 'qml_13', 'arm': 'B1', 'eps': 0.001, 't_count_asrun': 6362, 't_count_canon': 6326, 'n_rz_canon': 118, 'n_rz_asrun': 118, 'state_dist_vs_orig_canon': 3.547056028534499e-05}
+{'circuit': 'qml_13', 'arm': 'B2', 'eps': 0.001, 't_count_asrun': 6338, 't_count_canon': 6326, 'n_rz_canon': 118, 'n_rz_asrun': 118, 'state_dist_vs_orig_canon': 3.608813667015079e-05}
+{'circuit': 'qml_13', 'arm': 'B3', 'eps': 0.001, 't_count_asrun': 7690, 't_count_canon': 7668, 'n_rz_canon': 121, 'n_rz_asrun': 121, 'state_dist_vs_orig_canon': 3.3766743109250425e-06}
+{'circuit': 'qml_13', 'arm': 'B2ft', 'eps': 0.001, 't_count_asrun': 6398, 't_count_canon': 6386, 'n_rz_canon': 119, 'n_rz_asrun': 119, 'state_dist_vs_orig_canon': 3.579217822574629e-05}
+{'circuit': 'qml_13', 'arm': 'B3m', 'eps': 0.001, 't_count_asrun': 7372, 't_count_canon': 7340, 'n_rz_canon': 121, 'n_rz_asrun': 121, 'state_dist_vs_orig_canon': 7.190071113112581e-06}
+{'circuit': 'qml_13', 'arm': 'B3g', 'eps': 0.001, 't_count_asrun': 6830, 't_count_canon': 6790, 'n_rz_canon': 118, 'n_rz_asrun': 118, 'state_dist_vs_orig_canon': 1.3387317601668991e-05}
+{'circuit': 'qml_13', 'arm': 'B0', 'eps': 1e-05, 't_count_asrun': 8776, 't_count_canon': 8716, 'n_rz_canon': 118, 'n_rz_asrun': 118, 'state_dist_vs_orig_canon': 3.976878375656421e-07}
+{'circuit': 'qml_13', 'arm': 'B1', 'eps': 1e-05, 't_count_asrun': 8766, 't_count_canon': 8716, 'n_rz_canon': 118, 'n_rz_asrun': 118, 'state_dist_vs_orig_canon': 3.907454194192777e-07}
+{'circuit': 'qml_13', 'arm': 'B2', 'eps': 1e-05, 't_count_asrun': 8778, 't_count_canon': 8716, 'n_rz_canon': 118, 'n_rz_asrun': 118, 'state_dist_vs_orig_canon': 3.5419087414713827e-07}
+{'circuit': 'qml_13', 'arm': 'B3', 'eps': 1e-05, 't_count_asrun': 7690, 't_count_canon': 7668, 'n_rz_canon': 121, 'n_rz_asrun': 121, 'state_dist_vs_orig_canon': 3.3766743109250425e-06}
+{'circuit': 'qml_13', 'arm': 'B2ft', 'eps': 1e-05, 't_count_asrun': 8852, 't_count_canon': 8788, 'n_rz_canon': 119, 'n_rz_asrun': 119, 'state_dist_vs_orig_canon': 3.5247542500600643e-07}
+{'circuit': 'qml_13', 'arm': 'B3m', 'eps': 1e-05, 't_count_asrun': 9852, 't_count_canon': 9838, 'n_rz_canon': 121, 'n_rz_asrun': 121, 'state_dist_vs_orig_canon': 6.968314586559124e-08}
+{'circuit': 'qml_13', 'arm': 'B3g', 'eps': 1e-05, 't_count_asrun': 9214, 't_count_canon': 9162, 'n_rz_canon': 118, 'n_rz_asrun': 118, 'state_dist_vs_orig_canon': 1.4219232657475145e-07}
+{'circuit': 'hhl_8', 'arm': 'B0', 'eps': 0.001, 't_count_asrun': 35650, 't_count_canon': 35450, 'n_rz_canon': 583, 'n_rz_asrun': 583, 'state_dist_vs_orig_canon': 1.7944056073683236e-05}
+{'circuit': 'hhl_8', 'arm': 'B1', 'eps': 0.001, 't_count_asrun': 29439, 't_count_canon': 29205, 'n_rz_canon': 487, 'n_rz_asrun': 487, 'state_dist_vs_orig_canon': 1.9315464544930315e-05}
+{'circuit': 'hhl_8', 'arm': 'B2', 'eps': 0.001, 't_count_asrun': 35624, 't_count_canon': 35450, 'n_rz_canon': 583, 'n_rz_asrun': 583, 'state_dist_vs_orig_canon': 1.6333578300361358e-05}
+{'circuit': 'hhl_8', 'arm': 'B3', 'eps': 0.001, 't_count_asrun': 93821, 't_count_canon': 93637, 'n_rz_canon': 1266, 'n_rz_asrun': 1266, 'state_dist_vs_orig_canon': 8.555706706228594e-05}
+{'circuit': 'hhl_8', 'arm': 'B2ft', 'eps': 0.001, 't_count_asrun': 71714, 't_count_canon': 71262, 'n_rz_canon': 1126, 'n_rz_asrun': 1130, 'state_dist_vs_orig_canon': 4.3613967661576035e-05}
+{'circuit': 'hhl_8', 'arm': 'B3m', 'eps': 0.001, 't_count_asrun': 85360, 't_count_canon': 85036, 'n_rz_canon': 1202, 'n_rz_asrun': 1202, 'state_dist_vs_orig_canon': 6.606739161082872e-06}
+{'circuit': 'hhl_8', 'arm': 'B3g', 'eps': 0.001, 't_count_asrun': 19601, 't_count_canon': 19443, 'n_rz_canon': 309, 'n_rz_asrun': 309, 'state_dist_vs_orig_canon': 9.001061918502566e-06}
+{'circuit': 'hhl_8', 'arm': 'B0', 'eps': 1e-05, 't_count_asrun': 47410, 't_count_canon': 47228, 'n_rz_canon': 583, 'n_rz_asrun': 583, 'state_dist_vs_orig_canon': 1.7018446041702718e-07}
+{'circuit': 'hhl_8', 'arm': 'B1', 'eps': 1e-05, 't_count_asrun': 39163, 't_count_canon': 38987, 'n_rz_canon': 487, 'n_rz_asrun': 487, 'state_dist_vs_orig_canon': 1.7387687165749855e-07}
+{'circuit': 'hhl_8', 'arm': 'B2', 'eps': 1e-05, 't_count_asrun': 47396, 't_count_canon': 47228, 'n_rz_canon': 583, 'n_rz_asrun': 583, 'state_dist_vs_orig_canon': 1.6605737903012741e-07}
+{'circuit': 'hhl_8', 'arm': 'B3', 'eps': 1e-05, 't_count_asrun': 93165, 't_count_canon': 92889, 'n_rz_canon': 1252, 'n_rz_asrun': 1253, 'state_dist_vs_orig_canon': 2.287507892852722e-06}
+{'circuit': 'hhl_8', 'arm': 'B2ft', 'eps': 1e-05, 't_count_asrun': 106272, 't_count_canon': 105841, 'n_rz_canon': 1263, 'n_rz_asrun': 1264, 'state_dist_vs_orig_canon': 2.810319640620331e-07}
+{'circuit': 'hhl_8', 'arm': 'B3m', 'eps': 1e-05, 't_count_asrun': 116737, 't_count_canon': 116425, 'n_rz_canon': 1274, 'n_rz_asrun': 1274, 'state_dist_vs_orig_canon': 1.1348273159105668e-07}
+{'circuit': 'hhl_8', 'arm': 'B3g', 'eps': 1e-05, 't_count_asrun': 25123, 't_count_canon': 25043, 'n_rz_canon': 306, 'n_rz_asrun': 306, 'state_dist_vs_orig_canon': 9.530015626426811e-08}

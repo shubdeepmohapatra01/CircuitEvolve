@@ -1,0 +1,153 @@
+{
+ "blinded": false,
+ "next_id": 6,
+ "settings": {
+  "ab_fraction": 0.5,
+  "min_exposure": 8,
+  "max_exposure": 40,
+  "z_promote": 1.64,
+  "min_pass_with": 3,
+  "z_retire": -1.0,
+  "evidence": "improvement",
+  "banned_words": []
+ },
+ "rules": [
+  {
+   "id": "R1",
+   "text": "Before proposing a fix that deletes or replaces an rz(angle), check the resulting unitary matches the original to within allowance (eps_synth/N_Rz), not just approximately. A distance of ~0.2 vs required ~6e-5 means the replacement gate/angle is wrong, not just imprecise synthesis. Recompute the exact matrix product by hand or re-derive the angle algebraically before submitting.",
+   "status": "candidate",
+   "created_call": 11,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 1,
+   "without_pass": 1,
+   "exposures": 9,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 9,
+   "with_improvements": 0,
+   "without_prompts": 12,
+   "without_improvements": 1
+  },
+  {
+   "id": "R2",
+   "text": "When collapsing or merging rotations (e.g. fix op replacing gate at index 11 with identity/op0), verify the merged angle equals the sum/difference of the original rotation angles exactly (mod 2pi), including sign flips from any intervening h/s/x/z conjugations on that qubit.",
+   "status": "candidate",
+   "created_call": 11,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 1,
+   "without_pass": 1,
+   "exposures": 10,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 10,
+   "with_improvements": 0,
+   "without_prompts": 11,
+   "without_improvements": 1
+  },
+  {
+   "id": "R3",
+   "text": "A 'fix' proposal that removes a single rz without compensating for the Clifford gates around it on the same qubit will fail the operator-norm verifier; track the full Pauli-frame/basis change across the window before deleting or merging any rotation gate.",
+   "status": "candidate",
+   "created_call": 11,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 1,
+   "with_pass": 1,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 8,
+   "improvements": 1,
+   "note": "",
+   "with_prompts": 8,
+   "with_improvements": 1,
+   "without_prompts": 13,
+   "without_improvements": 0
+  },
+  {
+   "id": "R4",
+   "text": "When a fix removes one rz on a qubit (e.g. op N->0), check whether OTHER rz gates on that same qubit later in the window need their angles updated too (not just the one adjacent to the deletion) -- the accepted q3/q1/q0 example changed three separate downstream rz angles, including sign flips, to compensate for deleting a single rz at index 25.",
+   "status": "candidate",
+   "created_call": 22,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 8,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 8,
+   "with_improvements": 0,
+   "without_prompts": 3,
+   "without_improvements": 0
+  },
+  {
+   "id": "R5",
+   "text": "Before submitting fix op N->0 for a lone rz with no other rotation on that qubit in the window, compute the full window unitary with and without that gate; if they differ by more than eps_synth/N_Rz, the fix is invalid outright (not a candidate for later angle patching) -- do not propose bare deletions without first checking for compensating rz gates elsewhere on the same qubit.",
+   "status": "candidate",
+   "created_call": 22,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 5,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 5,
+   "with_improvements": 0,
+   "without_prompts": 6,
+   "without_improvements": 0
+  }
+ ],
+ "history": [
+  {
+   "call": 11,
+   "op": "add",
+   "id": "R1",
+   "status": "candidate",
+   "text": "Before proposing a fix that deletes or replaces an rz(angle), check the resulting unitary matches the original to within allowance (eps_synth/N_Rz), not just approximately. A distance of ~0.2 vs required ~6e-5 means the replacement gate/angle is wrong, not just imprecise synthesis. Recompute the exact matrix product by hand or re-derive the angle algebraically before submitting.",
+   "supersedes": null
+  },
+  {
+   "call": 11,
+   "op": "add",
+   "id": "R2",
+   "status": "candidate",
+   "text": "When collapsing or merging rotations (e.g. fix op replacing gate at index 11 with identity/op0), verify the merged angle equals the sum/difference of the original rotation angles exactly (mod 2pi), including sign flips from any intervening h/s/x/z conjugations on that qubit.",
+   "supersedes": null
+  },
+  {
+   "call": 11,
+   "op": "add",
+   "id": "R3",
+   "status": "candidate",
+   "text": "A 'fix' proposal that removes a single rz without compensating for the Clifford gates around it on the same qubit will fail the operator-norm verifier; track the full Pauli-frame/basis change across the window before deleting or merging any rotation gate.",
+   "supersedes": null
+  },
+  {
+   "call": 22,
+   "op": "add",
+   "id": "R4",
+   "status": "candidate",
+   "text": "When a fix removes one rz on a qubit (e.g. op N->0), check whether OTHER rz gates on that same qubit later in the window need their angles updated too (not just the one adjacent to the deletion) -- the accepted q3/q1/q0 example changed three separate downstream rz angles, including sign flips, to compensate for deleting a single rz at index 25.",
+   "supersedes": null
+  },
+  {
+   "call": 22,
+   "op": "add",
+   "id": "R5",
+   "status": "candidate",
+   "text": "Before submitting fix op N->0 for a lone rz with no other rotation on that qubit in the window, compute the full window unitary with and without that gate; if they differ by more than eps_synth/N_Rz, the fix is invalid outright (not a candidate for later angle patching) -- do not propose bare deletions without first checking for compensating rz gates elsewhere on the same qubit.",
+   "supersedes": null
+  }
+ ]
+}

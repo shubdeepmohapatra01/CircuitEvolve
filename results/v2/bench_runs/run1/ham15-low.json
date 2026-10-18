@@ -1,0 +1,112 @@
+{
+ "circuit": "ham15-low",
+ "python": "3.11.15",
+ "pyzx": "0.10.7",
+ "pytket": "2.18.5",
+ "started": "2026-10-13T22:10:51",
+ "qubits": 17,
+ "logical_counts": {
+  "gates": 167,
+  "t": 0,
+  "ccx": 0,
+  "ccz": 23,
+  "cx": 98,
+  "h": 46,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 161
+ },
+ "cliffordt_counts": {
+  "gates": 443,
+  "t": 161,
+  "ccx": 0,
+  "ccz": 0,
+  "cx": 236,
+  "h": 46,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 161
+ },
+ "provenance": {
+  "logical_vs_cliffordt": {
+   "method": "statevector_haar",
+   "n_states": 4,
+   "dist": 1.182426816824028e-15,
+   "ok": true,
+   "zx_identity": true,
+   "check_s": 8.78
+  },
+  "logical_vs_feynman": {
+   "method": "statevector_haar",
+   "n_states": 4,
+   "dist": 8.163243361664201e-15,
+   "ok": true,
+   "check_s": 5.71
+  }
+ },
+ "planted_bug_check": {
+  "method": "statevector_haar",
+  "n_states": 4,
+  "dist": 0.39018039433497875,
+  "ok": false,
+  "check_s": 4.65
+ },
+ "arms": {
+  "given_cliffordt": {
+   "t_count": 161,
+   "cx": 236,
+   "gates": 443
+  },
+  "pyzx_fr": {
+   "t_count": 97,
+   "rz_other": 0,
+   "cx": 316,
+   "h": 38,
+   "gates": 479,
+   "t_graph": 97,
+   "reduce_s": 0.29,
+   "pipeline_s": 0.41,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 1.2478559947770441e-15,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 9.07
+   }
+  },
+  "tket_fpo": {
+   "t_count": 147,
+   "rz_other": 0,
+   "cx": 252,
+   "h": 52,
+   "gates": 483,
+   "pipeline_s": 1.37,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 1.0350689089210364e-15,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 5.97
+   }
+  },
+  "tket_fpo_logical": {
+   "t_count": 147,
+   "rz_other": 0,
+   "cx": 252,
+   "h": 52,
+   "gates": 487,
+   "pipeline_s": 1.37,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 1.1244512909638767e-15,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 5.76
+   }
+  }
+ },
+ "finished": "2026-10-13T22:11:36"
+}

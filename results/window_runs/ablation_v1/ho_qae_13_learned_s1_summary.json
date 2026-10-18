@@ -1,0 +1,102 @@
+{
+ "tag": "ho_qae_13_learned_s1",
+ "name": "qae_13",
+ "input_source": "results/bqskit_baselines/stage1/inputs/qae_13_tket.qasm",
+ "n": 13,
+ "eps": 0.001,
+ "calls": 20,
+ "stats": {
+  "proposal_calls": 20,
+  "reflect_calls": 0,
+  "llm_errors": 0,
+  "declined": 13,
+  "candidates": 7,
+  "parse_errors": 0,
+  "verified": 1,
+  "rejected_verifier": 6,
+  "rejected_metric": 0,
+  "rejected_ledger": 0,
+  "rejected_whole": 0,
+  "accepted": 1,
+  "accepted_t_reduced": 1,
+  "exact_accepts": 0,
+  "approx_accepts": 1,
+  "rules_added": 0,
+  "reflect_skipped_no_evidence": 0,
+  "window_proposals": 0,
+  "fix_proposals": 7,
+  "refit_failed": 0,
+  "accepted_window": 0,
+  "accepted_fix": 1,
+  "rotations_removed_window": 0,
+  "rotations_removed_fix": 2
+ },
+ "backend_stats": {
+  "calls": 20,
+  "input_tokens": 44157,
+  "output_tokens": 9803,
+  "ok": 20,
+  "failed": 0
+ },
+ "t_before": 7821,
+ "t_after": 7681,
+ "before": {
+  "t": 7821,
+  "t_fixed": 23,
+  "t_gs": 7798,
+  "rz": 145,
+  "cx": 156,
+  "gates": 461,
+  "eps_rz": 6.896551722664952e-06
+ },
+ "after": {
+  "t": 7681,
+  "t_fixed": 23,
+  "t_gs": 7658,
+  "rz": 143,
+  "cx": 156,
+  "gates": 459,
+  "eps_rz": 6.99129971441551e-06
+ },
+ "t_after_reclaimed": 7681,
+ "ledger": {
+  "eps_total": 0.001,
+  "window_pool": 0.00025,
+  "eps_synth": 0.000999755859161418,
+  "d_input": 2.1358194398707251e-13,
+  "window_spent": 5.167231680049555e-16,
+  "window_spent_rounded": 2.44140625e-07,
+  "n_window_charges": 1,
+  "eps_rz": 6.99129971441551e-06,
+  "bound": 0.0009997558593755167,
+  "reclaimed_eps_synth": 0.0009999999997859013,
+  "rule": "v1: window pool cap 0.25 eps, synthesis = eps - d_input - ceil_q(spent)"
+ },
+ "final_check_vs_original": {
+  "ok": true,
+  "verified": true,
+  "method": "statevector",
+  "dist": 2.1517366196872248e-13,
+  "bound": 2.1409866715507747e-13
+ },
+ "archive": [
+  {
+   "t": 7681,
+   "rz": 143,
+   "spent": 5.167231680049555e-16,
+   "digest": "94b295abf5895047"
+  },
+  {
+   "t": 7821,
+   "rz": 145,
+   "spent": 0.0,
+   "digest": "83258637d4114b9e"
+  }
+ ],
+ "seconds": 33.0,
+ "verifier_digest": "bc3eac23a403dbc5",
+ "playbook": {
+  "live": 12,
+  "active": 1
+ }
+}

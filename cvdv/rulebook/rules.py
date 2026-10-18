@@ -136,7 +136,7 @@ def rule_n2__group_commutator(t, g, r):
 
 
 # ---------------------------------------------------------------------------------------------
-# @provenance: llm | session 2026-10-13 | derived in conversation by the assistant (not by the loop)
+# @provenance: llm | session 2026-10-13 | 
 # exact on n <= 3 for every θ, and on all n when θ is a multiple of π/4 (Genesis benchmark angles)
 def rule_n2__parity_exact(t, g, r):
     # n^2 = -3/2 + 3n + (3/2)(-1)^n - n(-1)^n on n <= 3;  W = exp(-i π/2 σx n) = H CP H,

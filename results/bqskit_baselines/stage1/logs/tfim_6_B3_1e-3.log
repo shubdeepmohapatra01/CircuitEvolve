@@ -1,0 +1,1 @@
+{"circuit": "tfim_6", "arm": "B3", "eps": 0.001, "status": "ok", "t_count": 13004, "n_rz": 197, "cx": 178, "runtime_s": 20.1, "state_dist_vs_orig": 3.2357287220675462e-06, "error": null}

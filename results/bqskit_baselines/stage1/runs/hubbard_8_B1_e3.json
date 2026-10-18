@@ -1,0 +1,23 @@
+{
+ "circuit": "hubbard_8",
+ "arm": "B1",
+ "eps": 0.001,
+ "status": "ok",
+ "n_rz": 84,
+ "rz_distinct": 54,
+ "eps_per_rz": 1.1904761904761905e-05,
+ "t_fixed": 0,
+ "t_gridsynth": 4450,
+ "t_count": 4450,
+ "cx": 320,
+ "gridsynth_s": 0.16,
+ "gs_max_reported_err": 5.45869874460823e-06,
+ "err_bound_gridsynth": 0.001,
+ "err_bound_total": 0.001,
+ "pre_s": 0.37,
+ "runtime_s": 0.54,
+ "verify_s": 0.5,
+ "state_dist_vs_orig": 4.2884229626313554e-05,
+ "state_dist_vs_input": 4.2884229625660545e-05,
+ "output": "hubbard_8_B1_e3.qasm.gz"
+}

@@ -3,8 +3,9 @@ blocks/verify_block.py (never edited here; integrity.FROZEN hashes it).
 
 verify_window(orig, new, k, allowance)
   1. literal checks: gate set, local qubit range, op count limit (no execution of model text anywhere);
-  2. if both windows are Clifford+T after snapping exact pi/4-multiple rz (circuit.normalize), EXACT mode:
-     verify_block.verify_exact over Z[omega]/sqrt2^k, charge 0 on success;
+  2. if both windows are Clifford+T after snapping exact pi/4-multiple rz (circuit.normalize), EXACT mode
+     ONLY: verify_block.verify_exact over Z[omega]/sqrt2^k, charge 0 on success, reject otherwise (CLAUDE.md
+     invariant 1: floating point never accepts a Clifford+T candidate);
   3. otherwise APPROXIMATE mode: verify_block.verify_instance(orig, new, k, eps=allowance) - phase-aligned
      OPERATOR-norm distance d <= allowance; the charge is d. For reference the record also carries BQSKit's
      Hilbert-Schmidt quantities, hs_cost = 1 - |Tr(U^dag V)|/N and hs_dist = sqrt(1 - (|Tr|/N)^2); both are
@@ -64,18 +65,15 @@ def verify_window(orig_ops, new_ops, k: int, allowance: float) -> dict:
             if r["ok"]:
                 return dict(ok=True, mode="exact", dist=0.0, charge=0.0, reason="",
                             phase_omega_power=r.get("phase_omega_power"))
-            exact_reason = r.get("reason", "")
-        else:
-            exact_reason = None
+            # CLAUDE.md invariant 1: floating point never accepts a Clifford+T candidate - no approximate
+            # fallback when both windows are Clifford+T.
+            return dict(ok=False, mode="exact", dist=None, charge=None,
+                        reason=f"exact check: {r.get('reason', 'not equal')}")
         r = vb.verify_instance(a, b, k, eps=allowance)
         hs = hs_quantities(a, b, k)
     out = dict(ok=bool(r["ok"]), mode="approx", dist=float(r["dist"]), fro=float(r["fro"]),
                charge=float(r["dist"]) if r["ok"] else None, allowance=float(allowance), **hs)
-    if not r["ok"]:
-        out["reason"] = (f"distance {r['dist']:.3e} > allowance {allowance:.3e}"
-                         + (f"; exact check: {exact_reason}" if exact_reason else ""))
-    else:
-        out["reason"] = ""
+    out["reason"] = "" if r["ok"] else f"distance {r['dist']:.3e} > allowance {allowance:.3e}"
     return out
 
 

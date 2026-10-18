@@ -1,0 +1,23 @@
+{
+ "circuit": "qae_13",
+ "arm": "B0",
+ "eps": 1e-05,
+ "status": "ok",
+ "n_rz": 145,
+ "rz_distinct": 54,
+ "eps_per_rz": 6.896551724137931e-08,
+ "t_fixed": 23,
+ "t_gridsynth": 10994,
+ "t_count": 11017,
+ "cx": 156,
+ "gridsynth_s": 0.1,
+ "gs_max_reported_err": 3.378106201630967e-08,
+ "err_bound_gridsynth": 1e-05,
+ "err_bound_total": 1e-05,
+ "pre_s": 0.0,
+ "runtime_s": 0.13,
+ "verify_s": 2.8,
+ "state_dist_vs_orig": 2.8190130923800645e-07,
+ "state_dist_vs_input": 2.8190129782112274e-07,
+ "output": "qae_13_B0_e5.qasm.gz"
+}

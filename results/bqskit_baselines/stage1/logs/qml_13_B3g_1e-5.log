@@ -1,0 +1,1 @@
+{"circuit": "qml_13", "arm": "B3g", "eps": 1e-05, "status": "ok", "t_count": 9214, "n_rz": 118, "cx": 152, "runtime_s": 16.5, "state_dist_vs_orig": 1.4794009664801244e-07, "error": null}

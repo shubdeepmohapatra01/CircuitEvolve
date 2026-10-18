@@ -1,0 +1,20 @@
+CIRCUIT barenco_tof_4: 7 qubits, 8 gates (ccx:8); classical reversible (x/cx/ccx + diagonal).
+Naive cost: 56 T (7 per Toffoli, 8 Toffolis).
+Declared zero-init qubits (benchmark contract, start in |0>): none.
+QUBITS (q: Z=declared zero-init / first touch / R=restored to |0> at end / guessed role):
+  q0:-/ccx-control/-/data; q1:-/ccx-control/-/data; q2:-/ccx-control/-/data; q3:-/ccx-control/-/data; q4:-/ccx-control/-/data; q5:-/ccx-control/-/data; q6:-/ccx-target/-/data
+TOFFOLIS (id: gate index, kind, controls -> target):
+  T0:g0 ccx q3 q5->q6; T1:g1 ccx q2 q4->q5; T2:g2 ccx q0 q1->q4; T3:g3 ccx q2 q4->q5; T4:g4 ccx q3 q5->q6; T5:g5 ccx q2 q4->q5; T6:g6 ccx q0 q1->q4; T7:g7 ccx q2 q4->q5
+PAIRS (same Toffoli repeated, controls unchanged in between; class: clean = declared-zero target, |0> before, not written between; mirror = target only read between; controls_fixed = target written between):
+  P0 = T2+T6 (g2..g6) target q4 controls q0 q1: mirror
+  P1 = T3+T5 (g3..g5) target q5 controls q2 q4: mirror
+UNPAIRED TOFFOLIS: T0, T1, T4, T7
+MULTI-CONTROLLED-X CASCADES (middle Toffoli + enclosing pairs):
+  M0: C4X controls ['q0', 'q1', 'q2', 'q3'] -> q6, middle T4, pairs ['P1', 'P0'], work qubits ['q5', 'q4'] (dirty/borrowed)
+REPEATED BLOCKS (gate pattern with relabelled qubits, count):
+  [ccx(0,1,2) ccx(3,4,1) ccx(5,6,4) ccx(3,4,1)] x2 at gates [0, 4]
+  [ccx(0,1,2) ccx(3,4,1) ccx(0,1,2)] x2 at gates [1, 5]
+ROTATIONS (non-Toffoli phase gates): {'t_like': 0, 's_like': 0, 'z': 0}
+SUBROUTINE GUESSES: M0 is a C4X built from an AND ladder on borrowed (dirty) work qubits
+NORMALIZED LOGICAL GATES (g<index>):
+  g0 ccx q3 q5 -> q6; g1 ccx q2 q4 -> q5; g2 ccx q0 q1 -> q4; g3 ccx q2 q4 -> q5; g4 ccx q3 q5 -> q6; g5 ccx q2 q4 -> q5; g6 ccx q0 q1 -> q4; g7 ccx q2 q4 -> q5

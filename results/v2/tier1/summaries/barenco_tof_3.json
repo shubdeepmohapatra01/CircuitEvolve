@@ -1,0 +1,144 @@
+{
+ "name": "barenco_tof_3",
+ "n": 5,
+ "n_gates": 4,
+ "gate_counts": {
+  "ccx": 4
+ },
+ "classical": true,
+ "toffolis": [
+  {
+   "id": "T0",
+   "gate": 0,
+   "kind": "ccx",
+   "controls": [
+    2,
+    3
+   ],
+   "target": 4
+  },
+  {
+   "id": "T1",
+   "gate": 1,
+   "kind": "ccx",
+   "controls": [
+    0,
+    1
+   ],
+   "target": 3
+  },
+  {
+   "id": "T2",
+   "gate": 2,
+   "kind": "ccx",
+   "controls": [
+    2,
+    3
+   ],
+   "target": 4
+  },
+  {
+   "id": "T3",
+   "gate": 3,
+   "kind": "ccx",
+   "controls": [
+    0,
+    1
+   ],
+   "target": 3
+  }
+ ],
+ "pairs": [
+  {
+   "id": "P0",
+   "first": "T1",
+   "second": "T3",
+   "gates": [
+    1,
+    3
+   ],
+   "kind": "ccx",
+   "target": 3,
+   "controls": [
+    0,
+    1
+   ],
+   "cls": "mirror",
+   "target_written_between": false,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  }
+ ],
+ "unpaired": [
+  "T0",
+  "T2"
+ ],
+ "mcx": [
+  {
+   "id": "M0",
+   "middle": "T2",
+   "pairs": [
+    "P0"
+   ],
+   "controls": [
+    0,
+    1,
+    2
+   ],
+   "target": 4,
+   "work": [
+    3
+   ],
+   "work_clean": false
+  }
+ ],
+ "qubits": [
+  {
+   "q": 0,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 1,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 2,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 3,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 4,
+   "declared_zero": false,
+   "first_touch": "ccx-target",
+   "restored": null,
+   "role": "data"
+  }
+ ],
+ "repeated": [],
+ "rotations": {
+  "t_like": 0,
+  "s_like": 0,
+  "z": 0
+ },
+ "declared_zero": [],
+ "digest": "2141919c6eb7a34d",
+ "hints": [
+  "M0 is a C3X built from an AND ladder on borrowed (dirty) work qubits"
+ ]
+}

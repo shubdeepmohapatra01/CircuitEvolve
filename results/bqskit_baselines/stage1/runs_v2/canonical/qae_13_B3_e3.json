@@ -1,0 +1,17 @@
+{
+ "circuit": "qae_13",
+ "arm": "B3",
+ "eps": 0.001,
+ "t_count_canon": 7516,
+ "t_fixed_canon": 32,
+ "t_gridsynth_canon": 7484,
+ "n_rz_canon": 119,
+ "n_rz_asrun": 119,
+ "eps_per_rz": 8.403361344537815e-07,
+ "cx_canon": 156,
+ "state_dist_vs_orig_canon": 3.450774243072142e-06,
+ "t_count_asrun": 7524,
+ "source_run": "runs_v2",
+ "output": "qae_13_B3_e3_canon.qasm.gz",
+ "gridsynth": "pygridsynth 2.0.0"
+}

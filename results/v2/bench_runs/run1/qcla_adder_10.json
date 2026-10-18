@@ -1,0 +1,158 @@
+{
+ "circuit": "qcla_adder_10",
+ "python": "3.11.15",
+ "pyzx": "0.10.7",
+ "pytket": "2.18.5",
+ "started": "2026-10-13T22:11:00",
+ "qubits": 36,
+ "logical_counts": {
+  "gates": 113,
+  "t": 0,
+  "ccx": 0,
+  "ccz": 34,
+  "cx": 29,
+  "h": 50,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 238
+ },
+ "cliffordt_counts": {
+  "gates": 521,
+  "t": 238,
+  "ccx": 0,
+  "ccz": 0,
+  "cx": 233,
+  "h": 50,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 238
+ },
+ "provenance": {
+  "logical_vs_cliffordt": {
+   "method": "sparse_pair_states",
+   "trials": 24,
+   "dist": 7.998537621807727e-16,
+   "ok": true,
+   "zx_identity": true,
+   "check_s": 49.92
+  },
+  "logical_vs_feynman": {
+   "method": "sparse_pair_states",
+   "trials": 24,
+   "dist": 1.4142135623730816,
+   "ok": false,
+   "check_s": 97.31
+  },
+  "logical_vs_nam_before": {
+   "method": "sparse_pair_states",
+   "trials": 24,
+   "dist": 9.860761315262648e-32,
+   "ok": true,
+   "check_s": 63.81
+  },
+  "nam_before_counts": {
+   "gates": 113,
+   "t": 0,
+   "ccx": 0,
+   "ccz": 34,
+   "cx": 29,
+   "h": 50,
+   "rz_nonclifford": 0,
+   "rz_other": 0,
+   "t_if_expanded": 238
+  }
+ },
+ "planted_bug_check": {
+  "method": "sparse_pair_states",
+  "trials": 24,
+  "dist": 0.390180644032255,
+  "ok": false,
+  "check_s": 33.75
+ },
+ "arms": {
+  "given_cliffordt": {
+   "t_count": 238,
+   "cx": 233,
+   "gates": 521
+  },
+  "pyzx_fr": {
+   "t_count": 162,
+   "rz_other": 0,
+   "cx": 403,
+   "h": 50,
+   "gates": 655,
+   "t_graph": 162,
+   "reduce_s": 0.33,
+   "pipeline_s": 1.02,
+   "verify": {
+    "method": "sparse_pair_states",
+    "trials": 24,
+    "dist": 6.167160163192685e-16,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 18.14
+   }
+  },
+  "tket_fpo": {
+   "t_count": 214,
+   "rz_other": 30,
+   "cx": 205,
+   "h": 124,
+   "gates": 609,
+   "pipeline_s": 1.08,
+   "verify": {
+    "method": "sparse_pair_states",
+    "ok": null,
+    "reason": "support > cap (262144)",
+    "zx_identity": false,
+    "check_s": 1.79
+   }
+  },
+  "tket_fpo_logical": {
+   "t_count": 212,
+   "rz_other": 0,
+   "cx": 205,
+   "h": 192,
+   "gates": 701,
+   "pipeline_s": 1.06,
+   "verify": {
+    "method": "sparse_pair_states",
+    "ok": null,
+    "reason": "support > cap (262144)",
+    "zx_identity": true,
+    "check_s": 1.89
+   }
+  },
+  "nam_light_file": {
+   "t_count": 162,
+   "rz_other": 0,
+   "cx": 195,
+   "h": 50,
+   "gates": 411,
+   "verify": {
+    "method": "sparse_pair_states",
+    "trials": 24,
+    "dist": 6.269101726012056e-16,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 64.81
+   }
+  },
+  "nam_heavy_file": {
+   "t_count": 162,
+   "rz_other": 0,
+   "cx": 183,
+   "h": 50,
+   "gates": 399,
+   "verify": {
+    "method": "sparse_pair_states",
+    "trials": 24,
+    "dist": 1.0273975812034416e-15,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 42.09
+   }
+  }
+ },
+ "finished": "2026-10-13T22:17:19"
+}

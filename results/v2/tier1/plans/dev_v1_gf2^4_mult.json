@@ -1,0 +1,383 @@
+{
+ "circuit": "gf2^4_mult",
+ "tag": "dev_v1",
+ "summary_digest": "f12df9fe073d4f88",
+ "normalization": {
+  "ok": true,
+  "certified": true,
+  "method": "basis-exhaustive",
+  "reason": ""
+ },
+ "best_classical": {
+  "t": 52.0,
+  "arm": "kvdw2020_pyzx_todd",
+  "ties": [
+   "kvdw2020_pyzx_todd"
+  ],
+  "origin": "results/v2/baselines_new.csv | published:KvdW2020",
+  "runs": {
+   "pyzx_fr": 68.0,
+   "tket_fpo": 96.0,
+   "nam_light_file": 68.0,
+   "nam_heavy_file": 68.0
+  },
+  "text": "52 (kvdw2020_pyzx_todd; pyzx_fr=68.0, tket_fpo=96.0)"
+ },
+ "plans": {
+  "llm/exact": {
+   "plan": {
+    "target": "exact",
+    "decisions": [
+     {
+      "element": "T0",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T1",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T2",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T3",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T4",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T5",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T6",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T7",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T8",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T9",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T10",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T11",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T12",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T13",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T14",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T15",
+      "route": "toffoli_7T"
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "This is the EXACT lane, so all relaxed routes (jones_toffoli, clean_and, temporary_and) are off-limits; previous call's rejection confirms a relaxed route broke unitarity. Use plain exact Toffoli decompositions for every gate and rely on pyzx's phase-folding/ZX simplification (then tket cleanup) on the resulting Clifford+T network to merge repeated parities across the 16 Toffolis sharing structure, which is exact and never increases T-count, targeting toward the known 52-T benchmark."
+   },
+   "t_count": 68,
+   "t_depth": 23,
+   "qubits": 12,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": true,
+   "method": "basis-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "toffoli_7T",
+    "T1": "toffoli_7T",
+    "T2": "toffoli_7T",
+    "T3": "toffoli_7T",
+    "T4": "toffoli_7T",
+    "T5": "toffoli_7T",
+    "T6": "toffoli_7T",
+    "T7": "toffoli_7T",
+    "T8": "toffoli_7T",
+    "T9": "toffoli_7T",
+    "T10": "toffoli_7T",
+    "T11": "toffoli_7T",
+    "T12": "toffoli_7T",
+    "T13": "toffoli_7T",
+    "T14": "toffoli_7T",
+    "T15": "toffoli_7T"
+   },
+   "call": 1,
+   "variant": null,
+   "digest": "d6da78e3f4fe07c7"
+  },
+  "llm/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "T0",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T1",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T2",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T3",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T4",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T5",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T6",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T7",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T8",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T9",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T10",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T11",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T12",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T13",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T14",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T15",
+      "route": "jones_toffoli"
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "clean_and failed verification because q8-q11 are read later by the cx gates, so the uncomputed relative phase leaks; jones_toffoli is a safe in-place 4-T substitution for every Toffoli regardless of target reuse, giving 64 T total versus 68/112."
+   },
+   "t_count": 64,
+   "t_depth": 32,
+   "qubits": 13,
+   "ancillas": 1,
+   "measurements": 16,
+   "verdict_mode": "relaxed",
+   "certified": false,
+   "method": "branchwise-exhaustive+sampled-branches",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "jones_toffoli",
+    "T1": "jones_toffoli",
+    "T2": "jones_toffoli",
+    "T3": "jones_toffoli",
+    "T4": "jones_toffoli",
+    "T5": "jones_toffoli",
+    "T6": "jones_toffoli",
+    "T7": "jones_toffoli",
+    "T8": "jones_toffoli",
+    "T9": "jones_toffoli",
+    "T10": "jones_toffoli",
+    "T11": "jones_toffoli",
+    "T12": "jones_toffoli",
+    "T13": "jones_toffoli",
+    "T14": "jones_toffoli",
+    "T15": "jones_toffoli"
+   },
+   "call": 2,
+   "variant": null,
+   "digest": "e2db411a5375bea0"
+  },
+  "control/exact": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V1 (spec) + pyzx"
+   },
+   "t_count": 68,
+   "t_depth": 23,
+   "qubits": 12,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": true,
+   "method": "basis-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "toffoli_7T",
+    "T1": "toffoli_7T",
+    "T2": "toffoli_7T",
+    "T3": "toffoli_7T",
+    "T4": "toffoli_7T",
+    "T5": "toffoli_7T",
+    "T6": "toffoli_7T",
+    "T7": "toffoli_7T",
+    "T8": "toffoli_7T",
+    "T9": "toffoli_7T",
+    "T10": "toffoli_7T",
+    "T11": "toffoli_7T",
+    "T12": "toffoli_7T",
+    "T13": "toffoli_7T",
+    "T14": "toffoli_7T",
+    "T15": "toffoli_7T"
+   },
+   "call": 0,
+   "variant": "V1",
+   "digest": "d6da78e3f4fe07c7"
+  },
+  "control/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "T0",
+      "route": "clean_and"
+     },
+     {
+      "element": "T1",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T2",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T3",
+      "route": "clean_and"
+     },
+     {
+      "element": "T4",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T5",
+      "route": "clean_and"
+     },
+     {
+      "element": "T6",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T7",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T8",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T9",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T10",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T11",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T12",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T13",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T14",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T15",
+      "route": "jones_toffoli"
+     }
+    ],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V2 (max_relaxed) + pyzx"
+   },
+   "t_count": 64,
+   "t_depth": 26,
+   "qubits": 13,
+   "ancillas": 1,
+   "measurements": 13,
+   "verdict_mode": "relaxed",
+   "certified": false,
+   "method": "branchwise-exhaustive+sampled-branches",
+   "zero_qubits": [
+    8,
+    9,
+    10
+   ],
+   "routes": {
+    "T0": "clean_and",
+    "T1": "jones_toffoli",
+    "T2": "jones_toffoli",
+    "T3": "clean_and",
+    "T4": "jones_toffoli",
+    "T5": "clean_and",
+    "T6": "jones_toffoli",
+    "T7": "jones_toffoli",
+    "T8": "jones_toffoli",
+    "T9": "jones_toffoli",
+    "T10": "jones_toffoli",
+    "T11": "jones_toffoli",
+    "T12": "jones_toffoli",
+    "T13": "jones_toffoli",
+    "T14": "jones_toffoli",
+    "T15": "jones_toffoli"
+   },
+   "call": 1,
+   "variant": "V2",
+   "digest": "4d9230265e6cad6d"
+  }
+ }
+}

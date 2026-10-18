@@ -1,0 +1,16 @@
+CIRCUIT barenco_tof_3: 5 qubits, 4 gates (ccx:4); classical reversible (x/cx/ccx + diagonal).
+Naive cost: 28 T (7 per Toffoli, 4 Toffolis).
+Declared zero-init qubits (benchmark contract, start in |0>): none.
+QUBITS (q: Z=declared zero-init / first touch / R=restored to |0> at end / guessed role):
+  q0:-/ccx-control/-/data; q1:-/ccx-control/-/data; q2:-/ccx-control/-/data; q3:-/ccx-control/-/data; q4:-/ccx-target/-/data
+TOFFOLIS (id: gate index, kind, controls -> target):
+  T0:g0 ccx q2 q3->q4; T1:g1 ccx q0 q1->q3; T2:g2 ccx q2 q3->q4; T3:g3 ccx q0 q1->q3
+PAIRS (same Toffoli repeated, controls unchanged in between; class: clean = declared-zero target, |0> before, not written between; mirror = target only read between; controls_fixed = target written between):
+  P0 = T1+T3 (g1..g3) target q3 controls q0 q1: mirror
+UNPAIRED TOFFOLIS: T0, T2
+MULTI-CONTROLLED-X CASCADES (middle Toffoli + enclosing pairs):
+  M0: C3X controls ['q0', 'q1', 'q2'] -> q4, middle T2, pairs ['P0'], work qubits ['q3'] (dirty/borrowed)
+ROTATIONS (non-Toffoli phase gates): {'t_like': 0, 's_like': 0, 'z': 0}
+SUBROUTINE GUESSES: M0 is a C3X built from an AND ladder on borrowed (dirty) work qubits
+NORMALIZED LOGICAL GATES (g<index>):
+  g0 ccx q2 q3 -> q4; g1 ccx q0 q1 -> q3; g2 ccx q2 q3 -> q4; g3 ccx q0 q1 -> q3

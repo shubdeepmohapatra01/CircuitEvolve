@@ -1,0 +1,1 @@
+{"circuit": "qae_13", "arm": "B2ft", "eps": 0.001, "status": "ok", "t_count": 7483, "n_rz": 136, "cx": 156, "runtime_s": 6.1, "state_dist_vs_orig": 3.2633487962030256e-05, "error": null}

@@ -1,0 +1,9 @@
+circuit,qubits,orig_gates,cx,h,rz_total,rz_nonclifford_t,t_fixed,implicit_perm_made_explicit,fpo_s,total_s,state_dist_vs_orig,file
+qft_8,8,146,68,8,63,48,15,True,0.23,0.23,2.9802322387695312e-08,inputs/qft_8_tket.qasm
+qpe_8,8,891,268,258,508,257,157,False,1.0,1.01,1.9371509552001953e-07,inputs/qpe_8_tket.qasm
+qae_13,13,403,156,74,231,145,23,False,0.67,0.67,1.219712610821791e-07,inputs/qae_13_tket.qasm
+heisenberg_6,6,710,274,210,435,150,0,True,1.24,1.24,2.2988391847225297e-07,inputs/heisenberg_6_tket.qasm
+tfim_6,6,506,180,192,303,160,0,False,0.83,0.83,2.010276550536162e-07,inputs/tfim_6_tket.qasm
+hubbard_8,8,933,389,255,377,84,0,True,2.55,2.55,2.2940046069533605e-07,inputs/hubbard_8_tket.qasm
+qml_13,13,230,152,102,118,118,0,False,0.89,0.89,1.3575603930867164e-07,inputs/qml_13_tket.qasm
+hhl_8,8,5709,497,607,1101,583,202,True,3.59,3.6,3.5262583393452264e-07,inputs/hhl_8_tket.qasm

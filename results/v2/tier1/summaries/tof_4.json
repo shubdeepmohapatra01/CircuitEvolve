@@ -1,0 +1,193 @@
+{
+ "name": "tof_4",
+ "n": 7,
+ "n_gates": 5,
+ "gate_counts": {
+  "ccx": 5
+ },
+ "classical": true,
+ "toffolis": [
+  {
+   "id": "T0",
+   "gate": 0,
+   "kind": "ccx",
+   "controls": [
+    0,
+    1
+   ],
+   "target": 4
+  },
+  {
+   "id": "T1",
+   "gate": 1,
+   "kind": "ccx",
+   "controls": [
+    2,
+    4
+   ],
+   "target": 5
+  },
+  {
+   "id": "T2",
+   "gate": 2,
+   "kind": "ccx",
+   "controls": [
+    3,
+    5
+   ],
+   "target": 6
+  },
+  {
+   "id": "T3",
+   "gate": 3,
+   "kind": "ccx",
+   "controls": [
+    2,
+    4
+   ],
+   "target": 5
+  },
+  {
+   "id": "T4",
+   "gate": 4,
+   "kind": "ccx",
+   "controls": [
+    0,
+    1
+   ],
+   "target": 4
+  }
+ ],
+ "pairs": [
+  {
+   "id": "P0",
+   "first": "T0",
+   "second": "T4",
+   "gates": [
+    0,
+    4
+   ],
+   "kind": "ccx",
+   "target": 4,
+   "controls": [
+    0,
+    1
+   ],
+   "cls": "clean",
+   "target_written_between": false,
+   "target_clean_before": true,
+   "target_clean_after": true,
+   "target_declared_zero": true
+  },
+  {
+   "id": "P1",
+   "first": "T1",
+   "second": "T3",
+   "gates": [
+    1,
+    3
+   ],
+   "kind": "ccx",
+   "target": 5,
+   "controls": [
+    2,
+    4
+   ],
+   "cls": "clean",
+   "target_written_between": false,
+   "target_clean_before": true,
+   "target_clean_after": true,
+   "target_declared_zero": true
+  }
+ ],
+ "unpaired": [
+  "T2"
+ ],
+ "mcx": [
+  {
+   "id": "M0",
+   "middle": "T2",
+   "pairs": [
+    "P1",
+    "P0"
+   ],
+   "controls": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "target": 6,
+   "work": [
+    5,
+    4
+   ],
+   "work_clean": true
+  }
+ ],
+ "qubits": [
+  {
+   "q": 0,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 1,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 2,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 3,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 4,
+   "declared_zero": true,
+   "first_touch": "ccx-target",
+   "restored": true,
+   "role": "ancilla(clean)"
+  },
+  {
+   "q": 5,
+   "declared_zero": true,
+   "first_touch": "ccx-target",
+   "restored": true,
+   "role": "ancilla(clean)"
+  },
+  {
+   "q": 6,
+   "declared_zero": false,
+   "first_touch": "ccx-target",
+   "restored": null,
+   "role": "data"
+  }
+ ],
+ "repeated": [],
+ "rotations": {
+  "t_like": 0,
+  "s_like": 0,
+  "z": 0
+ },
+ "declared_zero": [
+  4,
+  5
+ ],
+ "digest": "775b1268f4f2acca",
+ "hints": [
+  "M0 is a C4X built from an AND ladder on clean work qubits"
+ ]
+}

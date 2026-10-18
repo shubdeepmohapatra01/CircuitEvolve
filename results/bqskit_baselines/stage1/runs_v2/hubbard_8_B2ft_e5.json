@@ -1,0 +1,71 @@
+{
+ "circuit": "hubbard_8",
+ "arm": "B2ft",
+ "eps": 1e-05,
+ "status": "ok",
+ "t_count": 7608,
+ "cx": 388,
+ "n_rz": 105,
+ "eps_per_rz": 9.523809523809524e-08,
+ "gridsynth_algorithmic_error": 1e-05,
+ "residual_rz": 0,
+ "other_ops": {
+  "identity1": 5
+ },
+ "runtime_s": 9.6,
+ "verify_s": 0.9,
+ "state_dist_vs_orig": 4.1834751742125667e-07,
+ "state_dist_vs_input": 4.183475218152755e-07,
+ "state_dist_input_vs_cliffrz": null,
+ "stages": {
+  "input": {
+   "rz": 377,
+   "t": 0,
+   "params": 377,
+   "ops": 1021
+  },
+  "output": {
+   "rz": 0,
+   "t": 7608,
+   "params": 0,
+   "ops": 20262
+  }
+ },
+ "gate_counts": {
+  "HGate": 7856,
+  "CNOTGate": 388,
+  "SdgGate": 137,
+  "XGate": 75,
+  "SGate": 4047,
+  "ZGate": 25,
+  "SqrtXGate": 121,
+  "IdentityGate(1)": 5,
+  "TGate": 7608
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 105,
+    "algorithmic_error": 1e-05,
+    "precision_per_rz": 9.523809523809524e-08
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 166,
+   "distinct": [
+    6.02409638554217e-08
+   ]
+  },
+  "assign_errors": [
+   {
+    "num_blocks": 166,
+    "algorithmic_error": 1e-05
+   }
+  ],
+  "partitions": [],
+  "dump_pregs": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/stage1/outputs_v2/hubbard_8_B2ft_e5_pregs.qasm.gz",
+  "gridsynth_panic_retries": []
+ },
+ "output": "hubbard_8_B2ft_e5.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1"
+}

@@ -1,0 +1,112 @@
+{
+ "circuit": "ham15-high",
+ "python": "3.11.15",
+ "pyzx": "0.10.7",
+ "pytket": "2.18.5",
+ "started": "2026-10-13T22:17:00",
+ "qubits": 20,
+ "logical_counts": {
+  "gates": 1096,
+  "t": 0,
+  "ccx": 0,
+  "ccz": 351,
+  "cx": 43,
+  "h": 702,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 2457
+ },
+ "cliffordt_counts": {
+  "gates": 5308,
+  "t": 2457,
+  "ccx": 0,
+  "ccz": 0,
+  "cx": 2149,
+  "h": 702,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 2457
+ },
+ "provenance": {
+  "logical_vs_cliffordt": {
+   "method": "statevector_haar",
+   "n_states": 2,
+   "dist": 1.0587195044431996e-14,
+   "ok": true,
+   "zx_identity": true,
+   "check_s": 1471.61
+  },
+  "logical_vs_feynman": {
+   "method": "statevector_haar",
+   "n_states": 2,
+   "dist": 1.238301899902062e-13,
+   "ok": true,
+   "check_s": 95.42
+  }
+ },
+ "planted_bug_check": {
+  "method": "statevector_haar",
+  "n_states": 2,
+  "dist": 0.3901804700037484,
+  "ok": false,
+  "check_s": 168.96
+ },
+ "arms": {
+  "given_cliffordt": {
+   "t_count": 2457,
+   "cx": 2149,
+   "gates": 5308
+  },
+  "pyzx_fr": {
+   "t_count": 1019,
+   "rz_other": 0,
+   "cx": 2019,
+   "h": 356,
+   "gates": 3616,
+   "t_graph": 1019,
+   "reduce_s": 24.67,
+   "pipeline_s": 30.24,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 2,
+    "dist": 3.5491645190241806e-14,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 476.7
+   }
+  },
+  "tket_fpo": {
+   "t_count": 2163,
+   "rz_other": 0,
+   "cx": 2153,
+   "h": 390,
+   "gates": 4958,
+   "pipeline_s": 49.62,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 2,
+    "dist": 2.991078779712769e-14,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 597.94
+   }
+  },
+  "tket_fpo_logical": {
+   "t_count": 2159,
+   "rz_other": 0,
+   "cx": 2153,
+   "h": 417,
+   "gates": 4995,
+   "pipeline_s": 13.43,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 2,
+    "dist": 2.6676654719759946e-14,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 1034.97
+   }
+  }
+ },
+ "finished": "2026-10-13T23:23:09"
+}

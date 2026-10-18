@@ -1,0 +1,532 @@
+{
+ "name": "cuccaro_8",
+ "n": 18,
+ "n_gates": 49,
+ "gate_counts": {
+  "cx": 33,
+  "ccx": 16
+ },
+ "classical": true,
+ "toffolis": [
+  {
+   "id": "T0",
+   "gate": 2,
+   "kind": "ccx",
+   "controls": [
+    0,
+    1
+   ],
+   "target": 2
+  },
+  {
+   "id": "T1",
+   "gate": 5,
+   "kind": "ccx",
+   "controls": [
+    2,
+    3
+   ],
+   "target": 4
+  },
+  {
+   "id": "T2",
+   "gate": 8,
+   "kind": "ccx",
+   "controls": [
+    4,
+    5
+   ],
+   "target": 6
+  },
+  {
+   "id": "T3",
+   "gate": 11,
+   "kind": "ccx",
+   "controls": [
+    6,
+    7
+   ],
+   "target": 8
+  },
+  {
+   "id": "T4",
+   "gate": 14,
+   "kind": "ccx",
+   "controls": [
+    8,
+    9
+   ],
+   "target": 10
+  },
+  {
+   "id": "T5",
+   "gate": 17,
+   "kind": "ccx",
+   "controls": [
+    10,
+    11
+   ],
+   "target": 12
+  },
+  {
+   "id": "T6",
+   "gate": 20,
+   "kind": "ccx",
+   "controls": [
+    12,
+    13
+   ],
+   "target": 14
+  },
+  {
+   "id": "T7",
+   "gate": 23,
+   "kind": "ccx",
+   "controls": [
+    14,
+    15
+   ],
+   "target": 16
+  },
+  {
+   "id": "T8",
+   "gate": 25,
+   "kind": "ccx",
+   "controls": [
+    14,
+    15
+   ],
+   "target": 16
+  },
+  {
+   "id": "T9",
+   "gate": 28,
+   "kind": "ccx",
+   "controls": [
+    12,
+    13
+   ],
+   "target": 14
+  },
+  {
+   "id": "T10",
+   "gate": 31,
+   "kind": "ccx",
+   "controls": [
+    10,
+    11
+   ],
+   "target": 12
+  },
+  {
+   "id": "T11",
+   "gate": 34,
+   "kind": "ccx",
+   "controls": [
+    8,
+    9
+   ],
+   "target": 10
+  },
+  {
+   "id": "T12",
+   "gate": 37,
+   "kind": "ccx",
+   "controls": [
+    6,
+    7
+   ],
+   "target": 8
+  },
+  {
+   "id": "T13",
+   "gate": 40,
+   "kind": "ccx",
+   "controls": [
+    4,
+    5
+   ],
+   "target": 6
+  },
+  {
+   "id": "T14",
+   "gate": 43,
+   "kind": "ccx",
+   "controls": [
+    2,
+    3
+   ],
+   "target": 4
+  },
+  {
+   "id": "T15",
+   "gate": 46,
+   "kind": "ccx",
+   "controls": [
+    0,
+    1
+   ],
+   "target": 2
+  }
+ ],
+ "pairs": [
+  {
+   "id": "P0",
+   "first": "T0",
+   "second": "T15",
+   "gates": [
+    2,
+    46
+   ],
+   "kind": "ccx",
+   "target": 2,
+   "controls": [
+    0,
+    1
+   ],
+   "cls": "controls_fixed",
+   "target_written_between": true,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  },
+  {
+   "id": "P1",
+   "first": "T1",
+   "second": "T14",
+   "gates": [
+    5,
+    43
+   ],
+   "kind": "ccx",
+   "target": 4,
+   "controls": [
+    2,
+    3
+   ],
+   "cls": "controls_fixed",
+   "target_written_between": true,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  },
+  {
+   "id": "P2",
+   "first": "T2",
+   "second": "T13",
+   "gates": [
+    8,
+    40
+   ],
+   "kind": "ccx",
+   "target": 6,
+   "controls": [
+    4,
+    5
+   ],
+   "cls": "controls_fixed",
+   "target_written_between": true,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  },
+  {
+   "id": "P3",
+   "first": "T3",
+   "second": "T12",
+   "gates": [
+    11,
+    37
+   ],
+   "kind": "ccx",
+   "target": 8,
+   "controls": [
+    6,
+    7
+   ],
+   "cls": "controls_fixed",
+   "target_written_between": true,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  },
+  {
+   "id": "P4",
+   "first": "T4",
+   "second": "T11",
+   "gates": [
+    14,
+    34
+   ],
+   "kind": "ccx",
+   "target": 10,
+   "controls": [
+    8,
+    9
+   ],
+   "cls": "controls_fixed",
+   "target_written_between": true,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  },
+  {
+   "id": "P5",
+   "first": "T5",
+   "second": "T10",
+   "gates": [
+    17,
+    31
+   ],
+   "kind": "ccx",
+   "target": 12,
+   "controls": [
+    10,
+    11
+   ],
+   "cls": "controls_fixed",
+   "target_written_between": true,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  },
+  {
+   "id": "P6",
+   "first": "T6",
+   "second": "T9",
+   "gates": [
+    20,
+    28
+   ],
+   "kind": "ccx",
+   "target": 14,
+   "controls": [
+    12,
+    13
+   ],
+   "cls": "controls_fixed",
+   "target_written_between": true,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  },
+  {
+   "id": "P7",
+   "first": "T7",
+   "second": "T8",
+   "gates": [
+    23,
+    25
+   ],
+   "kind": "ccx",
+   "target": 16,
+   "controls": [
+    14,
+    15
+   ],
+   "cls": "mirror",
+   "target_written_between": false,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  }
+ ],
+ "unpaired": [],
+ "mcx": [],
+ "qubits": [
+  {
+   "q": 0,
+   "declared_zero": true,
+   "first_touch": "cx-target",
+   "restored": true,
+   "role": "ancilla(clean)"
+  },
+  {
+   "q": 1,
+   "declared_zero": false,
+   "first_touch": "cx-target",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 2,
+   "declared_zero": false,
+   "first_touch": "cx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 3,
+   "declared_zero": false,
+   "first_touch": "cx-target",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 4,
+   "declared_zero": false,
+   "first_touch": "cx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 5,
+   "declared_zero": false,
+   "first_touch": "cx-target",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 6,
+   "declared_zero": false,
+   "first_touch": "cx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 7,
+   "declared_zero": false,
+   "first_touch": "cx-target",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 8,
+   "declared_zero": false,
+   "first_touch": "cx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 9,
+   "declared_zero": false,
+   "first_touch": "cx-target",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 10,
+   "declared_zero": false,
+   "first_touch": "cx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 11,
+   "declared_zero": false,
+   "first_touch": "cx-target",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 12,
+   "declared_zero": false,
+   "first_touch": "cx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 13,
+   "declared_zero": false,
+   "first_touch": "cx-target",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 14,
+   "declared_zero": false,
+   "first_touch": "cx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 15,
+   "declared_zero": false,
+   "first_touch": "cx-target",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 16,
+   "declared_zero": false,
+   "first_touch": "cx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 17,
+   "declared_zero": false,
+   "first_touch": "cx-target",
+   "restored": null,
+   "role": "data"
+  }
+ ],
+ "repeated": [
+  {
+   "pattern": "cx(0,1) cx(0,2) ccx(2,1,0) cx(3,4) cx(3,0) ccx(0,4,3) cx(5,6) cx(5,3)",
+   "count": 2,
+   "at": [
+    0,
+    9
+   ],
+   "k": 8
+  },
+  {
+   "pattern": "cx(0,1) ccx(1,2,0) cx(3,4) cx(3,0) ccx(0,4,3) cx(5,6) cx(5,3) ccx(3,6,5)",
+   "count": 2,
+   "at": [
+    1,
+    10
+   ],
+   "k": 8
+  },
+  {
+   "pattern": "ccx(0,1,2) cx(3,4) cx(3,2) ccx(2,4,3) cx(5,6) cx(5,3) ccx(3,6,5) cx(7,8)",
+   "count": 2,
+   "at": [
+    2,
+    11
+   ],
+   "k": 8
+  },
+  {
+   "pattern": "cx(0,1) ccx(2,3,0) cx(0,2) cx(2,3) ccx(4,5,2) cx(2,4) cx(4,5) ccx(6,7,4)",
+   "count": 2,
+   "at": [
+    24,
+    33
+   ],
+   "k": 8
+  },
+  {
+   "pattern": "ccx(0,1,2) cx(2,0) cx(0,1) ccx(3,4,0) cx(0,3) cx(3,4) ccx(5,6,3) cx(3,5)",
+   "count": 2,
+   "at": [
+    25,
+    34
+   ],
+   "k": 8
+  },
+  {
+   "pattern": "cx(0,1) cx(1,2) ccx(3,4,1) cx(1,3) cx(3,4) ccx(5,6,3) cx(3,5) cx(5,6)",
+   "count": 2,
+   "at": [
+    26,
+    35
+   ],
+   "k": 8
+  }
+ ],
+ "rotations": {
+  "t_like": 0,
+  "s_like": 0,
+  "z": 0
+ },
+ "declared_zero": [
+  0
+ ],
+ "digest": "f7cd164f5820c5c5",
+ "hints": [
+  "ripple-carry-like: 7 Toffoli pairs whose target is modified in between (MAJ/UMA-style compute ... uncompute)"
+ ]
+}

@@ -1,0 +1,390 @@
+{
+ "tag": "dev_v1",
+ "calls_per_circuit": 8,
+ "workers": 4,
+ "circuits": [
+  "barenco_tof_3",
+  "barenco_tof_4",
+  "barenco_tof_5",
+  "csla_mux_3",
+  "cuccaro_4",
+  "cuccaro_8",
+  "gf2^4_mult",
+  "gf2^5_mult",
+  "gf2^6_mult",
+  "mod5_4",
+  "mod_mult_55",
+  "rc_adder_6",
+  "tof_3",
+  "tof_4",
+  "tof_5",
+  "vbe_adder_3"
+ ],
+ "skipped": {
+  "shor_12": "rotation-dominated (cp:490, ccp:150, 5 ccx); toolbox v1 has no rotation route and best_classical() has no comparable row; not run"
+ },
+ "seconds": 860.2,
+ "tokens": {
+  "input_tokens": 905089,
+  "output_tokens": 58206,
+  "calls": 128
+ },
+ "token_cap": 1300000,
+ "frozen_digest": "bc3eac23a403dbc594265a91ebb9f0ff12672dc913c56c5cf5d9d950c2a242c6",
+ "per_circuit": [
+  {
+   "circuit": "barenco_tof_3",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 51386,
+    "output_tokens": 2382,
+    "calls": 8
+   },
+   "llm_seconds": 141.8,
+   "control_seconds": 0.1,
+   "llm_ok": 5,
+   "llm_parse_or_plan_rejects": 0,
+   "llm_verifier_rejects": 3,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "barenco_tof_4",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 54500,
+    "output_tokens": 2554,
+    "calls": 8
+   },
+   "llm_seconds": 145.5,
+   "control_seconds": 0.6,
+   "llm_ok": 5,
+   "llm_parse_or_plan_rejects": 1,
+   "llm_verifier_rejects": 2,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "barenco_tof_5",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 57860,
+    "output_tokens": 3363,
+    "calls": 8
+   },
+   "llm_seconds": 150.0,
+   "control_seconds": 1.5,
+   "llm_ok": 6,
+   "llm_parse_or_plan_rejects": 0,
+   "llm_verifier_rejects": 2,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "csla_mux_3",
+   "normalization": {
+    "ok": true,
+    "certified": false,
+    "method": "basis-sampled",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 56664,
+    "output_tokens": 4850,
+    "calls": 8
+   },
+   "llm_seconds": 164.7,
+   "control_seconds": 0.0,
+   "llm_ok": 8,
+   "llm_parse_or_plan_rejects": 0,
+   "llm_verifier_rejects": 0,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "cuccaro_4",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 56163,
+    "output_tokens": 2375,
+    "calls": 8
+   },
+   "llm_seconds": 155.5,
+   "control_seconds": 2.5,
+   "llm_ok": 7,
+   "llm_parse_or_plan_rejects": 0,
+   "llm_verifier_rejects": 1,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "cuccaro_8",
+   "normalization": {
+    "ok": true,
+    "certified": false,
+    "method": "basis-sampled",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 64801,
+    "output_tokens": 3204,
+    "calls": 8
+   },
+   "llm_seconds": 168.6,
+   "control_seconds": 2.1,
+   "llm_ok": 7,
+   "llm_parse_or_plan_rejects": 1,
+   "llm_verifier_rejects": 0,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "gf2^4_mult",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 56807,
+    "output_tokens": 5905,
+    "calls": 8
+   },
+   "llm_seconds": 201.9,
+   "control_seconds": 3.7,
+   "llm_ok": 6,
+   "llm_parse_or_plan_rejects": 0,
+   "llm_verifier_rejects": 2,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "gf2^5_mult",
+   "normalization": {
+    "ok": true,
+    "certified": false,
+    "method": "basis-sampled",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 61057,
+    "output_tokens": 6596,
+    "calls": 8
+   },
+   "llm_seconds": 198.9,
+   "control_seconds": 31.5,
+   "llm_ok": 5,
+   "llm_parse_or_plan_rejects": 1,
+   "llm_verifier_rejects": 2,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "gf2^6_mult",
+   "normalization": {
+    "ok": true,
+    "certified": false,
+    "method": "basis-sampled",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 66115,
+    "output_tokens": 7624,
+    "calls": 8
+   },
+   "llm_seconds": 245.5,
+   "control_seconds": 250.1,
+   "llm_ok": 2,
+   "llm_parse_or_plan_rejects": 2,
+   "llm_verifier_rejects": 4,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "mod5_4",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 49905,
+    "output_tokens": 2859,
+    "calls": 8
+   },
+   "llm_seconds": 178.4,
+   "control_seconds": 0.1,
+   "llm_ok": 5,
+   "llm_parse_or_plan_rejects": 0,
+   "llm_verifier_rejects": 3,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "mod_mult_55",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 54894,
+    "output_tokens": 5027,
+    "calls": 8
+   },
+   "llm_seconds": 180.1,
+   "control_seconds": 0.5,
+   "llm_ok": 3,
+   "llm_parse_or_plan_rejects": 0,
+   "llm_verifier_rejects": 5,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "rc_adder_6",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 61380,
+    "output_tokens": 3470,
+    "calls": 8
+   },
+   "llm_seconds": 303.0,
+   "control_seconds": 161.7,
+   "llm_ok": 6,
+   "llm_parse_or_plan_rejects": 0,
+   "llm_verifier_rejects": 2,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "tof_3",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 50889,
+    "output_tokens": 1737,
+    "calls": 8
+   },
+   "llm_seconds": 91.5,
+   "control_seconds": 0.2,
+   "llm_ok": 7,
+   "llm_parse_or_plan_rejects": 1,
+   "llm_verifier_rejects": 0,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "tof_4",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 51962,
+    "output_tokens": 1653,
+    "calls": 8
+   },
+   "llm_seconds": 57.5,
+   "control_seconds": 0.2,
+   "llm_ok": 8,
+   "llm_parse_or_plan_rejects": 0,
+   "llm_verifier_rejects": 0,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "tof_5",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 53135,
+    "output_tokens": 1621,
+    "calls": 8
+   },
+   "llm_seconds": 56.2,
+   "control_seconds": 1.0,
+   "llm_ok": 7,
+   "llm_parse_or_plan_rejects": 1,
+   "llm_verifier_rejects": 0,
+   "llm_errors": 0
+  },
+  {
+   "circuit": "vbe_adder_3",
+   "normalization": {
+    "ok": true,
+    "certified": true,
+    "method": "basis-exhaustive",
+    "reason": ""
+   },
+   "llm_evals": 8,
+   "control_evals": 8,
+   "llm_tokens": {
+    "input_tokens": 57571,
+    "output_tokens": 2986,
+    "calls": 8
+   },
+   "llm_seconds": 60.9,
+   "control_seconds": 8.2,
+   "llm_ok": 5,
+   "llm_parse_or_plan_rejects": 1,
+   "llm_verifier_rejects": 2,
+   "llm_errors": 0
+  }
+ ],
+ "errors": {},
+ "model": "claude-sonnet-5"
+}

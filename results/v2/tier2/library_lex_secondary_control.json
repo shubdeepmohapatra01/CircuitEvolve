@@ -1,0 +1,524 @@
+{
+ "format": "circuitevolve.v2.tier2.library/1",
+ "version": "lex-replay-control",
+ "sha256": "4bef8a90eb7cccad9039757cbbf51bd3b874ca21e912a67f8ac2a378c40245d6",
+ "parent_sha256": "e3f42de9ea5ce951dada83aae46237080114108886dd8cbf91983fef2c1a8ccf",
+ "n_rules": 30,
+ "meta": {
+  "arm": "control",
+  "secondary": true,
+  "frozen_note": "SECONDARY replay with (T, gates) acceptance over the recorded verified proposals; not the primary (T-only) library."
+ },
+ "rules": [
+  {
+   "name": "enum31542",
+   "pattern": "cx a b; cx c b; cx c a",
+   "replacement": "cx c a; cx a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31541",
+   "pattern": "cx a b; cx c b; cx a c",
+   "replacement": "cx a c; cx c b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum35625",
+   "pattern": "tdg a; cx b a; cx c a; cx c b; t b",
+   "replacement": "tdg a; cx c b; t b; cx b a",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum1216",
+   "pattern": "s a; t a; cx b a; s a; t a",
+   "replacement": "tdg a; z b; cx b a; tdg a",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31550",
+   "pattern": "cx a b; cx b c; cx a b",
+   "replacement": "cx b c; cx a c",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31535",
+   "pattern": "cx a b; cx a c; cx c b",
+   "replacement": "cx c b; cx a c",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31559",
+   "pattern": "cx a b; cz c a; cz b c",
+   "replacement": "cz b c; cx a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum1198",
+   "pattern": "s a; t a; cx a b; s b; t b",
+   "replacement": "tdg a; z b; cx a b; tdg b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum803",
+   "pattern": "s a; t a; cx b a; z a",
+   "replacement": "z b; tdg a; cx b a",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum650",
+   "pattern": "tdg a; cx b a; s a; sdg b",
+   "replacement": "t a; cz a b; cx b a",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum32094",
+   "pattern": "cx a b; cx c b; tdg b; cx a c",
+   "replacement": "cx a c; cx c b; tdg b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum749",
+   "pattern": "z a; cx b a; s a; t a",
+   "replacement": "z b; cx b a; tdg a",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31574",
+   "pattern": "cz a b; cz c b; cx c a",
+   "replacement": "cx c a; cz a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31551",
+   "pattern": "cx a b; cx c a; cx a b",
+   "replacement": "cx c b; cx c a",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum32013",
+   "pattern": "cx a b; t b; cx b c; cx a c",
+   "replacement": "cx b c; cx a b; t b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum373",
+   "pattern": "s a; t a; cx a b; z b",
+   "replacement": "tdg a; z b; cx a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31539",
+   "pattern": "cx a b; cx c a; cx c b",
+   "replacement": "cx c a; cx a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31534",
+   "pattern": "cx a b; cx a c; cx b c",
+   "replacement": "cx b c; cx a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum315",
+   "pattern": "z a; cz a b; cx a b",
+   "replacement": "cx a b; cz a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum32006",
+   "pattern": "cx a b; s b; cz a c; cz b c",
+   "replacement": "cz b c; cx a b; s b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31556",
+   "pattern": "cx a b; cz c b; cz c a",
+   "replacement": "cz c b; cx a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum886",
+   "pattern": "tdg a; cx b a; s a; s b",
+   "replacement": "t a; cx b a; cz b a",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum32076",
+   "pattern": "cx a b; cx c a; t a; cx a b",
+   "replacement": "cx c a; t a; cx c b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum32078",
+   "pattern": "cx a b; cx c a; tdg a; cx a b",
+   "replacement": "cx c a; tdg a; cx c b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum726",
+   "pattern": "z a; cx a b; s b; t b",
+   "replacement": "z b; cx a b; tdg b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum978",
+   "pattern": "cx a b; cx b a; cx a b; cx b a",
+   "replacement": "cx b a; cx a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -2)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum31566",
+   "pattern": "cz a b; cz a c; cx c b",
+   "replacement": "cx c b; cz a b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum767",
+   "pattern": "z a; cx b a; h b; z a",
+   "replacement": "z b; cx b a; h b",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum32043",
+   "pattern": "cx a b; cx a c; t c; cx c b",
+   "replacement": "cx c b; cx a c; t c",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -1)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 3,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "name": "enum266",
+   "pattern": "cx a b; cx a b",
+   "replacement": "id",
+   "side": "commute",
+   "source": "control",
+   "meaning": "enumerated identity (T -0, gates -2)",
+   "proof": {
+    "method": "basis-exhaustive",
+    "certified": true,
+    "k": 2,
+    "global_phase": [
+     1.0,
+     0.0
+    ]
+   }
+  }
+ ]
+}

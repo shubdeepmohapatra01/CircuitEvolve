@@ -1,0 +1,102 @@
+{
+ "circuit": "grover_5",
+ "python": "3.11.15",
+ "pyzx": "0.10.7",
+ "pytket": "2.18.5",
+ "started": "2026-10-13T22:11:46",
+ "qubits": 9,
+ "logical_counts": {
+  "gates": 255,
+  "t": 0,
+  "ccx": 0,
+  "ccz": 48,
+  "cx": 0,
+  "h": 142,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 336
+ },
+ "cliffordt_counts": {
+  "gates": 831,
+  "t": 336,
+  "ccx": 0,
+  "ccz": 0,
+  "cx": 288,
+  "h": 142,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 336
+ },
+ "provenance": {
+  "logical_vs_cliffordt": {
+   "method": "unitary_dense",
+   "dist": 6.58771808218048e-15,
+   "ok": true,
+   "check_s": 2.88
+  },
+  "logical_vs_feynman": {
+   "method": "unitary_dense",
+   "dist": 1.813449306093597e-14,
+   "ok": true,
+   "check_s": 3.57
+  }
+ },
+ "planted_bug_check": {
+  "method": "unitary_dense",
+  "dist": 0.39018064403225217,
+  "ok": false,
+  "check_s": 5.14
+ },
+ "arms": {
+  "given_cliffordt": {
+   "t_count": 336,
+   "cx": 288,
+   "gates": 831
+  },
+  "pyzx_fr": {
+   "t_count": 166,
+   "rz_other": 0,
+   "cx": 287,
+   "h": 88,
+   "gates": 633,
+   "t_graph": 166,
+   "reduce_s": 0.37,
+   "pipeline_s": 0.51,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 6.155712679638164e-15,
+    "ok": true,
+    "check_s": 5.06
+   }
+  },
+  "tket_fpo": {
+   "t_count": 290,
+   "rz_other": 0,
+   "cx": 288,
+   "h": 270,
+   "gates": 987,
+   "pipeline_s": 1.15,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 1.347499710296846e-14,
+    "ok": true,
+    "check_s": 5.0
+   }
+  },
+  "tket_fpo_logical": {
+   "t_count": 290,
+   "rz_other": 0,
+   "cx": 288,
+   "h": 374,
+   "gates": 1126,
+   "pipeline_s": 1.2,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 2.3400933309859028e-14,
+    "ok": true,
+    "check_s": 5.89
+   }
+  }
+ },
+ "finished": "2026-10-13T22:12:18"
+}

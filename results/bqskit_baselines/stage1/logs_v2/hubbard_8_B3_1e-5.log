@@ -1,0 +1,1 @@
+{"circuit": "hubbard_8", "arm": "B3", "eps": 1e-05, "status": "ok", "t_count": 6470, "n_rz": 102, "cx": 388, "runtime_s": 12.6, "state_dist_vs_orig": 4.7298002269596585e-06, "error": null}

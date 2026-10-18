@@ -1,0 +1,26 @@
+CIRCUIT cuccaro_8: 18 qubits, 49 gates (ccx:16, cx:33); classical reversible (x/cx/ccx + diagonal).
+Naive cost: 112 T (7 per Toffoli, 16 Toffolis).
+Declared zero-init qubits (benchmark contract, start in |0>): ['q0'].
+QUBITS (q: Z=declared zero-init / first touch / R=restored to |0> at end / guessed role):
+  q0:Z/cx-target/R/ancilla(clean); q1:-/cx-target/-/data; q2:-/cx-control/-/data; q3:-/cx-target/-/data; q4:-/cx-control/-/data; q5:-/cx-target/-/data; q6:-/cx-control/-/data; q7:-/cx-target/-/data; q8:-/cx-control/-/data; q9:-/cx-target/-/data; q10:-/cx-control/-/data; q11:-/cx-target/-/data; q12:-/cx-control/-/data; q13:-/cx-target/-/data; q14:-/cx-control/-/data; q15:-/cx-target/-/data; q16:-/cx-control/-/data; q17:-/cx-target/-/data
+TOFFOLIS (id: gate index, kind, controls -> target):
+  T0:g2 ccx q0 q1->q2; T1:g5 ccx q2 q3->q4; T2:g8 ccx q4 q5->q6; T3:g11 ccx q6 q7->q8; T4:g14 ccx q8 q9->q10; T5:g17 ccx q10 q11->q12; T6:g20 ccx q12 q13->q14; T7:g23 ccx q14 q15->q16; T8:g25 ccx q14 q15->q16; T9:g28 ccx q12 q13->q14; T10:g31 ccx q10 q11->q12; T11:g34 ccx q8 q9->q10; T12:g37 ccx q6 q7->q8; T13:g40 ccx q4 q5->q6; T14:g43 ccx q2 q3->q4; T15:g46 ccx q0 q1->q2
+PAIRS (same Toffoli repeated, controls unchanged in between; class: clean = declared-zero target, |0> before, not written between; mirror = target only read between; controls_fixed = target written between):
+  P0 = T0+T15 (g2..g46) target q2 controls q0 q1: controls_fixed
+  P1 = T1+T14 (g5..g43) target q4 controls q2 q3: controls_fixed
+  P2 = T2+T13 (g8..g40) target q6 controls q4 q5: controls_fixed
+  P3 = T3+T12 (g11..g37) target q8 controls q6 q7: controls_fixed
+  P4 = T4+T11 (g14..g34) target q10 controls q8 q9: controls_fixed
+  P5 = T5+T10 (g17..g31) target q12 controls q10 q11: controls_fixed
+  P6 = T6+T9 (g20..g28) target q14 controls q12 q13: controls_fixed
+  P7 = T7+T8 (g23..g25) target q16 controls q14 q15: mirror
+UNPAIRED TOFFOLIS: none
+REPEATED BLOCKS (gate pattern with relabelled qubits, count):
+  [cx(0,1) cx(0,2) ccx(2,1,0) cx(3,4) cx(3,0) ccx(0,4,3) cx(5,6) cx(5,3)] x2 at gates [0, 9]
+  [cx(0,1) ccx(1,2,0) cx(3,4) cx(3,0) ccx(0,4,3) cx(5,6) cx(5,3) ccx(3,6,5)] x2 at gates [1, 10]
+  [ccx(0,1,2) cx(3,4) cx(3,2) ccx(2,4,3) cx(5,6) cx(5,3) ccx(3,6,5) cx(7,8)] x2 at gates [2, 11]
+  [cx(0,1) ccx(2,3,0) cx(0,2) cx(2,3) ccx(4,5,2) cx(2,4) cx(4,5) ccx(6,7,4)] x2 at gates [24, 33]
+ROTATIONS (non-Toffoli phase gates): {'t_like': 0, 's_like': 0, 'z': 0}
+SUBROUTINE GUESSES: ripple-carry-like: 7 Toffoli pairs whose target is modified in between (MAJ/UMA-style compute ... uncompute)
+NORMALIZED LOGICAL GATES (g<index>):
+  g0 cx q2 -> q1; g1 cx q2 -> q0; g2 ccx q0 q1 -> q2; g3 cx q4 -> q3; g4 cx q4 -> q2; g5 ccx q2 q3 -> q4; g6 cx q6 -> q5; g7 cx q6 -> q4; g8 ccx q4 q5 -> q6; g9 cx q8 -> q7; g10 cx q8 -> q6; g11 ccx q6 q7 -> q8; g12 cx q10 -> q9; g13 cx q10 -> q8; g14 ccx q8 q9 -> q10; g15 cx q12 -> q11; g16 cx q12 -> q10; g17 ccx q10 q11 -> q12; g18 cx q14 -> q13; g19 cx q14 -> q12; g20 ccx q12 q13 -> q14; g21 cx q16 -> q15; g22 cx q16 -> q14; g23 ccx q14 q15 -> q16; g24 cx q16 -> q17; g25 ccx q14 q15 -> q16; g26 cx q16 -> q14; g27 cx q14 -> q15; g28 ccx q12 q13 -> q14; g29 cx q14 -> q12; g30 cx q12 -> q13; g31 ccx q10 q11 -> q12; g32 cx q12 -> q10; g33 cx q10 -> q11; g34 ccx q8 q9 -> q10; g35 cx q10 -> q8; g36 cx q8 -> q9; g37 ccx q6 q7 -> q8; g38 cx q8 -> q6; g39 cx q6 -> q7; g40 ccx q4 q5 -> q6; g41 cx q6 -> q4; g42 cx q4 -> q5; g43 ccx q2 q3 -> q4; g44 cx q4 -> q2; g45 cx q2 -> q3; g46 ccx q0 q1 -> q2; g47 cx q2 -> q0; g48 cx q0 -> q1

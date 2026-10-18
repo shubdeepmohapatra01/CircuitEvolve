@@ -1,0 +1,45 @@
+{
+ "blinded": false,
+ "next_id": 2,
+ "settings": {
+  "ab_fraction": 0.5,
+  "min_exposure": 8,
+  "max_exposure": 40,
+  "z_promote": 1.64,
+  "min_pass_with": 3,
+  "z_retire": -1.0,
+  "evidence": "improvement",
+  "banned_words": []
+ },
+ "rules": [
+  {
+   "id": "R1",
+   "text": "Before you answer, read your reply once more and check that every line follows the exact output format given in the instructions (names, labels, number format, block markers); a malformed line wastes the attempt. Keep the answer concise and do not add commentary outside the requested blocks.",
+   "status": "active",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 0,
+   "improvements": 0,
+   "note": "(placebo control: generic, task-agnostic; hand-written, no evidence)",
+   "with_prompts": 0,
+   "with_improvements": 0,
+   "without_prompts": 0,
+   "without_improvements": 0
+  }
+ ],
+ "history": [
+  {
+   "call": 0,
+   "op": "add",
+   "id": "R1",
+   "status": "active",
+   "text": "Before you answer, read your reply once more and check that every line follows the exact output format given in the instructions (names, labels, number format, block markers); a malformed line wastes the attempt. Keep the answer concise and do not add commentary outside the requested blocks.",
+   "supersedes": null
+  }
+ ]
+}

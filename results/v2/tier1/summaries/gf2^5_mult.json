@@ -1,0 +1,446 @@
+{
+ "name": "gf2^5_mult",
+ "n": 15,
+ "n_gates": 29,
+ "gate_counts": {
+  "ccx": 25,
+  "cx": 4
+ },
+ "classical": true,
+ "toffolis": [
+  {
+   "id": "T0",
+   "gate": 0,
+   "kind": "ccx",
+   "controls": [
+    4,
+    6
+   ],
+   "target": 10
+  },
+  {
+   "id": "T1",
+   "gate": 1,
+   "kind": "ccx",
+   "controls": [
+    3,
+    7
+   ],
+   "target": 10
+  },
+  {
+   "id": "T2",
+   "gate": 2,
+   "kind": "ccx",
+   "controls": [
+    2,
+    8
+   ],
+   "target": 10
+  },
+  {
+   "id": "T3",
+   "gate": 3,
+   "kind": "ccx",
+   "controls": [
+    1,
+    9
+   ],
+   "target": 10
+  },
+  {
+   "id": "T4",
+   "gate": 4,
+   "kind": "ccx",
+   "controls": [
+    4,
+    7
+   ],
+   "target": 11
+  },
+  {
+   "id": "T5",
+   "gate": 5,
+   "kind": "ccx",
+   "controls": [
+    3,
+    8
+   ],
+   "target": 11
+  },
+  {
+   "id": "T6",
+   "gate": 6,
+   "kind": "ccx",
+   "controls": [
+    2,
+    9
+   ],
+   "target": 11
+  },
+  {
+   "id": "T7",
+   "gate": 7,
+   "kind": "ccx",
+   "controls": [
+    4,
+    8
+   ],
+   "target": 12
+  },
+  {
+   "id": "T8",
+   "gate": 8,
+   "kind": "ccx",
+   "controls": [
+    3,
+    9
+   ],
+   "target": 12
+  },
+  {
+   "id": "T9",
+   "gate": 9,
+   "kind": "ccx",
+   "controls": [
+    4,
+    9
+   ],
+   "target": 13
+  },
+  {
+   "id": "T10",
+   "gate": 14,
+   "kind": "ccx",
+   "controls": [
+    4,
+    5
+   ],
+   "target": 14
+  },
+  {
+   "id": "T11",
+   "gate": 15,
+   "kind": "ccx",
+   "controls": [
+    3,
+    6
+   ],
+   "target": 14
+  },
+  {
+   "id": "T12",
+   "gate": 16,
+   "kind": "ccx",
+   "controls": [
+    2,
+    7
+   ],
+   "target": 14
+  },
+  {
+   "id": "T13",
+   "gate": 17,
+   "kind": "ccx",
+   "controls": [
+    1,
+    8
+   ],
+   "target": 14
+  },
+  {
+   "id": "T14",
+   "gate": 18,
+   "kind": "ccx",
+   "controls": [
+    0,
+    9
+   ],
+   "target": 14
+  },
+  {
+   "id": "T15",
+   "gate": 19,
+   "kind": "ccx",
+   "controls": [
+    3,
+    5
+   ],
+   "target": 13
+  },
+  {
+   "id": "T16",
+   "gate": 20,
+   "kind": "ccx",
+   "controls": [
+    2,
+    6
+   ],
+   "target": 13
+  },
+  {
+   "id": "T17",
+   "gate": 21,
+   "kind": "ccx",
+   "controls": [
+    1,
+    7
+   ],
+   "target": 13
+  },
+  {
+   "id": "T18",
+   "gate": 22,
+   "kind": "ccx",
+   "controls": [
+    0,
+    8
+   ],
+   "target": 13
+  },
+  {
+   "id": "T19",
+   "gate": 23,
+   "kind": "ccx",
+   "controls": [
+    2,
+    5
+   ],
+   "target": 12
+  },
+  {
+   "id": "T20",
+   "gate": 24,
+   "kind": "ccx",
+   "controls": [
+    1,
+    6
+   ],
+   "target": 12
+  },
+  {
+   "id": "T21",
+   "gate": 25,
+   "kind": "ccx",
+   "controls": [
+    0,
+    7
+   ],
+   "target": 12
+  },
+  {
+   "id": "T22",
+   "gate": 26,
+   "kind": "ccx",
+   "controls": [
+    1,
+    5
+   ],
+   "target": 11
+  },
+  {
+   "id": "T23",
+   "gate": 27,
+   "kind": "ccx",
+   "controls": [
+    0,
+    6
+   ],
+   "target": 11
+  },
+  {
+   "id": "T24",
+   "gate": 28,
+   "kind": "ccx",
+   "controls": [
+    0,
+    5
+   ],
+   "target": 10
+  }
+ ],
+ "pairs": [],
+ "unpaired": [
+  "T0",
+  "T1",
+  "T2",
+  "T3",
+  "T4",
+  "T5",
+  "T6",
+  "T7",
+  "T8",
+  "T9",
+  "T10",
+  "T11",
+  "T12",
+  "T13",
+  "T14",
+  "T15",
+  "T16",
+  "T17",
+  "T18",
+  "T19",
+  "T20",
+  "T21",
+  "T22",
+  "T23",
+  "T24"
+ ],
+ "mcx": [],
+ "qubits": [
+  {
+   "q": 0,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 1,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 2,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 3,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 4,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 5,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 6,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 7,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 8,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 9,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 10,
+   "declared_zero": true,
+   "first_touch": "ccx-target",
+   "restored": false,
+   "role": "output(starts |0>)"
+  },
+  {
+   "q": 11,
+   "declared_zero": true,
+   "first_touch": "ccx-target",
+   "restored": false,
+   "role": "output(starts |0>)"
+  },
+  {
+   "q": 12,
+   "declared_zero": true,
+   "first_touch": "ccx-target",
+   "restored": false,
+   "role": "output(starts |0>)"
+  },
+  {
+   "q": 13,
+   "declared_zero": true,
+   "first_touch": "ccx-target",
+   "restored": false,
+   "role": "output(starts |0>)"
+  },
+  {
+   "q": 14,
+   "declared_zero": true,
+   "first_touch": "cx-target",
+   "restored": false,
+   "role": "output(starts |0>)"
+  }
+ ],
+ "repeated": [
+  {
+   "pattern": "ccx(0,1,2) ccx(3,4,2) ccx(5,6,2) ccx(7,8,2)",
+   "count": 3,
+   "at": [
+    0,
+    14,
+    19
+   ],
+   "k": 4
+  },
+  {
+   "pattern": "ccx(0,1,2) ccx(3,4,2) ccx(5,6,7)",
+   "count": 3,
+   "at": [
+    2,
+    17,
+    21
+   ],
+   "k": 3
+  },
+  {
+   "pattern": "ccx(0,1,2) ccx(3,4,5) ccx(6,7,5)",
+   "count": 3,
+   "at": [
+    3,
+    18,
+    22
+   ],
+   "k": 3
+  }
+ ],
+ "rotations": {
+  "t_like": 0,
+  "s_like": 0,
+  "z": 0
+ },
+ "declared_zero": [
+  10,
+  11,
+  12,
+  13,
+  14
+ ],
+ "digest": "a90ce16f5e4f6e54",
+ "hints": [
+  "25 unpaired Toffolis write into declared zero-init qubits (accumulation into an output register, multiplier-like)"
+ ]
+}

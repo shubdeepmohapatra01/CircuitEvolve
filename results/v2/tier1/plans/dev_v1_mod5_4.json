@@ -1,0 +1,187 @@
+{
+ "circuit": "mod5_4",
+ "tag": "dev_v1",
+ "summary_digest": "38152c2c3f98da60",
+ "normalization": {
+  "ok": true,
+  "certified": true,
+  "method": "basis-exhaustive",
+  "reason": ""
+ },
+ "best_classical": {
+  "t": 7.0,
+  "arm": "kvdw2020_pyzx_todd",
+  "ties": [
+   "kvdw2020_pyzx_todd"
+  ],
+  "origin": "results/v2/baselines_new.csv | published:KvdW2020",
+  "runs": {
+   "pyzx_fr": 8.0,
+   "tket_fpo": 26.0,
+   "nam_light_file": 16.0,
+   "nam_heavy_file": 16.0
+  },
+  "text": "7 (kvdw2020_pyzx_todd; pyzx_fr=8.0, tket_fpo=26.0)"
+ },
+ "plans": {
+  "llm/exact": {
+   "plan": {
+    "target": "exact",
+    "decisions": [
+     {
+      "element": "T0",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T1",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T2",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T3",
+      "route": "toffoli_7T"
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "This is the EXACT track, so relaxed routes (clean_and/jones_toffoli) are invalid and were correctly rejected; fall back to exact 7T Toffolis for all four gates and let pyzx/tket's phase-folding and ZX simplification merge parities across the shared target q4 to approach the known 7-T optimum."
+   },
+   "t_count": 8,
+   "t_depth": 4,
+   "qubits": 5,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": true,
+   "method": "basis-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "toffoli_7T",
+    "T1": "toffoli_7T",
+    "T2": "toffoli_7T",
+    "T3": "toffoli_7T"
+   },
+   "call": 1,
+   "variant": null,
+   "digest": "ebb2f833502c1129"
+  },
+  "llm/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "T0",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T1",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T2",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T3",
+      "route": "jones_toffoli"
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "q4 is not clean before any Toffoli (an X is applied first, then it accumulates), so clean_and is invalid for all four; jones_toffoli handles in-place dirty-target Toffolis correctly via a fresh ancilla AND plus measurement uncompute, giving 4 T each (16 T total) instead of 7 T each (28 T)."
+   },
+   "t_count": 16,
+   "t_depth": 8,
+   "qubits": 6,
+   "ancillas": 1,
+   "measurements": 4,
+   "verdict_mode": "relaxed",
+   "certified": true,
+   "method": "branchwise-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "jones_toffoli",
+    "T1": "jones_toffoli",
+    "T2": "jones_toffoli",
+    "T3": "jones_toffoli"
+   },
+   "call": 2,
+   "variant": null,
+   "digest": "5bc96e0778d3a135"
+  },
+  "control/exact": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V1 (spec) + pyzx"
+   },
+   "t_count": 8,
+   "t_depth": 4,
+   "qubits": 5,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": true,
+   "method": "basis-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "toffoli_7T",
+    "T1": "toffoli_7T",
+    "T2": "toffoli_7T",
+    "T3": "toffoli_7T"
+   },
+   "call": 0,
+   "variant": "V1",
+   "digest": "ebb2f833502c1129"
+  },
+  "control/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "T0",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T1",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T2",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T3",
+      "route": "jones_toffoli"
+     }
+    ],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V2 (max_relaxed) + pyzx"
+   },
+   "t_count": 16,
+   "t_depth": 8,
+   "qubits": 6,
+   "ancillas": 1,
+   "measurements": 4,
+   "verdict_mode": "relaxed",
+   "certified": true,
+   "method": "branchwise-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "jones_toffoli",
+    "T1": "jones_toffoli",
+    "T2": "jones_toffoli",
+    "T3": "jones_toffoli"
+   },
+   "call": 1,
+   "variant": "V2",
+   "digest": "5bc96e0778d3a135"
+  }
+ }
+}

@@ -1,0 +1,88 @@
+{
+ "circuit": "qpe_8",
+ "arm": "B3",
+ "eps": 0.001,
+ "status": "ok",
+ "t_count": 39605,
+ "cx": 234,
+ "n_rz": 560,
+ "eps_per_rz": 1.7857142857142858e-07,
+ "gridsynth_algorithmic_error": 0.0001,
+ "residual_rz": 0,
+ "other_ops": {
+  "identity1": 54
+ },
+ "runtime_s": 180.7,
+ "verify_s": 4.7,
+ "state_dist_vs_orig": 0.00010874264528473126,
+ "state_dist_vs_input": 0.00010874264528792419,
+ "state_dist_input_vs_cliffrz": 0.000108817405327249,
+ "stages": {
+  "input": {
+   "rz": 508,
+   "t": 0,
+   "params": 508,
+   "ops": 1034
+  },
+  "after_dpf": {
+   "rz": 126,
+   "t": 234,
+   "params": 126,
+   "ops": 1124,
+   "elapsed_s": 143.5
+  },
+  "output": {
+   "rz": 0,
+   "t": 39605,
+   "params": 0,
+   "ops": 101504
+  }
+ },
+ "gate_counts": {
+  "SdgGate": 57,
+  "HGate": 39852,
+  "CNOTGate": 234,
+  "SGate": 20807,
+  "SqrtXGate": 533,
+  "XGate": 286,
+  "TGate": 39536,
+  "YGate": 1,
+  "ZGate": 75,
+  "TdgGate": 69,
+  "IdentityGate(1)": 54
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 560,
+    "algorithmic_error": 0.0001,
+    "precision_per_rz": 1.7857142857142858e-07
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 47,
+   "distinct": [
+    2.5e-06,
+    0.00014285714285714287
+   ]
+  },
+  "assign_errors": [
+   {
+    "num_blocks": 40,
+    "algorithmic_error": 0.0001
+   }
+  ],
+  "partitions": [
+   {
+    "num_blocks": 7,
+    "block_size": 4,
+    "partitioner": "Quick",
+    "ops_before": 1034
+   }
+  ],
+  "dump_pregs": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/stage1/outputs_v2/qpe_8_B3_e3_pregs.qasm.gz",
+  "gridsynth_panic_retries": []
+ },
+ "output": "qpe_8_B3_e3.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1"
+}

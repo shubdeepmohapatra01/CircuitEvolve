@@ -1,0 +1,1 @@
+{"circuit": "tof_10", "seconds": 32.9, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 71, false], ["tier1_control", "relaxed", 36, false], ["tier2_final", "exact", 71, false], ["tier2_lexsec", "exact", 71, false], ["tier1+tier2_final", "exact", 71, false], ["tier1+tier2_lexsec", "exact", 71, false]]}

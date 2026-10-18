@@ -1,0 +1,85 @@
+{
+ "circuit": "hhl_8",
+ "arm": "B2ft",
+ "eps": 0.001,
+ "status": "ok",
+ "t_count": 63233,
+ "cx": 355,
+ "n_rz": 999,
+ "eps_per_rz": 1.001001001001001e-06,
+ "gridsynth_algorithmic_error": 0.001,
+ "residual_rz": 0,
+ "other_ops": {
+  "identity1": 133
+ },
+ "runtime_s": 93.5,
+ "verify_s": 6.3,
+ "state_dist_vs_orig": 4.114814978575207e-05,
+ "state_dist_vs_input": 4.1148149789727754e-05,
+ "state_dist_input_vs_cliffrz": null,
+ "stages": {
+  "input": {
+   "rz": 1101,
+   "t": 0,
+   "params": 1101,
+   "ops": 2205
+  },
+  "output": {
+   "rz": 0,
+   "t": 63233,
+   "params": 0,
+   "ops": 163162
+  }
+ },
+ "gate_counts": {
+  "ZGate": 296,
+  "TdgGate": 45,
+  "HGate": 63685,
+  "SdgGate": 147,
+  "SGate": 33613,
+  "YGate": 1,
+  "SqrtXGate": 1192,
+  "XGate": 507,
+  "TGate": 63188,
+  "IdentityGate(1)": 133,
+  "CNOTGate": 355
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 999,
+    "algorithmic_error": 0.001,
+    "precision_per_rz": 1.001001001001001e-06
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 63,
+   "distinct": [
+    1.5873015873015872e-05
+   ]
+  },
+  "assign_errors": [
+   {
+    "num_blocks": 63,
+    "algorithmic_error": 0.001
+   }
+  ],
+  "partitions": [],
+  "gridsynth_panic_retries": [
+   {
+    "theta": "3.8014601196981093",
+    "precision": "1.001001001001001e-06",
+    "error": "Invalid coefficients for inverse sqrt2 multiplication",
+    "resolved_by": "fresh subprocess attempt 1"
+   },
+   {
+    "theta": "0.4164522293774553",
+    "precision": "1.001001001001001e-06",
+    "error": "Invalid coefficients for inverse sqrt2 multiplication",
+    "resolved_by": "fresh subprocess attempt 1"
+   }
+  ]
+ },
+ "output": "hhl_8_B2ft_e3.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1"
+}

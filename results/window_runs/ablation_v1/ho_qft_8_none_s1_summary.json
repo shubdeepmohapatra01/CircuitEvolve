@@ -1,0 +1,93 @@
+{
+ "tag": "ho_qft_8_none_s1",
+ "name": "qft_8",
+ "input_source": "results/bqskit_baselines/stage1/inputs/qft_8_tket.qasm",
+ "n": 8,
+ "eps": 0.001,
+ "calls": 20,
+ "stats": {
+  "proposal_calls": 20,
+  "reflect_calls": 0,
+  "llm_errors": 0,
+  "declined": 17,
+  "candidates": 3,
+  "parse_errors": 0,
+  "verified": 0,
+  "rejected_verifier": 3,
+  "rejected_metric": 0,
+  "rejected_ledger": 0,
+  "rejected_whole": 0,
+  "accepted": 0,
+  "accepted_t_reduced": 0,
+  "exact_accepts": 0,
+  "approx_accepts": 0,
+  "rules_added": 0,
+  "reflect_skipped_no_evidence": 0,
+  "window_proposals": 1,
+  "fix_proposals": 2,
+  "refit_failed": 0,
+  "accepted_window": 0,
+  "accepted_fix": 0,
+  "rotations_removed_window": 0,
+  "rotations_removed_fix": 0
+ },
+ "backend_stats": {
+  "calls": 20,
+  "input_tokens": 37415,
+  "output_tokens": 11346,
+  "ok": 20,
+  "failed": 0
+ },
+ "t_before": 2391,
+ "t_after": 2391,
+ "before": {
+  "t": 2391,
+  "t_fixed": 15,
+  "t_gs": 2376,
+  "rz": 48,
+  "cx": 68,
+  "gates": 139,
+  "eps_rz": 2.083333333324288e-05
+ },
+ "after": {
+  "t": 2391,
+  "t_fixed": 15,
+  "t_gs": 2376,
+  "rz": 48,
+  "cx": 68,
+  "gates": 139,
+  "eps_rz": 2.083333333324288e-05
+ },
+ "t_after_reclaimed": 2391,
+ "ledger": {
+  "eps_total": 0.001,
+  "window_pool": 0.00025,
+  "eps_synth": 0.0009999999999956582,
+  "d_input": 4.341858697282516e-15,
+  "window_spent": 0.0,
+  "window_spent_rounded": 0.0,
+  "n_window_charges": 0,
+  "eps_rz": 2.083333333324288e-05,
+  "bound": 0.001,
+  "reclaimed_eps_synth": 0.0009999999999956582,
+  "rule": "v1: window pool cap 0.25 eps, synthesis = eps - d_input - ceil_q(spent)"
+ },
+ "final_check_vs_original": {
+  "ok": true,
+  "verified": true,
+  "method": "unitary",
+  "dist": 4.341858697282516e-15,
+  "bound": 4.341858697282516e-15
+ },
+ "archive": [
+  {
+   "t": 2391,
+   "rz": 48,
+   "spent": 0.0,
+   "digest": "b2bb2d38f68048e5"
+  }
+ ],
+ "seconds": 48.3,
+ "verifier_digest": "bc3eac23a403dbc5",
+ "playbook": null
+}

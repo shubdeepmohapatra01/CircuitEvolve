@@ -1,0 +1,153 @@
+{
+ "blinded": false,
+ "next_id": 6,
+ "settings": {
+  "ab_fraction": 0.5,
+  "min_exposure": 8,
+  "max_exposure": 40,
+  "z_promote": 1.64,
+  "min_pass_with": 3,
+  "z_retire": -1.0,
+  "evidence": "improvement",
+  "banned_words": []
+ },
+ "rules": [
+  {
+   "id": "R1",
+   "text": "Rz angle merges: combining two rz(a) on the same qubit (removing a cx-conjugation pair) only preserves the unitary if the merged angle equals the sum/difference consistent with the sign flip the cx conjugation applies, not just one of the two original angles. Check both +a and -a combinations against the full matrix before fixing an op to 0.",
+   "status": "candidate",
+   "created_call": 24,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 1,
+   "with_pass": 1,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 11,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 11,
+   "with_improvements": 0,
+   "without_prompts": 8,
+   "without_improvements": 0
+  },
+  {
+   "id": "R2",
+   "text": "When deleting an rz(angle) q between two cx q_c q_t conjugations (cx; rz; cx with same control/target), the deletion is only valid if the angle is 0 or the rz actually commutes trivially (angle encodes a global phase only on |1> of control-affected subspace); e.g. 'fix op N->0' failed at distance 9.8e-2, so verify commutation algebraically, not by pattern match alone.",
+   "status": "candidate",
+   "created_call": 24,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 1,
+   "with_pass": 1,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 11,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 11,
+   "with_improvements": 0,
+   "without_prompts": 8,
+   "without_improvements": 0
+  },
+  {
+   "id": "R3",
+   "text": "Replacing rz(angle) with rz(-angle) ('fix op i->-angle') is only correct if an odd number of X/CX-like sign flips act on that qubit between the original definition and this site; verify qubit parity along the circuit, since two such flips (e.g. q1) failed at distance 1.96e-01.",
+   "status": "candidate",
+   "created_call": 24,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 1,
+   "with_pass": 1,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 6,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 6,
+   "with_improvements": 0,
+   "without_prompts": 13,
+   "without_improvements": 0
+  },
+  {
+   "id": "R4",
+   "text": "cx q1 q0; rz(angle) q0; cx q1 q0 conjugation does NOT change sign or commute trivially when q1 (control) is untouched between: only rz on the TARGET qubit of a cx is invariant under that cx-conjugation; verify by matrix, since rz(-0.3927) q0 wrapped this way failed at distance 1.96e-01, same magnitude as R3's example.",
+   "status": "candidate",
+   "created_call": 34,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 6,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 6,
+   "with_improvements": 0,
+   "without_prompts": 4,
+   "without_improvements": 0
+  },
+  {
+   "id": "R5",
+   "text": "When proposing 'fix op i->X, op j->Y' for a pair of rz angles that look related (e.g. one is roughly double or half the other, or negatives), test the combined effect on the full circuit unitary, not each op independently; two internally-plausible single-op fixes combined (e.g. -2*pi/8 and 2*pi/8) produced distance 3.9e-01, far worse than either alone.",
+   "status": "candidate",
+   "created_call": 34,
+   "origin": "reflector",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 4,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 4,
+   "with_improvements": 0,
+   "without_prompts": 6,
+   "without_improvements": 0
+  }
+ ],
+ "history": [
+  {
+   "call": 24,
+   "op": "add",
+   "id": "R1",
+   "status": "candidate",
+   "text": "Rz angle merges: combining two rz(a) on the same qubit (removing a cx-conjugation pair) only preserves the unitary if the merged angle equals the sum/difference consistent with the sign flip the cx conjugation applies, not just one of the two original angles. Check both +a and -a combinations against the full matrix before fixing an op to 0.",
+   "supersedes": null
+  },
+  {
+   "call": 24,
+   "op": "add",
+   "id": "R2",
+   "status": "candidate",
+   "text": "When deleting an rz(angle) q between two cx q_c q_t conjugations (cx; rz; cx with same control/target), the deletion is only valid if the angle is 0 or the rz actually commutes trivially (angle encodes a global phase only on |1> of control-affected subspace); e.g. 'fix op N->0' failed at distance 9.8e-2, so verify commutation algebraically, not by pattern match alone.",
+   "supersedes": null
+  },
+  {
+   "call": 24,
+   "op": "add",
+   "id": "R3",
+   "status": "candidate",
+   "text": "Replacing rz(angle) with rz(-angle) ('fix op i->-angle') is only correct if an odd number of X/CX-like sign flips act on that qubit between the original definition and this site; verify qubit parity along the circuit, since two such flips (e.g. q1) failed at distance 1.96e-01.",
+   "supersedes": null
+  },
+  {
+   "call": 34,
+   "op": "add",
+   "id": "R4",
+   "status": "candidate",
+   "text": "cx q1 q0; rz(angle) q0; cx q1 q0 conjugation does NOT change sign or commute trivially when q1 (control) is untouched between: only rz on the TARGET qubit of a cx is invariant under that cx-conjugation; verify by matrix, since rz(-0.3927) q0 wrapped this way failed at distance 1.96e-01, same magnitude as R3's example.",
+   "supersedes": null
+  },
+  {
+   "call": 34,
+   "op": "add",
+   "id": "R5",
+   "status": "candidate",
+   "text": "When proposing 'fix op i->X, op j->Y' for a pair of rz angles that look related (e.g. one is roughly double or half the other, or negatives), test the combined effect on the full circuit unitary, not each op independently; two internally-plausible single-op fixes combined (e.g. -2*pi/8 and 2*pi/8) produced distance 3.9e-01, far worse than either alone.",
+   "supersedes": null
+  }
+ ]
+}

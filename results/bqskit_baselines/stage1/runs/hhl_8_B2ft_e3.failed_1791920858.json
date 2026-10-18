@@ -1,0 +1,97 @@
+{
+ "circuit": "hhl_8",
+ "arm": "B2ft",
+ "eps": 0.001,
+ "status": "error",
+ "error": "PanicException: Invalid coefficients for inverse sqrt2 multiplication",
+ "traceback": "^^^^^\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/compiler/compile.py\", line 636, in compile\n    out, data = compiler.compile(in_circuit, workflow, True)\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py\", line 93, in compile\n    return self.result(self.submit(circuit, workflow, request_data, logging_level,\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py\", line 83, in submit\n    asyncio.run(wf.run(circ, pd))\n  File \"/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py\", line 195, in run\n    return runner.run(main)\n           ^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py\", line 691, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/compiler/workflow.py\", line 75, in run\n    await pass_obj.run(circuit, data)\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py\", line 153, in gs_run\n    await g_run(self, circuit, data)\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/ft/ftpasses/gridsynth.py\", line 63, in run\n    gg_circs = await get_runtime().map(\n               ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/serial_runtime.py\", line 37, in _run\n    return [await self._call(fn, *a, **kwargs) for a in zip(*args)]\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/serial_runtime.py\", line 32, in _call\n    r = await r\n        ^^^^^^^\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/ft/ftpasses/gridsynth.py\", line 22, in run_rz\n    result = rsgridsynth.synth(\n             ^^^^^^^^^^^^^^^^^^\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py\", line 121, in synth\n    return _rs.synth(theta_s, prec_s, **kw)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\npyo3_runtime.PanicException: Invalid coefficients for inverse sqrt2 multiplication\n",
+ "wall_s": 122.8,
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 1059,
+    "algorithmic_error": 0.001,
+    "precision_per_rz": 9.442870632672333e-07
+   }
+  ],
+  "dpf_thresholds": [
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05,
+   1.5873015873015872e-05
+  ],
+  "assign_errors": [
+   {
+    "num_blocks": 63,
+    "algorithmic_error": 0.001
+   }
+  ],
+  "partitions": [],
+  "gridsynth_panic_retries": [
+   {
+    "theta": "-0.3389454153056768",
+    "precision": "9.442870632672333e-07",
+    "error": "Invalid coefficients for inverse sqrt2 multiplication"
+   }
+  ]
+ }
+}

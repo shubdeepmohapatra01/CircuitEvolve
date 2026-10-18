@@ -17,16 +17,81 @@ rewrite of the whole circuit.
 from __future__ import annotations
 
 import hashlib
+import math
+import re
 from dataclasses import dataclass, field
 
 from ..blocks import REPO
-from ..blocks.circuit_io import classify_angle, emit_rz, ops_to_qasm, qasm_to_ops
+from ..blocks.circuit_io import classify_angle, emit_rz, ops_to_qasm
 
 CORE_GATES = frozenset({"h", "s", "sdg", "x", "z", "t", "tdg", "cx", "cz", "rz"})
 STAGE1 = ("qft_8", "qpe_8", "qae_13", "heisenberg_6", "tfim_6", "hubbard_8", "qml_13", "hhl_8")
 STAGE1_INPUTS = REPO / "results" / "bqskit_baselines" / "stage1" / "inputs"
 WINDOW_QUBITS = 4
 WINDOW_GATES = 40
+
+
+NUM = r"(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?"
+ANGLE_RE = re.compile(rf"^([+-])?\s*(?:({NUM})\s*\*?\s*)?(pi)?\s*(?:/\s*({NUM}))?$")
+
+
+class ParseError(ValueError):
+    pass
+
+
+def parse_angle(text: str) -> float:
+    m = ANGLE_RE.match(text.strip().replace("\u03c0", "pi"))
+    if not m or not (m.group(2) or m.group(3)):
+        raise ParseError(f"bad angle {text!r}")
+    sign, num, pi, den = m.groups()
+    v = float(num) if num else 1.0
+    if pi:
+        v *= math.pi
+    if den:
+        d = float(den)
+        if d == 0:
+            raise ParseError("division by zero in angle")
+        v /= d
+    v = -v if sign == "-" else v
+    if not math.isfinite(v):
+        raise ParseError(f"non-finite angle {text!r}")
+    return v
+
+
+QREG_RE = re.compile(r"^qreg\s+([A-Za-z_]\w*)\s*\[\s*(\d+)\s*\]\s*;$")
+GATE_LINE_RE = re.compile(r"^([a-z]+)\s*(?:\(([^()]*)\))?\s+(.+?)\s*;$")
+ARG_RE = re.compile(r"^([A-Za-z_]\w*)\s*\[\s*(\d+)\s*\]$")
+SKIP = ("OPENQASM", "include", "creg", "measure", "barrier", "//")
+
+
+def read_qasm(text: str) -> tuple[list, int]:
+    """OpenQASM 2 -> (ops, n) over {h,s,sdg,x,z,t,tdg,cx,cz,rz}. Several qregs are concatenated in
+    declaration order (the BQSKit / qiskit convention). rz angles may be decimals or pytket's `k*pi` form;
+    they go through the literal parse_angle (no eval). Unknown gates raise ValueError."""
+    offs, n, ops = {}, 0, []
+    for raw in text.splitlines():
+        line = raw.split("//", 1)[0].strip()
+        if not line or line.startswith(SKIP):
+            continue
+        m = QREG_RE.match(line)
+        if m:
+            offs[m.group(1)] = n
+            n += int(m.group(2))
+            continue
+        m = GATE_LINE_RE.match(line)
+        if not m:
+            raise ValueError(f"cannot parse QASM line {raw!r}")
+        g, arg, args = m.groups()
+        if g not in CORE_GATES:
+            raise ValueError(f"gate {g!r} is not in the Clifford+Rz core gate set")
+        qs = []
+        for a in args.split(","):
+            am = ARG_RE.match(a.strip())
+            if not am or am.group(1) not in offs:
+                raise ValueError(f"bad qubit argument {a!r} in {raw!r}")
+            qs.append(offs[am.group(1)] + int(am.group(2)))
+        ops.append((g, tuple(qs), parse_angle(arg) if g == "rz" else None))
+    return ops, n
 
 
 def normalize(ops) -> list:
@@ -58,7 +123,8 @@ class Circuit:
     # ------------------------------------------------------------------ I/O
     @classmethod
     def from_qasm(cls, text: str, **meta) -> "Circuit":
-        ops, n = qasm_to_ops(text)
+        """OpenQASM 2 over the core gate set; see read_qasm."""
+        ops, n = read_qasm(text)
         return cls(n, normalize(ops), dict(meta))
 
     def to_qasm(self) -> str:
@@ -118,7 +184,14 @@ class Window:
 def windows(circ: Circuit, block_size: int = WINDOW_QUBITS, max_gates: int = WINDOW_GATES) -> tuple[list, list]:
     """(windows, flat_ops). `flat_ops` is the concatenation of the windows (a topological re-ordering of
     circ.ops, the same circuit); window.start indexes into it."""
+    from bqskit.passes.partitioning import quick as _quick
+
     from ..blocks.partition import partition
+    # QuickPartitioner keeps bins in hash sets keyed by a process-global counter (Bin.id), so the partition
+    # of the same circuit depended on how many partitions ran before in the process (observed in tests:
+    # one 3-qubit block vs two 2-qubit blocks). Ids only need to be unique within one call: reset it so
+    # windows are a deterministic function of the circuit.
+    _quick.Bin.id = 0
     blocks = partition(circ.ops, circ.n, block_size=block_size, max_gates=max_gates)
     out, flat = [], []
     for b in blocks:

@@ -1,0 +1,1 @@
+{"circuit": "grover_5", "seconds": 717.7, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 166, true], ["tier1_control", "relaxed", 144, false], ["tier2_final", "exact", 166, true], ["tier2_lexsec", "exact", 166, true], ["tier1+tier2_final", "exact", 166, true], ["tier1+tier2_lexsec", "exact", 166, true]]}

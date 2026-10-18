@@ -1,0 +1,478 @@
+{
+ "circuit": "gf2^7_mult",
+ "tag": "eval_v1",
+ "budget": 8,
+ "freeze": {
+  "files_checked": 21,
+  "verifier_digest": "bc3eac23a403dbc594265a91ebb9f0ff12672dc913c56c5cf5d9d950c2a242c6",
+  "libraries": {
+   "tier2_final": {
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "n_rules": 0,
+    "version": "v0"
+   },
+   "tier2_lexsec": {
+    "sha256": "4bef8a90eb7cccad9039757cbbf51bd3b874ca21e912a67f8ac2a378c40245d6",
+    "n_rules": 30,
+    "version": "lex-replay-control"
+   }
+  }
+ },
+ "started": "2026-10-14 09:22:54",
+ "family": "gf2_mult",
+ "n": 21,
+ "ccx": 49,
+ "declared_zero": [
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20
+ ],
+ "normalization": {
+  "ok": true,
+  "certified": false,
+  "method": "basis-sampled",
+  "reason": "",
+  "seconds": 0.1
+ },
+ "bars": {
+  "ours": {
+   "pyzx_fr": 217,
+   "tket_fpo": 301,
+   "tket_fpo_logical": 301,
+   "nam_light_file": 217
+  },
+  "best_ours_arm": "nam_light_file",
+  "best_ours_T": 217,
+  "published": {
+   "tpar_as_reported_by_nam2018": 217,
+   "nam2018_light": 217,
+   "nam2018_heavy": 217,
+   "best_prev_as_reported_by_kvdw2020": 185,
+   "kvdw2020_pyzx": 217,
+   "kvdw2020_pyzx_todd": 173
+  },
+  "best_pub_arm": "kvdw2020_pyzx_todd",
+  "best_pub_T": 173,
+  "nam_heavy": {
+   "nam_heavy_file": [
+    217,
+    true
+   ]
+  },
+  "best_classical_fn": {
+   "t": 173.0,
+   "arm": "kvdw2020_pyzx_todd",
+   "ties": [
+    "kvdw2020_pyzx_todd"
+   ],
+   "origin": "results/v2/baselines_new.csv | published:KvdW2020"
+  }
+ },
+ "tier1_control": {
+  "evaluations": 8,
+  "seconds": 16.7,
+  "n_ok": 8,
+  "records": [
+   {
+    "variant": "V1",
+    "global_pass": "pyzx",
+    "ok": true,
+    "verdict_mode": "exact",
+    "t_count": 217,
+    "qubits": 21,
+    "measurements": 0,
+    "certified": false,
+    "method": "basis-sampled",
+    "reason": "",
+    "seconds": 8.52
+   },
+   {
+    "variant": "V2",
+    "global_pass": "pyzx",
+    "ok": true,
+    "verdict_mode": "relaxed",
+    "t_count": 196,
+    "qubits": 22,
+    "measurements": 43,
+    "certified": false,
+    "method": "branchwise-sampled+sampled-branches",
+    "reason": "",
+    "seconds": 2.64
+   },
+   {
+    "variant": "V3",
+    "global_pass": "pyzx",
+    "ok": true,
+    "verdict_mode": "exact",
+    "t_count": 217,
+    "qubits": 21,
+    "measurements": 0,
+    "certified": false,
+    "method": "basis-sampled",
+    "reason": "",
+    "seconds": 0.0
+   },
+   {
+    "variant": "V4",
+    "global_pass": "pyzx",
+    "ok": true,
+    "verdict_mode": "exact",
+    "t_count": 217,
+    "qubits": 21,
+    "measurements": 0,
+    "certified": false,
+    "method": "basis-sampled",
+    "reason": "",
+    "seconds": 0.0
+   },
+   {
+    "variant": "V2",
+    "global_pass": "none",
+    "ok": true,
+    "verdict_mode": "relaxed",
+    "t_count": 196,
+    "qubits": 22,
+    "measurements": 43,
+    "certified": false,
+    "method": "branchwise-sampled+sampled-branches",
+    "reason": "",
+    "seconds": 3.26
+   },
+   {
+    "variant": "V1",
+    "global_pass": "none",
+    "ok": true,
+    "verdict_mode": "exact",
+    "t_count": 343,
+    "qubits": 21,
+    "measurements": 0,
+    "certified": false,
+    "method": "basis-sampled",
+    "reason": "",
+    "seconds": 0.01
+   },
+   {
+    "variant": "V3",
+    "global_pass": "none",
+    "ok": true,
+    "verdict_mode": "exact",
+    "t_count": 343,
+    "qubits": 21,
+    "measurements": 0,
+    "certified": false,
+    "method": "basis-sampled",
+    "reason": "",
+    "seconds": 0.0
+   },
+   {
+    "variant": "V2",
+    "global_pass": "pyzx_then_tket",
+    "ok": true,
+    "verdict_mode": "relaxed",
+    "t_count": 196,
+    "qubits": 22,
+    "measurements": 43,
+    "certified": false,
+    "method": "branchwise-sampled+sampled-branches",
+    "reason": "",
+    "seconds": 2.26
+   }
+  ]
+ },
+ "tier2_start": {
+  "ok": true,
+  "n": 21,
+  "arm": "nam_light_file",
+  "path": "benchmarks/nam_arith/nam/gf2^7_mult_light.qasm",
+  "t": 217,
+  "gates_total": 555,
+  "candidates": [
+   {
+    "arm": "pyzx_fr",
+    "path": "results/v2/bench_runs/run2/circuits/gf2^7_mult__pyzx_fr.qasm",
+    "t": 217,
+    "gates_total": 1313,
+    "n": 21,
+    "csv_t": 217,
+    "status": "ok"
+   },
+   {
+    "arm": "tket_fpo",
+    "path": "results/v2/bench_runs/run2/circuits/gf2^7_mult__tket_fpo.qasm",
+    "t": 301,
+    "gates_total": 629,
+    "n": 21,
+    "csv_t": 301,
+    "status": "ok"
+   },
+   {
+    "arm": "tket_fpo_logical",
+    "path": "results/v2/bench_runs/run2/circuits/gf2^7_mult__tket_fpo_logical.qasm",
+    "t": 301,
+    "gates_total": 629,
+    "n": 21,
+    "csv_t": 301,
+    "status": "ok"
+   },
+   {
+    "arm": "nam_light_file",
+    "path": "benchmarks/nam_arith/nam/gf2^7_mult_light.qasm",
+    "t": 217,
+    "gates_total": 555,
+    "n": 21,
+    "csv_t": 217,
+    "status": "ok"
+   }
+  ]
+ },
+ "arms": [
+  {
+   "arm": "tier1_control",
+   "mode": "exact",
+   "ok": true,
+   "t_count": 217,
+   "t_depth": 62,
+   "qubits": 21,
+   "ancillas": 0,
+   "measurements": 0,
+   "cx": 872,
+   "gates": 1407,
+   "verdict_mode": "exact",
+   "certified": false,
+   "method": "basis-sampled",
+   "unitary_preserving": true,
+   "zero_qubits": "",
+   "variant": "V1",
+   "global_pass": "pyzx",
+   "routes": "{}",
+   "found_at_eval": 0,
+   "runtime_s": 16.7,
+   "eval_seconds": 8.52,
+   "reseed": {
+    "1": {
+     "ok": true,
+     "method": "basis-sampled",
+     "certified": false,
+     "reason": ""
+    },
+    "2": {
+     "ok": true,
+     "method": "basis-sampled",
+     "certified": false,
+     "reason": ""
+    }
+   }
+  },
+  {
+   "arm": "tier1_control",
+   "mode": "relaxed",
+   "ok": true,
+   "t_count": 196,
+   "t_depth": 86,
+   "qubits": 22,
+   "ancillas": 1,
+   "measurements": 43,
+   "cx": 343,
+   "gates": 858,
+   "verdict_mode": "relaxed",
+   "certified": false,
+   "method": "branchwise-sampled+sampled-branches",
+   "unitary_preserving": false,
+   "zero_qubits": "14 15 16 17 18 19",
+   "variant": "V2",
+   "global_pass": "pyzx",
+   "routes": "{\"clean_and\": [\"T0\", \"T6\", \"T11\", \"T15\", \"T18\", \"T20\"], \"jones_toffoli\": [\"T1\", \"T2\", \"T3\", \"T4\", \"T5\", \"T7\", \"T8\", \"T9\", \"T10\", \"T12\", \"T13\", \"T14\", \"T16\", \"T17\", \"T19\", \"T21\", \"T22\", \"T23\", \"T24\", \"T25\", \"T26\", \"T27\", \"T28\", \"T29\", \"T30\", \"T31\", \"T32\", \"T33\", \"T34\", \"T35\", \"T36\", \"T37\", \"T38\", \"T39\", \"T40\", \"T41\", \"T42\", \"T43\", \"T44\", \"T45\", \"T46\", \"T47\", \"T48\"]}",
+   "found_at_eval": 1,
+   "runtime_s": 16.7,
+   "eval_seconds": 2.64,
+   "reseed": {
+    "1": {
+     "ok": true,
+     "method": "branchwise-sampled+sampled-branches",
+     "certified": false,
+     "reason": ""
+    },
+    "2": {
+     "ok": true,
+     "method": "branchwise-sampled+sampled-branches",
+     "certified": false,
+     "reason": ""
+    }
+   }
+  },
+  {
+   "arm": "tier2_final",
+   "mode": "exact",
+   "ok": true,
+   "t_count": 217,
+   "t_depth": 85,
+   "qubits": 21,
+   "ancillas": 0,
+   "measurements": 0,
+   "cx": 300,
+   "gates": 555,
+   "verdict_mode": "exact",
+   "certified": false,
+   "method": "basis-sampled",
+   "unitary_preserving": true,
+   "reason": "",
+   "t_before": 217,
+   "gates_before": 555,
+   "t_after": 217,
+   "gates_after": 555,
+   "applications": 0,
+   "fixpoint": true,
+   "library_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "library_rules": 0,
+   "runtime_s": 0.0,
+   "verify_seconds": 0.2,
+   "reseed": {
+    "1": {
+     "ok": true,
+     "certified": false,
+     "method": "basis-sampled",
+     "reason": ""
+    },
+    "2": {
+     "ok": true,
+     "certified": false,
+     "method": "basis-sampled",
+     "reason": ""
+    }
+   },
+   "notes": "start=nam_light_file (benchmarks/nam_arith/nam/gf2^7_mult_light.qasm)"
+  },
+  {
+   "arm": "tier2_lexsec",
+   "mode": "exact",
+   "ok": true,
+   "t_count": 217,
+   "t_depth": 85,
+   "qubits": 21,
+   "ancillas": 0,
+   "measurements": 0,
+   "cx": 300,
+   "gates": 555,
+   "verdict_mode": "exact",
+   "certified": false,
+   "method": "basis-sampled",
+   "unitary_preserving": true,
+   "reason": "",
+   "t_before": 217,
+   "gates_before": 555,
+   "t_after": 217,
+   "gates_after": 555,
+   "applications": 0,
+   "fixpoint": true,
+   "library_sha256": "4bef8a90eb7cccad9039757cbbf51bd3b874ca21e912a67f8ac2a378c40245d6",
+   "library_rules": 30,
+   "runtime_s": 0.03,
+   "verify_seconds": 0.2,
+   "reseed": {
+    "1": {
+     "ok": true,
+     "certified": false,
+     "method": "basis-sampled",
+     "reason": ""
+    },
+    "2": {
+     "ok": true,
+     "certified": false,
+     "method": "basis-sampled",
+     "reason": ""
+    }
+   },
+   "notes": "start=nam_light_file (benchmarks/nam_arith/nam/gf2^7_mult_light.qasm)"
+  },
+  {
+   "arm": "tier1+tier2_final",
+   "mode": "exact",
+   "ok": true,
+   "t_count": 217,
+   "t_depth": 62,
+   "qubits": 21,
+   "ancillas": 0,
+   "measurements": 0,
+   "cx": 872,
+   "gates": 1407,
+   "verdict_mode": "exact",
+   "certified": false,
+   "method": "basis-sampled",
+   "unitary_preserving": true,
+   "reason": "",
+   "t_before": 217,
+   "gates_before": 1407,
+   "t_after": 217,
+   "gates_after": 1407,
+   "applications": 0,
+   "fixpoint": true,
+   "library_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+   "library_rules": 0,
+   "runtime_s": 0.0,
+   "verify_seconds": 7.6,
+   "reseed": {
+    "1": {
+     "ok": true,
+     "certified": false,
+     "method": "basis-sampled",
+     "reason": ""
+    },
+    "2": {
+     "ok": true,
+     "certified": false,
+     "method": "basis-sampled",
+     "reason": ""
+    }
+   },
+   "notes": "start=tier1_control exact output"
+  },
+  {
+   "arm": "tier1+tier2_lexsec",
+   "mode": "exact",
+   "ok": true,
+   "t_count": 217,
+   "t_depth": 61,
+   "qubits": 21,
+   "ancillas": 0,
+   "measurements": 0,
+   "cx": 775,
+   "gates": 1298,
+   "verdict_mode": "exact",
+   "certified": false,
+   "method": "basis-sampled",
+   "unitary_preserving": true,
+   "reason": "",
+   "t_before": 217,
+   "gates_before": 1407,
+   "t_after": 217,
+   "gates_after": 1298,
+   "applications": 109,
+   "fixpoint": true,
+   "library_sha256": "4bef8a90eb7cccad9039757cbbf51bd3b874ca21e912a67f8ac2a378c40245d6",
+   "library_rules": 30,
+   "runtime_s": 0.44,
+   "verify_seconds": 7.5,
+   "reseed": {
+    "1": {
+     "ok": true,
+     "certified": false,
+     "method": "basis-sampled",
+     "reason": ""
+    },
+    "2": {
+     "ok": true,
+     "certified": false,
+     "method": "basis-sampled",
+     "reason": ""
+    }
+   },
+   "notes": "start=tier1_control exact output"
+  }
+ ],
+ "freeze_after_ok": true,
+ "seconds": 83.9
+}

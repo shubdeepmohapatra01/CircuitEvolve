@@ -1,0 +1,23 @@
+{
+ "circuit": "qpe_8",
+ "arm": "B1",
+ "eps": 0.001,
+ "status": "ok",
+ "n_rz": 206,
+ "rz_distinct": 62,
+ "eps_per_rz": 4.854368932038835e-06,
+ "t_fixed": 127,
+ "t_gridsynth": 11394,
+ "t_count": 11521,
+ "cx": 323,
+ "gridsynth_s": 0.11,
+ "gs_max_reported_err": 2.425039485284032e-06,
+ "err_bound_gridsynth": 0.001,
+ "err_bound_total": 0.001,
+ "pre_s": 0.42,
+ "runtime_s": 0.56,
+ "verify_s": 1.1,
+ "state_dist_vs_orig": 3.1073840802658114e-05,
+ "state_dist_vs_input": 3.107384080989778e-05,
+ "output": "qpe_8_B1_e3.qasm.gz"
+}

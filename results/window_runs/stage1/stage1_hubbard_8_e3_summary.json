@@ -1,0 +1,96 @@
+{
+ "tag": "stage1_hubbard_8_e3",
+ "name": "hubbard_8",
+ "input_source": "results/bqskit_baselines/stage1/inputs/hubbard_8_tket.qasm",
+ "n": 8,
+ "eps": 0.001,
+ "calls": 44,
+ "stats": {
+  "proposal_calls": 42,
+  "reflect_calls": 2,
+  "llm_errors": 0,
+  "declined": 40,
+  "candidates": 2,
+  "parse_errors": 0,
+  "verified": 0,
+  "rejected_verifier": 2,
+  "rejected_metric": 0,
+  "rejected_ledger": 0,
+  "rejected_whole": 0,
+  "accepted": 0,
+  "accepted_t_reduced": 0,
+  "exact_accepts": 0,
+  "approx_accepts": 0,
+  "rules_added": 4,
+  "reflect_skipped_no_evidence": 2,
+  "window_proposals": 0,
+  "fix_proposals": 2,
+  "refit_failed": 0,
+  "accepted_window": 0,
+  "accepted_fix": 0,
+  "rotations_removed_window": 0,
+  "rotations_removed_fix": 0
+ },
+ "backend_stats": {
+  "calls": 44,
+  "input_tokens": 80835,
+  "output_tokens": 17503,
+  "ok": 44,
+  "failed": 0
+ },
+ "t_before": 4312,
+ "t_after": 4312,
+ "before": {
+  "t": 4312,
+  "t_fixed": 0,
+  "t_gs": 4312,
+  "rz": 84,
+  "cx": 389,
+  "gates": 1021,
+  "eps_rz": 1.1904761904485371e-05
+ },
+ "after": {
+  "t": 4312,
+  "t_fixed": 0,
+  "t_gs": 4312,
+  "rz": 84,
+  "cx": 389,
+  "gates": 1021,
+  "eps_rz": 1.1904761904485371e-05
+ },
+ "t_after_reclaimed": 4312,
+ "ledger": {
+  "eps_total": 0.001,
+  "window_pool": 0.00025,
+  "eps_synth": 0.0009999999999767712,
+  "d_input": 2.3228770978897365e-14,
+  "window_spent": 0.0,
+  "window_spent_rounded": 0.0,
+  "n_window_charges": 0,
+  "eps_rz": 1.1904761904485371e-05,
+  "bound": 0.001,
+  "reclaimed_eps_synth": 0.0009999999999767712,
+  "rule": "v1: window pool cap 0.25 eps, synthesis = eps - d_input - ceil_q(spent)"
+ },
+ "final_check_vs_original": {
+  "ok": true,
+  "verified": true,
+  "method": "unitary",
+  "dist": 2.3228770978897365e-14,
+  "bound": 2.3228770978897365e-14
+ },
+ "archive": [
+  {
+   "t": 4312,
+   "rz": 84,
+   "spent": 0.0,
+   "digest": "11fefdbf8dc4f8a1"
+  }
+ ],
+ "seconds": 97.1,
+ "verifier_digest": "bc3eac23a403dbc5",
+ "playbook": {
+  "live": 6,
+  "active": 0
+ }
+}

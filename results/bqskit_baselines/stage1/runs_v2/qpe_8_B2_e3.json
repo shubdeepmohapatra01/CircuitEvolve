@@ -1,0 +1,72 @@
+{
+ "circuit": "qpe_8",
+ "arm": "B2",
+ "eps": 0.001,
+ "status": "ok",
+ "t_count": 14781,
+ "cx": 268,
+ "n_rz": 257,
+ "eps_per_rz": 3.891050583657588e-06,
+ "gridsynth_algorithmic_error": 0.001,
+ "residual_rz": 0,
+ "other_ops": {
+  "identity1": 34
+ },
+ "runtime_s": 7.0,
+ "verify_s": 1.7,
+ "state_dist_vs_orig": 2.925554120075888e-05,
+ "state_dist_vs_input": 2.9255541190871377e-05,
+ "state_dist_input_vs_cliffrz": 1.5854225412874475e-14,
+ "stages": {
+  "input": {
+   "rz": 508,
+   "t": 0,
+   "params": 508,
+   "ops": 1034
+  },
+  "clifford_rz": {
+   "rz": 257,
+   "t": 157,
+   "params": 257,
+   "ops": 1034,
+   "eps_per_gate": 1.9646365422396858e-06
+  },
+  "output": {
+   "rz": 0,
+   "t": 14781,
+   "params": 0,
+   "ops": 38272
+  }
+ },
+ "gate_counts": {
+  "CNOTGate": 268,
+  "XGate": 156,
+  "TdgGate": 93,
+  "HGate": 14926,
+  "SGate": 7910,
+  "SqrtXGate": 140,
+  "SdgGate": 39,
+  "ZGate": 18,
+  "TGate": 14688,
+  "IdentityGate(1)": 34
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 257,
+    "algorithmic_error": 0.001,
+    "precision_per_rz": 3.891050583657588e-06
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 0,
+   "distinct": []
+  },
+  "assign_errors": [],
+  "partitions": [],
+  "dump_pregs": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/stage1/outputs_v2/qpe_8_B2_e3_pregs.qasm.gz",
+  "gridsynth_panic_retries": []
+ },
+ "output": "qpe_8_B2_e3.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1"
+}

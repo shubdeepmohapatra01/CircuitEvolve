@@ -1,0 +1,96 @@
+{
+ "tag": "stage1_qae_13_e5",
+ "name": "qae_13",
+ "input_source": "results/bqskit_baselines/stage1/inputs/qae_13_tket.qasm",
+ "n": 13,
+ "eps": 1e-05,
+ "calls": 44,
+ "stats": {
+  "proposal_calls": 43,
+  "reflect_calls": 1,
+  "llm_errors": 0,
+  "declined": 38,
+  "candidates": 3,
+  "parse_errors": 3,
+  "verified": 0,
+  "rejected_verifier": 3,
+  "rejected_metric": 0,
+  "rejected_ledger": 0,
+  "rejected_whole": 0,
+  "accepted": 0,
+  "accepted_t_reduced": 0,
+  "exact_accepts": 0,
+  "approx_accepts": 0,
+  "rules_added": 2,
+  "reflect_skipped_no_evidence": 3,
+  "window_proposals": 2,
+  "fix_proposals": 1,
+  "refit_failed": 0,
+  "accepted_window": 0,
+  "accepted_fix": 0,
+  "rotations_removed_window": 0,
+  "rotations_removed_fix": 0
+ },
+ "backend_stats": {
+  "calls": 44,
+  "input_tokens": 123595,
+  "output_tokens": 21533,
+  "ok": 44,
+  "failed": 0
+ },
+ "t_before": 11017,
+ "t_after": 11017,
+ "before": {
+  "t": 11017,
+  "t_fixed": 23,
+  "t_gs": 10994,
+  "rz": 145,
+  "cx": 156,
+  "gates": 461,
+  "eps_rz": 6.896551576840039e-08
+ },
+ "after": {
+  "t": 11017,
+  "t_fixed": 23,
+  "t_gs": 10994,
+  "rz": 145,
+  "cx": 156,
+  "gates": 461,
+  "eps_rz": 6.896551576840039e-08
+ },
+ "t_after_reclaimed": 11017,
+ "ledger": {
+  "eps_total": 1e-05,
+  "window_pool": 2.5e-06,
+  "eps_synth": 9.999999786418056e-06,
+  "d_input": 2.1358194398707251e-13,
+  "window_spent": 0.0,
+  "window_spent_rounded": 0.0,
+  "n_window_charges": 0,
+  "eps_rz": 6.896551576840039e-08,
+  "bound": 1e-05,
+  "reclaimed_eps_synth": 9.999999786418056e-06,
+  "rule": "v1: window pool cap 0.25 eps, synthesis = eps - d_input - ceil_q(spent)"
+ },
+ "final_check_vs_original": {
+  "ok": true,
+  "verified": true,
+  "method": "statevector",
+  "dist": 2.1518225664046728e-13,
+  "bound": 2.1358194398707251e-13
+ },
+ "archive": [
+  {
+   "t": 11017,
+   "rz": 145,
+   "spent": 0.0,
+   "digest": "83258637d4114b9e"
+  }
+ ],
+ "seconds": 99.2,
+ "verifier_digest": "bc3eac23a403dbc5",
+ "playbook": {
+  "live": 11,
+  "active": 3
+ }
+}

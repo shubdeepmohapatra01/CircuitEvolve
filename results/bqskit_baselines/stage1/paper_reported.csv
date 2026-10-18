@@ -1,0 +1,57 @@
+source,benchmark_paper,benchmark,our_family_match,metric,error_total,baseline,naive_pk,dpf_synth,change_pct_verbatim,reading,dpf_reduction_vs_baseline_pct_approx
+Table I,QAE-81q,QAE-81q,qae_13,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,59.6,,92.6,+55%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,QAE-81q,QAE-81q,qae_13,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,163.4,,64.7,-60%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,QFT-40q,QFT-40q,qft_8,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,13.6,,25.2,+86%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,QFT-40q,QFT-40q,qft_8,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,25.6,,15.9,-38%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,Ising-420q,Ising-420q,tfim_6,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,32.8,,14.2,-57%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,Ising-420q,Ising-420q,tfim_6,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,32.8,,14.3,-57%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,LGT-380q,LGT-380q,,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,145.0,,83.2,-43%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,LGT-380q,LGT-380q,,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,217.2,,116.4,-46%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,Neutrino-18q,Neutrino-18q,,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,13.5,,8.7,-36%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,Neutrino-18q,Neutrino-18q,,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,10.7,,5.7,-47%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,QAOA-148q,QAOA-148q,,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,25.3,,16.6,-34%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,QAOA-148q,QAOA-148q,,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,31.1,,42.4,+36%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,LiH-12q,LiH-12q,,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,7.9,,7.2,-9%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,LiH-12q,LiH-12q,,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,6.7,,5.3,-21%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,H2O-16q,H2O-16q,,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,16.6,,12.4,-25%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,H2O-16q,H2O-16q,,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,13.4,,9.2,-32%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,FH-2x2-8q,FH-2x2-8q,hubbard_8,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,0.2,,0.2,-17%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,FH-2x2-8q,FH-2x2-8q,hubbard_8,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,0.2,,0.1,-20%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,QPE-14q,QPE-14q,qpe_8,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,21.7,,34.0,+57%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,QPE-14q,QPE-14q,qpe_8,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,20.8,,37.6,+81%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,Hubbard-18q,Hubbard-18q,hubbard_8,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,6.2,,5.5,-11%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,Hubbard-18q,Hubbard-18q,hubbard_8,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,5.0,,4.2,-15%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,QML-19q,QML-19q,qml_13,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,1.2,,1.1,-14%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,QML-19q,QML-19q,qml_13,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,1.3,,1.2,-9%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,Heis.-225q,Heisenberg-225q,heisenberg_6,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,25.6,,22.4,-12%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,Heis.-225q,Heisenberg-225q,heisenberg_6,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,44.7,,64.9,+45%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,KNN-129q,KNN-129q,,"space-time volume (M logical-qubit cycles), LPBC",not stated in Table I,1.8,,1.8,+0%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Table I,KNN-129q,KNN-129q,,"space-time volume (M logical-qubit cycles), HPBC",not stated in Table I,1.4,,1.4,-0%,verbatim (text layer of arXiv:2606.05397v1 p.8),
+Fig. 5,QAE-81q,QAE-81q,qae_13,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.2,0.28,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),72.0
+Fig. 5,QFT-40q,QFT-40q,qft_8,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,0.67,0.42,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),58.0
+Fig. 5,Ising-420q,Ising-420q,tfim_6,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.3,0.48,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),52.0
+Fig. 5,LGT-380q,LGT-380q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.32,0.53,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),47.0
+Fig. 5,Neutrino-Sim-18q,Neutrino-Sim-18q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.32,0.61,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),39.0
+Fig. 5,QAOA-148q,QAOA-148q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.32,0.66,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),34.0
+Fig. 5,LiH-12q,LiH-12q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.31,0.66,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),34.0
+Fig. 5,H2O-16q,H2O-16q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.3,0.67,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),33.0
+Fig. 5,FH-2x2-8q,FH-2x2-8q,hubbard_8,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.62,0.78,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),22.0
+Fig. 5,QPE-14q,QPE-14q,qpe_8,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.29,0.81,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),19.0
+Fig. 5,Hubbard-18q,Hubbard-18q,hubbard_8,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.31,0.83,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),17.0
+Fig. 5,QML-19q,QML-19q,qml_13,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.34,0.85,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),15.0
+Fig. 5,Heisenberg-225q,Heisenberg-225q,heisenberg_6,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.33,0.86,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),14.0
+Fig. 5,KNN-129q,KNN-129q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),0.001,1.0,1.38,1.0,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),0.0
+Fig. 5,QAE-81q,QAE-81q,qae_13,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.14,0.28,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),72.0
+Fig. 5,QFT-40q,QFT-40q,qft_8,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,0.58,0.44,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),56.0
+Fig. 5,Ising-420q,Ising-420q,tfim_6,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.32,0.48,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),52.0
+Fig. 5,LGT-380q,LGT-380q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.31,0.53,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),47.0
+Fig. 5,Neutrino-Sim-18q,Neutrino-Sim-18q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.32,0.61,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),39.0
+Fig. 5,QAOA-148q,QAOA-148q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.29,0.66,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),34.0
+Fig. 5,LiH-12q,LiH-12q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.32,0.66,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),34.0
+Fig. 5,H2O-16q,H2O-16q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.32,0.67,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),33.0
+Fig. 5,FH-2x2-8q,FH-2x2-8q,hubbard_8,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.79,0.78,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),22.0
+Fig. 5,QPE-14q,QPE-14q,qpe_8,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.3,0.81,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),19.0
+Fig. 5,Hubbard-18q,Hubbard-18q,hubbard_8,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.33,0.83,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),17.0
+Fig. 5,QML-19q,QML-19q,qml_13,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.36,0.85,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),15.0
+Fig. 5,Heisenberg-225q,Heisenberg-225q,heisenberg_6,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.34,0.86,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),14.0
+Fig. 5,KNN-129q,KNN-129q,,T-count normalized to Baseline (default BQSKit-FT + gridsynth),1e-05,1.0,1.45,1.0,,APPROXIMATE figure reading: bar-top pixel measurement of p.7 rendered at 5x (340 px per unit; +/-0.01),0.0

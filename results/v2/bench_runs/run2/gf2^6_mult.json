@@ -1,0 +1,196 @@
+{
+ "circuit": "gf2^6_mult",
+ "python": "3.11.15",
+ "pyzx": "0.10.7",
+ "pytket": "2.18.5",
+ "started": "2026-10-13T23:11:09",
+ "qubits": 18,
+ "logical_counts": {
+  "gates": 63,
+  "t": 0,
+  "ccx": 0,
+  "ccz": 36,
+  "cx": 5,
+  "h": 22,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 252
+ },
+ "cliffordt_counts": {
+  "gates": 495,
+  "t": 252,
+  "ccx": 0,
+  "ccz": 0,
+  "cx": 221,
+  "h": 22,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 252
+ },
+ "provenance": {
+  "logical_vs_cliffordt": {
+   "method": "statevector_haar",
+   "n_states": 4,
+   "dist": 1.3764827871878753e-15,
+   "ok": true,
+   "zx_identity": true,
+   "qcec": "equivalent",
+   "qcec_phase": "zx+sim",
+   "qcec_s": 0.39,
+   "verified": true,
+   "check_s": 31.11
+  },
+  "logical_vs_feynman": {
+   "method": "statevector_haar",
+   "n_states": 4,
+   "dist": 1.3005345402810235e-14,
+   "ok": true,
+   "qcec": "equivalent",
+   "qcec_phase": "zx+sim",
+   "qcec_s": 0.32,
+   "verified": true,
+   "check_s": 21.43
+  },
+  "logical_vs_nam_before": {
+   "method": "statevector_haar",
+   "n_states": 4,
+   "dist": 4.655583347066622e-15,
+   "ok": true,
+   "qcec": "equivalent",
+   "qcec_phase": "zx+sim",
+   "qcec_s": 0.39,
+   "verified": true,
+   "check_s": 19.84
+  },
+  "nam_before_counts": {
+   "gates": 113,
+   "t": 0,
+   "ccx": 0,
+   "ccz": 36,
+   "cx": 5,
+   "h": 72,
+   "rz_nonclifford": 0,
+   "rz_other": 0,
+   "t_if_expanded": 252
+  }
+ },
+ "planted_bug_check": {
+  "method": "statevector_haar",
+  "n_states": 4,
+  "dist": 0.3901805960995384,
+  "ok": false,
+  "qcec": "not_equivalent",
+  "qcec_phase": "zx+sim",
+  "qcec_s": 0.35,
+  "verified": false,
+  "check_s": 18.76
+ },
+ "arms": {
+  "given_cliffordt": {
+   "t_count": 252,
+   "cx": 221,
+   "gates": 495
+  },
+  "pyzx_fr": {
+   "t_count": 150,
+   "rz_other": 0,
+   "cx": 777,
+   "h": 14,
+   "gates": 1038,
+   "t_graph": 150,
+   "reduce_s": 2.33,
+   "pipeline_s": 2.72,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 1.3814199290399272e-15,
+    "ok": true,
+    "zx_identity": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.49,
+    "verified": true,
+    "check_s": 68.57
+   }
+  },
+  "tket_fpo": {
+   "t_count": 216,
+   "rz_other": 0,
+   "cx": 221,
+   "h": 22,
+   "gates": 466,
+   "pipeline_s": 4.01,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 8.94240152527253e-16,
+    "ok": true,
+    "zx_identity": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.42,
+    "verified": true,
+    "check_s": 27.54
+   }
+  },
+  "tket_fpo_logical": {
+   "t_count": 216,
+   "rz_other": 0,
+   "cx": 221,
+   "h": 22,
+   "gates": 467,
+   "pipeline_s": 4.48,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 9.587421986186457e-16,
+    "ok": true,
+    "zx_identity": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.49,
+    "verified": true,
+    "check_s": 28.97
+   }
+  },
+  "nam_light_file": {
+   "t_count": 150,
+   "rz_other": 0,
+   "cx": 221,
+   "h": 22,
+   "gates": 403,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 1.3655363852414886e-15,
+    "ok": true,
+    "zx_identity": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.39,
+    "verified": true,
+    "check_s": 29.87
+   }
+  },
+  "nam_heavy_file": {
+   "t_count": 150,
+   "rz_other": 0,
+   "cx": 221,
+   "h": 22,
+   "gates": 403,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 1.3659091719148057e-15,
+    "ok": true,
+    "zx_identity": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.35,
+    "verified": true,
+    "check_s": 29.41
+   }
+  }
+ },
+ "finished": "2026-10-13T23:16:02"
+}

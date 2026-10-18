@@ -1,0 +1,192 @@
+{
+ "circuit": "tof_5",
+ "tag": "dev_v1",
+ "summary_digest": "48b8d5d37454a80b",
+ "normalization": {
+  "ok": true,
+  "certified": true,
+  "method": "basis-exhaustive",
+  "reason": ""
+ },
+ "best_classical": {
+  "t": 31.0,
+  "arm": "best_prev_as_reported_by_kvdw2020",
+  "ties": [
+   "best_prev_as_reported_by_kvdw2020",
+   "kvdw2020_pyzx",
+   "kvdw2020_pyzx_todd",
+   "nam2018_heavy",
+   "nam2018_light",
+   "nam_heavy_file",
+   "nam_light_file",
+   "pyzx_fr",
+   "tpar_as_reported_by_nam2018"
+  ],
+  "origin": "results/v2/baselines_new.csv | published:KvdW2020",
+  "runs": {
+   "pyzx_fr": 31.0,
+   "tket_fpo": 43.0,
+   "nam_light_file": 31.0,
+   "nam_heavy_file": 31.0
+  },
+  "text": "31 (best_prev_as_reported_by_kvdw2020; pyzx_fr=31.0, tket_fpo=43.0)"
+ },
+ "plans": {
+  "llm/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "M0",
+      "route": "ancilla_mcx",
+      "middle": "jones"
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "The whole circuit is a single C5X cascade (M0) with three clean enclosing pairs and one middle Toffoli; routing all three pairs as temporary_and (4T each, direct since clean) and the middle as jones_toffoli (4T) gives 3*4+4=16 T total versus 49 T naive and 31 T best exact, fully relaxed-verifiable. Applying pyzx_then_tket afterward can only reduce further, never increase, T-count."
+   },
+   "t_count": 16,
+   "t_depth": 5,
+   "qubits": 10,
+   "ancillas": 1,
+   "measurements": 4,
+   "verdict_mode": "relaxed",
+   "certified": true,
+   "method": "branchwise-exhaustive",
+   "zero_qubits": [
+    5,
+    6,
+    7
+   ],
+   "routes": {
+    "T0": "temporary_and",
+    "T1": "temporary_and",
+    "T2": "temporary_and",
+    "T3": "jones_toffoli",
+    "T4": "temporary_and",
+    "T5": "temporary_and",
+    "T6": "temporary_and"
+   },
+   "call": 0,
+   "variant": null,
+   "digest": "32a1d1f0a76d938f"
+  },
+  "llm/exact": {
+   "plan": {
+    "target": "exact",
+    "decisions": [
+     {
+      "element": "M0",
+      "route": "barenco_mcx"
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "This is the only named element (M0 covers T0-T6 via the three pairs plus middle T3), so route the whole cascade through barenco_mcx: each enclosing pair becomes an 8-T relative-phase Toffoli pair and the middle becomes a 7-T Toffoli, giving 3*8+7=31 T unitarily; pyzx_then_tket then tries to simplify further. This stays exact (no measurement/ancilla promises) unlike the previous relaxed ancilla_mcx attempts, and avoids the prior rejected double-naming error."
+   },
+   "t_count": 31,
+   "t_depth": 24,
+   "qubits": 9,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": true,
+   "method": "basis-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "relative_phase_toffoli",
+    "T1": "relative_phase_toffoli",
+    "T2": "relative_phase_toffoli",
+    "T3": "toffoli_7T",
+    "T4": "relative_phase_toffoli",
+    "T5": "relative_phase_toffoli",
+    "T6": "relative_phase_toffoli"
+   },
+   "call": 3,
+   "variant": null,
+   "digest": "ce8ad1e997946f39"
+  },
+  "control/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "P0",
+      "route": "temporary_and"
+     },
+     {
+      "element": "P1",
+      "route": "temporary_and"
+     },
+     {
+      "element": "P2",
+      "route": "temporary_and"
+     },
+     {
+      "element": "T3",
+      "route": "jones_toffoli"
+     }
+    ],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V2 (max_relaxed) + pyzx"
+   },
+   "t_count": 16,
+   "t_depth": 5,
+   "qubits": 10,
+   "ancillas": 1,
+   "measurements": 4,
+   "verdict_mode": "relaxed",
+   "certified": true,
+   "method": "branchwise-exhaustive",
+   "zero_qubits": [
+    5,
+    6,
+    7
+   ],
+   "routes": {
+    "T0": "temporary_and",
+    "T1": "temporary_and",
+    "T2": "temporary_and",
+    "T3": "jones_toffoli",
+    "T4": "temporary_and",
+    "T5": "temporary_and",
+    "T6": "temporary_and"
+   },
+   "call": 1,
+   "variant": "V2",
+   "digest": "32a1d1f0a76d938f"
+  },
+  "control/exact": {
+   "plan": {
+    "target": "exact",
+    "decisions": [],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V4 (plain) + pyzx"
+   },
+   "t_count": 31,
+   "t_depth": 22,
+   "qubits": 9,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": true,
+   "method": "basis-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "toffoli_7T",
+    "T1": "toffoli_7T",
+    "T2": "toffoli_7T",
+    "T3": "toffoli_7T",
+    "T4": "toffoli_7T",
+    "T5": "toffoli_7T",
+    "T6": "toffoli_7T"
+   },
+   "call": 3,
+   "variant": "V4",
+   "digest": "a36cead865e03a68"
+  }
+ }
+}

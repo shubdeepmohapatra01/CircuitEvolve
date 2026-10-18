@@ -1,0 +1,1 @@
+{"circuit": "ham15-med", "seconds": 1535.8, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 212, false], ["tier1_control", "relaxed", 220, false], ["tier2_final", "exact", 212, false], ["tier2_lexsec", "exact", 212, false], ["tier1+tier2_final", "exact", 212, false], ["tier1+tier2_lexsec", "exact", 212, false]]}

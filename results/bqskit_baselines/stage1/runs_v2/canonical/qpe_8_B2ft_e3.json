@@ -1,0 +1,17 @@
+{
+ "circuit": "qpe_8",
+ "arm": "B2ft",
+ "eps": 0.001,
+ "t_count_canon": 27510,
+ "t_fixed_canon": 186,
+ "t_gridsynth_canon": 27324,
+ "n_rz_canon": 460,
+ "n_rz_asrun": 460,
+ "eps_per_rz": 2.173913043478261e-06,
+ "cx_canon": 236,
+ "state_dist_vs_orig_canon": 7.697359572821664e-05,
+ "t_count_asrun": 27664,
+ "source_run": "runs_v2",
+ "output": "qpe_8_B2ft_e3_canon.qasm.gz",
+ "gridsynth": "pygridsynth 2.0.0"
+}

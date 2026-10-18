@@ -1,5 +1,8 @@
 # Evolving the optimizer program (`circuitevolve/evolve_opt/`)
 
+> **Legacy (2026-10-13).** Code moved to `circuitevolve/legacy/evolve_opt/`; `circuitevolve.evolve_opt.*` are aliases
+> of the same modules, so the commands below still work. Current work: docs/CORE.md.
+
 Pivot after the block smoke (0 verified LLM block rewrites, `results/blocks/SMOKE_REPORT.md`): the LLM no
 longer rewrites blocks; it **evolves the optimizer program** (OpenEvolve / AlphaEvolve style). The frozen
 verifier still decides validity. Fitness is measured against the best classical result.

@@ -1,0 +1,17 @@
+{
+ "circuit": "tfim_6",
+ "arm": "B2",
+ "eps": 0.001,
+ "t_count_canon": 8560,
+ "t_fixed_canon": 0,
+ "t_gridsynth_canon": 8560,
+ "n_rz_canon": 160,
+ "n_rz_asrun": 160,
+ "eps_per_rz": 6.25e-06,
+ "cx_canon": 180,
+ "state_dist_vs_orig_canon": 5.7362856331446946e-05,
+ "t_count_asrun": 8560,
+ "source_run": "runs_v2",
+ "output": "tfim_6_B2_e3_canon.qasm.gz",
+ "gridsynth": "pygridsynth 2.0.0"
+}

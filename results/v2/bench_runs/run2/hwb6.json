@@ -1,0 +1,126 @@
+{
+ "circuit": "hwb6",
+ "python": "3.11.15",
+ "pyzx": "0.10.7",
+ "pytket": "2.18.5",
+ "started": "2026-10-13T23:08:15",
+ "qubits": 7,
+ "logical_counts": {
+  "gates": 79,
+  "t": 0,
+  "ccx": 0,
+  "ccz": 15,
+  "cx": 26,
+  "h": 30,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 105
+ },
+ "cliffordt_counts": {
+  "gates": 259,
+  "t": 105,
+  "ccx": 0,
+  "ccz": 0,
+  "cx": 116,
+  "h": 30,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 105
+ },
+ "provenance": {
+  "logical_vs_cliffordt": {
+   "method": "unitary_dense",
+   "dist": 1.6796778754395256e-15,
+   "ok": true,
+   "qcec": "equivalent",
+   "qcec_phase": "zx+sim",
+   "qcec_s": 0.32,
+   "verified": true,
+   "check_s": 0.5
+  },
+  "logical_vs_feynman": {
+   "method": "unitary_dense",
+   "dist": 5.702374507876428e-15,
+   "ok": true,
+   "qcec": "equivalent",
+   "qcec_phase": "zx+sim",
+   "qcec_s": 0.29,
+   "verified": true,
+   "check_s": 0.38
+  }
+ },
+ "planted_bug_check": {
+  "method": "unitary_dense",
+  "dist": 0.39018064403225583,
+  "ok": false,
+  "qcec": "not_equivalent",
+  "qcec_phase": "zx+sim",
+  "qcec_s": 0.3,
+  "verified": false,
+  "check_s": 0.37
+ },
+ "arms": {
+  "given_cliffordt": {
+   "t_count": 105,
+   "cx": 116,
+   "gates": 259
+  },
+  "pyzx_fr": {
+   "t_count": 75,
+   "rz_other": 0,
+   "cx": 160,
+   "h": 26,
+   "gates": 299,
+   "t_graph": 75,
+   "reduce_s": 0.29,
+   "pipeline_s": 0.44,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 1.2582343980128674e-15,
+    "ok": true,
+    "qcec": "equivalent_up_to_global_phase",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.31,
+    "verified": true,
+    "check_s": 0.99
+   }
+  },
+  "tket_fpo": {
+   "t_count": 95,
+   "rz_other": 0,
+   "cx": 111,
+   "h": 68,
+   "gates": 309,
+   "pipeline_s": 1.89,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 4.01557809110345e-15,
+    "ok": true,
+    "qcec": "equivalent_up_to_global_phase",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.24,
+    "verified": true,
+    "check_s": 0.32
+   }
+  },
+  "tket_fpo_logical": {
+   "t_count": 95,
+   "rz_other": 0,
+   "cx": 111,
+   "h": 100,
+   "gates": 359,
+   "pipeline_s": 1.52,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 6.912637138792784e-15,
+    "ok": true,
+    "qcec": "equivalent_up_to_global_phase",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.34,
+    "verified": true,
+    "check_s": 0.62
+   }
+  }
+ },
+ "finished": "2026-10-13T23:08:26"
+}

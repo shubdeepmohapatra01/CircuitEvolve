@@ -1,0 +1,23 @@
+{
+ "circuit": "heisenberg_6",
+ "arm": "B0",
+ "eps": 1e-05,
+ "status": "ok",
+ "n_rz": 150,
+ "rz_distinct": 8,
+ "eps_per_rz": 6.666666666666667e-08,
+ "t_fixed": 0,
+ "t_gridsynth": 11400,
+ "t_count": 11400,
+ "cx": 274,
+ "gridsynth_s": 0.09,
+ "gs_max_reported_err": 2.8222478746164938e-08,
+ "err_bound_gridsynth": 1e-05,
+ "err_bound_total": 1e-05,
+ "pre_s": 0.0,
+ "runtime_s": 0.12,
+ "verify_s": 1.0,
+ "state_dist_vs_orig": 1.0977142022932436e-06,
+ "state_dist_vs_input": 1.0977142052428766e-06,
+ "output": "heisenberg_6_B0_e5.qasm.gz"
+}

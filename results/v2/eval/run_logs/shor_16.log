@@ -1,0 +1,1 @@
+{"circuit": "shor_16", "seconds": null, "skipped": "rotation-dominated (continuous cp/ccp); frozen toolbox tier1-toolbox-v1 has no rotation route (same reason as shor_12 on dev); tier 2 is exact Clifford+T only; not run", "error": null, "arms": []}

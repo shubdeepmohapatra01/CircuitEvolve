@@ -1,0 +1,1 @@
+{"circuit": "hwb6", "seconds": 3.6, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 75, true], ["tier1_control", "relaxed", 56, false], ["tier2_final", "exact", 75, true], ["tier2_lexsec", "exact", 75, true], ["tier1+tier2_final", "exact", 75, true], ["tier1+tier2_lexsec", "exact", 75, true]]}

@@ -1,0 +1,76 @@
+
+thread '<unnamed>' (8893657) panicked at src/ring/d_omega.rs:161:13:
+Invalid coefficients for inverse sqrt2 multiplication
+stack backtrace:
+   0: __rustc::rust_begin_unwind
+   1: core::panicking::panic_fmt
+   2: <rsgridsynth::ring::d_omega::DOmega>::mul_by_inv_sqrt2
+   3: <rsgridsynth::unitary::DOmegaUnitary>::mul_by_h_from_left
+   4: <rsgridsynth::unitary::DOmegaUnitary>::mul_by_h_and_t_power_from_left
+   5: rsgridsynth::synthesis_of_clifford_t::decompose_domega_unitary
+   6: pyo3::impl_::trampoline::fastcall_cfunction_with_keywords::<<rsgridsynth::synth::MakeDef>::_PYO3_DEF::Def>
+   7: _cfunction_vectorcall_FASTCALL_KEYWORDS
+   8: _PyObject_Vectorcall
+   9: __PyEval_EvalFrameDefault
+  10: _gen_send_ex2
+  11: _task_step_impl
+  12: _task_step
+  13: __PyObject_MakeTpCall
+  14: _context_run
+  15: _cfunction_vectorcall_FASTCALL_KEYWORDS
+  16: __PyEval_EvalFrameDefault
+  17: _PyEval_EvalCode
+  18: _run_eval_code_obj
+  19: _run_mod
+  20: _pyrun_file
+  21: __PyRun_SimpleFileObject
+  22: __PyRun_AnyFileObject
+  23: _pymain_run_file_obj
+  24: _pymain_run_file
+  25: _Py_RunMain
+  26: _pymain_main
+  27: _Py_BytesMain
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
+Traceback (most recent call last):
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py", line 272, in <module>
+    main()
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py", line 262, in main
+    r = run_job(name, arm, eps)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py", line 197, in run_job
+    out = bq_compile(circ, model=CliffordTModel(circ.num_qudits, algorithmic_error=eps), compiler=compiler)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/compiler/compile.py", line 636, in compile
+    out, data = compiler.compile(in_circuit, workflow, True)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py", line 89, in compile
+    return self.result(self.submit(circuit, workflow, request_data, logging_level,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py", line 79, in submit
+    asyncio.run(wf.run(circ, pd))
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/compiler/workflow.py", line 75, in run
+    await pass_obj.run(circuit, data)
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py", line 114, in gs_run
+    await g_run(self, circuit, data)
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/ft/ftpasses/gridsynth.py", line 63, in run
+    gg_circs = await get_runtime().map(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/serial_runtime.py", line 37, in _run
+    return [await self._call(fn, *a, **kwargs) for a in zip(*args)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/serial_runtime.py", line 32, in _call
+    r = await r
+        ^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/ft/ftpasses/gridsynth.py", line 22, in run_rz
+    result = rsgridsynth.synth(
+             ^^^^^^^^^^^^^^^^^^
+pyo3_runtime.PanicException: Invalid coefficients for inverse sqrt2 multiplication

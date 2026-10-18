@@ -1,0 +1,50 @@
+{
+ "version": "v2-nam-arith-1",
+ "created": "2026-10-14",
+ "dev": [
+  "barenco_tof_3",
+  "barenco_tof_4",
+  "barenco_tof_5",
+  "csla_mux_3",
+  "cuccaro_4",
+  "cuccaro_8",
+  "gf2^4_mult",
+  "gf2^5_mult",
+  "gf2^6_mult",
+  "mod5_4",
+  "mod_mult_55",
+  "rc_adder_6",
+  "shor_12",
+  "tof_3",
+  "tof_4",
+  "tof_5",
+  "vbe_adder_3"
+ ],
+ "heldout": [
+  "adder_8",
+  "barenco_tof_10",
+  "csum_mux_9",
+  "cuccaro_16",
+  "gf2^10_mult",
+  "gf2^16_mult",
+  "gf2^7_mult",
+  "gf2^8_mult",
+  "gf2^9_mult",
+  "grover_5",
+  "ham15-high",
+  "ham15-low",
+  "ham15-med",
+  "hwb6",
+  "mod_adder_1024",
+  "mod_red_21",
+  "qcla_adder_10",
+  "qcla_com_7",
+  "qcla_mod_7",
+  "shor_14",
+  "shor_16",
+  "tof_10"
+ ],
+ "large_optional": [
+  "gf2^32_mult"
+ ]
+}

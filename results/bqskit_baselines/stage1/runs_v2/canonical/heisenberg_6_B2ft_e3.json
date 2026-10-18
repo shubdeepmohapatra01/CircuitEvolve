@@ -1,0 +1,17 @@
+{
+ "circuit": "heisenberg_6",
+ "arm": "B2ft",
+ "eps": 0.001,
+ "t_count_canon": 10664,
+ "t_fixed_canon": 0,
+ "t_gridsynth_canon": 10664,
+ "n_rz_canon": 190,
+ "n_rz_asrun": 190,
+ "eps_per_rz": 5.263157894736842e-06,
+ "cx_canon": 270,
+ "state_dist_vs_orig_canon": 6.893511085298177e-05,
+ "t_count_asrun": 10682,
+ "source_run": "runs_v2",
+ "output": "heisenberg_6_B2ft_e3_canon.qasm.gz",
+ "gridsynth": "pygridsynth 2.0.0"
+}

@@ -1,0 +1,100 @@
+{
+ "toffoli_7T": {
+  "t": 7,
+  "cx": 6,
+  "dist_vs_ccx": 3.0814879110195774e-33
+ },
+ "rccx": {
+  "t": 4,
+  "cx": 3,
+  "equals_ccx_up_to_diagonal": true,
+  "dist_vs_ccx": 1.9999999999999993
+ },
+ "rc3x": {
+  "t": 8,
+  "cx": 6,
+  "equals_c3x_up_to_diagonal": true
+ },
+ "qiskit_c3x_default": {
+  "t": 1905,
+  "cx": 14,
+  "rz_other": 0
+ },
+ "rccx_pair_around_cx": {
+  "t": 8,
+  "t_exact_version": 14,
+  "dist": 4.892387383025654e-16
+ },
+ "temporary_and": {
+  "t_compute": 4,
+  "computes_ab_on_basis": true,
+  "t_uncompute": 0,
+  "uncompute_branches_phase_consistent": [
+   1.0,
+   1.0
+  ]
+ },
+ "jones_toffoli": {
+  "t": 4,
+  "ancilla": 1,
+  "measurements": 1,
+  "derived_from": "temporary_and above"
+ },
+ "selinger_tdepth1_ccz": {
+  "t": 7,
+  "t_depth": 1,
+  "ancillas": 4,
+  "cx": 18,
+  "dist_on_clean_ancilla_subspace": 2.2829706804531434e-17,
+  "ancilla_leakage": 0.0
+ },
+ "phase_folding_parity": {
+  "t_before": 2,
+  "t_after_pyzx": 0,
+  "verify": {
+   "method": "unitary_dense",
+   "dist": 9.983673087713696e-17,
+   "ok": true,
+   "check_s": 0.0
+  }
+ },
+ "aqft_n8": {
+  "1": {
+   "kept_cphases": 0,
+   "op_dist_vs_qft": 1.9993439284535008
+  },
+  "2": {
+   "kept_cphases": 7,
+   "op_dist_vs_qft": 1.997091100106218
+  },
+  "3": {
+   "kept_cphases": 13,
+   "op_dist_vs_qft": 1.7419500280249176
+  },
+  "4": {
+   "kept_cphases": 18,
+   "op_dist_vs_qft": 0.8733610914397025
+  },
+  "5": {
+   "kept_cphases": 22,
+   "op_dist_vs_qft": 0.31179039973654904
+  },
+  "6": {
+   "kept_cphases": 25,
+   "op_dist_vs_qft": 0.09201398121516388
+  },
+  "7": {
+   "kept_cphases": 27,
+   "op_dist_vs_qft": 0.018407740577796393
+  },
+  "8": {
+   "kept_cphases": 28,
+   "op_dist_vs_qft": 0.0
+  }
+ },
+ "gridsynth_eps_2.5e-4": {
+  "pi/8": 38,
+  "pi/16": 36,
+  "0.39": 38
+ }
+}

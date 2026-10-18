@@ -1,0 +1,23 @@
+{
+ "circuit": "qml_13",
+ "arm": "B0",
+ "eps": 0.001,
+ "status": "ok",
+ "n_rz": 118,
+ "rz_distinct": 108,
+ "eps_per_rz": 8.47457627118644e-06,
+ "t_fixed": 0,
+ "t_gridsynth": 6350,
+ "t_count": 6350,
+ "cx": 152,
+ "gridsynth_s": 0.17,
+ "gs_max_reported_err": 4.233552054894421e-06,
+ "err_bound_gridsynth": 0.001,
+ "err_bound_total": 0.001,
+ "pre_s": 0.0,
+ "runtime_s": 0.19,
+ "verify_s": 2.1,
+ "state_dist_vs_orig": 3.311036231228979e-05,
+ "state_dist_vs_input": 3.311036231229745e-05,
+ "output": "qml_13_B0_e3.qasm.gz"
+}

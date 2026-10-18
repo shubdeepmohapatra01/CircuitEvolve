@@ -1,0 +1,17 @@
+CIRCUIT gf2^6_mult: 18 qubits, 41 gates (ccx:36, cx:5); classical reversible (x/cx/ccx + diagonal).
+Naive cost: 252 T (7 per Toffoli, 36 Toffolis).
+Declared zero-init qubits (benchmark contract, start in |0>): ['q12', 'q13', 'q14', 'q15', 'q16', 'q17'].
+QUBITS (q: Z=declared zero-init / first touch / R=restored to |0> at end / guessed role):
+  q0:-/ccx-control/-/data; q1:-/ccx-control/-/data; q2:-/ccx-control/-/data; q3:-/ccx-control/-/data; q4:-/ccx-control/-/data; q5:-/ccx-control/-/data; q6:-/ccx-control/-/data; q7:-/ccx-control/-/data; q8:-/ccx-control/-/data; q9:-/ccx-control/-/data; q10:-/ccx-control/-/data; q11:-/ccx-control/-/data; q12:Z/ccx-target/notR/output(starts |0>); q13:Z/ccx-target/notR/output(starts |0>); q14:Z/ccx-target/notR/output(starts |0>); q15:Z/ccx-target/notR/output(starts |0>); q16:Z/ccx-target/notR/output(starts |0>); q17:Z/cx-target/notR/output(starts |0>)
+TOFFOLIS (id: gate index, kind, controls -> target):
+  T0:g0 ccx q5 q7->q12; T1:g1 ccx q4 q8->q12; T2:g2 ccx q3 q9->q12; T3:g3 ccx q2 q10->q12; T4:g4 ccx q1 q11->q12; T5:g5 ccx q5 q8->q13; T6:g6 ccx q4 q9->q13; T7:g7 ccx q3 q10->q13; T8:g8 ccx q2 q11->q13; T9:g9 ccx q5 q9->q14; T10:g10 ccx q4 q10->q14; T11:g11 ccx q3 q11->q14; T12:g12 ccx q5 q10->q15; T13:g13 ccx q4 q11->q15; T14:g14 ccx q5 q11->q16; T15:g20 ccx q5 q6->q17; T16:g21 ccx q4 q7->q17; T17:g22 ccx q3 q8->q17; T18:g23 ccx q2 q9->q17; T19:g24 ccx q1 q10->q17; T20:g25 ccx q0 q11->q17; T21:g26 ccx q4 q6->q16; T22:g27 ccx q3 q7->q16; T23:g28 ccx q2 q8->q16; T24:g29 ccx q1 q9->q16; T25:g30 ccx q0 q10->q16; T26:g31 ccx q3 q6->q15; T27:g32 ccx q2 q7->q15; T28:g33 ccx q1 q8->q15; T29:g34 ccx q0 q9->q15; T30:g35 ccx q2 q6->q14; T31:g36 ccx q1 q7->q14; T32:g37 ccx q0 q8->q14; T33:g38 ccx q1 q6->q13; T34:g39 ccx q0 q7->q13; T35:g40 ccx q0 q6->q12
+UNPAIRED TOFFOLIS: T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35
+REPEATED BLOCKS (gate pattern with relabelled qubits, count):
+  [ccx(0,1,2) ccx(3,4,2) ccx(5,6,2) ccx(7,8,2) ccx(9,10,2)] x3 at gates [0, 20, 26]
+  [ccx(0,1,2) ccx(3,4,2) ccx(5,6,2) ccx(7,8,9)] x3 at gates [2, 23, 28]
+  [ccx(0,1,2) ccx(3,4,2) ccx(5,6,7) ccx(8,9,7)] x3 at gates [3, 24, 29]
+  [ccx(0,1,2) ccx(3,4,5) ccx(6,7,5) ccx(8,9,5)] x3 at gates [4, 25, 30]
+ROTATIONS (non-Toffoli phase gates): {'t_like': 0, 's_like': 0, 'z': 0}
+SUBROUTINE GUESSES: 36 unpaired Toffolis write into declared zero-init qubits (accumulation into an output register, multiplier-like)
+NORMALIZED LOGICAL GATES (g<index>):
+  g0 ccx q5 q7 -> q12; g1 ccx q4 q8 -> q12; g2 ccx q3 q9 -> q12; g3 ccx q2 q10 -> q12; g4 ccx q1 q11 -> q12; g5 ccx q5 q8 -> q13; g6 ccx q4 q9 -> q13; g7 ccx q3 q10 -> q13; g8 ccx q2 q11 -> q13; g9 ccx q5 q9 -> q14; g10 ccx q4 q10 -> q14; g11 ccx q3 q11 -> q14; g12 ccx q5 q10 -> q15; g13 ccx q4 q11 -> q15; g14 ccx q5 q11 -> q16; g15 cx q16 -> q17; g16 cx q15 -> q16; g17 cx q14 -> q15; g18 cx q13 -> q14; g19 cx q12 -> q13; g20 ccx q5 q6 -> q17; g21 ccx q4 q7 -> q17; g22 ccx q3 q8 -> q17; g23 ccx q2 q9 -> q17; g24 ccx q1 q10 -> q17; g25 ccx q0 q11 -> q17; g26 ccx q4 q6 -> q16; g27 ccx q3 q7 -> q16; g28 ccx q2 q8 -> q16; g29 ccx q1 q9 -> q16; g30 ccx q0 q10 -> q16; g31 ccx q3 q6 -> q15; g32 ccx q2 q7 -> q15; g33 ccx q1 q8 -> q15; g34 ccx q0 q9 -> q15; g35 ccx q2 q6 -> q14; g36 ccx q1 q7 -> q14; g37 ccx q0 q8 -> q14; g38 ccx q1 q6 -> q13; g39 ccx q0 q7 -> q13; g40 ccx q0 q6 -> q12

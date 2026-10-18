@@ -1,0 +1,180 @@
+{
+ "source": "results/window_runs/stage1/stage1_qpe_8_e3.jsonl",
+ "source_sha1": "f8927916a58b8ac8b9f87adf4fb9cf04ae82da46",
+ "note": "verbatim records; call 4 parent = the TKET input (first parent of the run)",
+ "start": {
+  "kind": "start",
+  "tag": "stage1_qpe_8_e3",
+  "n": 8,
+  "eps": 0.001,
+  "input": {
+   "name": "qpe_8",
+   "source": "results/bqskit_baselines/stage1/inputs/qpe_8_tket.qasm"
+  },
+  "cost": {
+   "t": 14761,
+   "t_fixed": 157,
+   "t_gs": 14604,
+   "rz": 257,
+   "cx": 268,
+   "gates": 1034,
+   "eps_rz": 3.8910505832969595e-06,
+   "eps_synth": 0.0009999999999073185
+  },
+  "ledger": {
+   "eps_total": 0.001,
+   "window_pool": 0.00025,
+   "eps_synth": 0.0009999999999073185,
+   "d_input": 9.268151948997937e-14,
+   "window_spent": 0.0,
+   "window_spent_rounded": 0.0,
+   "n_window_charges": 0,
+   "eps_rz": 3.8910505832969595e-06,
+   "bound": 0.001,
+   "reclaimed_eps_synth": 0.0009999999999073185,
+   "rule": "v1: window pool cap 0.25 eps, synthesis = eps - d_input - ceil_q(spent)"
+  },
+  "verifier_digest": "bc3eac23a403dbc5"
+ },
+ "accepted": {
+  "kind": "propose",
+  "call": 4,
+  "parent": "c69b9babe909249a",
+  "window": {
+   "index": 17,
+   "qubits": [
+    3,
+    5,
+    6,
+    7
+   ],
+   "n_ops": 40,
+   "t_cost": 686
+  },
+  "allowance": 6.25e-05,
+  "eps_rz": 3.8910505832969595e-06,
+  "rules_shown": [
+   "R1"
+  ],
+  "rules_hidden": [
+   "R2",
+   "R3",
+   "R4",
+   "R5"
+  ],
+  "prompt": "You are optimizing a fault-tolerant quantum circuit compiled to Clifford+T. You get one WINDOW of the\ncircuit (a sub-circuit on 4 local qubits q0..q3) and propose a cheaper replacement that implements the same\n4-qubit unitary up to global phase, within an error allowance.\n\nCost model (lower is better, compared lexicographically): total T-count of the whole circuit, where\n  * t / tdg cost 1 T; h, s, sdg, x, z, cx, cz are free; rz at a multiple of pi/4 is exact (odd multiples = 1 T);\n  * every other rz is synthesized by gridsynth at eps_rz = 3.891e-06, costing about 3*log2(1/eps_rz) T\n    (~54 T each here); removing a rotation also loosens eps_rz for all others; error budget you spend is\n    taken from synthesis, so a rewrite must save more T than it costs the other rotations.\nSo the main gains are FEWER rotations that need synthesis, then fewer t/tdg. Merely changing an angle\nto a different non-pi/4 value is not counted as an improvement.\n\nAcceptance (decided by an exact/numerical verifier, not by you): phase-aligned operator-norm distance\nbetween the original and the replacement window <= allowance = 6.250e-05. Clifford+T windows are checked exactly.\n\nTwo actions (you may mix them; at most 3 blocks in total, best first):\n A. EXACT REWRITE - a full replacement window in a ```window block (gates h s sdg x z t tdg cx cz rz(angle) on\n    q0..q3; `cx a b` = control a, target b; angles as decimals or k*pi/m). Useful facts: rz on the CONTROL of\n    cx commutes with it; x on the TARGET commutes with it; rz(a) rz(b) = rz(a+b) on one wire; a cx pair\n    conjugating an rz moves the rotation to a wire parity; h rz(a) h = rx(a).\n B. FIX-AND-REFIT - a ```fix block naming rotations of this window by op index and a target value each:\n        ```fix\n        op 7 -> pi/4\n        op 12 -> 0\n        ```\n    Targets: 0 (delete), a multiple of pi/4 (exact, free or 1 T), or 2*pi*m/2^k with k <= 4 (pi/8 multiples are\n    still synthesized here, so they save nothing by themselves). A numerical optimizer then re-fits ALL OTHER\n    non-pi/4 rotations of the window to stay as close as possible to the original unitary; the verifier\n    checks the refitted window against the allowance. A fix only survives if the remaining rotations can\n    absorb the change - e.g. another rotation acting on the same wire or the same cx-parity, or a set of\n    rotations whose combined effect is redundant. A rotation with nothing to absorb it fails unless its\n    plain snap distance (table) is itself within the allowance. Fixing several rotations at once is allowed.\n\nWindow (time order, top to bottom; angles reduced to [-pi, pi]; `# op i` = index for fix blocks):\n```window\nrz(0.33187704674842555) q3  # op 0\nrz(-1.7067878415236546) q0  # op 1\nt q1\nh q0\nsdg q0\ncx q0 q2\nsdg q0\nh q0\nrz(-1.74130641302063) q0  # op 8\nh q0\ncx q0 q2\nz q0\nrz(-0.7279362058199155) q2  # op 12\nh q0\nh q2\nrz(-1.4348048120661367) q0  # op 15\nrz(-0.43535237095586155) q2  # op 16\ncx q0 q3\nh q2\nrz(1.6114801074497724) q2  # op 19\nrz(0.8146776736655994) q3  # op 20\nh q3\nrz(-1.9999913026482794) q3  # op 22\nh q3\ns q3\ncx q0 q3\nsdg q3\nh q3\nrz(1.9999913026482803) q3  # op 28\nh q3\nrz(-0.36115655701658156) q3  # op 30\ncx q3 q2\ntdg q2\ncx q0 q2\nt q2\ncx q3 q2\ntdg q2\ncx q0 q2\ncx q0 q3\nrz(-0.10012223803497378) q2  # op 39\n```\nRotations needing synthesis (op index: angle | nearest pi/4 multiple | |angle - multiple| rad | plain snap\ndistance without refit (an upper bound; usable directly only if <= allowance, summed) | T now | P):\nP = the rotation's Pauli with all Clifford gates of the window moved to its end: op i = exp(-i*angle/2 * P).\nTwo rotations with the same P letters merge (same sign: angles add; opposite sign: subtract) when every\nrotation between them has a P that COMMUTES with theirs (two Paulis commute iff they differ, both non-I, on an\neven number of qubits); a fix of one of them to 0 is then refitted exactly. Different P letters do not merge.\n  op 0 on q3: rz(0.3318770467) | 0*pi/4 | 3.319e-01 | 1.657e-01 | 52 | P=+IIIZ\n  op 1 on q0: rz(-1.706787842) | -2*pi/4 | 1.360e-01 | 6.798e-02 | 58 | P=+ZIII\n  op 8 on q0: rz(-1.741306413) | -2*pi/4 | 1.705e-01 | 8.523e-02 | 54 | P=-ZIXI\n  op 12 on q2: rz(-0.7279362058) | -1*pi/4 | 5.746e-02 | 2.873e-02 | 58 | P=+IIZI\n  op 15 on q0: rz(-1.434804812) | -2*pi/4 | 1.360e-01 | 6.798e-02 | 58 | P=+ZIII\n  op 16 on q2: rz(-0.435352371) | -1*pi/4 | 3.500e-01 | 1.748e-01 | 56 | P=+IIXI\n  op 19 on q2: rz(1.611480107) | 2*pi/4 | 4.068e-02 | 2.034e-02 | 58 | P=+IIZI\n  op 20 on q3: rz(0.8146776737) | 1*pi/4 | 2.928e-02 | 1.464e-02 | 58 | P=+ZIIZ\n  op 22 on q3: rz(-1.999991303) | -3*pi/4 | 3.562e-01 | 1.779e-01 | 58 | P=+IIIX\n  op 28 on q3: rz(1.999991303) | 3*pi/4 | 3.562e-01 | 1.779e-01 | 58 | P=+ZIIX\n  op 30 on q3: rz(-0.361156557) | 0*pi/4 | 3.612e-01 | 1.803e-01 | 58 | P=+IIIZ\n  op 39 on q2: rz(-0.100122238) | 0*pi/4 | 1.001e-01 | 5.006e-02 | 56 | P=+IIZI\n  t/tdg gates (rotations by +-pi/4, cost 1 T each): op 2: +IZII, op 32: +IIZZ, op 34: +ZIZZ, op 36: +ZIZI\nWindow T-cost now: 686 T (12 rotation(s) to synthesize, 4 explicit T).\nLessons from earlier verifier feedback on this task (hints for proposing; scoring and verification are unchanged):\n  - Rz angle merges: combining two rz(a) on the same qubit (removing a cx-conjugation pair) only preserves the unitary if the merged angle equals the sum/difference consistent with the sign flip the cx conjugation applies, not just one of the two original angles. Check both +a and -a combinations against the full matrix before fixing an op to 0.\n\nKeep the reasoning short. If you see no valid improvement, reply NONE.",
+  "candidates": [
+   {
+    "action": "fix",
+    "fixes": {
+     "19": 0.0
+    },
+    "refit": {
+     "ok": true,
+     "dist": 5.99072710993101e-16,
+     "n_free": 11,
+     "reason": ""
+    },
+    "window": "rz(0.33187704674842555) q3\nrz(-1.7067878415236546) q0\nt q1\nh q0\nsdg q0\ncx q0 q2\nsdg q0\nh q0\nrz(-1.74130641302063) q0\nh q0\ncx q0 q2\nz q0\nrz(-0.7279362058199155) q2\nh q0\nh q2\nrz(-1.4348048120661367) q0\nrz(-0.43535237095586155) q2\ncx q0 q3\nh q2\nrz(0.8146776736655994) q3\nh q3\nrz(-1.9999913026482794) q3\nh q3\ns q3\ncx q0 q3\nsdg q3\nh q3\nrz(1.9999913026482803) q3\nh q3\nrz(-0.36115655701658156) q3\ncx q3 q2\ntdg q2\ncx q0 q2\nt q2\ncx q3 q2\ntdg q2\ncx q0 q2\ncx q0 q3\nrz(1.5113578694147982) q2",
+    "verify": {
+     "ok": true,
+     "mode": "approx",
+     "dist": 1.4549788751161594e-15,
+     "fro": 8.446303496929864e-16,
+     "charge": 1.4549788751161594e-15,
+     "allowance": 6.25e-05,
+     "hs_cost": 1.6653345369377348e-15,
+     "hs_dist": 5.7711949142924205e-08,
+     "reason": ""
+    },
+    "cost": {
+     "t": 14705,
+     "t_fixed": 157,
+     "t_gs": 14548,
+     "rz": 256,
+     "cx": 268,
+     "gates": 1033,
+     "eps_rz": 3.905296325321556e-06
+    },
+    "decision": "best so far"
+   }
+  ],
+  "response": "Looking at the P-labels, I can find merge candidates:\n\n- op 1 (ZIII) and op 15 (ZIII): same P, nothing non-commuting with ZIII of the opposite parity in between that blocks it... need to check commutation of everything between them. But let's check the easier ones first.\n- op 12 (IIZI), op 19 (IIZI), op 39 (IIZI): all same P=+IIZI, candidates to merge.\n- op 0 (IIIZ) and op 30 (IIIZ): same P.\n- op 22 (IIIX) and op 28 (ZIIX): different P, no merge.\n\n**op 12, op 19, op 39 merge (P=+IIZI):** Need everything between each pair to commute with IIZI (i.e. have even overlap with Z on q2, or be identity on q2). Between op12 and op19: op15(ZIII, overlap 0 qubits with q2 \u2192commutes - differ on 0 qubits... wait rule: commute iff differ on even # qubits *where both nonidentity*. ZIII vs IIZI: only q0 differs, q2 identity for ZIII - overlap qubits where both non-I: none \u2192 commute (0 is even). h/cx are Clifford conjugation already absorbed into P calc. So op15 commutes. Between op19 and op39: ops 20,22,28,30 (q3 stuff, IIIZ/IIIX/ZIIX/ZIIZ) \u2014 overlap with IIZI is 0 qubits (q2 identity in all) \u2192 commute. op32,34,36 (IIZZ,ZIZZ,ZIZI) overlap on q2: IIZZ vs IIZI differ at q2(both Z)+q3(Z vs I)= only q2 both nonI \u21921 qubit overlap\u2192odd\u2192does NOT commute! So op39 can't merge with op19 across op32/34/36.\n\nSo only merge op12 and op19 (adjacent-ish, only op15 ZIII between them, commutes). Fix op19 -> 0, refit op12 to absorb: combined angle for op12 should become (angle12 \u00b1 angle19). Signs are both +IIZI (same sign) so angles add: -0.7279362058 + 1.611480107 = 0.883543901, not near pi/4 multiple \u2014 still needs synthesis, no T savings alone. But this removes one rotation from synthesis list (op19), saving ~1 T-slot (58T) at cost of possibly adjusting op12 (no cost change, still 1 rotation). Net: -58T, -1 rotation synthesized.\n\n```fix\nop 19 -> 0\n```",
+  "parse_errors": [],
+  "whole_check": {
+   "method": "unitary",
+   "n": 8,
+   "dist": 9.302102437423625e-14,
+   "fro": 4.69123580542448e-14,
+   "ok": true,
+   "verified": true,
+   "bound": 9.413649836509553e-14
+  },
+  "accepted": true,
+  "action": "fix",
+  "t_before": 14761,
+  "t_after": 14705,
+  "charge": 1.4549788751161594e-15,
+  "rz_before": 257,
+  "rz_after": 256
+ },
+ "rejected": {
+  "kind": "propose",
+  "call": 18,
+  "parent": "af46041b4fd03f2d",
+  "window": {
+   "index": 27,
+   "qubits": [
+    3,
+    5,
+    6,
+    7
+   ],
+   "n_ops": 40,
+   "t_cost": 579
+  },
+  "allowance": 6.25e-05,
+  "eps_rz": 3.951604186886634e-06,
+  "rules_shown": [
+   "R1",
+   "R6",
+   "R8"
+  ],
+  "rules_hidden": [
+   "R3",
+   "R4",
+   "R7"
+  ],
+  "prompt": "You are optimizing a fault-tolerant quantum circuit compiled to Clifford+T. You get one WINDOW of the\ncircuit (a sub-circuit on 4 local qubits q0..q3) and propose a cheaper replacement that implements the same\n4-qubit unitary up to global phase, within an error allowance.\n\nCost model (lower is better, compared lexicographically): total T-count of the whole circuit, where\n  * t / tdg cost 1 T; h, s, sdg, x, z, cx, cz are free; rz at a multiple of pi/4 is exact (odd multiples = 1 T);\n  * every other rz is synthesized by gridsynth at eps_rz = 3.952e-06, costing about 3*log2(1/eps_rz) T\n    (~54 T each here); removing a rotation also loosens eps_rz for all others; error budget you spend is\n    taken from synthesis, so a rewrite must save more T than it costs the other rotations.\nSo the main gains are FEWER rotations that need synthesis, then fewer t/tdg. Merely changing an angle\nto a different non-pi/4 value is not counted as an improvement.\n\nAcceptance (decided by an exact/numerical verifier, not by you): phase-aligned operator-norm distance\nbetween the original and the replacement window <= allowance = 6.250e-05. Clifford+T windows are checked exactly.\n\nTwo actions (you may mix them; at most 3 blocks in total, best first):\n A. EXACT REWRITE - a full replacement window in a ```window block (gates h s sdg x z t tdg cx cz rz(angle) on\n    q0..q3; `cx a b` = control a, target b; angles as decimals or k*pi/m). Useful facts: rz on the CONTROL of\n    cx commutes with it; x on the TARGET commutes with it; rz(a) rz(b) = rz(a+b) on one wire; a cx pair\n    conjugating an rz moves the rotation to a wire parity; h rz(a) h = rx(a).\n B. FIX-AND-REFIT - a ```fix block naming rotations of this window by op index and a target value each:\n        ```fix\n        op 7 -> pi/4\n        op 12 -> 0\n        ```\n    Targets: 0 (delete), a multiple of pi/4 (exact, free or 1 T), or 2*pi*m/2^k with k <= 4 (pi/8 multiples are\n    still synthesized here, so they save nothing by themselves). A numerical optimizer then re-fits ALL OTHER\n    non-pi/4 rotations of the window to stay as close as possible to the original unitary; the verifier\n    checks the refitted window against the allowance. A fix only survives if the remaining rotations can\n    absorb the change - e.g. another rotation acting on the same wire or the same cx-parity, or a set of\n    rotations whose combined effect is redundant. A rotation with nothing to absorb it fails unless its\n    plain snap distance (table) is itself within the allowance. Fixing several rotations at once is allowed.\n\nWindow (time order, top to bottom; angles reduced to [-pi, pi]; `# op i` = index for fix blocks):\n```window\nrz(2.2328977635130105) q2  # op 0\ntdg q3\ncx q0 q3\nt q3\ncx q1 q3\ntdg q3\ncx q0 q3\ncx q0 q1\nt q3\ntdg q1\nh q3\ncx q0 q1\nrz(0.33187704674842555) q3  # op 12\nrz(-2.0590101383439805) q0  # op 13\nh q0\nsdg q0\ncx q0 q2\nsdg q0\nh q0\nrz(-1.6824524968728278) q0  # op 19\nh q0\ncx q0 q2\nz q0\nrz(0.40689323476112127) q2  # op 23\nh q0\nh q2\nrz(0.4882138115490847) q0  # op 26\nrz(-0.5964820672961295) q2  # op 27\ncx q0 q3\nh q2\nrz(1.8850964140331694) q2  # op 30\nrz(0.8146776736655994) q3  # op 31\nh q3\nrz(-1.9999913026482794) q3  # op 33\nh q3\ns q3\ncx q0 q3\nsdg q0\nsdg q3\nh q0\n```\nRotations needing synthesis (op index: angle | nearest pi/4 multiple | |angle - multiple| rad | plain snap\ndistance without refit (an upper bound; usable directly only if <= allowance, summed) | T now | P):\nP = the rotation's Pauli with all Clifford gates of the window moved to its end: op i = exp(-i*angle/2 * P).\nTwo rotations with the same P letters merge (same sign: angles add; opposite sign: subtract) when every\nrotation between them has a P that COMMUTES with theirs (two Paulis commute iff they differ, both non-I, on an\neven number of qubits); a fix of one of them to 0 is then refitted exactly. Different P letters do not merge.\n  op 0 on q2: rz(2.232897764) | 3*pi/4 | 1.233e-01 | 6.164e-02 | 60 | P=+IIZI\n  op 12 on q3: rz(0.3318770467) | 0*pi/4 | 3.319e-01 | 1.657e-01 | 52 | P=+IIIX\n  op 13 on q0: rz(-2.059010138) | -3*pi/4 | 2.972e-01 | 1.485e-01 | 58 | P=+ZIII\n  op 19 on q0: rz(-1.682452497) | -2*pi/4 | 1.117e-01 | 5.582e-02 | 58 | P=-ZIXI\n  op 23 on q2: rz(0.4068932348) | 1*pi/4 | 3.785e-01 | 1.890e-01 | 54 | P=+IIZI\n  op 26 on q0: rz(0.4882138115) | 1*pi/4 | 2.972e-01 | 1.485e-01 | 58 | P=+ZIII\n  op 27 on q2: rz(-0.5964820673) | -1*pi/4 | 1.889e-01 | 9.442e-02 | 60 | P=+IIXI\n  op 30 on q2: rz(1.885096414) | 2*pi/4 | 3.143e-01 | 1.570e-01 | 58 | P=+IIZI\n  op 31 on q3: rz(0.8146776737) | 1*pi/4 | 2.928e-02 | 1.464e-02 | 58 | P=+ZIIX\n  op 33 on q3: rz(-1.999991303) | -3*pi/4 | 3.562e-01 | 1.779e-01 | 58 | P=+IZIZ\n  t/tdg gates (rotations by +-pi/4, cost 1 T each): op 1: +IIIZ, op 3: +ZIIZ, op 5: +ZZIZ, op 8: +IZIZ, op 9: +ZZII\nWindow T-cost now: 579 T (10 rotation(s) to synthesize, 5 explicit T).\nLessons from earlier verifier feedback on this task (hints for proposing; scoring and verification are unchanged):\n  - Rz angle merges: combining two rz(a) on the same qubit (removing a cx-conjugation pair) only preserves the unitary if the merged angle equals the sum/difference consistent with the sign flip the cx conjugation applies, not just one of the two original angles. Check both +a and -a combinations against the full matrix before fixing an op to 0.\n  - Large rz(angle) values (|angle| > 2*pi) found far from gate boundaries often just need modular reduction: angle_eff = angle mod 2*pi (choosing representative in (-pi,pi]) before any sign-flip analysis. e.g. rz(10.8596) q0 reduced correctly to rz(-1.7068) q0 (10.8596 - 4*pi), not a conjugation-derived sign change.\n  - When proposing fixes to multiple rz ops in one patch, always re-simulate the FULL circuit with all proposed fixes applied together before submitting; per-op plausibility (angle mod 2*pi, double/half relation, sign flip) does not guarantee the joint unitary matches, as combining independently-valid-looking fixes can push distance from <1e-2 to >3e-1.\nRecent verifier feedback on earlier proposals:\n  - ACCEPTED fix op 19->0 (approx, distance 1.45e-15): T 14761 -> 14705, rotations 257 -> 256\n  - ACCEPTED fix op 8->8*pi/8, op 22->0 (approx, distance 1.35e-15): T 14705 -> 14583, rotations 256 -> 254\n  - rejected: fix op 14->0, op 34->0: distance 2.745e-01 > allowance 6.250e-05\n  - ACCEPTED fix op 24->0 (approx, distance 1.06e-15): T 14583 -> 14525, rotations 254 -> 253\n\nKeep the reasoning short. If you see no valid improvement, reply NONE.",
+  "candidates": [
+   {
+    "action": "fix",
+    "fixes": {
+     "23": 0.0
+    },
+    "refit": {
+     "ok": true,
+     "dist": 0.11734507062392587,
+     "n_free": 9,
+     "reason": ""
+    },
+    "window": "rz(2.21946572554039) q2\ntdg q3\ncx q0 q3\nt q3\ncx q1 q3\ntdg q3\ncx q0 q3\ncx q0 q1\nt q3\ntdg q1\nh q3\ncx q0 q1\nrz(0.33187704678547153) q3\nrz(2.498247168288577) q0\nh q0\nsdg q0\ncx q0 q2\nsdg q0\nh q0\nrz(-1.6833029510266453) q0\nh q0\ncx q0 q2\nz q0\nh q0\nh q2\nrz(2.2141418029000133) q0\nrz(-0.5579189154968807) q2\ncx q0 q3\nh q2\nrz(2.226375831640528) q2\nrz(0.8146776795103458) q3\nh q3\nrz(-1.9999913017389979) q3\nh q3\ns q3\ncx q0 q3\nsdg q0\nsdg q3\nh q0",
+    "verify": {
+     "ok": false,
+     "mode": "approx",
+     "dist": 0.11734507062392553,
+     "fro": 0.11183556866477434,
+     "charge": null,
+     "allowance": 6.25e-05,
+     "hs_cost": 0.0062535972092883085,
+     "hs_dist": 0.11166058812544646,
+     "reason": "distance 1.173e-01 > allowance 6.250e-05"
+    },
+    "decision": "rejected: verifier"
+   }
+  ],
+  "response": "Looking at the P labels: op 0, op 23, op 30 all share P=+IIZI (on q2), and op 13, op 26 share P=+ZIII (on q0).\n\n**op 0, 23, 30 (P=+IIZI on q2):** Need to check commutation of everything between them. Between op0 and op23 we have ops on q3/q0/q1 mixing in cx q0 q2 twice \u2014 but P must commute with all gates strictly between. Given the earlier accepted fixes already simplified things, let's check op23 and op30: between them is just `cx q0 q3, h q2, rz q3...` \u2014 h q2 is Clifford but conjugation already accounted for in P (P is stated post-moving Cliffords to end), so op23 and op30 merge directly: angles 0.40689323476 + 1.8850964140 = 2.29199 \u2192 mod reduce... but let's just try combining op23 into op30 (both +IIZI, same sign \u2192 add), fixing op23 to 0 and letting op30 absorb.\n\nAlso op0 (+IIZI) sits far earlier but separated by cx q0 q2 (acts on q2) which doesn't commute with Z on q2's identity structure trivially \u2014 IIZI vs cx q0q2: cx q0 q2 is not a single Pauli, skip merging op0 with others (too risky, leave it).\n\nTry merging op23 -> op30.\n\n```fix\nop 23 -> 0\n```",
+  "parse_errors": [],
+  "accepted": false
+ }
+}

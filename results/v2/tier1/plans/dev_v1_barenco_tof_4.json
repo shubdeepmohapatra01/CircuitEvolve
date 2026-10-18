@@ -1,0 +1,239 @@
+{
+ "circuit": "barenco_tof_4",
+ "tag": "dev_v1",
+ "summary_digest": "586920501a2ba2b7",
+ "normalization": {
+  "ok": true,
+  "certified": true,
+  "method": "basis-exhaustive",
+  "reason": ""
+ },
+ "best_classical": {
+  "t": 28.0,
+  "arm": "best_prev_as_reported_by_kvdw2020",
+  "ties": [
+   "best_prev_as_reported_by_kvdw2020",
+   "kvdw2020_pyzx",
+   "kvdw2020_pyzx_todd",
+   "nam2018_heavy",
+   "nam2018_light",
+   "nam_heavy_file",
+   "nam_light_file",
+   "pyzx_fr",
+   "tpar_as_reported_by_nam2018"
+  ],
+  "origin": "results/v2/baselines_new.csv | published:KvdW2020",
+  "runs": {
+   "pyzx_fr": 28.0,
+   "tket_fpo": 44.0,
+   "nam_light_file": 28.0,
+   "nam_heavy_file": 28.0
+  },
+  "text": "28 (best_prev_as_reported_by_kvdw2020; pyzx_fr=28.0, tket_fpo=44.0)"
+ },
+ "plans": {
+  "llm/exact": {
+   "plan": {
+    "target": "exact",
+    "decisions": [
+     {
+      "element": "P0",
+      "route": "relative_phase_toffoli"
+     },
+     {
+      "element": "P1",
+      "route": "relative_phase_toffoli"
+     },
+     {
+      "element": "T0",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T1",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T4",
+      "route": "toffoli_7T"
+     },
+     {
+      "element": "T7",
+      "route": "toffoli_7T"
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "Both pairs are mirror-class (target only read between occurrences), so relative_phase_toffoli applies exactly, cutting each pair from 14 T to 8 T (16 T total) while remaining unitary-preserving. Unpaired Toffolis T0,T1,T4,T7 must stay exact so they use the standard 7-T decomposition, giving 16+28=44 T before the Clifford+T pass tries to reduce further."
+   },
+   "t_count": 28,
+   "t_depth": 24,
+   "qubits": 7,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": true,
+   "method": "basis-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "toffoli_7T",
+    "T1": "toffoli_7T",
+    "T2": "relative_phase_toffoli",
+    "T3": "relative_phase_toffoli",
+    "T4": "toffoli_7T",
+    "T5": "relative_phase_toffoli",
+    "T6": "relative_phase_toffoli",
+    "T7": "toffoli_7T"
+   },
+   "call": 1,
+   "variant": null,
+   "digest": "f272fcb539bab484"
+  },
+  "llm/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "P0",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P1",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "T0",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T1",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T4",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T7",
+      "route": "jones_toffoli"
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "P0/P1 are mirror-class (target only read between), not clean, so temporary_and must use via_ancilla to compute the AND into a fresh ancilla and CNOT it onto the mirror target rather than writing directly, which caused the prior wrong-output rejections; unpaired Toffolis use jones_toffoli for 4T each."
+   },
+   "t_count": 24,
+   "t_depth": 10,
+   "qubits": 10,
+   "ancillas": 3,
+   "measurements": 6,
+   "verdict_mode": "relaxed",
+   "certified": true,
+   "method": "branchwise-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "jones_toffoli",
+    "T1": "jones_toffoli",
+    "T2": "temporary_and(via_ancilla)",
+    "T3": "temporary_and(via_ancilla)",
+    "T4": "jones_toffoli",
+    "T5": "temporary_and(via_ancilla)",
+    "T6": "temporary_and(via_ancilla)",
+    "T7": "jones_toffoli"
+   },
+   "call": 4,
+   "variant": null,
+   "digest": "4284a8baa0cd70a1"
+  },
+  "control/exact": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V1 (spec) + pyzx"
+   },
+   "t_count": 28,
+   "t_depth": 23,
+   "qubits": 7,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": true,
+   "method": "basis-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "toffoli_7T",
+    "T1": "toffoli_7T",
+    "T2": "toffoli_7T",
+    "T3": "toffoli_7T",
+    "T4": "toffoli_7T",
+    "T5": "toffoli_7T",
+    "T6": "toffoli_7T",
+    "T7": "toffoli_7T"
+   },
+   "call": 0,
+   "variant": "V1",
+   "digest": "62db28f99cae62f2"
+  },
+  "control/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "P0",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P1",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "T0",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T1",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T4",
+      "route": "jones_toffoli"
+     },
+     {
+      "element": "T7",
+      "route": "jones_toffoli"
+     }
+    ],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V2 (max_relaxed) + pyzx"
+   },
+   "t_count": 24,
+   "t_depth": 10,
+   "qubits": 10,
+   "ancillas": 3,
+   "measurements": 6,
+   "verdict_mode": "relaxed",
+   "certified": true,
+   "method": "branchwise-exhaustive",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "jones_toffoli",
+    "T1": "jones_toffoli",
+    "T2": "temporary_and(via_ancilla)",
+    "T3": "temporary_and(via_ancilla)",
+    "T4": "jones_toffoli",
+    "T5": "temporary_and(via_ancilla)",
+    "T6": "temporary_and(via_ancilla)",
+    "T7": "jones_toffoli"
+   },
+   "call": 1,
+   "variant": "V2",
+   "digest": "4284a8baa0cd70a1"
+  }
+ }
+}

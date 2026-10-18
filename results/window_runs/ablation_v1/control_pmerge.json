@@ -1,0 +1,73 @@
+{
+ "description": "experiments/window_pmerge_control.run_one at eps 1e-3 (no LLM, same windows, frozen verifier, ledger v1, same metric); final circuit checked vs the original",
+ "rows": [
+  {
+   "name": "qft_8",
+   "eps": 0.001,
+   "t": 2115,
+   "rz": 43,
+   "cx": 68,
+   "merges": 5,
+   "passes": 3,
+   "window_spent": 1.1139092198502597e-15,
+   "bound": 0.0009997558593761138,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 4.482787807050596e-15
+   },
+   "seconds": 1.5
+  },
+  {
+   "name": "qpe_8",
+   "eps": 0.001,
+   "t": 12597,
+   "rz": 224,
+   "cx": 268,
+   "merges": 23,
+   "passes": 3,
+   "window_spent": 1.6632457096853152e-14,
+   "bound": 0.0009997558593916325,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 9.685486008241907e-14
+   },
+   "seconds": 2.6
+  },
+  {
+   "name": "qae_13",
+   "eps": 0.001,
+   "t": 6683,
+   "rz": 126,
+   "cx": 156,
+   "merges": 19,
+   "passes": 7,
+   "window_spent": 1.1010127128652302e-14,
+   "bound": 0.00099975585938601,
+   "final_check": {
+    "ok": true,
+    "method": "statevector",
+    "dist": 2.1499022519263734e-13
+   },
+   "seconds": 1.6
+  },
+  {
+   "name": "hhl_8",
+   "eps": 0.001,
+   "t": 31762,
+   "rz": 525,
+   "cx": 497,
+   "merges": 58,
+   "passes": 5,
+   "window_spent": 3.800537994802071e-14,
+   "bound": 0.0009997558594130053,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 3.1915712996938657e-13
+   },
+   "seconds": 13.0
+  }
+ ]
+}

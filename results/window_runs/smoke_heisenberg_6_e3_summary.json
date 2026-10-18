@@ -1,0 +1,80 @@
+{
+ "tag": "smoke_heisenberg_6_e3",
+ "name": "heisenberg_6",
+ "input_source": "results/bqskit_baselines/stage1/inputs/heisenberg_6_tket.qasm",
+ "n": 6,
+ "eps": 0.001,
+ "calls": 20,
+ "stats": {
+  "proposal_calls": 20,
+  "reflect_calls": 0,
+  "llm_errors": 0,
+  "candidates": 3,
+  "parse_errors": 19,
+  "verified": 0,
+  "rejected_verifier": 3,
+  "rejected_metric": 0,
+  "rejected_ledger": 0,
+  "rejected_whole": 0,
+  "accepted": 0,
+  "accepted_t_reduced": 0,
+  "exact_accepts": 0,
+  "approx_accepts": 0,
+  "rules_added": 0,
+  "reflect_skipped_no_evidence": 2
+ },
+ "backend_stats": {
+  "calls": 20,
+  "input_tokens": 23654,
+  "output_tokens": 11416,
+  "ok": 20,
+  "failed": 0
+ },
+ "t_before": 8600,
+ "t_after": 8600,
+ "before": {
+  "t": 8600,
+  "t_fixed": 0,
+  "t_gs": 8600,
+  "rz": 150,
+  "cx": 274,
+  "gates": 919,
+  "eps_rz": 3.3333333333333333e-06
+ },
+ "after": {
+  "t": 8600,
+  "t_fixed": 0,
+  "t_gs": 8600,
+  "rz": 150,
+  "cx": 274,
+  "gates": 919,
+  "eps_rz": 3.3333333333333333e-06
+ },
+ "t_after_reclaimed": 8200,
+ "ledger": {
+  "eps_total": 0.001,
+  "window_pool": 0.0005,
+  "eps_synth": 0.0005,
+  "d_input": 2.5737892000129755e-14,
+  "window_spent": 0.0,
+  "n_window_charges": 0,
+  "eps_rz": 3.3333333333333333e-06,
+  "bound": 0.0005000000000257379,
+  "reclaimed_eps_synth": 0.0009999999999742621,
+  "rule": "v0: eps/2 windows, eps/2 synthesis"
+ },
+ "archive": [
+  {
+   "t": 8600,
+   "rz": 150,
+   "spent": 0.0,
+   "digest": "b11d56526f922963"
+  }
+ ],
+ "seconds": 47.7,
+ "verifier_digest": "bc3eac23a403dbc5",
+ "playbook": {
+  "live": 0,
+  "active": 0
+ }
+}

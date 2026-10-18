@@ -1,0 +1,312 @@
+{
+ "pool_size": 42270,
+ "pool_t_reducing": 8833,
+ "pool_specs": [
+  [
+   1,
+   8
+  ],
+  [
+   2,
+   6
+  ],
+  [
+   3,
+   4
+  ]
+ ],
+ "t_reducing_pool_rules_matching_any_start": 0,
+ "t_reducing_pool_total_matches": 0,
+ "llm_verified_rules": 54,
+ "llm_verified_t_reducing": 35,
+ "control_verified_rules": 117,
+ "control_verified_t_reducing": 47,
+ "transfer_rows": 43,
+ "transfer_llm_t_saved": 0,
+ "transfer_control_t_saved": 0,
+ "transfer_llm_g_saved": 154,
+ "transfer_control_g_saved": 297,
+ "transfer_guard_all_ok": true,
+ "outcomes": {
+  "llm": {
+   "not_identity": 48,
+   "malformed": 15,
+   "duplicate": 32,
+   "verified": 54,
+   "parse_error": 4
+  },
+  "control": {
+   "verified": 117
+  }
+ },
+ "llm_calls": 36,
+ "tokens": {
+  "calls": 36,
+  "input_tokens": 229474,
+  "output_tokens": 68095,
+  "truncated": 2,
+  "ok": 36,
+  "failed": 0
+ },
+ "verify_schedule": [
+  3,
+  4,
+  10,
+  16,
+  6,
+  9,
+  7,
+  10,
+  2,
+  6,
+  6,
+  6,
+  6,
+  6,
+  1,
+  11,
+  4,
+  4
+ ],
+ "frozen": {
+  "library_final": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "library_control_final": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "lex_llm": "f0d431824f21732e90a42945afd3f2063dd56c41d613fc8c37e3fd6aaf296022",
+  "lex_control": "4bef8a90eb7cccad9039757cbbf51bd3b874ca21e912a67f8ac2a378c40245d6"
+ },
+ "lex_replay": {
+  "llm": {
+   "total_t": 758,
+   "total_g": 2378,
+   "n_rules": 1,
+   "rules": [
+    {
+     "name": "g8p0_cx_self_cancel_through_t",
+     "pattern": "cx b a; cx b a",
+     "replacement": "id",
+     "apps": 1,
+     "g_saved": 2
+    }
+   ]
+  },
+  "control": {
+   "total_t": 758,
+   "total_g": 2310,
+   "n_rules": 30,
+   "rules": [
+    {
+     "name": "enum31542",
+     "pattern": "cx a b; cx c b; cx c a",
+     "replacement": "cx c a; cx a b",
+     "apps": 7,
+     "g_saved": 7
+    },
+    {
+     "name": "enum31541",
+     "pattern": "cx a b; cx c b; cx a c",
+     "replacement": "cx a c; cx c b",
+     "apps": 9,
+     "g_saved": 9
+    },
+    {
+     "name": "enum35625",
+     "pattern": "tdg a; cx b a; cx c a; cx c b; t b",
+     "replacement": "tdg a; cx c b; t b; cx b a",
+     "apps": 6,
+     "g_saved": 6
+    },
+    {
+     "name": "enum1216",
+     "pattern": "s a; t a; cx b a; s a; t a",
+     "replacement": "tdg a; z b; cx b a; tdg a",
+     "apps": 4,
+     "g_saved": 4
+    },
+    {
+     "name": "enum31550",
+     "pattern": "cx a b; cx b c; cx a b",
+     "replacement": "cx b c; cx a c",
+     "apps": 5,
+     "g_saved": 5
+    },
+    {
+     "name": "enum31535",
+     "pattern": "cx a b; cx a c; cx c b",
+     "replacement": "cx c b; cx a c",
+     "apps": 2,
+     "g_saved": 2
+    },
+    {
+     "name": "enum31559",
+     "pattern": "cx a b; cz c a; cz b c",
+     "replacement": "cz b c; cx a b",
+     "apps": 2,
+     "g_saved": 2
+    },
+    {
+     "name": "enum1198",
+     "pattern": "s a; t a; cx a b; s b; t b",
+     "replacement": "tdg a; z b; cx a b; tdg b",
+     "apps": 3,
+     "g_saved": 3
+    },
+    {
+     "name": "enum803",
+     "pattern": "s a; t a; cx b a; z a",
+     "replacement": "z b; tdg a; cx b a",
+     "apps": 2,
+     "g_saved": 2
+    },
+    {
+     "name": "enum650",
+     "pattern": "tdg a; cx b a; s a; sdg b",
+     "replacement": "t a; cz a b; cx b a",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum32094",
+     "pattern": "cx a b; cx c b; tdg b; cx a c",
+     "replacement": "cx a c; cx c b; tdg b",
+     "apps": 0,
+     "g_saved": 0
+    },
+    {
+     "name": "enum749",
+     "pattern": "z a; cx b a; s a; t a",
+     "replacement": "z b; cx b a; tdg a",
+     "apps": 3,
+     "g_saved": 3
+    },
+    {
+     "name": "enum31574",
+     "pattern": "cz a b; cz c b; cx c a",
+     "replacement": "cx c a; cz a b",
+     "apps": 2,
+     "g_saved": 2
+    },
+    {
+     "name": "enum31551",
+     "pattern": "cx a b; cx c a; cx a b",
+     "replacement": "cx c b; cx c a",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum32013",
+     "pattern": "cx a b; t b; cx b c; cx a c",
+     "replacement": "cx b c; cx a b; t b",
+     "apps": 0,
+     "g_saved": 0
+    },
+    {
+     "name": "enum373",
+     "pattern": "s a; t a; cx a b; z b",
+     "replacement": "tdg a; z b; cx a b",
+     "apps": 2,
+     "g_saved": 2
+    },
+    {
+     "name": "enum31539",
+     "pattern": "cx a b; cx c a; cx c b",
+     "replacement": "cx c a; cx a b",
+     "apps": 2,
+     "g_saved": 2
+    },
+    {
+     "name": "enum31534",
+     "pattern": "cx a b; cx a c; cx b c",
+     "replacement": "cx b c; cx a b",
+     "apps": 2,
+     "g_saved": 2
+    },
+    {
+     "name": "enum315",
+     "pattern": "z a; cz a b; cx a b",
+     "replacement": "cx a b; cz a b",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum32006",
+     "pattern": "cx a b; s b; cz a c; cz b c",
+     "replacement": "cz b c; cx a b; s b",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum31556",
+     "pattern": "cx a b; cz c b; cz c a",
+     "replacement": "cz c b; cx a b",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum886",
+     "pattern": "tdg a; cx b a; s a; s b",
+     "replacement": "t a; cx b a; cz b a",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum32076",
+     "pattern": "cx a b; cx c a; t a; cx a b",
+     "replacement": "cx c a; t a; cx c b",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum32078",
+     "pattern": "cx a b; cx c a; tdg a; cx a b",
+     "replacement": "cx c a; tdg a; cx c b",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum726",
+     "pattern": "z a; cx a b; s b; t b",
+     "replacement": "z b; cx a b; tdg b",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum978",
+     "pattern": "cx a b; cx b a; cx a b; cx b a",
+     "replacement": "cx b a; cx a b",
+     "apps": 2,
+     "g_saved": 4
+    },
+    {
+     "name": "enum31566",
+     "pattern": "cz a b; cz a c; cx c b",
+     "replacement": "cx c b; cz a b",
+     "apps": 2,
+     "g_saved": 2
+    },
+    {
+     "name": "enum767",
+     "pattern": "z a; cx b a; h b; z a",
+     "replacement": "z b; cx b a; h b",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum32043",
+     "pattern": "cx a b; cx a c; t c; cx c b",
+     "replacement": "cx c b; cx a c; t c",
+     "apps": 1,
+     "g_saved": 1
+    },
+    {
+     "name": "enum266",
+     "pattern": "cx a b; cx a b",
+     "replacement": "id",
+     "apps": 1,
+     "g_saved": 2
+    }
+   ]
+  }
+ },
+ "start_total_t": 758,
+ "start_total_gates": 2380
+}

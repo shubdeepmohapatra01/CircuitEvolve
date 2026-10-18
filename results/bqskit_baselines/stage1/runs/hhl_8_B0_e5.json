@@ -1,0 +1,23 @@
+{
+ "circuit": "hhl_8",
+ "arm": "B0",
+ "eps": 1e-05,
+ "status": "ok",
+ "n_rz": 583,
+ "rz_distinct": 531,
+ "eps_per_rz": 1.7152658662092626e-08,
+ "t_fixed": 202,
+ "t_gridsynth": 47208,
+ "t_count": 47410,
+ "cx": 497,
+ "gridsynth_s": 0.47,
+ "gs_max_reported_err": 8.572599074077848e-09,
+ "err_bound_gridsynth": 1e-05,
+ "err_bound_total": 1e-05,
+ "pre_s": 0.0,
+ "runtime_s": 0.62,
+ "verify_s": 5.7,
+ "state_dist_vs_orig": 1.4659662067294036e-07,
+ "state_dist_vs_input": 1.465966205876868e-07,
+ "output": "hhl_8_B0_e5.qasm.gz"
+}

@@ -1,0 +1,65 @@
+{
+ "circuit": "tfim_6",
+ "arm": "B2",
+ "eps": 0.001,
+ "status": "ok",
+ "t_count": 8560,
+ "cx": 180,
+ "n_rz": 160,
+ "eps_per_rz": 6.25e-06,
+ "gridsynth_algorithmic_error": 0.001,
+ "residual_rz": 0,
+ "other_ops": {},
+ "runtime_s": 7.8,
+ "verify_s": 2.0,
+ "state_dist_vs_orig": 5.126128411670302e-05,
+ "state_dist_vs_input": 5.126128411213068e-05,
+ "state_dist_input_vs_cliffrz": 5.397308896224646e-15,
+ "stages": {
+  "input": {
+   "rz": 303,
+   "t": 0,
+   "params": 303,
+   "ops": 675
+  },
+  "clifford_rz": {
+   "rz": 160,
+   "t": 0,
+   "params": 160,
+   "ops": 673,
+   "eps_per_gate": 3.2894736842105265e-06
+  },
+  "output": {
+   "rz": 0,
+   "t": 8560,
+   "params": 0,
+   "ops": 22785
+  }
+ },
+ "gate_counts": {
+  "TGate": 8560,
+  "HGate": 8910,
+  "ZGate": 11,
+  "SdgGate": 102,
+  "CNOTGate": 180,
+  "SGate": 4861,
+  "XGate": 161
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 160,
+    "algorithmic_error": 0.001,
+    "precision_per_rz": 6.25e-06
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 0,
+   "distinct": []
+  },
+  "assign_errors": [],
+  "partitions": []
+ },
+ "output": "tfim_6_B2_e3.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1"
+}

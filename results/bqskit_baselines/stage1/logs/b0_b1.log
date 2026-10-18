@@ -1,0 +1,78 @@
+{'circuit': 'qft_8', 'arm': 'B0', 'eps': 0.001, 'n_rz': 48, 't_count': 2403, 'cx': 68, 'state_dist_vs_orig': 4.0623144791315975e-05}
+{'circuit': 'qft_8', 'arm': 'B0', 'eps': 1e-05, 'n_rz': 48, 't_count': 3321, 'cx': 68, 'state_dist_vs_orig': 7.294290846317905e-07}
+{'circuit': 'qft_8', 'arm': 'B1', 'eps': 0.001, 'n_rz': 33, 't_count': 1577, 'cx': 90, 'state_dist_vs_orig': 6.338657411480412e-05}
+{'circuit': 'qft_8', 'arm': 'B1', 'eps': 1e-05, 'n_rz': 33, 't_count': 2229, 'cx': 90, 'state_dist_vs_orig': 6.710204806076119e-07}
+{'circuit': 'qpe_8', 'arm': 'B0', 'eps': 0.001, 'n_rz': 257, 't_count': 14803, 'cx': 268, 'state_dist_vs_orig': 3.347187272996179e-05}
+{'circuit': 'qpe_8', 'arm': 'B0', 'eps': 1e-05, 'n_rz': 257, 't_count': 19927, 'cx': 268, 'state_dist_vs_orig': 4.639001723060377e-07}
+{'circuit': 'qpe_8', 'arm': 'B1', 'eps': 0.001, 'n_rz': 206, 't_count': 11521, 'cx': 323, 'state_dist_vs_orig': 3.1073840802658114e-05}
+Traceback (most recent call last):
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_b0_b1.py", line 86, in <module>
+    main()
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_b0_b1.py", line 82, in main
+    run(name, arm, ref, qin)
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_b0_b1.py", line 56, in run
+    ct, st = lower_clifford_rz(qc, eps)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/s1_common.py", line 170, in lower_clifford_rz
+    emit_rz(float(ins.operation.params[0]), qs[0])
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/s1_common.py", line 162, in emit_rz
+    raise ValueError(g)
+ValueError: I
+skip qft_8_B0_e3.json
+skip qft_8_B0_e5.json
+skip qft_8_B1_e3.json
+skip qft_8_B1_e5.json
+skip qpe_8_B0_e3.json
+skip qpe_8_B0_e5.json
+skip qpe_8_B1_e3.json
+{'circuit': 'qpe_8', 'arm': 'B1', 'eps': 1e-05, 'n_rz': 206, 't_count': 15677, 'cx': 323, 'state_dist_vs_orig': 5.956812195970721e-07}
+{'circuit': 'qae_13', 'arm': 'B0', 'eps': 0.001, 'n_rz': 145, 't_count': 7891, 'cx': 156, 'state_dist_vs_orig': 3.285813609134476e-05}
+{'circuit': 'qae_13', 'arm': 'B0', 'eps': 1e-05, 'n_rz': 145, 't_count': 11017, 'cx': 156, 'state_dist_vs_orig': 2.8190130923800645e-07}
+{'circuit': 'qae_13', 'arm': 'B1', 'eps': 0.001, 'n_rz': 88, 't_count': 4565, 'cx': 267, 'state_dist_vs_orig': 4.0158611973196196e-05}
+{'circuit': 'qae_13', 'arm': 'B1', 'eps': 1e-05, 'n_rz': 88, 't_count': 6405, 'cx': 267, 'state_dist_vs_orig': 4.705587485263122e-07}
+{'circuit': 'heisenberg_6', 'arm': 'B0', 'eps': 0.001, 'n_rz': 150, 't_count': 8200, 'cx': 274, 'state_dist_vs_orig': 0.00011945282548489133}
+{'circuit': 'heisenberg_6', 'arm': 'B0', 'eps': 1e-05, 'n_rz': 150, 't_count': 11400, 'cx': 274, 'state_dist_vs_orig': 1.0977142022932436e-06}
+Traceback (most recent call last):
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_b0_b1.py", line 86, in <module>
+    main()
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_b0_b1.py", line 82, in main
+    run(name, arm, ref, qin)
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_b0_b1.py", line 61, in run
+    d_orig = state_distance(ref, ct)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/s1_common.py", line 216, in state_distance
+    assert ref.num_qubits == cand.num_qubits
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+skip qft_8_B0_e3.json
+skip qft_8_B0_e5.json
+skip qft_8_B1_e3.json
+skip qft_8_B1_e5.json
+skip qpe_8_B0_e3.json
+skip qpe_8_B0_e5.json
+skip qpe_8_B1_e3.json
+skip qpe_8_B1_e5.json
+skip qae_13_B0_e3.json
+skip qae_13_B0_e5.json
+skip qae_13_B1_e3.json
+skip qae_13_B1_e5.json
+skip heisenberg_6_B0_e3.json
+skip heisenberg_6_B0_e5.json
+{'circuit': 'heisenberg_6', 'arm': 'B1', 'eps': 0.001, 'n_rz': 150, 't_count': 8200, 'cx': 287, 'state_dist_vs_orig': 8.561754036742163e-05}
+{'circuit': 'heisenberg_6', 'arm': 'B1', 'eps': 1e-05, 'n_rz': 150, 't_count': 11400, 'cx': 287, 'state_dist_vs_orig': 4.7599735183364024e-07}
+{'circuit': 'tfim_6', 'arm': 'B0', 'eps': 0.001, 'n_rz': 160, 't_count': 8560, 'cx': 180, 'state_dist_vs_orig': 5.1261284115859816e-05}
+{'circuit': 'tfim_6', 'arm': 'B0', 'eps': 1e-05, 'n_rz': 160, 't_count': 11840, 'cx': 180, 'state_dist_vs_orig': 9.793989004854254e-07}
+{'circuit': 'tfim_6', 'arm': 'B1', 'eps': 0.001, 'n_rz': 160, 't_count': 8560, 'cx': 490, 'state_dist_vs_orig': 4.9978968784797164e-05}
+{'circuit': 'tfim_6', 'arm': 'B1', 'eps': 1e-05, 'n_rz': 160, 't_count': 11840, 'cx': 490, 'state_dist_vs_orig': 3.9946498685212514e-07}
+{'circuit': 'hubbard_8', 'arm': 'B0', 'eps': 0.001, 'n_rz': 84, 't_count': 4466, 'cx': 389, 'state_dist_vs_orig': 4.505087789134118e-05}
+{'circuit': 'hubbard_8', 'arm': 'B0', 'eps': 1e-05, 'n_rz': 84, 't_count': 6016, 'cx': 389, 'state_dist_vs_orig': 6.087267083584698e-07}
+{'circuit': 'hubbard_8', 'arm': 'B1', 'eps': 0.001, 'n_rz': 84, 't_count': 4450, 'cx': 320, 'state_dist_vs_orig': 4.2884229626313554e-05}
+{'circuit': 'hubbard_8', 'arm': 'B1', 'eps': 1e-05, 'n_rz': 84, 't_count': 6016, 'cx': 320, 'state_dist_vs_orig': 4.6103251819226004e-07}
+{'circuit': 'qml_13', 'arm': 'B0', 'eps': 0.001, 'n_rz': 118, 't_count': 6350, 'cx': 152, 'state_dist_vs_orig': 3.311036231228979e-05}
+{'circuit': 'qml_13', 'arm': 'B0', 'eps': 1e-05, 'n_rz': 118, 't_count': 8776, 'cx': 152, 'state_dist_vs_orig': 3.4051665944500023e-07}
+{'circuit': 'qml_13', 'arm': 'B1', 'eps': 0.001, 'n_rz': 118, 't_count': 6362, 'cx': 79, 'state_dist_vs_orig': 3.6347803256344804e-05}
+{'circuit': 'qml_13', 'arm': 'B1', 'eps': 1e-05, 'n_rz': 118, 't_count': 8766, 'cx': 79, 'state_dist_vs_orig': 3.4578007454454485e-07}
+{'circuit': 'hhl_8', 'arm': 'B0', 'eps': 0.001, 'n_rz': 583, 't_count': 35650, 'cx': 497, 'state_dist_vs_orig': 1.9638330400188312e-05}
+{'circuit': 'hhl_8', 'arm': 'B0', 'eps': 1e-05, 'n_rz': 583, 't_count': 47410, 'cx': 497, 'state_dist_vs_orig': 1.4659662067294036e-07}
+{'circuit': 'hhl_8', 'arm': 'B1', 'eps': 0.001, 'n_rz': 487, 't_count': 29439, 'cx': 663, 'state_dist_vs_orig': 1.7738167538909092e-05}
+{'circuit': 'hhl_8', 'arm': 'B1', 'eps': 1e-05, 'n_rz': 487, 't_count': 39163, 'cx': 663, 'state_dist_vs_orig': 1.6565669149328256e-07}

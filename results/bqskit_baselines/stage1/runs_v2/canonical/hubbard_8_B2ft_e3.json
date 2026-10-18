@@ -1,0 +1,17 @@
+{
+ "circuit": "hubbard_8",
+ "arm": "B2ft",
+ "eps": 0.001,
+ "t_count_canon": 4470,
+ "t_fixed_canon": 6,
+ "t_gridsynth_canon": 4464,
+ "n_rz_canon": 85,
+ "n_rz_asrun": 85,
+ "eps_per_rz": 1.1764705882352942e-05,
+ "cx_canon": 388,
+ "state_dist_vs_orig_canon": 4.994846205090462e-05,
+ "t_count_asrun": 4502,
+ "source_run": "runs_v2",
+ "output": "hubbard_8_B2ft_e3_canon.qasm.gz",
+ "gridsynth": "pygridsynth 2.0.0"
+}

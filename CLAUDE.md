@@ -3,7 +3,31 @@
 A verifier-first harness for **LLM-assisted discovery of fault-tolerant circuit constructions**. The
 LLM is a mutation operator inside a search loop; an exact verifier decides what survives.
 
-## Current experiment (read `docs/TEST_PLAN.md` first)
+## Current work: the window core (read `docs/CORE.md` first)
+
+ONE pipeline in `circuitevolve/core/` with three parts plus a simple selection loop, for fault-tolerant
+(Clifford+T) circuit optimization compared against BQSKit-FT (skill `bqskit-ft-reference-baseline`):
+
+| Part | File | What it does |
+|---|---|---|
+| mutator | `core/mutator.py` | LLM sees one window (<= 4 qubits, <= 40 ops), its T-cost, its error allowance, playbook rules and recent verifier feedback; returns replacement windows in a literal text format (regex-parsed, never exec/eval) |
+| verifier | `core/verifier.py` | wraps the FROZEN `blocks/verify_block.py`: exact D[omega] check for Clifford+T windows, else phase-aligned operator distance <= allowance; whole-circuit check against the ORIGINAL circuit (n <= 20) on every accept |
+| metric | `core/metric.py` | T-count under BQSKit's convention: remaining Rz synthesized by gridsynth at eps_rz = eps_synth / N_Rz, pi/4 multiples exact; also rotation and CNOT counts |
+| loop | `core/loop.py` (+ `core/ledger.py`, `core/circuit.py`) | start from the TKET-pre-optimized input, windows by T-cost, accept on measured improvement, archive best + 3 others, playbook updated only on measured T reduction, one JSON line per LLM call in `results/window_runs/<tag>.jsonl` |
+
+Error ledger v0 (`core/ledger.py`): total eps per circuit; eps/2 for approximate window rewrites (charged their
+measured distance), eps/2 for final synthesis (eps_rz = (eps/2)/N_Rz); bound <= eps. Run:
+`experiments/window_run.py`. Stage-1 circuits: qft_8, qpe_8, qae_13, heisenberg_6, tfim_6, hubbard_8, qml_13,
+hhl_8 at eps in {1e-3, 1e-5}; arms B0-B3 in `results/bqskit_baselines/stage1/` (Baselines track).
+
+**Legacy (archived 2026-10-13, still reproducible):** the relaxed-specification adder search
+(`circuitevolve/legacy/adder/`, P0-P5 below), the block optimizer v1 rule library / proposer / pipeline
+(`circuitevolve/legacy/blocks_v1/`) and optimizer-program evolution (`circuitevolve/legacy/evolve_opt/`). Their
+old import paths (`circuitevolve.search.{slice,evolve,llm}`, `circuitevolve.blocks.{program,rules,proposer,
+pipeline}`, `circuitevolve.evolve_opt.*`) are aliases of the same module objects; their tests are in
+`tests/legacy/`. Do not extend them; new work goes into `circuitevolve/core/`.
+
+### Legacy adder experiment (`docs/TEST_PLAN.md`)
 
 **Relaxed-specification adder test.** Starting from a naive ripple-carry (Cuccaro) adder, can search
 find an n-bit adder with fewer than **8n** T gates (the floor reached by exact-unitary optimization,
@@ -17,11 +41,9 @@ measured with pyzx) and ideally rediscover Gidney's **~4n** temporary-AND adder?
 
 Background: `docs/FTQC_PRIMER.md` (methods by level), `docs/PIPELINE.md` (overall tool design).
 
-## Build phases (do not skip; each ends at a gate)
-
-P0 IR + simulators → P1 verifier + planted-bug suite (gate: 100%) → P2 baselines (gate: 14n/8n/~4n
-reproduced) → P3 classical search (go/no-go) → P4 LLM proposer → P5 experiment arms → P6 transfer.
-P0–P3 use no LLM.
+Build phases (legacy adder track; each ended at a gate): P0 IR + simulators -> P1 verifier + planted-bug
+suite (gate: 100%) -> P2 baselines (gate: 14n/8n/~4n reproduced) -> P3 classical search (go/no-go) -> P4 LLM
+proposer -> P5 experiment arms -> P6 transfer. P0-P3 use no LLM.
 
 ## Invariants — changing any of these invalidates past results
 
@@ -32,6 +54,9 @@ P0–P3 use no LLM.
    ≤ eps_block (default 1e-8) on the instance angles, and for angle-expression rules also on ≥ 32 random
    angle vectors; every reported circuit carries the bound d(input) + Σ block distances + #rz·eps_rz.
    Blocks whose gates are all Clifford+T may be checked exactly (D[ω]) by the same module.
+   The window core (`core/verifier.py`) uses the same module with the ledger's allowance eps_w in place of
+   eps_block, charges each accepted window its measured distance, and checks a window whose original and
+   replacement are both Clifford+T ONLY exactly (no floating-point fallback).
 2. **The specification, not the unitary, is the contract.** A candidate must compute the spec's
    function on every valid input (ancillas start in |0⟩), return ancillas to |0⟩, and for every
    measurement branch m apply K_m|x⟩ = c_m|f(x)⟩ with the *same* c_m for all x (phase consistency) and
@@ -40,7 +65,8 @@ P0–P3 use no LLM.
    qubits, then T-depth.
 4. **The verifier is frozen during search.** Search code, prompts and candidates must never modify
    `ir.py`, `sim.py`, `spec.py`, `verify.py`, `cost.py`, `blocks/verify_block.py` or the planted-bug
-   suites (`acceptance.py`, `tests/test_blocks_verify.py`). Any change to these
+   suites (`acceptance.py`, `tests/test_blocks_verify.py`). `core/verifier.py` only wraps them; if a needed
+   check cannot be expressed through the frozen API, stop and report instead of editing them. Any change to these
    requires re-running `tests/` and the acceptance suite, and is recorded in `results/CHANGELOG.md`.
 5. **Results are append-only.** Add rows/files under `results/`; never edit an existing row.
 6. **Global phase is unobservable**, but relative phase between inputs is not (invariant 2).
@@ -54,26 +80,30 @@ P0–P3 use no LLM.
 
 ```
 circuitevolve/
-  ir.py        Circuit IR: gates, macros (ccx, and_compute, and_uncompute), measurement, classical control
-  ring.py      exact arithmetic in Z[ω]/√2^k
-  sim.py       sparse exact simulator, branch-wise over measurement outcomes
-  spec.py      specifications (adder), register contracts
-  verify.py    verifier levels L0–L3
-  cost.py      T-count, T-depth, qubits
-  baselines/   naive Cuccaro, pyzx, Gidney reference
-  search/      representations, mutation operators, search loops (P3+), LLM proposer (P4+)
-  blocks/      block optimizer v1: QASM import, best-classical input, BQSKit partitions, block programs,
-               approximate verifier (verify_block.py, FROZEN), cost model, rule library, LLM proposer
-experiments/   run scripts and configs
-tests/         unit tests + verifier acceptance suite (planted bugs)
-results/       append-only outputs
+  core/        THE pipeline: circuit.py, mutator.py, verifier.py, metric.py, ledger.py, loop.py (docs/CORE.md)
+  llm_backends.py  make_api_backend (host.llm, thinking off), make_cli_backend, make_batch_merger
+  locks.py     NUMERIC_LOCK - one process-wide lock: never fork while numpy verification runs
+  integrity.py digest of the frozen verifier files, checked at start/end of every run
+  ir.py, ring.py, sim.py, spec.py, verify.py, cost.py, acceptance.py   exact Z[omega] stack (FROZEN)
+  blocks/      shared Clifford+Rz infrastructure: circuit_io (QASM import, minrz lowering), partition
+               (BQSKit windows), cost_model (cached gridsynth), passes (phase folding), classical (TKET /
+               pyzx inputs), runtime (in-process BQSKit runtime), verify_block.py (FROZEN approximate mode)
+  search/      playbook.py (self-evolving rule file, used by the core); slice/evolve/llm = legacy aliases
+  baselines/   naive Cuccaro, pyzx, Gidney reference (used by the frozen acceptance suite)
+  legacy/      adder/ (slice search + LLM proposer), blocks_v1/ (rule library, proposer, pipeline),
+               evolve_opt/ (optimizer-program evolution) - archived, reproducible, not extended
+experiments/   run scripts (window_run.py for the core; others legacy); bqskit_baselines/ = Baselines track
+tests/         core + frozen suites; tests/legacy/ for the archived stacks
+results/       append-only outputs (window_runs/ for the core)
+playbooks/     mutable playbooks (window_v0.json for the core)
 ```
 
 ## Commands
 
 ```
-.venv/bin/python -m pytest -q          # all tests, including the verifier acceptance suite
-.venv/bin/python experiments/baselines.py
+.venv/bin/python -m pytest -q          # all tests (core, frozen verifier suites, tests/legacy/)
+.venv/bin/python experiments/window_run.py heisenberg_6 1e-3 --tag <new tag>   # CLI backend
+# platform kernel (env circuitevolve-dev): from experiments.window_run import run_api; run_api(host, ...)
 ```
 
 ## Status (2026-10-06)
@@ -100,3 +130,12 @@ Block optimizer v1 in `circuitevolve/blocks/` (docs/BLOCK_PIPELINE.md); approxim
 `blocks/verify_block.py` frozen. Dev smoke (`results/blocks/SMOKE_REPORT.md`): LLM found 0 verified
 improvements on tfim_4 / heisenberg_4 / qft_5 / hhl_8 (35 proposer calls); deterministic phase folding cuts
 hhl_8 (TKET input) from 54,914 to 48,307 T. Evaluation circuits not yet touched.
+
+## Status (2026-10-13, window core)
+
+Older stacks archived to `circuitevolve/legacy/` (aliases keep every old command working; 169 original tests
+pass, plus 71 original legacy tests re-run unchanged through the old import paths). New three-part core in
+`circuitevolve/core/` (docs/CORE.md), 194 tests pass. Live smoke heisenberg_6 at eps 1e-3 (20 calls, ~35k
+tokens): T 8600 -> 8600 (v0 ledger; 8200 = B0 with unspent window budget returned), nothing accepted - the
+model declined 19/20 windows and the verifier rejected the 3 candidates it gave (snaps 80x over allowance).
+See `results/window_runs/smoke_heisenberg_6_e3_NOTE.md`.

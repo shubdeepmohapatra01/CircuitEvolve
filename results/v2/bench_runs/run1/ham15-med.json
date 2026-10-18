@@ -1,0 +1,112 @@
+{
+ "circuit": "ham15-med",
+ "python": "3.11.15",
+ "pyzx": "0.10.7",
+ "pytket": "2.18.5",
+ "started": "2026-10-13T22:13:18",
+ "qubits": 17,
+ "logical_counts": {
+  "gates": 288,
+  "t": 0,
+  "ccx": 0,
+  "ccz": 82,
+  "cx": 42,
+  "h": 164,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 574
+ },
+ "cliffordt_counts": {
+  "gates": 1272,
+  "t": 574,
+  "ccx": 0,
+  "ccz": 0,
+  "cx": 534,
+  "h": 164,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 574
+ },
+ "provenance": {
+  "logical_vs_cliffordt": {
+   "method": "statevector_haar",
+   "n_states": 4,
+   "dist": 3.351926454758787e-15,
+   "ok": true,
+   "zx_identity": true,
+   "check_s": 15.26
+  },
+  "logical_vs_feynman": {
+   "method": "statevector_haar",
+   "n_states": 4,
+   "dist": 2.8970726669462885e-14,
+   "ok": true,
+   "check_s": 11.27
+  }
+ },
+ "planted_bug_check": {
+  "method": "statevector_haar",
+  "n_states": 4,
+  "dist": 0.390180455406162,
+  "ok": false,
+  "check_s": 9.86
+ },
+ "arms": {
+  "given_cliffordt": {
+   "t_count": 574,
+   "cx": 534,
+   "gates": 1272
+  },
+  "pyzx_fr": {
+   "t_count": 212,
+   "rz_other": 0,
+   "cx": 548,
+   "h": 80,
+   "gates": 910,
+   "t_graph": 212,
+   "reduce_s": 1.52,
+   "pipeline_s": 1.91,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 8.725774122979979e-15,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 17.76
+   }
+  },
+  "tket_fpo": {
+   "t_count": 480,
+   "rz_other": 0,
+   "cx": 531,
+   "h": 105,
+   "gates": 1171,
+   "pipeline_s": 2.27,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 5.943974478299473e-15,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 14.31
+   }
+  },
+  "tket_fpo_logical": {
+   "t_count": 464,
+   "rz_other": 0,
+   "cx": 519,
+   "h": 156,
+   "gates": 1219,
+   "pipeline_s": 2.07,
+   "verify": {
+    "method": "statevector_haar",
+    "n_states": 4,
+    "dist": 2.292599163607603e-15,
+    "ok": true,
+    "zx_identity": true,
+    "check_s": 16.1
+   }
+  }
+ },
+ "finished": "2026-10-13T22:14:51"
+}

@@ -1,0 +1,15 @@
+{
+ "circuit": "qft_8",
+ "arm": "B2",
+ "eps": 0.001,
+ "status": "error",
+ "error": "ModuleNotFoundError: No module named 'bqskit.passes.rules.u12rz'",
+ "traceback": "Traceback (most recent call last):\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py\", line 254, in main\n    r = run_job(name, arm, eps)\n        ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/stage1/run_bqskit_arms.py\", line 172, in run_job\n    from bqskit.ft.cliffordrz.cliffordrzmodel import CliffordRZModel\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/ft/cliffordrz/__init__.py\", line 3, in <module>\n    from bqskit.ft.cliffordrz.cliffordrzmodel import CliffordRZModel\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/ft/cliffordrz/cliffordrzmodel.py\", line 10, in <module>\n    from bqskit.ft.cliffordrz.defaultworkflow import build_circuit_workflow\n  File \"/Users/shubdeepmohapatra/Documents/CircuitEvolve/experiments/bqskit_baselines/.venv-dpf/lib/python3.12/site-packages/bqskit/ft/cliffordrz/defaultworkflow.py\", line 35, in <module>\n    from bqskit.passes.rules.u12rz import U1ToRZPass\nModuleNotFoundError: No module named 'bqskit.passes.rules.u12rz'\n",
+ "wall_s": 0.7,
+ "log": {
+  "gridsynth_calls": [],
+  "dpf_thresholds": [],
+  "assign_errors": [],
+  "partitions": []
+ }
+}

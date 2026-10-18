@@ -1,0 +1,1 @@
+{"circuit": "qcla_mod_7", "seconds": 2786.6, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 237, false], ["tier1_control", "relaxed", 196, false], ["tier2_final", "exact", 237, false], ["tier2_lexsec", "exact", 237, false], ["tier1+tier2_final", "exact", 237, false], ["tier1+tier2_lexsec", "exact", 237, false]]}

@@ -1,0 +1,181 @@
+{
+ "circuit": "gf2^4_mult",
+ "python": "3.11.15",
+ "pyzx": "0.10.7",
+ "pytket": "2.18.5",
+ "started": "2026-10-13T23:08:05",
+ "qubits": 12,
+ "logical_counts": {
+  "gates": 33,
+  "t": 0,
+  "ccx": 0,
+  "ccz": 16,
+  "cx": 3,
+  "h": 14,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 112
+ },
+ "cliffordt_counts": {
+  "gates": 225,
+  "t": 112,
+  "ccx": 0,
+  "ccz": 0,
+  "cx": 99,
+  "h": 14,
+  "rz_nonclifford": 0,
+  "rz_other": 0,
+  "t_if_expanded": 112
+ },
+ "provenance": {
+  "logical_vs_cliffordt": {
+   "method": "unitary_dense",
+   "dist": 3.258256130352615e-15,
+   "ok": true,
+   "qcec": "equivalent",
+   "qcec_phase": "zx+sim",
+   "qcec_s": 0.23,
+   "verified": true,
+   "check_s": 210.68
+  },
+  "logical_vs_feynman": {
+   "method": "unitary_dense",
+   "dist": 6.557627429898329e-15,
+   "ok": true,
+   "qcec": "equivalent",
+   "qcec_phase": "zx+sim",
+   "qcec_s": 0.37,
+   "verified": true,
+   "check_s": 223.88
+  },
+  "logical_vs_nam_before": {
+   "method": "unitary_dense",
+   "dist": 2.17765734876096e-15,
+   "ok": true,
+   "qcec": "equivalent",
+   "qcec_phase": "zx+sim",
+   "qcec_s": 0.3,
+   "verified": true,
+   "check_s": 250.4
+  },
+  "nam_before_counts": {
+   "gates": 51,
+   "t": 0,
+   "ccx": 0,
+   "ccz": 16,
+   "cx": 3,
+   "h": 32,
+   "rz_nonclifford": 0,
+   "rz_other": 0,
+   "t_if_expanded": 112
+  }
+ },
+ "planted_bug_check": {
+  "method": "unitary_dense",
+  "dist": 0.3901806440322565,
+  "ok": false,
+  "qcec": "not_equivalent",
+  "qcec_phase": "zx+sim",
+  "qcec_s": 0.32,
+  "verified": false,
+  "check_s": 208.96
+ },
+ "arms": {
+  "given_cliffordt": {
+   "t_count": 112,
+   "cx": 99,
+   "gates": 225
+  },
+  "pyzx_fr": {
+   "t_count": 68,
+   "rz_other": 0,
+   "cx": 303,
+   "h": 8,
+   "gates": 418,
+   "t_graph": 68,
+   "reduce_s": 0.59,
+   "pipeline_s": 0.65,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 2.1535599461808497e-15,
+    "ok": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.24,
+    "verified": true,
+    "check_s": 210.51
+   }
+  },
+  "tket_fpo": {
+   "t_count": 96,
+   "rz_other": 0,
+   "cx": 99,
+   "h": 14,
+   "gates": 214,
+   "pipeline_s": 1.1,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 1.0985684915981723e-15,
+    "ok": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.24,
+    "verified": true,
+    "check_s": 159.03
+   }
+  },
+  "tket_fpo_logical": {
+   "t_count": 96,
+   "rz_other": 0,
+   "cx": 99,
+   "h": 14,
+   "gates": 215,
+   "pipeline_s": 1.08,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 1.6188693696365725e-15,
+    "ok": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.3,
+    "verified": true,
+    "check_s": 185.21
+   }
+  },
+  "nam_light_file": {
+   "t_count": 68,
+   "rz_other": 0,
+   "cx": 99,
+   "h": 14,
+   "gates": 187,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 4.300439595042508e-15,
+    "ok": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.3,
+    "verified": true,
+    "check_s": 173.86
+   }
+  },
+  "nam_heavy_file": {
+   "t_count": 68,
+   "rz_other": 0,
+   "cx": 99,
+   "h": 14,
+   "gates": 187,
+   "verify": {
+    "method": "unitary_dense",
+    "dist": 4.352096937937973e-15,
+    "ok": true,
+    "qcec": "equivalent",
+    "qcec_phase": "zx+sim",
+    "qcec_s": 0.31,
+    "verified": true,
+    "check_s": 174.55
+   }
+  }
+ },
+ "finished": "2026-10-13T23:38:08"
+}

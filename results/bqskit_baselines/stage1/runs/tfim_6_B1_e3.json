@@ -1,0 +1,23 @@
+{
+ "circuit": "tfim_6",
+ "arm": "B1",
+ "eps": 0.001,
+ "status": "ok",
+ "n_rz": 160,
+ "rz_distinct": 21,
+ "eps_per_rz": 6.25e-06,
+ "t_fixed": 0,
+ "t_gridsynth": 8560,
+ "t_count": 8560,
+ "cx": 490,
+ "gridsynth_s": 0.11,
+ "gs_max_reported_err": 2.700511696972133e-06,
+ "err_bound_gridsynth": 0.001,
+ "err_bound_total": 0.001,
+ "pre_s": 0.16,
+ "runtime_s": 0.3,
+ "verify_s": 0.8,
+ "state_dist_vs_orig": 4.9978968784797164e-05,
+ "state_dist_vs_input": 4.997896877736477e-05,
+ "output": "tfim_6_B1_e3.qasm.gz"
+}

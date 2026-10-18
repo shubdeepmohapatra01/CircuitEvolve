@@ -69,5 +69,32 @@ def run_passes(circuit: Circuit, passes, model=None, seed: int | None = None) ->
     if seed is not None:
         data['seed'] = seed
     wf = passes if isinstance(passes, Workflow) else Workflow(passes)
-    asyncio.run(wf.run(circuit, data))
+    _run_coro(wf.run(circuit, data))
     return circuit, data
+
+
+def _run_coro(coro) -> None:
+    """asyncio.run, but also usable where an event loop is already running (Jupyter/IPython kernels).
+
+    asyncio.run refuses to start inside a running loop, so in that case the coroutine runs to completion on a
+    short-lived worker thread with its own loop. The call still blocks the caller; exceptions are re-raised.
+    """
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        asyncio.run(coro)
+        return
+    import threading
+    box: dict = {}
+
+    def target():
+        try:
+            asyncio.run(coro)
+        except BaseException as e:  # re-raised in the caller's thread
+            box["err"] = e
+
+    t = threading.Thread(target=target, name="bqskit-passes")
+    t.start()
+    t.join()
+    if "err" in box:
+        raise box["err"]

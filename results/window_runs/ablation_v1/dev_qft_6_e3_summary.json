@@ -1,0 +1,102 @@
+{
+ "tag": "dev_qft_6_e3",
+ "name": "qft_6",
+ "input_source": "tket FullPeepholeOptimise (circuitevolve.blocks.classical.tket_optimise)",
+ "n": 6,
+ "eps": 0.001,
+ "calls": 33,
+ "stats": {
+  "proposal_calls": 33,
+  "reflect_calls": 0,
+  "llm_errors": 0,
+  "declined": 31,
+  "candidates": 2,
+  "parse_errors": 0,
+  "verified": 1,
+  "rejected_verifier": 1,
+  "rejected_metric": 0,
+  "rejected_ledger": 0,
+  "rejected_whole": 0,
+  "accepted": 1,
+  "accepted_t_reduced": 1,
+  "exact_accepts": 0,
+  "approx_accepts": 1,
+  "rules_added": 0,
+  "reflect_skipped_no_evidence": 2,
+  "window_proposals": 1,
+  "fix_proposals": 1,
+  "refit_failed": 0,
+  "accepted_window": 0,
+  "accepted_fix": 1,
+  "rotations_removed_window": 0,
+  "rotations_removed_fix": 1
+ },
+ "backend_stats": {
+  "calls": 33,
+  "input_tokens": 74145,
+  "output_tokens": 18179,
+  "ok": 33,
+  "failed": 0
+ },
+ "t_before": 1133,
+ "t_after": 1081,
+ "before": {
+  "t": 1133,
+  "t_fixed": 11,
+  "t_gs": 1122,
+  "rz": 24,
+  "cx": 39,
+  "gates": 80,
+  "eps_rz": 4.1666666666578696e-05
+ },
+ "after": {
+  "t": 1081,
+  "t_fixed": 11,
+  "t_gs": 1070,
+  "rz": 23,
+  "cx": 39,
+  "gates": 79,
+  "eps_rz": 4.346764605969081e-05
+ },
+ "t_after_reclaimed": 1081,
+ "ledger": {
+  "eps_total": 0.001,
+  "window_pool": 0.00025,
+  "eps_synth": 0.0009997558593728886,
+  "d_input": 2.1113815671771115e-15,
+  "window_spent": 8.718928108879263e-16,
+  "window_spent_rounded": 2.44140625e-07,
+  "n_window_charges": 1,
+  "eps_rz": 4.346764605969081e-05,
+  "bound": 0.0009997558593758719,
+  "reclaimed_eps_synth": 0.0009999999999970167,
+  "rule": "v1: window pool cap 0.25 eps, synthesis = eps - d_input - ceil_q(spent)"
+ },
+ "final_check_vs_original": {
+  "ok": true,
+  "verified": true,
+  "method": "unitary",
+  "dist": 1.983877973711744e-15,
+  "bound": 2.983274378065038e-15
+ },
+ "archive": [
+  {
+   "t": 1081,
+   "rz": 23,
+   "spent": 8.718928108879263e-16,
+   "digest": "7584cc5c4d6b21d5"
+  },
+  {
+   "t": 1133,
+   "rz": 24,
+   "spent": 0.0,
+   "digest": "bf653480f7efc728"
+  }
+ ],
+ "seconds": 72.2,
+ "verifier_digest": "bc3eac23a403dbc5",
+ "playbook": {
+  "live": 7,
+  "active": 0
+ }
+}

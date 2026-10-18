@@ -1,0 +1,305 @@
+{
+ "name": "gf2^4_mult",
+ "n": 12,
+ "n_gates": 19,
+ "gate_counts": {
+  "ccx": 16,
+  "cx": 3
+ },
+ "classical": true,
+ "toffolis": [
+  {
+   "id": "T0",
+   "gate": 0,
+   "kind": "ccx",
+   "controls": [
+    3,
+    5
+   ],
+   "target": 8
+  },
+  {
+   "id": "T1",
+   "gate": 1,
+   "kind": "ccx",
+   "controls": [
+    2,
+    6
+   ],
+   "target": 8
+  },
+  {
+   "id": "T2",
+   "gate": 2,
+   "kind": "ccx",
+   "controls": [
+    1,
+    7
+   ],
+   "target": 8
+  },
+  {
+   "id": "T3",
+   "gate": 3,
+   "kind": "ccx",
+   "controls": [
+    3,
+    6
+   ],
+   "target": 9
+  },
+  {
+   "id": "T4",
+   "gate": 4,
+   "kind": "ccx",
+   "controls": [
+    2,
+    7
+   ],
+   "target": 9
+  },
+  {
+   "id": "T5",
+   "gate": 5,
+   "kind": "ccx",
+   "controls": [
+    3,
+    7
+   ],
+   "target": 10
+  },
+  {
+   "id": "T6",
+   "gate": 9,
+   "kind": "ccx",
+   "controls": [
+    3,
+    4
+   ],
+   "target": 11
+  },
+  {
+   "id": "T7",
+   "gate": 10,
+   "kind": "ccx",
+   "controls": [
+    2,
+    5
+   ],
+   "target": 11
+  },
+  {
+   "id": "T8",
+   "gate": 11,
+   "kind": "ccx",
+   "controls": [
+    1,
+    6
+   ],
+   "target": 11
+  },
+  {
+   "id": "T9",
+   "gate": 12,
+   "kind": "ccx",
+   "controls": [
+    0,
+    7
+   ],
+   "target": 11
+  },
+  {
+   "id": "T10",
+   "gate": 13,
+   "kind": "ccx",
+   "controls": [
+    2,
+    4
+   ],
+   "target": 10
+  },
+  {
+   "id": "T11",
+   "gate": 14,
+   "kind": "ccx",
+   "controls": [
+    1,
+    5
+   ],
+   "target": 10
+  },
+  {
+   "id": "T12",
+   "gate": 15,
+   "kind": "ccx",
+   "controls": [
+    0,
+    6
+   ],
+   "target": 10
+  },
+  {
+   "id": "T13",
+   "gate": 16,
+   "kind": "ccx",
+   "controls": [
+    1,
+    4
+   ],
+   "target": 9
+  },
+  {
+   "id": "T14",
+   "gate": 17,
+   "kind": "ccx",
+   "controls": [
+    0,
+    5
+   ],
+   "target": 9
+  },
+  {
+   "id": "T15",
+   "gate": 18,
+   "kind": "ccx",
+   "controls": [
+    0,
+    4
+   ],
+   "target": 8
+  }
+ ],
+ "pairs": [],
+ "unpaired": [
+  "T0",
+  "T1",
+  "T2",
+  "T3",
+  "T4",
+  "T5",
+  "T6",
+  "T7",
+  "T8",
+  "T9",
+  "T10",
+  "T11",
+  "T12",
+  "T13",
+  "T14",
+  "T15"
+ ],
+ "mcx": [],
+ "qubits": [
+  {
+   "q": 0,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 1,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 2,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 3,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 4,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 5,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 6,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 7,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 8,
+   "declared_zero": true,
+   "first_touch": "ccx-target",
+   "restored": false,
+   "role": "output(starts |0>)"
+  },
+  {
+   "q": 9,
+   "declared_zero": true,
+   "first_touch": "ccx-target",
+   "restored": false,
+   "role": "output(starts |0>)"
+  },
+  {
+   "q": 10,
+   "declared_zero": true,
+   "first_touch": "ccx-target",
+   "restored": false,
+   "role": "output(starts |0>)"
+  },
+  {
+   "q": 11,
+   "declared_zero": true,
+   "first_touch": "cx-target",
+   "restored": false,
+   "role": "output(starts |0>)"
+  }
+ ],
+ "repeated": [
+  {
+   "pattern": "ccx(0,1,2) ccx(3,4,2) ccx(5,6,2)",
+   "count": 3,
+   "at": [
+    0,
+    9,
+    13
+   ],
+   "k": 3
+  }
+ ],
+ "rotations": {
+  "t_like": 0,
+  "s_like": 0,
+  "z": 0
+ },
+ "declared_zero": [
+  8,
+  9,
+  10,
+  11
+ ],
+ "digest": "f12df9fe073d4f88",
+ "hints": [
+  "16 unpaired Toffolis write into declared zero-init qubits (accumulation into an output register, multiplier-like)"
+ ]
+}

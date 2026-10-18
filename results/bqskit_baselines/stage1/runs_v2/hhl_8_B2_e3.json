@@ -1,0 +1,79 @@
+{
+ "circuit": "hhl_8",
+ "arm": "B2",
+ "eps": 0.001,
+ "status": "ok",
+ "t_count": 35624,
+ "cx": 497,
+ "n_rz": 583,
+ "eps_per_rz": 1.7152658662092624e-06,
+ "gridsynth_algorithmic_error": 0.001,
+ "residual_rz": 0,
+ "other_ops": {
+  "identity1": 21
+ },
+ "runtime_s": 25.4,
+ "verify_s": 5.5,
+ "state_dist_vs_orig": 1.4420671674869248e-05,
+ "state_dist_vs_input": 1.4420671668444944e-05,
+ "state_dist_input_vs_cliffrz": 3.4250825731211785e-14,
+ "stages": {
+  "input": {
+   "rz": 1101,
+   "t": 0,
+   "params": 1101,
+   "ops": 2205
+  },
+  "clifford_rz": {
+   "rz": 583,
+   "t": 202,
+   "params": 583,
+   "ops": 2218,
+   "eps_per_gate": 9.074410163339383e-07
+  },
+  "output": {
+   "rz": 0,
+   "t": 35624,
+   "params": 0,
+   "ops": 92076
+  }
+ },
+ "gate_counts": {
+  "CNOTGate": 497,
+  "XGate": 291,
+  "HGate": 36194,
+  "TGate": 35520,
+  "SdgGate": 107,
+  "ZGate": 31,
+  "SqrtXGate": 238,
+  "IdentityGate(1)": 21,
+  "TdgGate": 104,
+  "SGate": 19073
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 583,
+    "algorithmic_error": 0.001,
+    "precision_per_rz": 1.7152658662092624e-06
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 0,
+   "distinct": []
+  },
+  "assign_errors": [],
+  "partitions": [],
+  "dump_pregs": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/results/bqskit_baselines/stage1/outputs_v2/hhl_8_B2_e3_pregs.qasm.gz",
+  "gridsynth_panic_retries": [
+   {
+    "theta": "6.974305199962074",
+    "precision": "1.7152658662092624e-06",
+    "error": "Invalid coefficients for inverse sqrt2 multiplication",
+    "resolved_by": "fresh subprocess attempt 1"
+   }
+  ]
+ },
+ "output": "hhl_8_B2_e3.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1"
+}

@@ -1,0 +1,1 @@
+{"circuit": "qpe_8", "arm": "B3", "eps": 1e-05, "status": "ok", "t_count": 37967, "n_rz": 538, "cx": 236, "runtime_s": 217.3, "state_dist_vs_orig": 3.1391566393250174e-06, "error": null}

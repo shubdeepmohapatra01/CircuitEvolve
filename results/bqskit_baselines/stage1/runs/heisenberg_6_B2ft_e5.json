@@ -1,0 +1,69 @@
+{
+ "circuit": "heisenberg_6",
+ "arm": "B2ft",
+ "eps": 1e-05,
+ "status": "ok",
+ "t_count": 14890,
+ "cx": 270,
+ "n_rz": 192,
+ "eps_per_rz": 5.208333333333334e-08,
+ "gridsynth_algorithmic_error": 1e-05,
+ "residual_rz": 0,
+ "other_ops": {
+  "identity1": 16
+ },
+ "runtime_s": 49.6,
+ "verify_s": 2.8,
+ "state_dist_vs_orig": 8.772855706509183e-07,
+ "state_dist_vs_input": 8.772855664037464e-07,
+ "state_dist_input_vs_cliffrz": null,
+ "stages": {
+  "input": {
+   "rz": 435,
+   "t": 0,
+   "params": 435,
+   "ops": 919
+  },
+  "output": {
+   "rz": 0,
+   "t": 14890,
+   "params": 0,
+   "ops": 38733
+  }
+ },
+ "gate_counts": {
+  "ZGate": 39,
+  "SqrtXGate": 161,
+  "CNOTGate": 270,
+  "HGate": 15164,
+  "TGate": 14890,
+  "SdgGate": 111,
+  "XGate": 167,
+  "SGate": 7915,
+  "IdentityGate(1)": 16
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 192,
+    "algorithmic_error": 1e-05,
+    "precision_per_rz": 5.208333333333334e-08
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 89,
+   "distinct": [
+    1.1235955056179776e-07
+   ]
+  },
+  "assign_errors": [
+   {
+    "num_blocks": 89,
+    "algorithmic_error": 1e-05
+   }
+  ],
+  "partitions": []
+ },
+ "output": "heisenberg_6_B2ft_e5.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1"
+}

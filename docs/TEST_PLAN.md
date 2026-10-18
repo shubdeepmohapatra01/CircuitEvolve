@@ -1,5 +1,8 @@
 # Test scope and build plan: a harness for LLM-discovered relaxed-spec circuit constructions
 
+> **Legacy (2026-10-13).** The adder search code is in `circuitevolve/legacy/adder/` (old paths are aliases).
+> Current work: the window core, docs/CORE.md.
+
 *Written 2026-10-06. To be executed in the user's experiment repository (path to be granted).
 Builds on `pipeline_overview.md` and `ftqc_optimization_primer.md`.*
 

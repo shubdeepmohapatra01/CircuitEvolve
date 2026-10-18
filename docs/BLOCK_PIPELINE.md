@@ -1,5 +1,9 @@
 # Block optimizer v1 (`circuitevolve/blocks/`)
 
+> **Legacy (2026-10-13).** The rule library / proposer / pipeline described here now live in
+> `circuitevolve/legacy/blocks_v1/` (old paths are aliases). The shared infrastructure stays in `circuitevolve/blocks/`
+> and is used by the window core (docs/CORE.md).
+
 Goal: beat the **best classical** Clifford+T compilation (lower T of pyzx `full_reduce` and TKET
 `FullPeepholeOptimise`, both followed by gridsynth at eps_rz = 1e-9) by rewriting small blocks with an
 LLM, where every accepted rewrite is checked by a frozen verifier with an explicit error budget.

@@ -1,0 +1,17 @@
+{
+ "circuit": "hhl_8",
+ "arm": "B1",
+ "eps": 0.001,
+ "t_count_canon": 29205,
+ "t_fixed_canon": 137,
+ "t_gridsynth_canon": 29068,
+ "n_rz_canon": 487,
+ "n_rz_asrun": 487,
+ "eps_per_rz": 2.053388090349076e-06,
+ "cx_canon": 663,
+ "state_dist_vs_orig_canon": 1.9315464544930315e-05,
+ "t_count_asrun": 29439,
+ "source_run": "runs",
+ "output": "hhl_8_B1_e3_canon.qasm.gz",
+ "gridsynth": "pygridsynth 2.0.0"
+}

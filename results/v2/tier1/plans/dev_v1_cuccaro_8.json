@@ -1,0 +1,297 @@
+{
+ "circuit": "cuccaro_8",
+ "tag": "dev_v1",
+ "summary_digest": "f7cd164f5820c5c5",
+ "normalization": {
+  "ok": true,
+  "certified": false,
+  "method": "basis-sampled",
+  "reason": ""
+ },
+ "best_classical": {
+  "t": 64.0,
+  "arm": "pyzx_fr",
+  "ties": [
+   "pyzx_fr"
+  ],
+  "origin": "results/v2/baselines_new.csv | run:run2",
+  "runs": {
+   "pyzx_fr": 64.0,
+   "tket_fpo": 96.0
+  },
+  "text": "64 (pyzx_fr; pyzx_fr=64.0, tket_fpo=96.0)"
+ },
+ "plans": {
+  "llm/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "P0",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P1",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P2",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P3",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P4",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P5",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P6",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P7",
+      "route": "temporary_and",
+      "via_ancilla": true
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "P7 is a mirror pair (target only read in between) so it also qualifies for temporary_and via a fresh ancilla, replacing the previously used 8 T relative_phase_toffoli with 4 T; all other pairs keep the best-known temporary_and(via_ancilla) routing, dropping total T from 36 to 32."
+   },
+   "t_count": 32,
+   "t_depth": 9,
+   "qubits": 26,
+   "ancillas": 8,
+   "measurements": 8,
+   "verdict_mode": "relaxed",
+   "certified": false,
+   "method": "branchwise-sampled",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "temporary_and(via_ancilla)",
+    "T1": "temporary_and(via_ancilla)",
+    "T2": "temporary_and(via_ancilla)",
+    "T3": "temporary_and(via_ancilla)",
+    "T4": "temporary_and(via_ancilla)",
+    "T5": "temporary_and(via_ancilla)",
+    "T6": "temporary_and(via_ancilla)",
+    "T7": "temporary_and(via_ancilla)",
+    "T8": "temporary_and(via_ancilla)",
+    "T9": "temporary_and(via_ancilla)",
+    "T10": "temporary_and(via_ancilla)",
+    "T11": "temporary_and(via_ancilla)",
+    "T12": "temporary_and(via_ancilla)",
+    "T13": "temporary_and(via_ancilla)",
+    "T14": "temporary_and(via_ancilla)",
+    "T15": "temporary_and(via_ancilla)"
+   },
+   "call": 2,
+   "variant": null,
+   "digest": "a18c7e60e561ce6d"
+  },
+  "llm/exact": {
+   "plan": {
+    "target": "exact",
+    "decisions": [
+     {
+      "element": "P0",
+      "route": "relative_phase_toffoli"
+     },
+     {
+      "element": "P1",
+      "route": "relative_phase_toffoli"
+     },
+     {
+      "element": "P2",
+      "route": "relative_phase_toffoli"
+     },
+     {
+      "element": "P3",
+      "route": "relative_phase_toffoli"
+     },
+     {
+      "element": "P4",
+      "route": "relative_phase_toffoli"
+     },
+     {
+      "element": "P5",
+      "route": "relative_phase_toffoli"
+     },
+     {
+      "element": "P6",
+      "route": "relative_phase_toffoli"
+     },
+     {
+      "element": "P7",
+      "route": "relative_phase_toffoli"
+     }
+    ],
+    "global_pass": "pyzx_then_tket",
+    "request_cards": [],
+    "rationale": "All 8 pairs are compute/uncompute-style (controls_fixed or mirror) where the MAJ/UMA structure means the intervening gates only touch the target via CX reading it, so the relative-phase Toffoli identity applies exactly to each pair, giving 8 T per pair (64 T total) fully unitary with no ancilla/measurement; a final pyzx_then_tket pass may shave more via phase folding on the CX network."
+   },
+   "t_count": 64,
+   "t_depth": 64,
+   "qubits": 18,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": false,
+   "method": "basis-sampled",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "relative_phase_toffoli",
+    "T1": "relative_phase_toffoli",
+    "T2": "relative_phase_toffoli",
+    "T3": "relative_phase_toffoli",
+    "T4": "relative_phase_toffoli",
+    "T5": "relative_phase_toffoli",
+    "T6": "relative_phase_toffoli",
+    "T7": "relative_phase_toffoli",
+    "T8": "relative_phase_toffoli",
+    "T9": "relative_phase_toffoli",
+    "T10": "relative_phase_toffoli",
+    "T11": "relative_phase_toffoli",
+    "T12": "relative_phase_toffoli",
+    "T13": "relative_phase_toffoli",
+    "T14": "relative_phase_toffoli",
+    "T15": "relative_phase_toffoli"
+   },
+   "call": 1,
+   "variant": null,
+   "digest": "37e1f2683b632714"
+  },
+  "control/exact": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V1 (spec) + pyzx"
+   },
+   "t_count": 64,
+   "t_depth": 42,
+   "qubits": 18,
+   "ancillas": 0,
+   "measurements": 0,
+   "verdict_mode": "exact",
+   "certified": false,
+   "method": "basis-sampled",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "toffoli_7T",
+    "T1": "toffoli_7T",
+    "T2": "toffoli_7T",
+    "T3": "toffoli_7T",
+    "T4": "toffoli_7T",
+    "T5": "toffoli_7T",
+    "T6": "toffoli_7T",
+    "T7": "toffoli_7T",
+    "T8": "toffoli_7T",
+    "T9": "toffoli_7T",
+    "T10": "toffoli_7T",
+    "T11": "toffoli_7T",
+    "T12": "toffoli_7T",
+    "T13": "toffoli_7T",
+    "T14": "toffoli_7T",
+    "T15": "toffoli_7T"
+   },
+   "call": 0,
+   "variant": "V1",
+   "digest": "d49529e0311cd4b0"
+  },
+  "control/relaxed": {
+   "plan": {
+    "target": "relaxed",
+    "decisions": [
+     {
+      "element": "P0",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P1",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P2",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P3",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P4",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P5",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P6",
+      "route": "temporary_and",
+      "via_ancilla": true
+     },
+     {
+      "element": "P7",
+      "route": "temporary_and",
+      "via_ancilla": true
+     }
+    ],
+    "global_pass": "pyzx",
+    "request_cards": [],
+    "rationale": "control V2 (max_relaxed) + pyzx"
+   },
+   "t_count": 32,
+   "t_depth": 9,
+   "qubits": 26,
+   "ancillas": 8,
+   "measurements": 8,
+   "verdict_mode": "relaxed",
+   "certified": false,
+   "method": "branchwise-sampled",
+   "zero_qubits": [],
+   "routes": {
+    "T0": "temporary_and(via_ancilla)",
+    "T1": "temporary_and(via_ancilla)",
+    "T2": "temporary_and(via_ancilla)",
+    "T3": "temporary_and(via_ancilla)",
+    "T4": "temporary_and(via_ancilla)",
+    "T5": "temporary_and(via_ancilla)",
+    "T6": "temporary_and(via_ancilla)",
+    "T7": "temporary_and(via_ancilla)",
+    "T8": "temporary_and(via_ancilla)",
+    "T9": "temporary_and(via_ancilla)",
+    "T10": "temporary_and(via_ancilla)",
+    "T11": "temporary_and(via_ancilla)",
+    "T12": "temporary_and(via_ancilla)",
+    "T13": "temporary_and(via_ancilla)",
+    "T14": "temporary_and(via_ancilla)",
+    "T15": "temporary_and(via_ancilla)"
+   },
+   "call": 1,
+   "variant": "V2",
+   "digest": "a18c7e60e561ce6d"
+  }
+ }
+}

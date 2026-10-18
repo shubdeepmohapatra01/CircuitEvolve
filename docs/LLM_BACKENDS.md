@@ -1,5 +1,9 @@
 # LLM backends for the proposer
 
+> **2026-10-13.** The backend factories moved verbatim to `circuitevolve/llm_backends.py` (re-exported by
+> `circuitevolve.search.llm`, now an alias of `circuitevolve.legacy.adder.llm`). The window core uses
+> `make_api_backend(host.llm, model=host.reasoning_model())` via `experiments/window_run.py`.
+
 `circuitevolve/search/llm.py` takes any callable `complete(list[str]) -> list[str | Exception]`.
 Two factories are provided. Both return a callable with a `stats` Counter; `llm_search` stores the
 change in that counter over a run as `stats["backend"]` in the run summary.

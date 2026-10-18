@@ -1,0 +1,1 @@
+{"circuit": "qft_8", "arm": "B3m", "eps": 1e-05, "status": "ok", "t_count": 2996, "n_rz": 39, "cx": 68, "runtime_s": 5.8, "state_dist_vs_orig": 1.4448251304302328e-07, "error": null}

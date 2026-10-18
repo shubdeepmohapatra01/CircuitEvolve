@@ -1,0 +1,1 @@
+{"circuit": "heisenberg_6", "arm": "B3m", "eps": 0.001, "status": "ok", "t_count": 9136, "n_rz": 152, "cx": 274, "runtime_s": 21.8, "state_dist_vs_orig": 2.2810360581678723e-05, "error": null}

@@ -1,0 +1,339 @@
+{
+ "name": "barenco_tof_5",
+ "n": 9,
+ "n_gates": 12,
+ "gate_counts": {
+  "ccx": 12
+ },
+ "classical": true,
+ "toffolis": [
+  {
+   "id": "T0",
+   "gate": 0,
+   "kind": "ccx",
+   "controls": [
+    4,
+    7
+   ],
+   "target": 8
+  },
+  {
+   "id": "T1",
+   "gate": 1,
+   "kind": "ccx",
+   "controls": [
+    3,
+    6
+   ],
+   "target": 7
+  },
+  {
+   "id": "T2",
+   "gate": 2,
+   "kind": "ccx",
+   "controls": [
+    2,
+    5
+   ],
+   "target": 6
+  },
+  {
+   "id": "T3",
+   "gate": 3,
+   "kind": "ccx",
+   "controls": [
+    0,
+    1
+   ],
+   "target": 5
+  },
+  {
+   "id": "T4",
+   "gate": 4,
+   "kind": "ccx",
+   "controls": [
+    2,
+    5
+   ],
+   "target": 6
+  },
+  {
+   "id": "T5",
+   "gate": 5,
+   "kind": "ccx",
+   "controls": [
+    3,
+    6
+   ],
+   "target": 7
+  },
+  {
+   "id": "T6",
+   "gate": 6,
+   "kind": "ccx",
+   "controls": [
+    4,
+    7
+   ],
+   "target": 8
+  },
+  {
+   "id": "T7",
+   "gate": 7,
+   "kind": "ccx",
+   "controls": [
+    3,
+    6
+   ],
+   "target": 7
+  },
+  {
+   "id": "T8",
+   "gate": 8,
+   "kind": "ccx",
+   "controls": [
+    2,
+    5
+   ],
+   "target": 6
+  },
+  {
+   "id": "T9",
+   "gate": 9,
+   "kind": "ccx",
+   "controls": [
+    0,
+    1
+   ],
+   "target": 5
+  },
+  {
+   "id": "T10",
+   "gate": 10,
+   "kind": "ccx",
+   "controls": [
+    2,
+    5
+   ],
+   "target": 6
+  },
+  {
+   "id": "T11",
+   "gate": 11,
+   "kind": "ccx",
+   "controls": [
+    3,
+    6
+   ],
+   "target": 7
+  }
+ ],
+ "pairs": [
+  {
+   "id": "P0",
+   "first": "T3",
+   "second": "T9",
+   "gates": [
+    3,
+    9
+   ],
+   "kind": "ccx",
+   "target": 5,
+   "controls": [
+    0,
+    1
+   ],
+   "cls": "mirror",
+   "target_written_between": false,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  },
+  {
+   "id": "P1",
+   "first": "T4",
+   "second": "T8",
+   "gates": [
+    4,
+    8
+   ],
+   "kind": "ccx",
+   "target": 6,
+   "controls": [
+    2,
+    5
+   ],
+   "cls": "mirror",
+   "target_written_between": false,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  },
+  {
+   "id": "P2",
+   "first": "T5",
+   "second": "T7",
+   "gates": [
+    5,
+    7
+   ],
+   "kind": "ccx",
+   "target": 7,
+   "controls": [
+    3,
+    6
+   ],
+   "cls": "mirror",
+   "target_written_between": false,
+   "target_clean_before": false,
+   "target_clean_after": false,
+   "target_declared_zero": false
+  }
+ ],
+ "unpaired": [
+  "T0",
+  "T1",
+  "T2",
+  "T6",
+  "T10",
+  "T11"
+ ],
+ "mcx": [
+  {
+   "id": "M0",
+   "middle": "T6",
+   "pairs": [
+    "P2",
+    "P1",
+    "P0"
+   ],
+   "controls": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "target": 8,
+   "work": [
+    7,
+    6,
+    5
+   ],
+   "work_clean": false
+  }
+ ],
+ "qubits": [
+  {
+   "q": 0,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 1,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 2,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 3,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 4,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 5,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 6,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 7,
+   "declared_zero": false,
+   "first_touch": "ccx-control",
+   "restored": null,
+   "role": "data"
+  },
+  {
+   "q": 8,
+   "declared_zero": false,
+   "first_touch": "ccx-target",
+   "restored": null,
+   "role": "data"
+  }
+ ],
+ "repeated": [
+  {
+   "pattern": "ccx(0,1,2) ccx(3,4,1) ccx(5,6,4) ccx(7,8,6) ccx(5,6,4) ccx(3,4,1)",
+   "count": 2,
+   "at": [
+    0,
+    6
+   ],
+   "k": 6
+  },
+  {
+   "pattern": "ccx(0,1,2) ccx(3,4,1) ccx(5,6,4) ccx(3,4,1) ccx(0,1,2)",
+   "count": 2,
+   "at": [
+    1,
+    7
+   ],
+   "k": 5
+  },
+  {
+   "pattern": "ccx(0,1,2) ccx(3,4,1) ccx(0,1,2) ccx(5,2,6)",
+   "count": 2,
+   "at": [
+    2,
+    8
+   ],
+   "k": 4
+  },
+  {
+   "pattern": "ccx(0,1,2) ccx(3,2,4) ccx(5,4,6)",
+   "count": 2,
+   "at": [
+    3,
+    9
+   ],
+   "k": 3
+  }
+ ],
+ "rotations": {
+  "t_like": 0,
+  "s_like": 0,
+  "z": 0
+ },
+ "declared_zero": [],
+ "digest": "2d786741929f1476",
+ "hints": [
+  "M0 is a C5X built from an AND ladder on borrowed (dirty) work qubits"
+ ]
+}
