@@ -349,3 +349,14 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
 - ENGINE.md: point-2 section (anatomy, seeds incl. harvest numbers, G1 graduation, campaign contract); phase log updated. CLAUDE.md layout line updated.
 - Final state: suite 341 passed + 2 qutip-gated skips; dv frozen digest bc3eac23 unchanged; cvdv FROZEN.sha256 all OK; BASELINE_MANIFEST guard green. Phases P2.1-P2.5 complete.
 - What point 2 changed, in one line each: the reflector reads accept anatomy + grouped rejections; both family playbooks are seeded (primer + certified literature); the first rule graduated to verified code (G1, -8.27% dev T, separate attribution); the first-campaign contract is frozen in docs/P2_CAMPAIGN.md.
+
+## 2026-10-18 method cascade P3.0 (plan start-state record)
+
+- PLAN_P3 (docs/PLAN_P3.md, commit 4af6778) execution starts here. Start state verified:
+  - circuitevolve suite (.venv): 341 passed + 2 skipped.
+  - cvdv suite (conda env cvdv-opt): 33 passed; `bash cvdv/scripts/check_frozen.sh` OK.
+  - `circuitevolve.integrity.frozen_digest()` = bc3eac23a403dbc594265a91ebb9f0ff12672dc913c56c5cf5d9d950c2a242c6 (unchanged).
+  - tests/engine/test_manifest.py green (runs inside the full suite).
+- Housekeeping: 7 routing-log rows appended by post-P2 dry runs (results/engine/routing_log.jsonl)
+  were sitting uncommitted; committed here unmodified (append-only, no existing row touched).
+- No code changes in this commit.
