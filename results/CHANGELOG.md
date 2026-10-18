@@ -301,3 +301,11 @@
 ### Correction to P1.1+P1.2 entry
 
 The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new contract tests)"; the actual gate run printed **307 passed** - 300 baseline + 7 new tests in tests/engine/test_contract.py. Count error in the notes only; the gate itself was green as stated.
+
+## 2026-10-18 engine refactor P1.3 (cvdv plugin, wrap-in-place)
+
+- NEW `circuitevolve/domains/cvdv/`: CvdvRulesPlugin + benchmark_plugin — the frozen CV-DV certified compiler behind the engine contract. State = rule-library source; tasks = term kinds by certified-duration share; candidates = restricted-DSL rule functions (regex parse, frozen library.load path, evolve.py collision policy); verify = frozen per-instance certificate; measure = certified compile_step under the existing lexicographic metric; exact rules charge 0.
+- optimize() cvdv branch wired: {"benchmark": <name>} input; raw term lists deferred to the first unified campaign.
+- Gates (run in env cvdv-opt): engine loop ACCEPTS scripted rule_n2__parity_exact via the frozen certifier (3 two-op / 6 one-op per n2 term, charge 0); boseHubbard_small via the plugin measure path + Genesis routing reproduces the compare_isas hashseed-0 ours row EXACTLY (44/30/74/393, eps_bound 7.53e-15); cvdv acceptance 33 passed before AND after; check_frozen.sh all OK; venv suite 325 passed + 2 expected skips (qutip-gated); zero-accept optimize reproduces the rulebook compile.
+- Documented deviations: existing cvdv metric has no ancilla component (followed the code); global/final check = bound_valid AND eps_bound <= eps_total (every compile re-certifies from scratch, so the windowed bound does not apply); input_check 0.0 (avoids double-counting the start certificate).
+- Built by a sub-agent; files reviewed; no frozen/engine/dv_windows files touched.

@@ -54,7 +54,7 @@ def load_table(path: Path | None = None) -> dict:
 
 # ------------------------------------------------------------------ features (deterministic)
 def _is_terms(source, manifest) -> bool:
-    if isinstance(source, dict) and ("terms" in source or "hamiltonian" in source):
+    if isinstance(source, dict) and ("terms" in source or "hamiltonian" in source or "benchmark" in source):
         return True
     if isinstance(source, (str, Path)) and str(source).endswith((".terms.json", ".terms")):
         return True

@@ -61,12 +61,24 @@ def _run_dv_windows(source, eps, complete, binding: FamilyBinding, *, tag, playb
     return out
 
 
-def _run_cvdv(source, eps, complete, binding: FamilyBinding, *, tag, **kw):
+def _run_cvdv(source, eps, complete, binding: FamilyBinding, *, tag, runs_dir=None, n_max: int = 3,
+              r_max: int = 4096, isa=None, rules_path=None, **kw):
     try:
-        from ..domains.cvdv import build_loop  # provided by the cvdv plugin (P1.3)
+        from ..domains.cvdv import benchmark_plugin
     except ImportError as e:
         raise NotImplementedError(
             "cvdv family binding: the cvdv plugin (PLAN_P1 P1.3) is not importable in this "
-            f"environment ({e}); run in the cvdv-opt environment or finish P1.3") from e
-    loop = build_loop(source, eps, complete, tag=tag, **kw)
+            f"environment ({e}); run in an environment with the cvdv stack deps") from e
+    from ..blocks import REPO
+    from ..core.ledger import Ledger
+    if isinstance(source, dict) and "benchmark" in source:
+        plugin = benchmark_plugin(source["benchmark"], eps_total=eps, n_max=n_max, r_max=r_max,
+                                  isa=isa, rules_path=rules_path)
+    else:
+        raise NotImplementedError(
+            "cvdv family binding v0 takes {'benchmark': '<genesis benchmark name>'}; raw term "
+            "lists need the cvdv Term constructors and land with the first unified campaign")
+    from .loop import EvolveLoop
+    loop = EvolveLoop(plugin, eps, complete, Ledger(eps), tag=tag,
+                      runs_dir=Path(runs_dir) if runs_dir else REPO / "results" / "engine" / "cvdv_runs", **kw)
     return loop.run()
