@@ -297,3 +297,7 @@
 - Playbook tiers (machinery only, content copied verbatim): playbooks/router.json; families/dv.windows.json = byte-identical dev_v1.json copy; families/cvdv.bosonic.json = 6 cvdv rulebook insights as seed rules; graduated/index.json = EMPTY hash-checked library (tamper + file-drift tests).
 - `engine/{graduate,reflector,recognize}.py`: graduation formats/provenance/loader, the point-2 reflector seam (AcceptAnatomy), recognizer re-export.
 - Gates: engine suite 30 passed; full suite green; frozen digests unchanged; originals (dev_v1.json, cvdv rulebook) untouched.
+
+### Correction to P1.1+P1.2 entry
+
+The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new contract tests)"; the actual gate run printed **307 passed** - 300 baseline + 7 new tests in tests/engine/test_contract.py. Count error in the notes only; the gate itself was green as stated.
