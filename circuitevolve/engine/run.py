@@ -57,6 +57,10 @@ def optimize(source, eps: float, complete, *, manifest: dict | None = None, tag:
                                    staged=(i > 0), **kw)
         elif b.plugin == "cvdv":
             summ = _run_cvdv(current, eps, complete, b, tag=tag, **kw)
+        elif b.plugin == "reconstruction":
+            summ = _run_reconstruction(current, eps, complete, b, tag=tag,
+                                       playbook_path=playbook_path, runs_dir=runs_dir,
+                                       manifest=manifest, **kw)
         elif b.plugin is None:
             raise NotImplementedError(
                 f"method '{b.method}' routed (status {b.status!r}) but its plugin is not "
@@ -79,15 +83,21 @@ def _run_dv_windows(source, eps, complete, binding: MethodBinding, *, tag, playb
     from ..core.circuit import Circuit, load_input, original_ops
     from ..core.loop import RUNS, WindowLoop
     from ..search.playbook import Playbook
-    tket_entry_rec = None
-    if staged or isinstance(source, dict):                  # verified output of a previous stage
+    tket_entry_rec, staged_rec = None, None
+    # a zero-accept earlier stage threads the ORIGINAL source onward: a str source is handled
+    # by the raw-qasm branch below even when staged=True (tket auto fires on its Toffolis)
+    if isinstance(source, dict):                            # verified output of a previous stage
         payload = source
-        if not (isinstance(payload, dict) and "ops" in payload and "n" in payload):
+        if not ("ops" in payload and "n" in payload):
             raise NotImplementedError(
-                "angle stage after a cascade stage expects an {'ops', 'n', 'name'} payload — "
-                "the reconstruction plugin that produces it lands in PLAN_P3 P3.3")
+                "angle stage after a cascade stage expects an {'ops', 'n', 'name'} payload "
+                "(reconstruction's cascade_payload); got a different staged input")
         ops, n = list(payload["ops"]), payload["n"]
         name = payload.get("name", "staged")
+        staged_rec = dict(segments=payload.get("segments"), segment=payload.get("segment"),
+                          segment_t=payload.get("segment_t"), fixed_t=payload.get("fixed_t", 0),
+                          total_t_before=payload.get("total_t_before",
+                                                     payload.get("fixed_t", 0) + _named_t(ops)))
         if tket == "auto":                                  # entry pass: staged input is never pre-TKET'd
             from .tketpass import tket_entry
             before = _named_t(ops)
@@ -136,10 +146,52 @@ def _run_dv_windows(source, eps, complete, binding: MethodBinding, *, tag, playb
     loop = WindowLoop(circ, orig, eps, complete, playbook=pb, tag=tag,
                       runs_dir=Path(runs_dir) if runs_dir else RUNS, **kw)
     out = loop.run()
+    if staged_rec is not None:                     # whole-stage attribution: loop numbers are the
+        out["segment_loop"] = dict(t_before=out["t_before"], t_after=out["t_after"])
+        out["staged"] = dict(staged_rec)           # optimized segment's; totals add the fixed T
+        out["t_before"] = staged_rec["total_t_before"]
+        out["t_after"] = staged_rec["fixed_t"] + out["segment_loop"]["t_after"]
     if tket_entry_rec is not None:                 # deterministic entry-pass gains: own section
         out["tket_entry"] = tket_entry_rec
     out["pre_opt"] = pre_opt                       # deterministic pass gains: SEPARATE column,
     if pb is not None and not pb.frozen and playbook_path is not None:   # never sold as LLM gains
+        pb.save(playbook_path)
+    return out
+
+
+def _run_reconstruction(source, eps, complete, binding: MethodBinding, *, tag, playbook_path=None,
+                        runs_dir=None, manifest=None, graduated: str = "on", **kw):
+    """Reconstruction stage (PLAN_P3 P3.3): v2/tier1 plugin through the generic loop.
+    RELAXED column; declared-zero qubits come from the caller's manifest
+    ({'declared_zero': [...]}, the benchmark contract) — never guessed. `graduated` is
+    accepted for cascade-kwarg compatibility; no graduated rules exist for this family yet."""
+    from ..blocks import REPO
+    from ..core.ledger import Ledger
+    from ..domains.reconstruction import ReconstructionPlugin
+    from ..search.playbook import Playbook
+    from ..v2.tier1.recognize import load_logical, summarize
+    from .loop import EvolveLoop
+    s_in = str(source)
+    text = s_in if s_in.lstrip().startswith("OPENQASM") else Path(s_in).read_text()
+    name = Path(s_in).stem if s_in.endswith(".qasm") else "qasm"
+    dz = list((manifest or {}).get("declared_zero", []))
+    _, lc = load_logical(text, name=name)
+    summary = summarize(lc, declared_zero=dz, name=name)
+    plugin = ReconstructionPlugin(lc, summary)
+    pb = None
+    if playbook_path is not None:
+        p = Path(playbook_path)
+        pb = Playbook.load(p) if p.exists() else Playbook(evidence="improvement")
+    loop = EvolveLoop(plugin, eps, complete, Ledger(eps), playbook=pb, tag=tag,
+                      runs_dir=Path(runs_dir) if runs_dir else REPO / "results" / "engine" / "recon_runs",
+                      **kw)
+    out = loop.run()
+    out["contract"] = "relaxed"                        # §1.5: relaxed column, never mixed
+    best = loop.archive[0]
+    payload = plugin.cascade_payload(best)
+    if payload is not None:
+        out["_out_payload"] = payload
+    if pb is not None and not pb.frozen and playbook_path is not None:
         pb.save(playbook_path)
     return out
 

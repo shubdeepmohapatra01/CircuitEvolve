@@ -429,3 +429,39 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   Suite 352 passed + 2 skips; digest bc3eac23 unchanged; cvdv untouched.
 - routing_log.jsonl rows appended by this suite run committed (append-only; tests that exercise
   optimize() log real decisions - pre-existing behavior).
+
+## 2026-10-18 method cascade P3.3 (reconstruction method plugin)
+
+- circuitevolve/domains/reconstruction/plugin.py: v2/tier1 behind the DomainPlugin contract,
+  wrapping recognize/plan/compile UNCHANGED and calling the FROZEN v2 relaxed verifier through
+  compile.evaluate + verify.check_integrity (never reimplemented; same frozen digest as the DV
+  stack, checked at plugin construction and by the engine at loop start/end). Mapping: state =
+  current best verified compilation (start = input, naive frozen cost); task = ONE whole-circuit
+  planning problem (the recognizer element menu; key = parent digest); candidate = one literal
+  JSON plan (v2 parse_plan, no exec/eval); measure = (T, qubits, T-depth) lexicographic in the
+  RELAXED column, verdict_mode recorded per accept; ledger untouched (charge 0, exact branch-wise
+  per v2 conventions). The deterministic control route (v2/tier1/control.py) is the no-LLM arm,
+  fed through the SAME engine path as scripted completions.
+- cascade_payload(): hands the angle stage the largest measurement-free Clifford+T segment +
+  fixed-T remainder; run.py staged branch reports WHOLE-stage totals (segment_loop section keeps
+  the loop's own numbers) so per-stage attribution never hides the unoptimized remainder. A
+  zero-accept reconstruction stage threads the ORIGINAL source onward (angle then runs its
+  normal raw path).
+- run.py: _run_reconstruction (relaxed contract tag, declared_zero from the caller's manifest,
+  runs under results/engine/recon_runs when tagged); router.json reconstruction row flipped
+  reserved -> active (plugin 'reconstruction').
+- playbooks/families/reconstruction.json seeded (6 rules, origin=seed, status=candidate,
+  provenance-tagged '[seed 2026-10-18 tier-1 toolbox]' like P2.2): temporary AND (Gidney 2018),
+  Jones Toffoli / measurement-based uncompute (Jones 2013), clean-AND compute-only,
+  relative-phase Toffoli pairing (Maslov 2016), the dev routing lesson 'mirror pair into
+  declared-zero target => temporary-AND first', MCX cascades (Barenco 1995 + Maslov). Credit
+  accrues only under the unchanged A/B machinery (invariant 7).
+- Gates: (a) scripted control plans through the ENGINE loop reproduce the v2 deterministic-
+  control numbers on 4 suite circuits (cuccaro_4 16T/14q, rc_adder_6 40T/16q, tof_5 16T/10q,
+  barenco_tof_5 36T/13q - equal T AND qubits vs results/v2/tier1/dev_results.csv best rows),
+  ledger spend 0; (b) zero-accept run returns the input unchanged (56T cuccaro_4, explicit
+  reason); bad plan rejected, never silently accepted; (c) fake-LLM cascade e2e on cuccaro_4:
+  reconstruction (control V1/V2) then angle (G1 + declining loop) = 16T final, strictly below
+  the angle-only arm (48T twin after TKET entry), per-stage attribution 56->16->16 with
+  contracts separated (relaxed | approx); (d) suite 358 passed + 2 skips, digest bc3eac23
+  unchanged, cvdv frozen OK.

@@ -3,8 +3,8 @@
  "provenance": "P3.2 migration (docs/PLAN_P3.md section 2): the /0 'families' table becomes the /1 'methods' cascade table. Methods are METHOD-scoped, never circuit-class-scoped (no taxonomy; an 'adder' is only structure). Frozen names kept: the angle method's playbook stays playbooks/families/dv.windows.json and its graduated-index lookup alias stays 'dv.windows' (G1 entry frozen); cvdv keeps playbooks/families/cvdv.bosonic.json. The /0 'arithmetic' reserved row is superseded by the reconstruction method. The /0 table is preserved in git history; routing_log rows before this commit reference circuitevolve.engine.router/0.",
  "methods": {
   "reconstruction": {
-   "plugin": null,
-   "status": "reserved",
+   "plugin": "reconstruction",
+   "status": "active",
    "contract": "relaxed",
    "rank": 0,
    "family": "reconstruction",
@@ -16,7 +16,7 @@
     "min_toffoli_naive_t_share": 0.2
    },
    "playbook": "playbooks/families/reconstruction.json",
-   "note": "plugin lands in P3.3; until then the method routes (cascade position 0) but refuses to execute"
+   "note": "P3.3: circuitevolve/domains/reconstruction wraps v2/tier1 (frozen relaxed verifier; deterministic control route = the no-LLM arm)"
   },
   "angle": {
    "plugin": "dv_windows",

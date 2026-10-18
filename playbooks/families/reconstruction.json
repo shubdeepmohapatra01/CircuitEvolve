@@ -1,0 +1,95 @@
+{
+ "blinded": false,
+ "next_id": 7,
+ "settings": {
+  "ab_fraction": 0.5,
+  "min_exposure": 8,
+  "max_exposure": 40,
+  "z_promote": 1.64,
+  "min_pass_with": 3,
+  "z_retire": -1.0,
+  "evidence": "improvement",
+  "banned_words": []
+ },
+ "rules": [
+  {
+   "id": "R1",
+   "text": "[seed 2026-10-18 tier-1 toolbox] Gidney 2018 temporary AND: a Toffoli PAIR that computes and later uncomputes the same AND costs 4 T total - 4 T to compute, 0 T to uncompute via X-basis measurement + classically controlled CZ fix-up. Clean pairs (target declared zero-init, |0> before, unwritten between) take temporary_and directly on the target; any pair with unchanged controls takes it via a fresh ancilla (via_ancilla: true) with cx(ancilla, target) at both ends.",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0, "with_pass": 0, "without_props": 0, "without_pass": 0,
+   "exposures": 0, "improvements": 0,
+   "note": "provenance: Gidney, Quantum 2, 74 (2018); v2 tier-1 toolbox route temporary_and",
+   "with_prompts": 0, "with_improvements": 0, "without_prompts": 0, "without_improvements": 0
+  },
+  {
+   "id": "R2",
+   "text": "[seed 2026-10-18 tier-1 toolbox] Jones Toffoli / measurement-based uncompute: ANY single ccx or ccz costs 4 T + 1 fresh clean ancilla + 1 measurement (jones_toffoli) - AND into the ancilla (4 T), cx/cz(ancilla, target), then measure the ancilla and fix up with Cliffords. Use it for unpaired Toffolis that have no clean target.",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0, "with_pass": 0, "without_props": 0, "without_pass": 0,
+   "exposures": 0, "improvements": 0,
+   "note": "provenance: Jones, PRA 87, 022328 (2013); v2 tier-1 toolbox route jones_toffoli",
+   "with_prompts": 0, "with_improvements": 0, "without_prompts": 0, "without_improvements": 0
+  },
+  {
+   "id": "R3",
+   "text": "[seed 2026-10-18 tier-1 toolbox] Clean-AND compute-only: a Toffoli whose target is a declared zero-init qubit still |0> at that point is a pure AND - 4 T, no measurement, no uncompute (clean_and). Typical for the first write into an output register (multiplier-like accumulation).",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0, "with_pass": 0, "without_props": 0, "without_pass": 0,
+   "exposures": 0, "improvements": 0,
+   "note": "provenance: Gidney 2018 compute-only AND; v2 tier-1 toolbox route clean_and",
+   "with_prompts": 0, "with_improvements": 0, "without_prompts": 0, "without_improvements": 0
+  },
+  {
+   "id": "R4",
+   "text": "[seed 2026-10-18 tier-1 toolbox] Relative-phase Toffoli pairing (Maslov RCCX): a mirror pair (same Toffoli repeated, target only READ in between) can use the 4-T relative-phase Toffoli on BOTH members - the second cancels the first's phase, so the pair is EXACT (8 T, unitary-preserving). Never use RCCX on a lone Toffoli: the uncancelled phase is an error.",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0, "with_pass": 0, "without_props": 0, "without_pass": 0,
+   "exposures": 0, "improvements": 0,
+   "note": "provenance: Maslov, PRA 93, 022311 (2016); v2 tier-1 toolbox route relative_phase_toffoli",
+   "with_prompts": 0, "with_improvements": 0, "without_prompts": 0, "without_improvements": 0
+  },
+  {
+   "id": "R5",
+   "text": "[seed 2026-10-18 tier-1 routing lesson] Mirror pair writing into a declared-zero target => temporary-AND: when the recognizer shows a pair whose target is a declared zero-init qubit (class 'clean'), temporary_and on the target is strictly cheaper than any exact route (4 T vs 8+ T) and the relaxed verifier certifies it branch-wise. Route clean pairs FIRST; they are the highest-value decisions on adder-like structure.",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0, "with_pass": 0, "without_props": 0, "without_pass": 0,
+   "exposures": 0, "improvements": 0,
+   "note": "provenance: v2 tier-1 dev runs (results/v2/tier1/dev_results.csv): V2 max_relaxed beats exact on every pair-rich dev circuit",
+   "with_prompts": 0, "with_improvements": 0, "without_prompts": 0, "without_improvements": 0
+  },
+  {
+   "id": "R6",
+   "text": "[seed 2026-10-18 tier-1 toolbox] MCX cascades: an unpaired Toffoli whose controls are targets of enclosing pairs is a multi-controlled X built from an AND ladder. Relaxed: ancilla_mcx (every enclosing pair -> temporary_and, middle -> jones_toffoli, 4 T per element). Exact: barenco_mcx (pairs -> relative_phase_toffoli 8 T each, middle 7 T).",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0, "with_pass": 0, "without_props": 0, "without_pass": 0,
+   "exposures": 0, "improvements": 0,
+   "note": "provenance: Barenco et al. PRA 52, 3457 (1995) + Maslov 2016; v2 tier-1 toolbox routes ancilla_mcx/barenco_mcx",
+   "with_prompts": 0, "with_improvements": 0, "without_prompts": 0, "without_improvements": 0
+  }
+ ],
+ "history": [
+  {
+   "call": 0,
+   "op": "seed",
+   "note": "P3.3 (docs/PLAN_P3.md): 6 rules seeded from the v2 tier-1 toolbox + dev routing lesson, provenance-tagged like the P2.2 seeds. Origin=seed, status=candidate: credit only accrues under the unchanged A/B machinery on measured improvement (invariant 7)."
+  }
+ ]
+}
