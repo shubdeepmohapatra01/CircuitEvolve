@@ -465,3 +465,37 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   the angle-only arm (48T twin after TKET entry), per-stage attribution 56->16->16 with
   contracts separated (relaxed | approx); (d) suite 358 passed + 2 skips, digest bc3eac23
   unchanged, cvdv frozen OK.
+
+## 2026-10-18 method cascade P3.4 (structure lifting, deterministic core)
+
+- engine/lift.py: exact span matcher for the standard 7-T Toffoli network and the Maslov RCCX
+  over {h,s,sdg,x,z,t,tdg,cx,cz}. Candidate spans are per-qubit projected subsequences on a
+  3-qubit support (minimal op span), and EVERY claim is verified EXACTLY before substitution:
+  the span's 8 basis columns are computed in D[omega] (the frozen sparse simulator sim.py) and
+  compared to the CCX/RCCX reference columns up to one global unit phase omega^j (recorded per
+  claim). Soundness rules: an op straddling the support ends the window; a BYSTANDER rule
+  rejects claims whose support grew onto a qubit that skipped ops already touched (substitution
+  at span start would reorder non-commuting ops - caught by a whole-circuit exact test during
+  development and fixed before commit). RCCX claims are REPORTED, not substituted by default
+  (a lone relative-phase Toffoli is not a ccx; no rccx gate downstream). LLM spotter =
+  call-site stub behind lift_llm=False raising NotImplementedError (budget-gated, outside P3).
+- Wiring: route() pre-recognition fires ONLY at toffolis==0 AND t+tdg>=7; on recovery the
+  cascade routes AND EXECUTES on the lifted form (MethodBinding.lifted_source, excluded from
+  log rows; lift counts logged in evidence).
+- results/engine/recon_bench/lifting_report.json + decomposed_plain/ twins (sha256'd):
+  * DOCUMENTED DEVIATION from the P3.1-twin-only reading of the gate: the FullPeepholeOptimise
+    stress twins carry NO exact CCX/RCCX projected spans anywhere (verified by exhaustive
+    per-triple search): global peephole optimization absorbs Toffoli-local Cliffords into
+    neighbours and cancels T across construction boundaries. Stress recovery = 0/11 circuits,
+    recorded honestly (plan: no minimum imposed) with the finding in the report.
+  * decomposed_plain/ = macro-expanded base set (standard qelib 7-T splice of every ccx/ccz in
+    the RAW suite circuits - the realistic lift target: toolchain-expanded, not re-optimized).
+    Base recovery 11/11 circuits at 100% (285/285 on mod_adder_1024), naive-T conserved
+    (7*ccx + t_left == naive) on every circuit.
+- Gates: (a) lifting_report.json per-circuit rates; zero false structures re-verified by a
+  whole-circuit exact D[omega] comparison on basis probes (barenco_tof_5, nested/macro-claim
+  shape) + roundtrip lift(expand(cuccaro_4)) == raw op-for-op; (b) decomposed_plain cuccaro_4
+  lifts (8/8), routes [reconstruction, angle] with lift evidence, and the cascade (16T) beats
+  the angle-only arm on the same decomposed input; (c) lift NEVER fires when ccx is present
+  (raw path routes without lift evidence, bit-identical behavior). Suite 366 passed + 2 skips;
+  digest bc3eac23 unchanged.

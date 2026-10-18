@@ -73,6 +73,35 @@ def test_angle_tket_entry_fires_on_toffoli_input(tmp_path):
     assert s["stages"][0]["method"] == "angle" and s["stages"][0]["contract"] == "approx"
 
 
+def test_lifted_cuccaro_cascade_beats_angle_only(tmp_path):
+    """P3.4 gate (b), execution half: the DECOMPOSED (macro-expanded) cuccaro_4 lifts in
+    pre-recognition, routes [reconstruction, angle], and the cascade beats the angle-only
+    arm on the same decomposed input. lift(expand(raw)) == raw (test_lift roundtrip), so
+    the raw circuit's control plans drive the reconstruction stage."""
+    import csv
+    from circuitevolve.v2.tier1.control import control_plans
+    from circuitevolve.v2.tier1.recognize import load_logical, summarize
+    plain = str(REPO / "results" / "engine" / "recon_bench" / "decomposed_plain" / "cuccaro_4.qasm")
+    rows = {r["name"]: r for r in csv.DictReader(
+        open(REPO / "benchmarks" / "nam_arith" / "MANIFEST.csv"))}
+    dz = [int(x) for x in str(rows["cuccaro_4"].get("zero_init_qubits") or "").split()]
+    _, lc = load_logical(CUCCARO_4, name="cuccaro_4")
+    s = summarize(lc, declared_zero=dz, name="cuccaro_4")
+    plans = iter([p.to_json() for _, _, p in control_plans(lc, s, 2)])
+
+    def complete(prompts):
+        return [next(plans, "NONE") for _ in prompts]
+
+    cascade = optimize(plain, 1e-3, complete, manifest={"declared_zero": dz},
+                       runs_dir=tmp_path / "c", n_calls=2, batch=1)
+    angle_only = optimize(plain, 1e-3, _nones(), manifest={"method": "angle"},
+                          runs_dir=tmp_path / "a", n_calls=1, batch=1)
+    assert [x["method"] for x in cascade["routing"]["cascade"]] == ["reconstruction", "angle"]
+    assert cascade["stages"][0]["t_before"] == 56 and cascade["stages"][0]["t_after"] == 16
+    assert cascade["t_after"] == 16
+    assert cascade["t_after"] < angle_only["t_after"]
+
+
 def test_stage1_summary_shape_unchanged(tmp_path):
     """Single-stage pure-rotation run: pre-/1 top-level summary shape intact + new sections."""
     s = optimize("tfim_6", 1e-3, _nones(), runs_dir=tmp_path, n_calls=1, batch=1, graduated="off")

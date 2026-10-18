@@ -50,6 +50,8 @@ def optimize(source, eps: float, complete, *, manifest: dict | None = None, tag:
                     routing=dict(family=None, contract=None, playbook=None, cascade=[],
                                  reason="pure-Clifford input: no method predicate fires"))
     stages, current, summ = [], source, None
+    if bindings[0].lifted_source is not None:          # P3.4: stages run on the lifted form
+        current = bindings[0].lifted_source
     for i, b in enumerate(bindings):
         if b.plugin == "dv_windows":
             summ = _run_dv_windows(current, eps, complete, b, tag=tag, playbook_path=playbook_path,

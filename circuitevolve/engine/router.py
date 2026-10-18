@@ -187,6 +187,7 @@ class MethodBinding:
     status: str = "active"
     features: dict = field(default_factory=dict)
     evidence: dict = field(default_factory=dict)
+    lifted_source: str | None = None    # P3.4: lifted QASM text when pre-recognition fired
 
 
 def _bind(method: str, row: dict, reason: str, feats: dict, evidence: dict | None = None) -> MethodBinding:
@@ -218,7 +219,18 @@ def route(source, manifest: dict | None = None, table_path: Path | None = None,
         cascade = [_bind("cvdv", methods["cvdv"], "Hamiltonian term input", feats)]
     else:
         cascade = []
+        lifted_text, lift_rec = None, None
+        if (isinstance(source, (str, Path)) and feats.get("toffolis", 0) == 0
+                and _t_like(feats) >= 7):               # P3.4 pre-recognition: fires ONLY here
+            from .lift import pre_recognize
+            lifted_text, lift_rec = pre_recognize(source)
+            if lifted_text is not None:
+                source = lifted_text                    # recognize/route on the lifted form
+                feats = features_of(source, manifest)
+                feats["lift"] = {k: v for k, v in lift_rec.items() if k != "claims"}
         ev = recon_evidence(source, feats)
+        if lift_rec is not None and lifted_text is not None:
+            ev["lift"] = feats["lift"]
         if ev["fires"]:
             cascade.append(_bind("reconstruction", methods["reconstruction"],
                                  f"structural: {ev['toffolis']} Toffolis, pairs={ev['pairs']}, "
@@ -231,7 +243,11 @@ def route(source, manifest: dict | None = None, table_path: Path | None = None,
                                  f"{feats['toffolis']} Toffolis (non-Clifford content {t_nc})",
                                  feats))
         cascade.sort(key=lambda b: b.rank)
-    _log_decision(dict(cascade=[{k: v for k, v in asdict(b).items() if k not in ("features", "evidence")}
+        if lifted_text is not None:
+            for b in cascade:
+                b.lifted_source = lifted_text           # optimize() executes on the lifted form
+    _log_decision(dict(cascade=[{k: v for k, v in asdict(b).items()
+                                 if k not in ("features", "evidence", "lifted_source")}
                                 for b in cascade],
                        reason=(cascade[0].reason if cascade else
                                "no method applicable (pure-Clifford input): returned unchanged"),
