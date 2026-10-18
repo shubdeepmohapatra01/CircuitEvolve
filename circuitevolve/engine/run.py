@@ -1,46 +1,102 @@
-"""The user-facing entry point (PLAN_P1 P1.4): optimize(source, eps, complete) — no domain named.
+"""The user-facing entry point (PLAN_P3 P3.2): optimize(source, eps, complete) — no domain named.
 
 source: a stage-1 benchmark name ("qft_8"), a QASM path/text, or a Hamiltonian term input.
-The tier-0 router picks the family binding; the binding picks the plugin, contract and playbook.
-Zero accepted rewrites reproduce the input's baseline exactly (B0 for the DV window family —
-gate: tests/engine/test_optimize_b0.py).
+The tier-0 router returns the method CASCADE (ordered MethodBindings); optimize() executes the
+stages in order, threading each stage's verified output into the next, and emits per-stage
+sections in the summary. Single-stage cascades keep the pre-/1 summary shape bit-exact
+(gates: tests/engine/test_optimize_b0.py, test_p2_dryrun.py, golden fixture). An empty cascade
+(pure-Clifford input) returns the input unchanged with an explanatory summary — not an error.
+Contracts never mix (PLAN_P3 §1.5): each stage record names its contract; the angle stage
+after reconstruction is unitary-preserving RELATIVE to the reconstructed circuit.
 """
 from __future__ import annotations
 
 import re
 from pathlib import Path
 
-from .router import FamilyBinding, route
+from .router import MethodBinding, features_of, route
 
 _STAGE1_NAME = re.compile(r"^[A-Za-z0-9_]+$")
 
 
+def _named_t(ops) -> int:
+    """Named-T count of an op list (t/tdg gates; routing-level attribution metric only)."""
+    return sum(1 for g, _, _ in ops if g in ("t", "tdg"))
+
+
+def _stage_record(b: MethodBinding, summ: dict) -> dict:
+    return dict(method=b.method, family=b.family, contract=b.contract, status=b.status,
+                t_before=summ.get("t_before"), t_after=summ.get("t_after"),
+                verified=bool((summ.get("final_check_vs_original") or {}).get("ok")),
+                reason=b.reason)
+
+
 def optimize(source, eps: float, complete, *, manifest: dict | None = None, tag: str | None = None,
-             playbook_path=None, runs_dir=None, **kw) -> dict:
-    """Route, bind, run. Returns the run summary with a `routing` section added."""
+             playbook_path=None, runs_dir=None, tket: str = "auto", **kw) -> dict:
+    """Route, cascade, run. Returns the LAST stage's summary (pre-/1 shape preserved for
+    single-stage runs) with `routing` (incl. the cascade) and `stages` sections added."""
     routed_source = source
-    if isinstance(source, str) and _STAGE1_NAME.match(source) and not str(source).endswith(".qasm"):
+    is_stage1 = bool(isinstance(source, str) and _STAGE1_NAME.match(source)
+                     and not str(source).endswith(".qasm"))
+    if is_stage1:
         from ..core.circuit import load_input
         routed_source = list(load_input(source).ops)       # route on the actual TKET-pre-optimized ops
-    binding = route(routed_source, manifest)
-    if binding.plugin == "dv_windows":
-        summ = _run_dv_windows(source, eps, complete, binding, tag=tag, playbook_path=playbook_path,
-                               runs_dir=runs_dir, **kw)
-    elif binding.plugin == "cvdv":
-        summ = _run_cvdv(source, eps, complete, binding, tag=tag, **kw)
-    else:  # pragma: no cover - the router only returns known plugins
-        raise RuntimeError(f"router returned unknown plugin {binding.plugin!r}")
-    summ["routing"] = dict(family=binding.family, contract=binding.contract, reason=binding.reason,
-                           playbook=binding.playbook)
+    bindings = route(routed_source, manifest)
+    if not bindings:
+        feats = features_of(routed_source)
+        return dict(status="unchanged", t_before=0, t_after=0, features=feats, stages=[],
+                    reason="no method applicable: no non-Clifford content — pure-Clifford "
+                           "input returned unchanged (T-count already 0)",
+                    routing=dict(family=None, contract=None, playbook=None, cascade=[],
+                                 reason="pure-Clifford input: no method predicate fires"))
+    stages, current, summ = [], source, None
+    for i, b in enumerate(bindings):
+        if b.plugin == "dv_windows":
+            summ = _run_dv_windows(current, eps, complete, b, tag=tag, playbook_path=playbook_path,
+                                   runs_dir=runs_dir, tket=("off" if is_stage1 else tket),
+                                   staged=(i > 0), **kw)
+        elif b.plugin == "cvdv":
+            summ = _run_cvdv(current, eps, complete, b, tag=tag, **kw)
+        elif b.plugin is None:
+            raise NotImplementedError(
+                f"method '{b.method}' routed (status {b.status!r}) but its plugin is not "
+                "available yet — the reconstruction plugin lands in PLAN_P3 P3.3")
+        else:  # pragma: no cover - the router only returns known plugins
+            raise RuntimeError(f"router returned unknown plugin {b.plugin!r}")
+        stages.append(_stage_record(b, summ))
+        current = summ.pop("_out_payload", current)   # threading seam: verified stage output
+    last = bindings[-1]
+    summ["routing"] = dict(family=last.family, contract=last.contract, reason=last.reason,
+                           playbook=last.playbook,
+                           cascade=[dict(method=b.method, family=b.family, rank=b.rank,
+                                         status=b.status, reason=b.reason) for b in bindings])
+    summ["stages"] = stages
     return summ
 
 
-def _run_dv_windows(source, eps, complete, binding: FamilyBinding, *, tag, playbook_path, runs_dir,
-                    graduated: str = "on", **kw):
+def _run_dv_windows(source, eps, complete, binding: MethodBinding, *, tag, playbook_path, runs_dir,
+                    graduated: str = "on", tket: str = "auto", staged: bool = False, **kw):
     from ..core.circuit import Circuit, load_input, original_ops
     from ..core.loop import RUNS, WindowLoop
     from ..search.playbook import Playbook
-    if isinstance(source, str) and _STAGE1_NAME.match(source):
+    tket_entry_rec = None
+    if staged or isinstance(source, dict):                  # verified output of a previous stage
+        payload = source
+        if not (isinstance(payload, dict) and "ops" in payload and "n" in payload):
+            raise NotImplementedError(
+                "angle stage after a cascade stage expects an {'ops', 'n', 'name'} payload — "
+                "the reconstruction plugin that produces it lands in PLAN_P3 P3.3")
+        ops, n = list(payload["ops"]), payload["n"]
+        name = payload.get("name", "staged")
+        if tket == "auto":                                  # entry pass: staged input is never pre-TKET'd
+            from .tketpass import tket_entry
+            before = _named_t(ops)
+            ops = tket_entry(ops, n)
+            tket_entry_rec = dict(fired=True, why="staged input", t_before=before, t_after=_named_t(ops))
+        circ = Circuit(n, ops, dict(name=name, source="cascade_stage"))
+        # §1.5: the angle stage is unitary-preserving RELATIVE to the reconstructed circuit
+        orig = list(circ.ops)
+    elif isinstance(source, str) and _STAGE1_NAME.match(source):
         circ = load_input(source)
         orig, n = original_ops(source)
         assert n == circ.n
@@ -48,12 +104,23 @@ def _run_dv_windows(source, eps, complete, binding: FamilyBinding, *, tag, playb
         s = str(source)
         text = s if s.lstrip().startswith("OPENQASM") else Path(s).read_text()
         name = Path(s).stem if s.endswith(".qasm") else "qasm"
-        circ = Circuit.from_qasm(text, name=name, source="qasm_input")
+        feats = binding.features or {}
+        has_tof = bool(feats.get("toffolis"))
+        if tket == "auto" and has_tof:                      # window core takes CORE_GATES only:
+            from .tketpass import read_qasm_ops, tket_entry  # decompose Toffolis at the angle door
+            n, ops0 = read_qasm_ops(text)
+            before = _named_t(ops0) + 7 * sum(1 for g, _, _ in ops0 if g in ("ccx", "ccz"))
+            ops = tket_entry(ops0, n)
+            tket_entry_rec = dict(fired=True, why="input contains Toffolis", t_before=before,
+                                  t_after=_named_t(ops))
+            circ = Circuit(n, ops, dict(name=name, source="qasm_input+tket_entry"))
+        else:                                               # today's path, bit-exact (no entry pass)
+            circ = Circuit.from_qasm(text, name=name, source="qasm_input")
         orig = list(circ.ops)
     pre_opt = None
     if graduated == "on":
         from .graduate import apply_graduated, load_graduated
-        rules = load_graduated(binding.family)
+        rules = load_graduated(binding.graduated_family)   # §2: frozen index key 'dv.windows'
         if rules:
             rz0 = sum(1 for g, _, _ in circ.ops if g == "rz")
             ops2, reports = apply_graduated(list(circ.ops), rules, n=circ.n)
@@ -69,13 +136,15 @@ def _run_dv_windows(source, eps, complete, binding: FamilyBinding, *, tag, playb
     loop = WindowLoop(circ, orig, eps, complete, playbook=pb, tag=tag,
                       runs_dir=Path(runs_dir) if runs_dir else RUNS, **kw)
     out = loop.run()
+    if tket_entry_rec is not None:                 # deterministic entry-pass gains: own section
+        out["tket_entry"] = tket_entry_rec
     out["pre_opt"] = pre_opt                       # deterministic pass gains: SEPARATE column,
     if pb is not None and not pb.frozen and playbook_path is not None:   # never sold as LLM gains
         pb.save(playbook_path)
     return out
 
 
-def _run_cvdv(source, eps, complete, binding: FamilyBinding, *, tag, runs_dir=None, n_max: int = 3,
+def _run_cvdv(source, eps, complete, binding: MethodBinding, *, tag, runs_dir=None, n_max: int = 3,
               r_max: int = 4096, isa=None, rules_path=None, **kw):
     try:
         from ..domains.cvdv import benchmark_plugin

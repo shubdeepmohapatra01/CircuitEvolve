@@ -1,14 +1,30 @@
-"""Tier-0 router (PLAN_P1 P1.4): deterministic code over recognizer features — never prose.
+"""Tier-0 router v1 (PLAN_P3 P3.2): method predicates + cascade — deterministic code over
+recognizer features, never prose.
 
-route(source, manifest) -> FamilyBinding. v0 table:
-    Hamiltonian term input                         -> cvdv.bosonic  (certified-subspace contract)
-    QASM, 0 Toffolis, >=1 non-Clifford rz          -> dv.windows    (approx contract)
-    anything else                                  -> NeedsTriage   (logged; the LLM triage
-                                                      fallback and the arithmetic family land
-                                                      in point 3 — the run refuses politely)
-Every decision (including NeedsTriage) is appended to results/engine/routing_log.jsonl with the
-feature vector and the table version, so routing is auditable and A/B-testable like any other
-proposal-side component. A manifest {"family": ...} override is honored and logged as such.
+route(source, manifest) -> ordered list[MethodBinding] (the cascade). Methods are
+METHOD-scoped, not circuit-class-scoped (PLAN_P3 §1.1): `reconstruction` (construction
+substitution, relaxed contract), `angle` (rotation/window polish, approx contract — the
+dv.windows stack), `cvdv` (certified subspace, term input, input-type-disjoint). ALL
+applicable methods run, most-structural first; predicates (PLAN_P3 §5.1, settled):
+
+    cvdv            Hamiltonian term input (disjoint single-stage cascade)
+    reconstruction  toffolis >= 1 AND (>=1 Toffoli pair OR >=1 MCX cascade OR
+                    toffoli-naive-T share >= 20%); pair/MCX evidence from the v2 recognizer
+                    on the RAW input (counts-only fallback when the exact-IR parse fails)
+    angle           >=1 non-Clifford rotation, where T gates and Toffolis count as
+                    non-Clifford rotation content: rz_nonclifford + t_like + toffolis >= 1
+
+Pure-Clifford input: NO method fires -> route() returns [] (optimize() returns the input
+unchanged — not an error). Recognize/route on the RAW input; decompose late (§1.3): the TKET
+entry pass lives inside the angle method, never before reconstruction. A manifest
+{"family"|"method": ...} override picks a single-stage cascade and is logged as such.
+Every decision is appended to results/engine/routing_log.jsonl with features + evidence
+(auditable, A/B-testable like any proposal-side component). NO LLM in routing; no triage call.
+
+Frozen names: the angle method keeps family label "dv.windows" (playbook path + graduated
+index key, G1 frozen); cvdv keeps "cvdv.bosonic". FamilyBinding remains for pre-/1 consumers;
+MethodBinding is the cascade row (open decision 3 settled: its own dataclass carrying the
+FamilyBinding fields plus method/rank/status/evidence).
 """
 from __future__ import annotations
 
@@ -117,34 +133,112 @@ def features_of(source, manifest: dict | None = None) -> dict:
     return dict(input_type="qasm", **_scan_qasm(text))
 
 
+# ------------------------------------------------------------------ method evidence
+def _t_like(feats: dict) -> int:
+    c = feats.get("counts", {})
+    return c.get("t", 0) + c.get("tdg", 0)
+
+
+def _toffoli_share(feats: dict) -> float:
+    naive = 7 * feats.get("toffolis", 0)
+    denom = naive + _t_like(feats)
+    return (naive / denom) if denom else 0.0
+
+
+def recon_evidence(source, feats: dict) -> dict:
+    """Deterministic structural evidence for the reconstruction predicate, computed on the
+    RAW input (PLAN_P3 §1.3). Pair/MCX counts come from the v2 recognizer when the input is
+    QASM text/path in the exact-IR gate set; otherwise counts-only (share criterion alone).
+    Routing has no benchmark manifest, so pair CLASSES here ignore declared-zero contracts —
+    the reconstruction method re-recognizes with the full contract before planning."""
+    ev = dict(toffolis=feats.get("toffolis", 0), t_like=_t_like(feats),
+              toffoli_naive_t_share=round(_toffoli_share(feats), 4), pairs=None, mcx=None)
+    if ev["toffolis"] == 0:
+        ev["fires"] = False
+        return ev
+    if isinstance(source, (str, Path)):
+        try:
+            from ..v2.tier1.recognize import load_logical, summarize
+            _, lc = load_logical(str(source))
+            s = summarize(lc)
+            ev.update(pairs=len(s.pairs), mcx=len(s.mcx),
+                      pairs_by_class={p["cls"]: sum(1 for q in s.pairs if q["cls"] == p["cls"])
+                                      for p in s.pairs})
+        except Exception as err:  # exact-IR parse failed: counts-only evidence
+            ev["recognizer"] = f"unavailable ({type(err).__name__}: {err})"
+    ev["fires"] = bool((ev["pairs"] or 0) >= 1 or (ev["mcx"] or 0) >= 1
+                       or ev["toffoli_naive_t_share"] >= 0.2)
+    return ev
+
+
+@dataclass
+class MethodBinding:
+    """One cascade stage (open decision 3: FamilyBinding fields + method/rank/status/evidence).
+    `family` keeps the FROZEN label recorded state references ('dv.windows', 'cvdv.bosonic');
+    `graduated_family` is the graduated-index lookup alias (§2)."""
+    method: str
+    family: str
+    plugin: str | None
+    contract: str
+    playbook: str
+    graduated_family: str
+    rank: int
+    reason: str
+    status: str = "active"
+    features: dict = field(default_factory=dict)
+    evidence: dict = field(default_factory=dict)
+
+
+def _bind(method: str, row: dict, reason: str, feats: dict, evidence: dict | None = None) -> MethodBinding:
+    return MethodBinding(method=method, family=row["family"], plugin=row.get("plugin"),
+                         contract=row["contract"], playbook=row["playbook"],
+                         graduated_family=row.get("graduated_family", row["family"]),
+                         rank=row.get("rank", 0), reason=reason,
+                         status=row.get("status", "active"), features=feats,
+                         evidence=evidence or {})
+
+
 # ------------------------------------------------------------------ routing
-def route(source, manifest: dict | None = None, table_path: Path | None = None, log: bool = True) -> FamilyBinding:
+def route(source, manifest: dict | None = None, table_path: Path | None = None,
+          log: bool = True) -> list[MethodBinding]:
+    """Ordered cascade of applicable methods (may be empty: pure-Clifford input)."""
     table = load_table(table_path)
+    methods = table["methods"]
     feats = features_of(source, manifest)
-    override = (manifest or {}).get("family")
+    override = (manifest or {}).get("method") or (manifest or {}).get("family")
     if override:
-        fam, reason = override, "manifest override"
+        key = {"dv.windows": "angle", "cvdv.bosonic": "cvdv"}.get(override, override)
+        row = methods.get(key)
+        if row is None:
+            reason = f"manifest override '{override}' names no known method {sorted(methods)}"
+            _log_decision(dict(cascade=[], reason=reason, features=feats, table=table["format"]), log)
+            raise NeedsTriage(reason, feats)
+        cascade = [_bind(key, row, "manifest override", feats)]
     elif feats["input_type"] == "terms":
-        fam, reason = "cvdv.bosonic", "Hamiltonian term input"
-    elif feats["toffolis"] == 0 and feats["rz_nonclifford"] > 0:
-        fam, reason = "dv.windows", (f"QASM, 0 Toffolis, {feats['rz_nonclifford']} non-Clifford rz "
-                                     "(rotation-dominated)")
+        cascade = [_bind("cvdv", methods["cvdv"], "Hamiltonian term input", feats)]
     else:
-        reason = (f"no deterministic family match (toffolis={feats.get('toffolis')}, "
-                  f"rz_nonclifford={feats.get('rz_nonclifford')}); "
-                  "arithmetic family + LLM triage land in point 3")
-        _log_decision(dict(family=None, reason=reason, features=feats, table=table["format"]), log)
-        raise NeedsTriage(reason, feats)
-    row = table["families"].get(fam)
-    if row is None or row.get("status") == "reserved" or row.get("plugin") is None:
-        reason2 = f"family '{fam}' is not available yet ({(row or {}).get('status', 'missing')})"
-        _log_decision(dict(family=fam, reason=reason2, features=feats, table=table["format"]), log)
-        raise NeedsTriage(reason2, feats)
-    b = FamilyBinding(family=fam, plugin=row["plugin"], contract=row["contract"], playbook=row["playbook"],
-                      graduated=row.get("graduated", []), reason=reason, features=feats)
-    _log_decision(dict(**{k: v for k, v in asdict(b).items() if k != "features"}, features=feats,
+        cascade = []
+        ev = recon_evidence(source, feats)
+        if ev["fires"]:
+            cascade.append(_bind("reconstruction", methods["reconstruction"],
+                                 f"structural: {ev['toffolis']} Toffolis, pairs={ev['pairs']}, "
+                                 f"mcx={ev['mcx']}, naive-T share {ev['toffoli_naive_t_share']}",
+                                 feats, ev))
+        t_nc = feats["rz_nonclifford"] + _t_like(feats) + feats["toffolis"]
+        if t_nc >= 1:
+            cascade.append(_bind("angle", methods["angle"],
+                                 f"{feats['rz_nonclifford']} non-Clifford rz, {_t_like(feats)} t/tdg, "
+                                 f"{feats['toffolis']} Toffolis (non-Clifford content {t_nc})",
+                                 feats))
+        cascade.sort(key=lambda b: b.rank)
+    _log_decision(dict(cascade=[{k: v for k, v in asdict(b).items() if k not in ("features", "evidence")}
+                                for b in cascade],
+                       reason=(cascade[0].reason if cascade else
+                               "no method applicable (pure-Clifford input): returned unchanged"),
+                       features=feats,
+                       evidence=(cascade[0].evidence if cascade and cascade[0].evidence else None),
                        table=table["format"]), log)
-    return b
+    return cascade
 
 
 def _log_decision(decision: dict, log: bool):

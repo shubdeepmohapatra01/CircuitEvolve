@@ -1,28 +1,47 @@
 {
- "format": "circuitevolve.engine.router/0",
- "provenance": "P1.4 initial table. dv.windows playbook copied from playbooks/dev_v1.json; cvdv.bosonic converted from cvdv/rulebook/playbook.md (texts verbatim). Routing: deterministic features only; LLM triage fallback + arithmetic family land in point 3.",
- "families": {
-  "dv.windows": {
-   "plugin": "dv_windows",
-   "contract": "approx",
-   "precondition": "QASM, 0 Toffolis, >=1 non-Clifford rz (rotation-dominated)",
-   "playbook": "playbooks/families/dv.windows.json",
-   "graduated": []
-  },
-  "cvdv.bosonic": {
-   "plugin": "cvdv",
-   "contract": "certified_subspace",
-   "precondition": "Hamiltonian term input",
-   "playbook": "playbooks/families/cvdv.bosonic.json",
-   "graduated": []
-  },
-  "arithmetic": {
+ "format": "circuitevolve.engine.router/1",
+ "provenance": "P3.2 migration (docs/PLAN_P3.md section 2): the /0 'families' table becomes the /1 'methods' cascade table. Methods are METHOD-scoped, never circuit-class-scoped (no taxonomy; an 'adder' is only structure). Frozen names kept: the angle method's playbook stays playbooks/families/dv.windows.json and its graduated-index lookup alias stays 'dv.windows' (G1 entry frozen); cvdv keeps playbooks/families/cvdv.bosonic.json. The /0 'arithmetic' reserved row is superseded by the reconstruction method. The /0 table is preserved in git history; routing_log rows before this commit reference circuitevolve.engine.router/0.",
+ "methods": {
+  "reconstruction": {
    "plugin": null,
-   "contract": "relaxed",
    "status": "reserved",
-   "precondition": "Toffoli-dominated QASM (reserved until dv_arith lands, point 3)",
-   "playbook": "playbooks/families/arith.relaxed.json",
-   "graduated": []
+   "contract": "relaxed",
+   "rank": 0,
+   "family": "reconstruction",
+   "graduated_family": "reconstruction",
+   "predicate": {
+    "requires": "toffolis>=1 AND (pairs>=1 OR mcx>=1 OR toffoli_naive_t_share>=0.2)",
+    "min_pairs": 1,
+    "min_mcx": 1,
+    "min_toffoli_naive_t_share": 0.2
+   },
+   "playbook": "playbooks/families/reconstruction.json",
+   "note": "plugin lands in P3.3; until then the method routes (cascade position 0) but refuses to execute"
+  },
+  "angle": {
+   "plugin": "dv_windows",
+   "status": "active",
+   "contract": "approx",
+   "rank": 1,
+   "family": "dv.windows",
+   "graduated_family": "dv.windows",
+   "predicate": {
+    "requires": ">=1 non-Clifford rotation: rz_nonclifford + t_like + toffolis >= 1 (T gates and Toffolis are non-Clifford rotation content)"
+   },
+   "playbook": "playbooks/families/dv.windows.json",
+   "tket_entry": "auto: FullPeepholeOptimise entry pass fires only when the stage input contains Toffolis or came from a previous cascade stage; stage-1 named inputs and first-stage pure-rotation QASM keep today's path bit-exact (never before reconstruction, PLAN_P3 section 1.3)"
+  },
+  "cvdv": {
+   "plugin": "cvdv",
+   "status": "active",
+   "contract": "certified_subspace",
+   "rank": 0,
+   "family": "cvdv.bosonic",
+   "graduated_family": "cvdv.bosonic",
+   "predicate": {
+    "requires": "Hamiltonian term input (input-type-disjoint from the QASM methods)"
+   },
+   "playbook": "playbooks/families/cvdv.bosonic.json"
   }
  }
 }

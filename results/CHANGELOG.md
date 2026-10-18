@@ -387,3 +387,45 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
 - Gate: tests/engine/test_recon_bench.py (6 tests: feature reproduction on cuccaro_4 + rc_adder_6,
   suite membership, twin + source sha256, baselines shape); suite 347 passed + 2 skips; digest
   bc3eac23 unchanged; no existing file modified.
+
+## 2026-10-18 method cascade P3.2 (router v1: method predicates + cascade)
+
+- playbooks/router.json migrated /0 'families' -> /1 'methods' (reconstruction | angle | cvdv),
+  each row: predicate parameters, contract, plugin id, playbook path, cascade rank, frozen
+  family label. Frozen names kept per plan section 2: angle keeps playbook
+  playbooks/families/dv.windows.json + graduated_family 'dv.windows' (G1 entry untouched); cvdv
+  keeps cvdv.bosonic.json. The /0 'arithmetic' reserved row is superseded by the reconstruction
+  method. /0 table preserved in git history; pre-migration routing_log rows reference router/0.
+- engine/router.py: route() now returns an ordered list[MethodBinding] (open decision 3 settled:
+  MethodBinding = own dataclass, FamilyBinding fields + method/rank/status/evidence; FamilyBinding
+  kept for pre-/1 consumers). Predicates (open decision 1 settled): reconstruction fires at
+  toffolis>=1 AND (pairs>=1 OR mcx>=1 OR toffoli_naive_t_share>=0.2), pair/MCX evidence from the
+  v2 recognizer on the RAW input (counts-only fallback outside the exact-IR grid); angle fires at
+  >=1 non-Clifford rotation where t/tdg AND Toffolis count as non-Clifford rotation content
+  (a Toffoli-bearing circuit always has an angle stage - its T content is what angle polishes).
+  Pure Clifford -> empty cascade. NO LLM in routing; manifest {family|method} override = single-
+  stage cascade (legacy names dv.windows/cvdv.bosonic map to angle/cvdv). Log rows now carry the
+  cascade + predicate evidence (router/1 tag).
+- engine/run.py: optimize() executes the cascade, threading each stage's verified output into the
+  next ({'ops','n','name'} payload seam; producer lands in P3.3) and emitting per-stage sections
+  (stages: [{method, family, contract, t_before/t_after, verified, reason}]). Single-stage runs
+  keep the pre-/1 top-level summary shape BIT-EXACT; pure-Clifford input returns
+  status='unchanged' with an explanatory summary (not an error). Reserved reconstruction method
+  routes but refuses execution with a clear NotImplementedError until P3.3.
+- engine/tketpass.py: the angle method's TKET entry pass (frozen Baselines sequence:
+  FullPeepholeOptimise -> replace_implicit_wire_swaps -> AutoRebase{CX,H,Rz} ->
+  RemoveRedundancies + emit_rz lowering) + angle-tolerant literal QASM reader. 'auto' semantics
+  SETTLED to honor both section 1.3 and the bit-exact gate: the pass fires only when the stage
+  input contains Toffolis (the window core takes CORE_GATES only) or arrived from a previous
+  cascade stage; stage-1 named inputs and first-stage pure-rotation QASM keep today's path
+  byte-identical. Never before reconstruction (cascade order enforces it). Entry-pass gains are
+  reported in their own tket_entry section - deterministic, never sold as LLM gains.
+- Tests: test_router.py rewritten for /1 (9 -> 10 tests; log test now writes to tmp);
+  test_cascade.py new (4 gates: pure-Clifford pass-through, cuccaro_4 refusal until P3.3,
+  TKET entry on a sub-threshold-share Toffoli input incl. final check vs the decomposed entry
+  form, stage-1 summary-shape guard). Gates: (a) B0 identity / graduated on-off / golden /
+  dry-run pass UNCHANGED; (b) pure-Clifford unchanged; (c) cuccaro_4 raw routes
+  [reconstruction, angle] (recognizer pairs evidence); (d) log rows carry evidence.
+  Suite 352 passed + 2 skips; digest bc3eac23 unchanged; cvdv untouched.
+- routing_log.jsonl rows appended by this suite run committed (append-only; tests that exercise
+  optimize() log real decisions - pre-existing behavior).
