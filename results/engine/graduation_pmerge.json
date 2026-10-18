@@ -1,0 +1,136 @@
+{
+ "description": "Replays playbooks/graduated/same_pauli_merge.py over the 8 stage-1 dev circuits at eps=1e-3,\nreporting T under the candidate's own ledger exactly like the loop would see it (d_input\nmeasured against the ORIGINAL qseed circuit AFTER the pass, eps_rz = eps_synth / N_rz).",
+ "eps": 0.001,
+ "pass_path": "playbooks/graduated/same_pauli_merge.py",
+ "verifier_digest": "bc3eac23a403dbc5",
+ "rows": [
+  {
+   "name": "qft_8",
+   "eps": 0.001,
+   "t_before": 2391,
+   "t_after": 2115,
+   "merges": 5,
+   "passes": 3,
+   "max_merge_dist": 4.107976658921538e-16,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 4.482787807050596e-15
+   },
+   "seconds": 1.6
+  },
+  {
+   "name": "qpe_8",
+   "eps": 0.001,
+   "t_before": 14761,
+   "t_after": 12597,
+   "merges": 23,
+   "passes": 3,
+   "max_merge_dist": 1.3862984260300243e-15,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 9.685486008241907e-14
+   },
+   "seconds": 2.4
+  },
+  {
+   "name": "qae_13",
+   "eps": 0.001,
+   "t_before": 7821,
+   "t_after": 6683,
+   "merges": 19,
+   "passes": 7,
+   "max_merge_dist": 9.163946600867659e-16,
+   "final_check": {
+    "ok": true,
+    "method": "statevector",
+    "dist": 2.1499022519263734e-13
+   },
+   "seconds": 1.5
+  },
+  {
+   "name": "heisenberg_6",
+   "eps": 0.001,
+   "t_before": 8200,
+   "t_after": 8200,
+   "merges": 0,
+   "passes": 1,
+   "max_merge_dist": 0.0,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 2.5529261167505838e-14
+   },
+   "seconds": 0.4
+  },
+  {
+   "name": "tfim_6",
+   "eps": 0.001,
+   "t_before": 8560,
+   "t_after": 8560,
+   "merges": 0,
+   "passes": 1,
+   "max_merge_dist": 0.0,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 3.560675668908507e-14
+   },
+   "seconds": 0.3
+  },
+  {
+   "name": "hubbard_8",
+   "eps": 0.001,
+   "t_before": 4312,
+   "t_after": 4312,
+   "merges": 0,
+   "passes": 1,
+   "max_merge_dist": 0.0,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 2.3280540980184537e-14
+   },
+   "seconds": 1.8
+  },
+  {
+   "name": "qml_13",
+   "eps": 0.001,
+   "t_before": 6326,
+   "t_after": 6326,
+   "merges": 0,
+   "passes": 1,
+   "max_merge_dist": 0.0,
+   "final_check": {
+    "ok": true,
+    "method": "statevector",
+    "dist": 9.041913897279408e-15
+   },
+   "seconds": 1.5
+  },
+  {
+   "name": "hhl_8",
+   "eps": 0.001,
+   "t_before": 35450,
+   "t_after": 31762,
+   "merges": 58,
+   "passes": 5,
+   "max_merge_dist": 1.2936665932914117e-15,
+   "final_check": {
+    "ok": true,
+    "method": "unitary",
+    "dist": 3.1915712996938657e-13
+   },
+   "seconds": 12.0
+  }
+ ],
+ "keep": {
+  "total_t_before": 87821,
+  "total_t_after": 80555,
+  "improved_pct": 8.27,
+  "risers": [],
+  "bad_checks": [],
+  "kept": true
+ }
+}

@@ -35,7 +35,8 @@ def optimize(source, eps: float, complete, *, manifest: dict | None = None, tag:
     return summ
 
 
-def _run_dv_windows(source, eps, complete, binding: FamilyBinding, *, tag, playbook_path, runs_dir, **kw):
+def _run_dv_windows(source, eps, complete, binding: FamilyBinding, *, tag, playbook_path, runs_dir,
+                    graduated: str = "on", **kw):
     from ..core.circuit import Circuit, load_input, original_ops
     from ..core.loop import RUNS, WindowLoop
     from ..search.playbook import Playbook
@@ -49,6 +50,18 @@ def _run_dv_windows(source, eps, complete, binding: FamilyBinding, *, tag, playb
         name = Path(s).stem if s.endswith(".qasm") else "qasm"
         circ = Circuit.from_qasm(text, name=name, source="qasm_input")
         orig = list(circ.ops)
+    pre_opt = None
+    if graduated == "on":
+        from .graduate import apply_graduated, load_graduated
+        rules = load_graduated(binding.family)
+        if rules:
+            rz0 = sum(1 for g, _, _ in circ.ops if g == "rz")
+            ops2, reports = apply_graduated(list(circ.ops), rules, n=circ.n)
+            pre_opt = dict(rules=[r.id for r in rules], reports=reports, rz_before=rz0,
+                           rz_after=sum(1 for g, _, _ in ops2 if g == "rz"))
+            circ = Circuit(circ.n, ops2, dict(circ.meta, graduated=[r.id for r in rules]))
+            # the loop's standard input check measures the (original -> pre-opted) distance and
+            # charges it to the ledger, so the pass spends no budget machinery of its own
     pb = None
     if playbook_path is not None:
         p = Path(playbook_path)
@@ -56,7 +69,8 @@ def _run_dv_windows(source, eps, complete, binding: FamilyBinding, *, tag, playb
     loop = WindowLoop(circ, orig, eps, complete, playbook=pb, tag=tag,
                       runs_dir=Path(runs_dir) if runs_dir else RUNS, **kw)
     out = loop.run()
-    if pb is not None and not pb.frozen and playbook_path is not None:
+    out["pre_opt"] = pre_opt                       # deterministic pass gains: SEPARATE column,
+    if pb is not None and not pb.frozen and playbook_path is not None:   # never sold as LLM gains
         pb.save(playbook_path)
     return out
 

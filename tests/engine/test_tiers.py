@@ -57,16 +57,20 @@ def test_cvdv_seeds_have_traceable_provenance():
             raise AssertionError(f"cvdv seed without recognized provenance marker: {r.text[:60]}")
 
 
-def test_graduated_index_loads_and_is_empty():
+def test_graduated_index_loads_with_hash_check():
+    """P1 froze the library empty; P2.3 graduated G1 (same-Pauli merge) into dv.windows.
+    cvdv.bosonic remains empty until a certified rule earns promotion in a campaign."""
     idx = load_index()
-    assert all(v == [] for v in idx["families"].values())
-    assert load_graduated("dv.windows") == []
+    dv = load_graduated("dv.windows")
+    assert [g.id for g in dv] == ["G1"] and dv[0].kind == "pass"
     assert load_graduated("cvdv.bosonic") == []
+    assert set(idx["families"]) == {"dv.windows", "cvdv.bosonic"}
 
 
-def test_graduated_empty_library_is_identity():
+def test_graduated_empty_rule_list_is_identity():
     state = [("h", (0,), None), ("rz", (0,), 0.3)]
-    assert apply_graduated(state, []) is state
+    out, reports = apply_graduated(state, [], n=1)
+    assert out is state and reports == []
 
 
 def test_graduated_index_tamper_detected(tmp_path):
