@@ -282,3 +282,10 @@
 - `results/engine/BASELINE_MANIFEST.json`: 126 baseline-critical files hashed (bqskit_baselines CSVs + stage-1 TKET inputs, v2 baselines/eval/frozen tier-2 libraries, stage-1 window-run outputs, ablation report, cvdv results + rulebook, all playbooks); dv frozen digest bc3eac23... and cvdv FROZEN.sha256 recorded. Permanent guard: `tests/engine/test_manifest.py`.
 - Golden behavior fixture `tests/engine/golden_dv.json` (scripted-LLM WindowLoop run: 2 accepts T 242->202->200, 1 llm error, 1 decline, reflector add) + equivalence test `tests/engine/test_golden_dv.py` — the P1.2 gate.
 - No frozen file, baseline, or result was modified.
+
+## 2026-10-18 engine refactor P1.1 + P1.2 (extraction + dv_windows plugin)
+
+- NEW `circuitevolve/engine/`: domain-blind EvolveLoop (exact extraction of core/loop.py control flow), DomainPlugin contract + Member, ledger/playbook re-exports (implementations stay at core/ledger.py and search/playbook.py — paths unchanged).
+- NEW `circuitevolve/domains/dv_windows/`: the stage-1 window core as a plugin (select = T-cost-ranked windows, mutate = literal window/fix prompts, verify = frozen verify_window, measure = BqskitTMetric); verify/check callables late-bind through core/loop.py (monkeypatch surface preserved).
+- `core/loop.py` is now a 4.5KB shim (was 22.7KB): WindowLoop(EvolveLoop) with identical constructor, run(), TASK_TEXT, RUNS, _choose_windows/_member/ledger0 surfaces.
+- Gates: golden equivalence test PASSED unchanged (identical accepts/charges/prompt hashes/stats vs pre-refactor fixture); full suite 306 passed (300 + 6 new contract tests); dv frozen digest bc3eac23 unchanged; cvdv untouched.
