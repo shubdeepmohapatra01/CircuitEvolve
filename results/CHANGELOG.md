@@ -519,3 +519,35 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   results/engine/ab_candidates/). BUDGET-GATED: the script refuses to run without
   --yes-i-have-approval; real-LLM execution requires explicit user approval and is NOT part
   of P3 execution (committed not run).
+
+## 2026-10-18 method cascade P3.6 (cascade demo + docs + close)
+
+- results/engine/recon_bench/DEMO.md (zero LLM, reproduces from experiments/engine_cascade_demo.py):
+  * raw cuccaro_8: cascade 32 T (relaxed, per-stage 112->32->32) vs angle-only 96 (approx) vs
+    best classical B0 96 / B1 64 (exact) - contract columns separated, per-stage attribution
+    shown incl. the deterministic TKET entry and G1 rows (never sold as LLM gains).
+  * mixed circuit (open decision 4 settled: benchmarks/mixed/cuccaro_4_rot.qasm = cuccaro_4
+    body + 5-rotation payload, built by the demo script, sha256 recorded): cascade 130
+    (16 named T relaxed + rotation estimate) vs angle-only 162. MIXED-INPUT SEMANTICS added to
+    _run_reconstruction: general-angle rotations cannot enter the v2 exact-IR pipeline, so
+    reconstruction rewrites the largest Toffoli-bearing grid segment through the FROZEN
+    verifier, passes rotation segments through untouched, and hands the rotation-richest
+    measurement-free segment to the angle stage; named-T and rotation-estimate columns are
+    never summed across contracts (documented in DEMO.md).
+- Whole-circuit check honesty: stage records now distinguish verified=None (size-capped check
+  SKIPPED, e.g. n=26 cuccaro_8 angle stage) from False (FAILED); DEMO prints the distinction.
+- Staged angle totals made metric-consistent: t_before/t_after = fixed named T + the LOOP's
+  own segment numbers (one column; the pre-entry named count stays in the staged section).
+- tests/engine/test_cascade.py +1 (mixed e2e: routes [reconstruction, angle], 56->16 relaxed
+  verified, rotations passed through, cascade beats angle-only).
+- docs/ENGINE.md: routing section rewritten for the /1 method cascade (+ lifting + mixed
+  semantics); point-3 section now records what P3 delivered; phase log updated. CLAUDE.md:
+  engine summary + layout lines (router /1, tketpass.py, lift.py, domains/reconstruction,
+  playbooks reconstruction seeds).
+- CLOSE: PLAN_P3 executed end to end, 7 commits (eb71a4d e749f52 9797117 94a8311 47868ff
+  e8eb845 + this one). Final state: circuitevolve suite 371 passed + 2 skipped (started
+  341+2); cvdv suite 33 passed; dv frozen digest bc3eac23 UNCHANGED; cvdv FROZEN.sha256
+  UNCHANGED; results/ append-only throughout (the one documented deviation: P3.4 stress-twin
+  recovery is 0 - recorded as a finding, with the macro-expanded base set added for the
+  realistic lift target). All real-LLM work remains budget-gated and NOT executed
+  (engine_ab_candidates.py refuses without explicit approval; lift_llm spotter is a stub).

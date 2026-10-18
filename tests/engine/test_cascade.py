@@ -102,6 +102,37 @@ def test_lifted_cuccaro_cascade_beats_angle_only(tmp_path):
     assert cascade["t_after"] < angle_only["t_after"]
 
 
+def test_mixed_circuit_cascade(tmp_path):
+    """P3.6: the mixed demo circuit (adder + rotation payload) routes [reconstruction, angle];
+    reconstruction rewrites the grid segment through the frozen verifier (56 -> 16 named T,
+    relaxed) and passes the rotations through untouched; the cascade beats angle-only."""
+    import csv
+    from circuitevolve.v2.tier1.control import control_plans
+    from circuitevolve.v2.tier1.recognize import load_logical, summarize
+    mixed = str(REPO / "benchmarks" / "mixed" / "cuccaro_4_rot.qasm")
+    rows = {r["name"]: r for r in csv.DictReader(
+        open(REPO / "benchmarks" / "nam_arith" / "MANIFEST.csv"))}
+    dz = [int(x) for x in str(rows["cuccaro_4"].get("zero_init_qubits") or "").split()]
+    _, lc = load_logical(CUCCARO_4, name="cuccaro_4")
+    s = summarize(lc, declared_zero=dz, name="cuccaro_4")
+    plans = iter([p.to_json() for _, _, p in control_plans(lc, s, 2)])
+
+    def complete(prompts):
+        return [next(plans, "NONE") for _ in prompts]
+
+    casc = optimize(mixed, 1e-3, complete, manifest={"declared_zero": dz},
+                    runs_dir=tmp_path / "c", n_calls=2, batch=1)
+    assert [x["method"] for x in casc["routing"]["cascade"]] == ["reconstruction", "angle"]
+    st0 = casc["stages"][0]
+    assert st0["contract"] == "relaxed" and st0["t_before"] == 56 and st0["t_after"] == 16
+    assert st0["verified"] is True
+    # the angle stage received the rotation segment; the reconstructed named T is fixed_t
+    assert casc["staged"]["fixed_t"] == 16 and casc["staged"]["segment_t"] == 0
+    angle_only = optimize(mixed, 1e-3, _nones(), manifest={"method": "angle"},
+                          runs_dir=tmp_path / "a", n_calls=1, batch=1)
+    assert casc["t_after"] < angle_only["t_after"]            # reconstruction gain survives
+
+
 def test_stage1_summary_shape_unchanged(tmp_path):
     """Single-stage pure-rotation run: pre-/1 top-level summary shape intact + new sections."""
     s = optimize("tfim_6", 1e-3, _nones(), runs_dir=tmp_path, n_calls=1, batch=1, graduated="off")

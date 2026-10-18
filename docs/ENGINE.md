@@ -68,14 +68,33 @@ empty library is a verified no-op. Formats/provenance schema: `engine/graduate.p
 (`GraduatedRule`: id, family, kind in {dsl, pass, cvdv_rule}, path, sha256, provenance_rule_id,
 verified_by).
 
-## Routing
+## Routing — the method cascade (P3, 2026-10-18)
 
-Deterministic v0 (literal QASM scan, no eval): Hamiltonian terms -> `cvdv.bosonic`
-(certified-subspace contract); 0 Toffolis + >= 1 non-Clifford rz -> `dv.windows` (approx);
-everything else -> `NeedsTriage` (the run refuses politely). Every decision — including
-NeedsTriage and manifest overrides — is appended to `results/engine/routing_log.jsonl` with the
-feature vector, so routing is auditable and A/B-testable. The LLM triage fallback and the
-`arithmetic` family (relaxed contract, tier-1 recognizer) land in point 3.
+Router /1 is METHOD-scoped, never circuit-class-scoped (there is no circuit taxonomy; an
+"adder" is only structure the recognizer can prove). `route()` returns the ordered cascade of
+ALL applicable methods (`list[MethodBinding]`), most-structural first; `optimize()` executes
+the stages in order, threading each stage's verified output into the next and emitting
+per-stage summary sections. Deterministic predicates, NO LLM anywhere in routing:
+
+| method | fires when | contract | plugin |
+|---|---|---|---|
+| cvdv | Hamiltonian term input (input-type-disjoint) | certified_subspace | `domains/cvdv` |
+| reconstruction | toffolis >= 1 AND (pairs >= 1 OR mcx >= 1 OR toffoli-naive-T share >= 0.2); pair/MCX evidence from the v2 recognizer on the RAW input | relaxed | `domains/reconstruction` (wraps v2/tier1; frozen relaxed verifier; the deterministic control route is the no-LLM arm) |
+| angle | >= 1 non-Clifford rotation (t/tdg and Toffolis count as non-Clifford rotation content) | approx | `domains/dv_windows` |
+
+Pure-Clifford input -> empty cascade, returned unchanged (not an error). Recognize/route on
+the RAW input; decompose late: the TKET entry pass lives INSIDE the angle method
+(`engine/tketpass.py`, `tket='auto'`: fires only on Toffoli-bearing or staged input — stage-1
+names and first-stage pure-rotation QASM keep the pre-P3 path bit-exact), never before
+reconstruction. Structure lifting (`engine/lift.py`) runs as pre-recognition ONLY at
+toffolis == 0 AND t+tdg >= 7: exact D[omega] span matching of the 7-T Toffoli network (+ RCCX
+spotting), every claim verified in the ring before substitution — see
+`results/engine/recon_bench/lifting_report.json` for recovery on the stress vs macro-expanded
+twins. Every decision is appended to `results/engine/routing_log.jsonl` (cascade + predicate
+evidence + lift counts). Manifest `{"method"|"family": ...}` override = single-stage cascade.
+Mixed input (Toffolis + general-angle rotations): reconstruction rewrites the largest grid
+segment through the frozen verifier and passes rotation segments through untouched; stage
+columns are never summed across contracts (see `recon_bench/DEMO.md`).
 
 ## Running
 
@@ -109,14 +128,23 @@ s["routing"]   # {'family': ..., 'contract': ..., 'reason': ..., 'playbook': ...
 - **Campaign contract**: docs/P2_CAMPAIGN.md (dev/held-out split, arms, power floor, freeze
   procedure). The first real-LLM campaign is a separate budget-approved step.
 
-## Deferred to point 3
+## Point 3 (built 2026-10-18): the method cascade
 
-LLM triage fallback on NeedsTriage, the `arithmetic` family (`domains/dv_arith` wrapping
-v2/tier1), raw term-list CV-DV input, per-family splits beyond dv.windows.
+Delivered by PLAN_P3: the reconstruction method (`domains/reconstruction`, v2/tier1 behind
+the engine loop; seeded playbook `playbooks/families/reconstruction.json`), router /1 with
+predicates + cascade execution, structure lifting (`engine/lift.py`, deterministic core; the
+LLM spotter is a budget-gated stub behind `lift_llm=False`), the `max_candidates` knob
+(proposal-side, default 3 bit-exact) + the budget-gated 3v5 A/B harness
+(`experiments/engine_ab_candidates.py`, committed NOT run), the reconstruction benchmark
+suite (`results/engine/recon_bench/`: MANIFEST, baselines, decomposed + decomposed_plain
+twins, lifting report, DEMO.md). Still deferred: LLM triage/lifting spotters (budget-gated),
+raw term-list CV-DV input.
 
 ## Phase log (gates in results/CHANGELOG.md)
 
 P1: safety net 9c14c13 | extraction + dv_windows d25948f | router + tiers 7286dd0 | cvdv plugin
 b1abf1f | docs 08bcb28. P2: anatomy 0510056 | seeds 8ddfe12 | graduation 85d707c | campaign +
-dry run 3ff350d | docs: this commit. Suite growth 295 -> 341+ tests; dv frozen digest bc3eac23
+dry run 3ff350d | docs 1a73046. P3: start record eb71a4d | recon bench e749f52 | router /1
+cascade 9797117 | reconstruction plugin 94a8311 | lifting 47868ff | candidates knob e8eb845 |
+demo + docs: this commit. Suite growth 295 -> 341 -> 370+ tests; dv frozen digest bc3eac23
 and cvdv FROZEN.sha256 unchanged throughout.

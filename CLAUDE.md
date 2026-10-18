@@ -8,7 +8,13 @@ LLM is a mutation operator inside a search loop; an exact verifier decides what 
 Since 2026-10-18 there is ONE generic, domain-blind pipeline in `circuitevolve/engine/` (loop, plugin
 contract, tier-0 router, playbook tiers, `optimize()` entry point) with domains as plugins under
 `circuitevolve/domains/`: `dv_windows` (the stage-1 window core below, behaviorally identical —
-golden-equivalence-gated) and `cvdv` (the frozen CV-DV certified compiler, wrapped in place).
+golden-equivalence-gated), `cvdv` (the frozen CV-DV certified compiler, wrapped in place), and
+`reconstruction` (P3: v2/tier1 construction substitution behind the loop; frozen relaxed verifier).
+Router /1 (P3) is METHOD-scoped: `route()` returns the ordered cascade [reconstruction?, angle?]
+or [cvdv] from deterministic predicates (no LLM), `optimize()` executes all stages threading
+verified output, the TKET entry pass lives inside the angle method (never before reconstruction),
+and `engine/lift.py` recovers Toffolis from decomposed Clifford+T input by exact D[omega] span
+matching (pre-recognition, fires only at 0 Toffolis + >= 7 t/tdg).
 The engine owns acceptance, the error-ledger protocol, playbook credit, logging and integrity;
 plugins own select/mutate/verify/measure. `core/loop.py` is now a thin shim; everything below about
 the window core still holds and runs unchanged.
@@ -89,11 +95,13 @@ proposer -> P5 experiment arms -> P6 transfer. P0-P3 use no LLM.
 ```
 circuitevolve/
   engine/      THE generic pipeline (docs/ENGINE.md): loop.py (domain-blind EvolveLoop), plugin.py
-               (DomainPlugin contract), router.py (tier-0, deterministic), run.py (optimize() entry),
+               (DomainPlugin contract), router.py (tier-0 /1: method predicates + cascade, deterministic),
+               run.py (optimize() entry, cascade executor), tketpass.py (angle-method TKET entry pass),
+               lift.py (P3.4 structure lifting, exact D[omega] span matcher),
                graduate.py (hash-checked graduated-rule library), reflector.py (point-2 seam),
                ledger.py / playbook.py (re-exports of the implementations below)
   domains/     dv_windows/ (window core as plugin), cvdv/ (frozen CV-DV compiler wrapped in place),
-               dv_arith/ reserved (point 3)
+               reconstruction/ (P3.3: v2/tier1 behind the loop; control route = no-LLM arm)
   core/        window-core parts: circuit.py, mutator.py, verifier.py, metric.py, ledger.py (docs/CORE.md);
                loop.py = back-compat shim over the engine
   llm_backends.py  make_api_backend (host.llm, thinking off), make_cli_backend, make_batch_merger
@@ -110,8 +118,9 @@ circuitevolve/
 experiments/   run scripts (window_run.py for the core; others legacy); bqskit_baselines/ = Baselines track
 tests/         core + frozen suites; tests/legacy/ for the archived stacks
 results/       append-only outputs (window_runs/ for the core)
-playbooks/     mutable playbooks: router.json (tier 0), families/ (tier 1: dv.windows incl. 8 primer
-               seeds, cvdv.bosonic incl. 2 certified harvest seeds), graduated/ (hash-checked
+playbooks/     mutable playbooks: router.json (tier 0, format /1: methods + predicates + cascade ranks),
+               families/ (tier 1: dv.windows incl. 8 primer seeds, cvdv.bosonic incl. 2 certified
+               harvest seeds, reconstruction incl. 6 tier-1 toolbox seeds), graduated/ (hash-checked
                executable rules; G1 = same_pauli_merge, dev replay -8.27% T, every application
                re-verified); window_v0.json / dev_v1.json etc. = stage-1 originals (unchanged)
 ```
