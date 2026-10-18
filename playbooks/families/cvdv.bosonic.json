@@ -1,6 +1,6 @@
 {
  "blinded": false,
- "next_id": 7,
+ "next_id": 9,
  "settings": {
   "ab_fraction": 0.5,
   "min_exposure": 8,
@@ -125,6 +125,44 @@
    "with_improvements": 0,
    "without_prompts": 0,
    "without_improvements": 0
+  },
+  {
+   "id": "R7",
+   "text": "[harvest arXiv:2407.10381 \u00a7VII.C.2 eq:RZZ] Weight-2 Pauli gadget as a CD phase-space loop: 4 CDs on one ancilla mode (-a,ia,a,-ia alternating qubits, a=sqrt(|\u03b8|/2)) close the loop; certified exact eps<1e-15 at n_max=3, cost 4/0 per ZZ term (vs current 8/4).",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 0,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 0,
+   "with_improvements": 0,
+   "without_prompts": 0,
+   "without_improvements": 0
+  },
+  {
+   "id": "R8",
+   "text": "[harvest arXiv:2407.10381 \u00a7VII.C.1 eq:cparity_conj] Z\u2192P conjugation V e^{-i\u03b8Z\u00b7op} V\u2020 (V=H for X; Sdg,H for Y) lifts z_hop's CP\u00b7BS\u00b7CR to pauli_hop; certified exact eps=2.5e-16 at n_max=3, cost 3/2 per term (vs current none \u2014 new kind coverage).",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 0,
+   "improvements": 0,
+   "note": "",
+   "with_prompts": 0,
+   "with_improvements": 0,
+   "without_prompts": 0,
+   "without_improvements": 0
   }
  ],
  "history": [
@@ -174,6 +212,22 @@
    "id": "R6",
    "status": "candidate",
    "text": "[cvdv rulebook #6] For n\u00b2 group-commutator schemes, the failure isn't slow convergence but an O(1) BCH expansion parameter x\u00b7n_max (x=sqrt(|\u03b8|/2r)): since all higher-order terms scale as (x\u00b7n_max)^k, reaching small eps requires r ~ n_max\u00b2, making the ~20-latency-per-rep cost explode \u2014 symmetrization/sign-fixes that only kill the x\u00b3 term don't help because x\u00b7n_max itself isn't small at realistic n_max, r budgets. [auto, 2026-10-13]",
+   "supersedes": null
+  },
+  {
+   "call": 0,
+   "op": "add",
+   "id": "R7",
+   "status": "candidate",
+   "text": "[harvest arXiv:2407.10381 \u00a7VII.C.2 eq:RZZ] Weight-2 Pauli gadget as a CD phase-space loop: 4 CDs on one ancilla mode (-a,ia,a,-ia alternating qubits, a=sqrt(|\u03b8|/2)) close the loop; certified exact eps<1e-15 at n_max=3, cost 4/0 per ZZ term (vs current 8/4).",
+   "supersedes": null
+  },
+  {
+   "call": 0,
+   "op": "add",
+   "id": "R8",
+   "status": "candidate",
+   "text": "[harvest arXiv:2407.10381 \u00a7VII.C.1 eq:cparity_conj] Z\u2192P conjugation V e^{-i\u03b8Z\u00b7op} V\u2020 (V=H for X; Sdg,H for Y) lifts z_hop's CP\u00b7BS\u00b7CR to pauli_hop; certified exact eps=2.5e-16 at n_max=3, cost 3/2 per term (vs current none \u2014 new kind coverage).",
    "supersedes": null
   }
  ]

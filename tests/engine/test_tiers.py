@@ -20,19 +20,41 @@ def test_family_playbooks_load():
     assert all(r.origin == "seed" for r in cv.rules)                 # converted rulebook insights
 
 
-def test_dv_family_playbook_is_verbatim_copy():
+def test_dv_family_playbook_is_dev_v1_plus_seeds_only():
+    """P1 copied dev_v1 verbatim; P2.2 appended seed rules ONLY — the inherited stage-1 rules
+    must remain byte-identical and every addition must be origin='seed' (PLAN_P2 section 2)."""
     a = json.loads((PB / "dev_v1.json").read_text())
     b = json.loads((PB / "families" / "dv.windows.json").read_text())
-    assert a == b                                                    # content unchanged in P1
+    inherited = {r["id"]: r for r in a["rules"]}
+    extra = []
+    for r in b["rules"]:
+        if r["id"] in inherited and r["origin"] != "seed":
+            assert r == inherited[r["id"]], f"inherited rule {r['id']} was modified"
+        else:
+            extra.append(r)
+    assert len(b["rules"]) == len(a["rules"]) + len(extra)
+    assert extra and all(r["origin"] == "seed" and r["status"] in ("candidate", "active") for r in extra)
+    assert all("[seed" in r["text"] or "[harvest" in r["text"] for r in extra), "seed provenance marker required"
+    assert a["settings"] == b["settings"]                            # A/B thresholds not weakened
 
 
-def test_cvdv_seeds_are_verbatim_rulebook_text():
+def test_cvdv_seeds_have_traceable_provenance():
+    """Every cvdv seed is either verbatim rulebook text ([cvdv rulebook #N]) or a certified
+    literature harvest ([harvest arXiv:...], P2.2b — certificate numbers in the rule text,
+    full record in results/engine/harvest_*.{md,json})."""
     md = (REPO / "cvdv" / "rulebook" / "playbook.md").read_text()
     cv = Playbook.load(PB / "families" / "cvdv.bosonic.json")
+    assert all(r.origin == "seed" and r.status in ("candidate", "active") for r in cv.rules)
     for r in cv.rules:
-        body = r.text.split("] ", 1)[1]                              # strip "[cvdv rulebook #N] "
-        head = body[:60]
-        assert " ".join(head.split()) in " ".join(md.split()), r.text[:50]
+        if r.text.startswith("[cvdv rulebook #"):
+            head = r.text.split("] ", 1)[1][:60]
+            assert " ".join(head.split()) in " ".join(md.split()), r.text[:50]
+        elif r.text.startswith("[harvest arXiv:"):
+            assert "certified" in r.text, "harvest seed must cite its certificate in-text"
+            reports = list((REPO / "results" / "engine").glob("harvest_cvdv_*.json"))
+            assert reports, "harvest seed present but no harvest report found"
+        else:
+            raise AssertionError(f"cvdv seed without recognized provenance marker: {r.text[:60]}")
 
 
 def test_graduated_index_loads_and_is_empty():
