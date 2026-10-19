@@ -615,3 +615,17 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   per element, verbatim-resubmit check, verifier-counterexample support invariants).
 - Honest caveats recorded in the report: single seed, no variance estimate; transfer is the
   held-out phase's question. Suite 371+2 green; digest bc3eac23 unchanged.
+
+## 2026-10-19 recon_campaign1 HELD-OUT phase complete (frozen transfer)
+
+- Playbook frozen (sha 111ab24a...), reflector OFF, 12 opus-5-5 calls/circuit. Results
+  (relaxed, frozen verifier): cuccaro_16 224->64 (= control floor, 5 acc), adder_8 399->160
+  (control 180: -11%, and below the 173 exact control), barenco_tof_10 224->96 (= control,
+  4 acc), mod_adder_1024 1995->628 (control 660: -5%, 2 acc), qcla_adder_10 unchanged
+  (0 verified - the SAME v2 verifier-coverage block as the blocked control bar; parity, not
+  refutation). TRANSFER CONFIRMED: the frozen playbook + Opus matched or beat the
+  deterministic control on all 5 evaluable held-out circuits.
+- DISCLOSURE: gf2^4_mult NOT EVALUATED - all 12 calls hit the platform per-conversation LLM
+  token ceiling (2.0M) instantly at campaign end; recorded as a gap, never as a zero-accept
+  result. mod_adder_1024 call 10 errored once (2 accepts stand).
+- results/engine/recon_campaign1/HELDOUT_REPORT.md; suite 371+2 green; digest unchanged.

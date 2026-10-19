@@ -1,0 +1,73 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "M0",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "T0",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T1",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T2",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T3",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T4",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T5",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T6",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T7",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T25",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T26",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T27",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T28",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T29",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T30",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T31",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "pyzx_then_tket",
+ "request_cards": [],
+ "rationale": "There are no declared-zero qubits, so M0 uses ancilla_mcx. Its eight mirror pairs P0-P7 each become a temporary AND on a fresh ancilla (via_ancilla, 4 T per pair), and the middle Toffoli T16 uses the Jones route (4 T). The 16 unpaired Toffolis each use the 4-T Jones measurement Toffoli on a fresh ancilla, for an expected 32+4+64 = 100 T in total, versus 224 T naive."
+}
