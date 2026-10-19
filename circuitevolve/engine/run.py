@@ -193,6 +193,8 @@ def _run_reconstruction(source, eps, complete, binding: MethodBinding, *, tag, p
     text = s_in if s_in.lstrip().startswith("OPENQASM") else Path(s_in).read_text()
     name = Path(s_in).stem if s_in.endswith(".qasm") else "qasm"
     dz = list((manifest or {}).get("declared_zero", []))
+    # G2 (graduated from recon_campaign1): AND-preserving pairing, opt-in per run
+    and_pres = bool((manifest or {}).get("and_preserving", False))
 
     # ---- mixed-input detection: general-angle rz force the segment path
     mixed, all_ops, n_all, seg_span = False, None, None, None
@@ -223,10 +225,10 @@ def _run_reconstruction(source, eps, complete, binding: MethodBinding, *, tag, p
         seg_span = max(runs, key=lambda r: grid_t(*r))
         seg_text = _emit_qasm(all_ops[seg_span[0]:seg_span[1]], n_all)
         _, lc = load_logical(seg_text, name=f"{name}_seg")
-        summary = summarize(lc, declared_zero=dz, name=f"{name}_seg")
+        summary = summarize(lc, declared_zero=dz, name=f"{name}_seg", and_preserving=and_pres)
     else:
         _, lc = load_logical(text, name=name)
-        summary = summarize(lc, declared_zero=dz, name=name)
+        summary = summarize(lc, declared_zero=dz, name=name, and_preserving=and_pres)
     plugin = ReconstructionPlugin(lc, summary)
     pb = None
     if playbook_path is not None:

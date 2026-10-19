@@ -275,7 +275,48 @@ def _repeated_blocks(lc: LogicalCircuit, kmin: int = 3, kmax: int = 8) -> list:
     return out[:6]
 
 
-def summarize(lc: LogicalCircuit, declared_zero=(), name: str = "", samples: int = 1024, seed: int = 0) -> Summary:
+def _and_preserving_ok(G, i: int, j: int, controls, cap: int = 12) -> bool:
+    """G2 graduation (recon_campaign1, rc_adder_6 discovery): may the Toffolis at gates i and j
+    pair even though their controls are WRITTEN in between? Yes iff the intervening ops provably
+    preserve AND(c0, c1) as a Boolean function — checked EXHAUSTIVELY over the backward influence
+    cone of the controls (classical gates only; cone capped at `cap` qubits, else refuse).
+    Proposal-side: a pair admitted here only changes what plans can be PROPOSED — every compiled
+    plan still faces the frozen verifier. A refusal here is always sound (pair just not formed)."""
+    import itertools
+    seg = G[i + 1:j]
+    infl, use = set(controls), []
+    for g in reversed(seg):
+        if set(g.writes()) & infl:
+            if g.name not in ("x", "cx", "ccx", "swap"):
+                return False                       # non-classical writer in the cone: cannot verify
+            infl |= set(g.qubits)
+            use.append(g)
+    if len(infl) > cap:
+        return False
+    use.reverse()
+    sup = sorted(infl)
+    idx = {q: k for k, q in enumerate(sup)}
+    c0, c1 = controls
+    for bits in itertools.product((0, 1), repeat=len(sup)):
+        v = list(bits)
+        before = v[idx[c0]] & v[idx[c1]]
+        for g in use:
+            q = g.qubits
+            if g.name == "x":
+                v[idx[q[0]]] ^= 1
+            elif g.name == "cx":
+                v[idx[q[1]]] ^= v[idx[q[0]]]
+            elif g.name == "ccx":
+                v[idx[q[2]]] ^= v[idx[q[0]]] & v[idx[q[1]]]
+            else:                                  # swap
+                v[idx[q[0]]], v[idx[q[1]]] = v[idx[q[1]]], v[idx[q[0]]]
+        if (v[idx[c0]] & v[idx[c1]]) != before:
+            return False
+    return True
+
+
+def summarize(lc: LogicalCircuit, declared_zero=(), name: str = "", samples: int = 1024, seed: int = 0,
+              and_preserving: bool = False) -> Summary:
     n, G = lc.n, lc.gates
     dz = tuple(sorted(set(int(q) for q in declared_zero)))
     tr = _bit_trace(lc, set(dz), k=samples, seed=seed)
@@ -294,7 +335,8 @@ def summarize(lc: LogicalCircuit, declared_zero=(), name: str = "", samples: int
         for tb in tofs[a_idx + 1:]:
             i, j = ta["gate"], tb["gate"]
             between = G[i + 1:j]
-            if any(set(g.writes()) & ctrl for g in between):
+            ctrl_written = any(set(g.writes()) & ctrl for g in between)
+            if ctrl_written and not and_preserving:
                 break                          # a control changed: no later Toffoli undoes Ti
             if ta["kind"] == "ccz":
                 same = tb["kind"] == "ccz" and set(G[j].qubits) == set(G[i].qubits)
@@ -304,13 +346,17 @@ def summarize(lc: LogicalCircuit, declared_zero=(), name: str = "", samples: int
                 continue
             if tb["id"] in in_pair:
                 break
+            if ctrl_written and not _and_preserving_ok(G, i, j, ta["controls"]):
+                continue                       # this partner can't close the pair; a later one may
             t_written = any(tgt in g.writes() for g in between)
             cb = ca = None
             if tr is not None:
                 cb = bool(not tr[0][i][:, tgt].any())
                 after = tr[0][j + 1] if j + 1 < len(G) else tr[1]
                 ca = bool(not after[:, tgt].any())
-            if not t_written and cb and tgt in dz:
+            if ctrl_written:
+                cls = "and_preserving"         # G2: AND(c0,c1) exactly preserved in between
+            elif not t_written and cb and tgt in dz:
                 cls = "clean"
             elif not t_written:
                 cls = "mirror"

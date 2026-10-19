@@ -44,7 +44,9 @@ def variant_decisions(lc: LogicalCircuit, s: Summary, v: str) -> list:
             d.append(Decision(t["id"], "clean_and" if clean.get(t["id"]) else "jones_toffoli"))
     elif v == "V3":
         d = [Decision(p["id"], "relative_phase_toffoli") for p in s.pairs
-             if p["kind"] == "ccx" and not p["target_written_between"]]
+             if p["kind"] == "ccx" and not p["target_written_between"]
+             and p["cls"] != "and_preserving"]   # G2 pairs: control VALUES differ at the two
+             # members, so RCCX phases would not cancel — relaxed routes only
     elif v == "V4":
         d = []
     else:

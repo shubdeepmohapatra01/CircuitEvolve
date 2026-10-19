@@ -685,3 +685,23 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   sha for the reserved eval recorded in SWEEP_REPORT.md.
 - Gates: suite 371 passed + 2 skipped; digest bc3eac23 unchanged; cvdv frozen OK. All run
   logs + sweep_results.jsonl + reports committed append-only.
+
+## 2026-10-19 G2: AND-preserving pairing graduated to deterministic code
+
+- The recon_campaign1 rc_adder_6 discovery (LLM paired Toffolis whose control is rewritten in
+  between only by ops that preserve AND(c0,c1)) is now exact code: recognize._and_preserving_ok
+  verifies the claim EXHAUSTIVELY over the controls' backward influence cone (classical gates
+  only, cone capped at 12 qubits, refusal is always sound). Opt-in: summarize(...,
+  and_preserving=True) / optimize manifest {'and_preserving': True}; DEFAULT OFF keeps every
+  committed evidence path bit-exact (recon_bench manifest reproduction, v2 control reproduction
+  tests). PROPOSAL-side only: recognize/control are not in the frozen set; every plan still
+  passes the frozen verifier. Exact V3 explicitly excludes the new class (RCCX phases would not
+  cancel across differing control values).
+- Graduation gates (tests/engine/test_and_preserving.py, 5 tests): the deterministic control
+  with G2 ON reproduces the LLM's results WITHOUT any LLM - rc_adder_6 40 -> 24 (pairs 1 -> 5)
+  and mod_red_21 56 -> 44 (= the frozen held-out result, now explained); barenco_tof_5 improves
+  36 -> 28 (remaining gap to the LLM's 16 is the separate C5X re-identification, not graduated);
+  negative control (x on a control) correctly refused. Suite 376 passed + 2 skips; digest
+  bc3eac23 unchanged.
+- Campaign model pins for the upcoming dv.windows 3-arm campaign (user request, cost):
+  proposer claude-opus-5 (was opus-5-5), reflector claude-sonnet-5-5 unchanged.
