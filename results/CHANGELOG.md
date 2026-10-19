@@ -705,3 +705,11 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   bc3eac23 unchanged.
 - Campaign model pins for the upcoming dv.windows 3-arm campaign (user request, cost):
   proposer claude-opus-5 (was opus-5-5), reflector claude-sonnet-5-5 unchanged.
+
+## 2026-10-19 angle campaign handoff runbook
+
+- docs/ANGLE_CAMPAIGN_RUNBOOK.md committed: operational facts for running the FROZEN
+  docs/P2_CAMPAIGN.md contract from a fresh session (kernel env + XDG guard, 2.0M per-session
+  LLM ceiling -> sequential sub-session chaining, append-only tag rules, arm semantics, pins:
+  proposer claude-opus-5 / reflector claude-sonnet-5-5, adaptive thinking). Campaign itself
+  NOT started in this entry.
