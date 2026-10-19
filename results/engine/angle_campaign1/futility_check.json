@@ -1,0 +1,30 @@
+{
+ "evaluated": "2026-10-19 15:35:12",
+ "circuits": [
+  "qft_8",
+  "heisenberg_6",
+  "hubbard_8"
+ ],
+ "reduction_pct": {
+  "qft_8": {
+   "A": 0.09456264775413711,
+   "B": 0.09456264775413711,
+   "C": 0.09456264775413711
+  },
+  "heisenberg_6": {
+   "A": 0.0,
+   "B": 0.0,
+   "C": 0.0
+  },
+  "hubbard_8": {
+   "A": 0.0,
+   "B": 0.0,
+   "C": 0.0
+  }
+ },
+ "mean_A_minus_C_pp": 0.0,
+ "mean_B_minus_C_pp": 0.0,
+ "mde_pp": 5.0,
+ "fired": false,
+ "rule": "fires iff mean(A-C) < -5.0 pp over the first 3 DEV circuits"
+}

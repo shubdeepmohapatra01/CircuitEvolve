@@ -187,11 +187,19 @@ def key(cell: dict) -> str:
 
 
 def cells() -> list:
-    """The full campaign schedule, in execution order."""
-    out = [dict(phase="dev", circuit=c, arm=a, eps=DEV_EPS, calls=DEV_CALLS) for c in DEV for a in ARMS]
-    out += [dict(phase="held", circuit=c, arm=a, eps=e, calls=HELD_CALLS)
-            for e in HELD_EPS for c in HELD for a in ARMS]
-    return out
+    """The full campaign schedule, in execution order.
+
+    A-FIRST order (user decision 2026-10-19, after 12 DEV cells had run circuit-major): arm A's
+    DEV cells, then the freeze, then arm A's held-out cells, then the B/C backfill (DEV, then
+    held-out). The contract fixes arms, budgets, windows and pins, not the order; B and C never
+    read or write arm A's playbook, and the freeze depends only on arm A (B_held = A's active count
+    at freeze), so the reorder changes no cell's inputs. Cells already done are skipped as before."""
+    dev = {a: [dict(phase="dev", circuit=c, arm=a, eps=DEV_EPS, calls=DEV_CALLS) for c in DEV] for a in ARMS}
+    held = {a: [dict(phase="held", circuit=c, arm=a, eps=e, calls=HELD_CALLS) for e in HELD_EPS for c in HELD]
+            for a in ARMS}
+    bc_dev = [x for c in DEV for x in (dev["B"][DEV.index(c)], dev["C"][DEV.index(c)])]
+    bc_held = [x for i in range(len(held["B"])) for x in (held["B"][i], held["C"][i])]
+    return dev["A"] + held["A"] + bc_dev + bc_held
 
 
 def rows() -> list:
@@ -320,9 +328,9 @@ def freeze() -> dict:
     arm A's frozen ACTIVE-rule count; records SHA-256 of everything that conditions held-out."""
     if FREEZE.exists():
         return json.loads(FREEZE.read_text())
-    pend = [key(c) for c in cells() if c["phase"] == "dev" and key(c) not in done_keys()]
+    pend = [key(c) for c in cells() if c["phase"] == "dev" and c["arm"] == "A" and key(c) not in done_keys()]
     if pend:
-        raise RuntimeError(f"freeze refused: DEV not complete ({len(pend)} cells pending)")
+        raise RuntimeError(f"freeze refused: arm-A DEV learning not complete ({len(pend)} cells pending)")
     n_act, _, settings = _live_layout(A_PB)
     b_sha = _placebo_file(B_HELD, n_act, 0, settings,
                           f"HELD-OUT placebo: arm A frozen active count at freeze ({n_act})")
@@ -409,6 +417,10 @@ def run_cell(llm, cell: dict) -> dict:
             pb_file = B_HELD
             kw = dict(playbook_path=str(B_HELD), playbook_frozen=True)
     sha_before = sha256(pb_file) if pb_file else None
+    a_backup = None
+    if arm == "A" and phase == "dev":                 # infrastructure guard: an invalid run must
+        a_backup = OUT / f"_A_backup_before_{tag}.json"   # never leave evidence in the playbook
+        shutil.copyfile(A_PB, a_backup)
     print(f"== {tag} · {phase} · arm {arm} · eps {eps:g} · budget {calls} "
           f"({n_prop} proposer + {n_refl} reflector) · playbook sha {str(sha_before)[:12]}", flush=True)
     t0 = time.time()
@@ -423,7 +435,14 @@ def run_cell(llm, cell: dict) -> dict:
     st = summ["stats"]
     fc = summ.get("final_check_vs_original")
     ceiling_hit = scan["ceiling_errors"] > 0
-    valid = (not ceiling_hit) and st["llm_errors"] <= max(2, calls // 10) and bool(fc and fc.get("ok"))
+    infra_fail = ceiling_hit or st["llm_errors"] >= st["proposal_calls"]   # every call failed
+    valid = (not infra_fail) and st["llm_errors"] <= max(2, calls // 10) and bool(fc and fc.get("ok"))
+    restored = False
+    if a_backup is not None:
+        if not valid:                                 # roll arm A's playbook back to pre-run state
+            shutil.copyfile(a_backup, A_PB)
+            restored = True
+        a_backup.unlink()
     row = dict(key=key(cell), phase=phase, circuit=name, arm=arm, eps=eps, tag=tag, rerun_of=prev,
                budget=calls, nominal_split=[n_prop, n_refl], proposer=PROPOSER,
                reflector=(REFLECTOR if learning else None),
@@ -438,7 +457,7 @@ def run_cell(llm, cell: dict) -> dict:
                playbook=summ.get("playbook"), playbook_file=(_rel(pb_file) if pb_file else None),
                playbook_sha_before=sha_before, playbook_sha_after=sha_after,
                calls_to_best=calls_to_best(RUNS / f"{tag}.jsonl"), log_scan=scan,
-               ceiling_hit=ceiling_hit, valid=valid, seconds=round(time.time() - t0, 1),
+               ceiling_hit=ceiling_hit, infra_fail=infra_fail, a_playbook_restored=restored, valid=valid, seconds=round(time.time() - t0, 1),
                finished=time.strftime("%Y-%m-%d %H:%M:%S"))
     _append(RESULTS, row)
     print(f"== {tag} DONE: T {row['t_before']} -> {row['t_after']} · accepted {st['accepted']} "
@@ -491,8 +510,9 @@ def next_chunk(max_calls: int = CHUNK_MAX_CALLS) -> list:
     out, tot = [], 0
     for c in pending():
         if c["phase"] == "held" and not FREEZE.exists():
-            break                                     # DEV must be frozen before held-out starts
-        if out and (tot + c["calls"] > max_calls or c["phase"] != out[0]["phase"]):
+            break                                     # arm-A DEV must be frozen before held-out starts
+        if out and (tot + c["calls"] > max_calls or c["phase"] != out[0]["phase"]
+                    or (c["arm"] == "A") != (out[0]["arm"] == "A")):
             break
         out.append(c)
         tot += c["calls"]
@@ -518,6 +538,10 @@ def run_chunk(llm, max_calls: int = CHUNK_MAX_CALLS) -> dict:
     if fut and fut["fired"]:
         print("!! futility stop fired — campaign halted (see futility_check.json)", flush=True)
         return dict(ran=[], stopped="futility")
+    if not FREEZE.exists() and not [c for c in pending() if c["phase"] == "dev" and c["arm"] == "A"]:
+        f = freeze()
+        print(f"FREEZE written: arm-A playbook sha {f['a_playbook_sha'][:16]} · "
+              f"{f['a_active_at_freeze']} active rule(s) · B_held sha {f['b_held_sha'][:16]}", flush=True)
     chunk = next_chunk(max_calls)
     if not chunk:
         why = "complete" if not pending() else "awaiting freeze()"
@@ -529,9 +553,9 @@ def run_chunk(llm, max_calls: int = CHUNK_MAX_CALLS) -> dict:
     for c in chunk:
         r = run_cell(llm, c)
         ran.append(dict(key=r["key"], tag=r["tag"], t=(r["t_before"], r["t_after"]), valid=r["valid"]))
-        if r["ceiling_hit"]:
-            stopped = "token ceiling"
-            print("!! budget-ceiling signature: stopping chunk (rerun this cell in a fresh session)", flush=True)
+        if r["ceiling_hit"] or r["infra_fail"]:
+            stopped = "token ceiling" if r["ceiling_hit"] else "llm infrastructure failure"
+            print(f"!! {stopped}: stopping chunk (cell invalid; rerun in a fresh session)", flush=True)
             break
         fut = futility()
         if fut and fut["fired"]:

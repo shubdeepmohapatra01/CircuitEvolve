@@ -19,6 +19,7 @@ from circuitevolve.search.playbook import Playbook  # noqa: E402
 from experiments import engine_angle_campaign as ac  # noqa: E402
 
 FAMILY = REPO / "playbooks" / "families" / "dv.windows.json"
+START_SNAPSHOT = REPO / "results" / "engine" / "angle_campaign1" / "A_playbook_at_start.json"
 REFLECT_REPLY = '```json\n[{"op": "add", "text": "fake reflector rule for the driver test"}]\n```'
 BOGUS = "```window\nh q0\n```\n"         # parses, verifier rejects: counts as reflector evidence
 QASM = """OPENQASM 2.0;
@@ -60,7 +61,7 @@ def fake_llm(log, ceiling=False):
 def camp(tmp_path, monkeypatch):
     out = tmp_path / "angle_campaign1"
     a_pb = tmp_path / "dv.windows.json"
-    shutil.copyfile(FAMILY, a_pb)
+    shutil.copyfile(START_SNAPSHOT, a_pb)        # campaign-start layout (the live file evolves)
     for k, v in dict(OUT=out, RUNS=out / "runs", RESULTS=out / "results.jsonl", START=out / "START.json",
                      FREEZE=out / "FREEZE.json", FUTILITY=out / "futility_check.json",
                      ZERO_LLM=out / "zero_llm.json", PLACEBO_DIR=out / "placebo",
@@ -76,7 +77,10 @@ def camp(tmp_path, monkeypatch):
 def test_schedule_and_budget_split():
     cs = ac.cells()
     assert len(cs) == 5 * 3 + 3 * 3 * 2
-    assert [c["arm"] for c in cs[:3]] == ["A", "B", "C"] and cs[0]["circuit"] == "qft_8"
+    # A-first order (2026-10-19 user decision): DEV A, HELD A, then DEV B/C, then HELD B/C
+    assert [c["arm"] for c in cs[:5]] == ["A"] * 5 and [c["phase"] for c in cs[5:11]] == ["held"] * 6
+    assert all(c["arm"] == "A" for c in cs[:11]) and {c["arm"] for c in cs[11:]} == {"B", "C"}
+    assert len({ac.key(c) for c in cs}) == len(cs)
     assert ac.expected_split(45, True) == (40, 5)
     assert ac.expected_split(45, False) == (45, 0)
     assert ac.expected_split(40, False) == (40, 0)
@@ -145,9 +149,9 @@ def test_dev_cells_arm_semantics(camp):
 
 def test_held_frozen_and_ceiling(camp, monkeypatch):
     camp.start()
-    # pretend DEV complete so the freeze is allowed
+    # pretend DEV arm A complete so the freeze is allowed (B/C DEV may follow the freeze)
     for c in camp.cells():
-        if c["phase"] == "dev":
+        if c["phase"] == "dev" and c["arm"] == "A":
             camp._append(camp.RESULTS, dict(key=camp.key(c), valid=True))
     f = camp.freeze()
     assert f["a_active_at_freeze"] == 1
@@ -185,3 +189,13 @@ def test_futility_and_report(camp):
     assert rep["paired"]["dev|0.001|A-C"]["n"] == 3
     with pytest.raises(FileExistsError):
         camp.report("REPORT_test")            # append-only
+
+
+def test_infra_failure_restores_arm_a(camp):
+    camp.start()
+    sha0 = _sha(camp.A_PB)
+    def dead(reqs, max_concurrency=4):
+        return [{"error": "No credentials available for Anthropic API"}] * len(reqs)
+    r = camp.run_cell(dead, dict(phase="dev", circuit="hubbard_8", arm="A", eps=1e-3, calls=8))
+    assert r["infra_fail"] and not r["valid"] and r["a_playbook_restored"]
+    assert _sha(camp.A_PB) == sha0 and not list(camp.OUT.glob("_A_backup_*"))

@@ -7,7 +7,10 @@ import random
 from circuitevolve.blocks import REPO
 from circuitevolve.search.playbook import Playbook
 
-TARGET = REPO / "playbooks" / "families" / "dv.windows.json"
+# P2.2 seeded state = the committed pre-campaign file; the live family file is MUTATED by
+# angle_campaign1 arm-A learning (by protocol), so seed/inheritance invariants are checked on the
+# sha-recorded snapshot (6876d37c..., identical to playbooks/families/dv.windows.json at d054cea).
+TARGET = REPO / "results" / "engine" / "angle_campaign1" / "A_playbook_at_start.json"
 
 
 def _pb():

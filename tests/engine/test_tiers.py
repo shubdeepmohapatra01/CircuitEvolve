@@ -11,6 +11,10 @@ from circuitevolve.engine.graduate import INDEX, apply_graduated, load_graduated
 from circuitevolve.search.playbook import Playbook
 
 PB = REPO / "playbooks"
+# P2.2 seeded state = the committed pre-campaign file; the live family file is MUTATED by
+# angle_campaign1 arm-A learning (by protocol), so seed/inheritance invariants are checked on the
+# sha-recorded snapshot (6876d37c..., identical to playbooks/families/dv.windows.json at d054cea).
+DV_SEEDED = REPO / "results" / "engine" / "angle_campaign1" / "A_playbook_at_start.json"
 
 
 def test_family_playbooks_load():
@@ -24,7 +28,7 @@ def test_dv_family_playbook_is_dev_v1_plus_seeds_only():
     """P1 copied dev_v1 verbatim; P2.2 appended seed rules ONLY — the inherited stage-1 rules
     must remain byte-identical and every addition must be origin='seed' (PLAN_P2 section 2)."""
     a = json.loads((PB / "dev_v1.json").read_text())
-    b = json.loads((PB / "families" / "dv.windows.json").read_text())
+    b = json.loads(DV_SEEDED.read_text())
     inherited = {r["id"]: r for r in a["rules"]}
     extra = []
     for r in b["rules"]:

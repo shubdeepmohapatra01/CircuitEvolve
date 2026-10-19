@@ -749,3 +749,32 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   0 on heisenberg_6/hubbard_8/qml_13/tfim_6 (attributed to the pass, never to an arm).
 - START.json: arm-A playbook sha 6876d37c..., B_dev sha 68997b84..., verifier digest bc3eac23...
   Campaign calls not yet issued in this entry.
+
+## 2026-10-19 angle_campaign1 DEV progress (12/15 DEV cells) + infra incident + A-first reorder
+
+- DEV cells done (all valid, final check vs original OK, 0 LLM errors), T before (post-G1) -> after:
+  qft_8 A/B/C 2115 -> 2113 / 2113 / 2113; heisenberg_6 8200 flat x3; hubbard_8 4312 flat x3;
+  qml_13 6326 flat x3. Futility check (first 3 DEV circuits) evaluated: mean A-C = 0.0 pp, NOT
+  fired. Arm B (placebo) declined far more often (qft 32, heis 43, hub 45, qml 45 of ~41-45
+  proposer calls) than A (0/5/11 on the first three) and C (0/0/0/1).
+- Arm-A playbook after qml_13: 1 active (R3) + 0 candidates, 50 retired (the reflector's additions
+  and all seeds retired by the unchanged z_retire gate).
+- Incident: two daemon restarts (~20:40 UTC) cancelled the hhl_8 chunk. Tag ac1_dev_hhl_8_A_e3
+  holds only a start record (cancelled). The automatic rerun ac1_dev_hhl_8_A_e3_r2 ran with no
+  Anthropic credentials (all 45 calls: "No credentials available for Anthropic API") -> row
+  recorded valid=False (append-only, kept). That run had credited 45 errored prompts to the arm-A
+  playbook (R3 exposures 330 -> 375, nothing else); the file was RESTORED from the sha-verified
+  snapshot runs/ac1_dev_qml_13_A_e3_playbook.json (f32102c6...) = the state after the last valid
+  arm-A cell. Driver hardened: arm-A DEV runs back up the playbook and roll it back when the
+  run is invalid; any all-calls-failed run (not only the token ceiling) is infra_fail and stops
+  the chunk (test_infra_failure_restores_arm_a).
+- Order change (user decision): A-FIRST. Remaining schedule = hhl_8 A -> freeze (now gated on
+  arm-A DEV only; B_held = A's active count at freeze) -> 6 held-out A cells -> B/C backfill
+  (hhl_8 B,C DEV, then 12 held-out B/C cells). The contract fixes arms/budgets/windows/pins, not
+  order; B and C never read or write arm A's playbook, so no cell's inputs change. Until the
+  backfill completes, held-out A is reportable only against the external bars (B0, G1, best of
+  B1/B2/B3g, DPF); A-vs-C/B attribution waits for the backfill.
+- Tests: test_seeds / test_tiers / test_p2_dryrun asserted P2.2 seed invariants on the LIVE family
+  file, which arm-A learning mutates by protocol; they now read the sha-recorded pre-campaign
+  snapshot results/engine/angle_campaign1/A_playbook_at_start.json (6876d37c..., byte-identical
+  to the file at d054cea). Suite 383 passed + 2 skipped; digest bc3eac23 unchanged.

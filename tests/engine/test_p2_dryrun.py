@@ -12,6 +12,10 @@ from circuitevolve.engine.graduate import load_callable, load_graduated
 from circuitevolve.engine.run import optimize
 
 FAMILY = REPO / "playbooks" / "families" / "dv.windows.json"
+# P2.2 seeded state = the committed pre-campaign file; the live family file is MUTATED by
+# angle_campaign1 arm-A learning (by protocol), so seed/inheritance invariants are checked on the
+# sha-recorded snapshot (6876d37c..., identical to playbooks/families/dv.windows.json at d054cea).
+SEEDED = REPO / "results" / "engine" / "angle_campaign1" / "A_playbook_at_start.json"
 EPS = 1e-3
 
 QASM = """OPENQASM 2.0;
@@ -48,7 +52,7 @@ def test_p2_stack_end_to_end(tmp_path):
     reply = "```window\n" + window_text(folded) + "\n```\n"
 
     pb_copy = tmp_path / "dv.windows.json"
-    shutil.copyfile(FAMILY, pb_copy)
+    shutil.copyfile(SEEDED, pb_copy)
     family_sha = hashlib.sha256(FAMILY.read_bytes()).hexdigest()
 
     prompts_seen, reflects_seen = [], []
