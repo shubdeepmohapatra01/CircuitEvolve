@@ -1,0 +1,204 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T0",
+   "route": "clean_and"
+  },
+  {
+   "element": "T6",
+   "route": "clean_and"
+  },
+  {
+   "element": "T11",
+   "route": "clean_and"
+  },
+  {
+   "element": "T15",
+   "route": "clean_and"
+  },
+  {
+   "element": "T18",
+   "route": "clean_and"
+  },
+  {
+   "element": "T20",
+   "route": "clean_and"
+  },
+  {
+   "element": "T1",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T2",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T3",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T4",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T5",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T7",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T8",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T9",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T10",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T12",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T13",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T14",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T16",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T17",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T19",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T21",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T22",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T23",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T24",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T25",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T26",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T27",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T28",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T29",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T30",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T31",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T32",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T33",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T34",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T35",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T36",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T37",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T38",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T39",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T40",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T41",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T42",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T43",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T44",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T45",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T46",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T47",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T48",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "pyzx_then_tket",
+ "request_cards": [],
+ "rationale": "The first Toffoli writing each of q14-q19 (T0, T6, T11, T15, T18, T20) hits a declared zero-init qubit that is still |0>, so it uses clean_and (4 T, no measurement or ancilla). The other 43 Toffolis accumulate into already-written outputs, including q20, which the cx from q19 makes non-zero, so they use jones_toffoli (4 T, one reusable fresh ancilla plus a measurement each). This gives 49 x 4 = 196 T versus 343 naive; the playbook's multiplicity rules refer to other instances and do not apply here."
+}

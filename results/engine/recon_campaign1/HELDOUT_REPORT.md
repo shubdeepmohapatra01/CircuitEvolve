@@ -28,3 +28,10 @@ proposer claude-opus-5-5. RELAXED column; frozen v2 verifier; digest bc3eac23 al
   empty by design when frozen.
 - Single seed per circuit; 12 calls each; honest MDE caveat: per-circuit results only,
   no cross-circuit significance claim from n=6.
+
+## Addendum (2026-10-19): gf2^4_mult frozen slot completed
+
+Run with the post-dev frozen playbook (phase held2, 12 calls) before any learning
+touched the circuit: **T 112 -> 36 (relaxed), 6 accepts, verified** — vs control
+relaxed 64 (**-44%**), control exact 68, B1 pyzx 68. The 'budget ceiling' gap row in
+the table above is closed by this result.

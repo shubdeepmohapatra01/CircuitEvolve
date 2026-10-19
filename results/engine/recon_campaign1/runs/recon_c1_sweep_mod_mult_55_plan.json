@@ -1,0 +1,33 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T0",
+   "route": "clean_and"
+  },
+  {
+   "element": "T1",
+   "route": "clean_and"
+  },
+  {
+   "element": "P0",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "T3",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T4",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T5",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "pyzx_then_tket",
+ "request_cards": [],
+ "rationale": "T0 and T1 are the first writes into the zero-init qubits q7 and q6, so each can be a compute-only clean AND at 4 T. P0 has its controls fixed but its target q8 is written in between, so it uses a temporary AND on a fresh ancilla (4 T for the pair). The remaining in-place Toffolis T3, T4 and T5 use the Jones 4-T route, giving 24 T in total versus 49 naive."
+}

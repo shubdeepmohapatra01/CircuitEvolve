@@ -1,0 +1,274 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T5",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q7, a0",
+    "cx q8, a0",
+    "cx a0, q7",
+    "cx a0, q8",
+    "tdg q7",
+    "tdg q8",
+    "t a0",
+    "cx a0, q7",
+    "cx a0, q8",
+    "h a0",
+    "s a0",
+    "cx a0, q9",
+    "cx a0, q10",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q7, q8",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T6",
+   "route": "custom",
+   "gates": [
+    "x q10",
+    "x q10"
+   ]
+  },
+  {
+   "element": "T7",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q13, a0",
+    "cx q14, a0",
+    "cx a0, q13",
+    "cx a0, q14",
+    "tdg q13",
+    "tdg q14",
+    "t a0",
+    "cx a0, q13",
+    "cx a0, q14",
+    "h a0",
+    "s a0",
+    "cx a0, q15",
+    "cx a0, q16",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q13, q14",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T8",
+   "route": "custom",
+   "gates": [
+    "x q16",
+    "x q16"
+   ]
+  },
+  {
+   "element": "T9",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q20, a0",
+    "cx q21, a0",
+    "cx a0, q20",
+    "cx a0, q21",
+    "tdg q20",
+    "tdg q21",
+    "t a0",
+    "cx a0, q20",
+    "cx a0, q21",
+    "h a0",
+    "s a0",
+    "cx a0, q22",
+    "cx a0, q23",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q20, q21",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T10",
+   "route": "custom",
+   "gates": [
+    "x q23",
+    "x q23"
+   ]
+  },
+  {
+   "element": "P0",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P1",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P2",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P3",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P4",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P5",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P6",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P7",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P8",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P9",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P10",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P11",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "T1",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T2",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T3",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T4",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T15",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T16",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T17",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T18",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T23",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T24",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T25",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T27",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T28",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T29",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T39",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T40",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T41",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T42",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T45",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T46",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T49",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T50",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T51",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T52",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T53",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T55",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T56",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "pyzx_then_tket",
+ "request_cards": [],
+ "rationale": "Three pairs of Toffolis are adjacent and share the same controls: T5/T6 at g13-g14, T7/T8 at g15-g16, and T9/T10 at g17-g18. Each pair is fused into one 4-T Gidney AND on a fresh ancilla, fanned out to both targets with CNOTs and uncomputed by measurement; the second Toffoli of each pair becomes a Clifford no-op. All other Toffolis keep 4-T temporary-AND or Jones routes, so the expected total is 168 T versus 180 T now."
+}

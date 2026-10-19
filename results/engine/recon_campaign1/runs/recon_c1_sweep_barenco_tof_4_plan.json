@@ -1,0 +1,122 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T0",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T1",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T2",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T3",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T5",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T6",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T7",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T4",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "cx q1, a0",
+    "cx a0, q0",
+    "cx a0, q1",
+    "tdg q0",
+    "tdg q1",
+    "t a0",
+    "cx a0, q0",
+    "cx a0, q1",
+    "h a0",
+    "s a0",
+    "h a1",
+    "t a1",
+    "cx a0, a1",
+    "cx q2, a1",
+    "cx a1, a0",
+    "cx a1, q2",
+    "tdg a0",
+    "tdg q2",
+    "t a1",
+    "cx a1, a0",
+    "cx a1, q2",
+    "h a1",
+    "s a1",
+    "h a2",
+    "t a2",
+    "cx a1, a2",
+    "cx q3, a2",
+    "cx a2, a1",
+    "cx a2, q3",
+    "tdg a1",
+    "tdg q3",
+    "t a2",
+    "cx a2, a1",
+    "cx a2, q3",
+    "h a2",
+    "s a2",
+    "cx a2, q6",
+    "h a2",
+    "measure a2 -> c2",
+    "if(c2) cz a1, q3",
+    "if(c2) x a2",
+    "h a1",
+    "measure a1 -> c1",
+    "if(c1) cz a0, q2",
+    "if(c1) x a1",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q0, q1",
+    "if(c0) x a0"
+   ]
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "The 8-Toffoli circuit is exactly a C4X with controls q0..q3 and target q6, and it restores dirty work qubits q4 and q5. So T4 is replaced by a clean-ancilla temporary-AND ladder (3 Gidney ANDs at 4 T each, measurement uncompute at 0 T, 12 T total), and the other seven Toffolis become identities. The playbook and feedback lines about multiplicities like x13/x26 do not match this toolbox, so I ignored them as unrelated data."
+}

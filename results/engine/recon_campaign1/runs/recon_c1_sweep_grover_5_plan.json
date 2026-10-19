@@ -1,0 +1,156 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "P0",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P1",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P2",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P3",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P4",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P5",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P6",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P7",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P8",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P9",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P10",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P11",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "T1",
+   "route": "clean_and"
+  },
+  {
+   "element": "T2",
+   "route": "clean_and"
+  },
+  {
+   "element": "T3",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T4",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T5",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T9",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T13",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T14",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T15",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T16",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T17",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T21",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T25",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T26",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T27",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T28",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T29",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T33",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T37",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T38",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T39",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T40",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T41",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T45",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "pyzx_then_tket",
+ "request_cards": [],
+ "rationale": "q6 is written only by the q0,q1 pairs and starts at |0>, so it is back to |0> before each of those pairs. That makes the direct temporary AND valid for those pairs and drops their ancillas, which should keep 144 T while lowering peak qubits from 12 toward 11. T1 and T2 are the first writes into zero-init q2 and q3, so clean_and saves two measurements and ancillas, and the remaining unpaired Toffolis use 4-T Jones gadgets."
+}

@@ -1,0 +1,86 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "M0",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "T1",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "cx q2, a0",
+    "cx a0, q0",
+    "cx a0, q2",
+    "tdg q0",
+    "tdg q2",
+    "t a0",
+    "cx a0, q0",
+    "cx a0, q2",
+    "h a0",
+    "s a0",
+    "cx a0, q1",
+    "cx a0, q5",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q0, q2",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T2",
+   "route": "custom",
+   "gates": [
+    "x q5",
+    "x q5"
+   ]
+  },
+  {
+   "element": "T0",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T3",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T4",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T5",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T9",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T10",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T11",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T12",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T13",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T14",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "pyzx",
+ "request_cards": [],
+ "rationale": "T1 (g5) and T2 (g6) sit next to each other and share the controls q0,q2, so one 4-T Gidney AND is computed into a fresh ancilla, CNOT-ed onto both q1 and q5, and erased by X-measurement with a CZ fix-up; T2 becomes an identity. M0 uses a temporary AND on the clean q6 plus a Jones middle (8 T), and the remaining 10 Toffolis use Jones (40 T), for 52 T total versus the previous 56."
+}

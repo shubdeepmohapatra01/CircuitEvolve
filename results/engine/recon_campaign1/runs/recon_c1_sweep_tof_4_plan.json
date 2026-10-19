@@ -1,0 +1,13 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "M0",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "M0 is a C4X ladder on the declared-zero work qubits q4 and q5, and both enclosing pairs P0 and P1 are clean. That makes them direct temporary ANDs at 4 T each with measurement-based uncompute. The middle Toffoli T2 targets the data qubit q6, so it uses the Jones construction (4 T, one fresh ancilla), for a total of 12 T versus the 35 T naive cost."
+}

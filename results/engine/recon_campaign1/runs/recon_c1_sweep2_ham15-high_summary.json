@@ -1,0 +1,109 @@
+{
+ "tag": "recon_c1_sweep2_ham15-high",
+ "name": "ham15-high",
+ "input_source": "reconstruction",
+ "n": 20,
+ "eps": 0.001,
+ "calls": 16,
+ "stats": {
+  "proposal_calls": 15,
+  "reflect_calls": 1,
+  "llm_errors": 0,
+  "declined": 0,
+  "candidates": 10,
+  "parse_errors": 5,
+  "verified": 8,
+  "rejected_verifier": 2,
+  "rejected_metric": 4,
+  "rejected_ledger": 0,
+  "rejected_whole": 0,
+  "accepted": 4,
+  "accepted_t_reduced": 4,
+  "exact_accepts": 0,
+  "approx_accepts": 4,
+  "rules_added": 2,
+  "reflect_skipped_no_evidence": 0,
+  "plan_proposals": 10,
+  "accepted_plan": 4
+ },
+ "backend_stats": {
+  "calls": 15,
+  "input_tokens": 539834,
+  "output_tokens": 147829,
+  "ok": 15,
+  "failed": 0,
+  "truncated": 2,
+  "empty": 1,
+  "retries": 1
+ },
+ "t_before": 2457,
+ "t_after": 824,
+ "before": {
+  "t_count": 2457,
+  "qubits": 20,
+  "t_depth": 1184,
+  "measurements": 0,
+  "mode": "input"
+ },
+ "after": {
+  "t_count": 824,
+  "qubits": 21,
+  "t_depth": 268,
+  "measurements": 206,
+  "mode": "relaxed"
+ },
+ "t_after_reclaimed": null,
+ "ledger": {
+  "eps_total": 0.001,
+  "window_pool": 0.00025,
+  "eps_synth": 0.001,
+  "d_input": 0.0,
+  "window_spent": 0.0,
+  "window_spent_rounded": 0.0,
+  "n_window_charges": 2,
+  "eps_rz": null,
+  "bound": 0.0,
+  "reclaimed_eps_synth": 0.001,
+  "rule": "v1: window pool cap 0.25 eps, synthesis = eps - d_input - ceil_q(spent)",
+  "note": "reconstruction charges 0 (exact branch-wise constructions, v2 conventions)"
+ },
+ "final_check_vs_original": {
+  "ok": true,
+  "mode": "relaxed",
+  "certified": false,
+  "reason": "",
+  "unitary_preserving": false
+ },
+ "archive": [
+  {
+   "t_count": 824,
+   "qubits": 21,
+   "mode": "relaxed",
+   "digest": "397b97272cdc885a"
+  },
+  {
+   "t_count": 860,
+   "qubits": 21,
+   "mode": "relaxed",
+   "digest": "a470a3c3f8b311c7"
+  },
+  {
+   "t_count": 880,
+   "qubits": 21,
+   "mode": "relaxed",
+   "digest": "429d8d373474ee56"
+  },
+  {
+   "t_count": 2457,
+   "qubits": 20,
+   "mode": "input",
+   "digest": "input:0f806383981caf8a"
+  }
+ ],
+ "seconds": 1464.8,
+ "verifier_digest": "bc3eac23a403dbc5",
+ "playbook": {
+  "live": 26,
+  "active": 15
+ }
+}

@@ -1,0 +1,318 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T15",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q4, a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q4, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q8",
+    "cx a0, q9",
+    "cx a0, q10",
+    "cx a0, q11",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q0, q4",
+    "if(c0) x a0",
+    "h a0",
+    "t a0",
+    "cx q1, a0",
+    "tdg a0",
+    "cx q5, a0",
+    "t a0",
+    "cx q1, a0",
+    "tdg a0",
+    "cx q5, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q8",
+    "cx a0, q10",
+    "cx a0, q11",
+    "h a0",
+    "measure a0 -> c1",
+    "if(c1) cz q1, q5",
+    "if(c1) x a0",
+    "h a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q6, a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q6, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q8",
+    "cx a0, q11",
+    "h a0",
+    "measure a0 -> c2",
+    "if(c2) cz q2, q6",
+    "if(c2) x a0",
+    "h a0",
+    "t a0",
+    "cx q3, a0",
+    "tdg a0",
+    "cx q7, a0",
+    "t a0",
+    "cx q3, a0",
+    "tdg a0",
+    "cx q7, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q8",
+    "h a0",
+    "measure a0 -> c3",
+    "if(c3) cz q3, q7",
+    "if(c3) x a0",
+    "cx q1, q0",
+    "cx q5, q4",
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q4, a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q4, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q9",
+    "cx a0, q11",
+    "h a0",
+    "measure a0 -> c4",
+    "if(c4) cz q0, q4",
+    "if(c4) x a0",
+    "cx q5, q4",
+    "cx q1, q0",
+    "cx q3, q2",
+    "cx q7, q6",
+    "h a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q6, a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q6, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q9",
+    "cx a0, q10",
+    "cx a0, q11",
+    "h a0",
+    "measure a0 -> c5",
+    "if(c5) cz q2, q6",
+    "if(c5) x a0",
+    "cx q7, q6",
+    "cx q3, q2",
+    "cx q2, q0",
+    "cx q6, q4",
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q4, a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q4, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q10",
+    "cx a0, q11",
+    "h a0",
+    "measure a0 -> c6",
+    "if(c6) cz q0, q4",
+    "if(c6) x a0",
+    "cx q6, q4",
+    "cx q2, q0",
+    "cx q3, q1",
+    "cx q7, q5",
+    "h a0",
+    "t a0",
+    "cx q1, a0",
+    "tdg a0",
+    "cx q5, a0",
+    "t a0",
+    "cx q1, a0",
+    "tdg a0",
+    "cx q5, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q8",
+    "cx a0, q9",
+    "cx a0, q11",
+    "h a0",
+    "measure a0 -> c7",
+    "if(c7) cz q1, q5",
+    "if(c7) x a0",
+    "cx q7, q5",
+    "cx q3, q1",
+    "cx q1, q0",
+    "cx q2, q0",
+    "cx q3, q0",
+    "cx q5, q4",
+    "cx q6, q4",
+    "cx q7, q4",
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q4, a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q4, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q11",
+    "h a0",
+    "measure a0 -> c8",
+    "if(c8) cz q0, q4",
+    "if(c8) x a0",
+    "cx q7, q4",
+    "cx q6, q4",
+    "cx q5, q4",
+    "cx q3, q0",
+    "cx q2, q0",
+    "cx q1, q0"
+   ]
+  },
+  {
+   "element": "T0",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T1",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T2",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T3",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T4",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T5",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T6",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T7",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T8",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T9",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T10",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T11",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T12",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T13",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  },
+  {
+   "element": "T14",
+   "route": "custom",
+   "gates": [
+    "x q0",
+    "x q0"
+   ]
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "The whole GF(2^4) product is bilinear: with all other Toffolis set to identity, the CNOTs g6-g8 act on zero registers, so the final T15 element alone writes the outputs. It builds them from the 9 two-level Karatsuba AND products, each done as a 4-T Gidney AND on one reused ancilla, CNOT fan-out to q8-q11, then measurement uncompute, for 36 T total. Products and output maps were derived from the reduced polynomial coefficients (F8=d0+d4, F9=d1+d4+d5, F10=d2+d5+d6, F11=d3+d6) and spot-checked by hand on two basis inputs."
+}

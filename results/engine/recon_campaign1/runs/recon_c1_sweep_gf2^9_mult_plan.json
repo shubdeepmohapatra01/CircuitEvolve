@@ -1,0 +1,504 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T35",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q6, a0",
+    "cx q15, a0",
+    "cx a0, q6",
+    "cx a0, q15",
+    "tdg q6",
+    "tdg q15",
+    "t a0",
+    "cx a0, q6",
+    "cx a0, q15",
+    "cx q6, a0",
+    "cx q15, a0",
+    "h a0",
+    "s a0",
+    "h a1",
+    "t a1",
+    "cx q7, a1",
+    "cx q16, a1",
+    "cx a1, q7",
+    "cx a1, q16",
+    "tdg q7",
+    "tdg q16",
+    "t a1",
+    "cx a1, q7",
+    "cx a1, q16",
+    "cx q7, a1",
+    "cx q16, a1",
+    "h a1",
+    "s a1",
+    "h a2",
+    "t a2",
+    "cx q8, a2",
+    "cx q17, a2",
+    "cx a2, q8",
+    "cx a2, q17",
+    "tdg q8",
+    "tdg q17",
+    "t a2",
+    "cx a2, q8",
+    "cx a2, q17",
+    "cx q8, a2",
+    "cx q17, a2",
+    "h a2",
+    "s a2",
+    "cx a0, q21",
+    "cx a0, q22",
+    "cx a1, q22",
+    "cx a0, q23",
+    "cx a1, q23",
+    "cx a2, q23",
+    "cx a1, q24",
+    "cx a2, q24",
+    "cx a2, q25",
+    "cx q6, q7",
+    "cx q15, q16",
+    "h a3",
+    "t a3",
+    "cx q7, a3",
+    "cx q16, a3",
+    "cx a3, q7",
+    "cx a3, q16",
+    "tdg q7",
+    "tdg q16",
+    "t a3",
+    "cx a3, q7",
+    "cx a3, q16",
+    "cx q7, a3",
+    "cx q16, a3",
+    "h a3",
+    "s a3",
+    "cx a3, q22",
+    "h a3",
+    "measure a3 -> c3",
+    "if(c3) cz q7, q16",
+    "if(c3) x a3",
+    "cx q15, q16",
+    "cx q6, q7",
+    "cx q6, q8",
+    "cx q15, q17",
+    "h a3",
+    "t a3",
+    "cx q8, a3",
+    "cx q17, a3",
+    "cx a3, q8",
+    "cx a3, q17",
+    "tdg q8",
+    "tdg q17",
+    "t a3",
+    "cx a3, q8",
+    "cx a3, q17",
+    "cx q8, a3",
+    "cx q17, a3",
+    "h a3",
+    "s a3",
+    "cx a3, q23",
+    "h a3",
+    "measure a3 -> c4",
+    "if(c4) cz q8, q17",
+    "if(c4) x a3",
+    "cx q15, q17",
+    "cx q6, q8",
+    "cx q7, q8",
+    "cx q16, q17",
+    "h a3",
+    "t a3",
+    "cx q8, a3",
+    "cx q17, a3",
+    "cx a3, q8",
+    "cx a3, q17",
+    "tdg q8",
+    "tdg q17",
+    "t a3",
+    "cx a3, q8",
+    "cx a3, q17",
+    "cx q8, a3",
+    "cx q17, a3",
+    "h a3",
+    "s a3",
+    "cx a3, q24",
+    "h a3",
+    "measure a3 -> c5",
+    "if(c5) cz q8, q17",
+    "if(c5) x a3",
+    "cx q16, q17",
+    "cx q7, q8",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q6, q15",
+    "if(c0) x a0",
+    "h a1",
+    "measure a1 -> c1",
+    "if(c1) cz q7, q16",
+    "if(c1) x a1",
+    "h a2",
+    "measure a2 -> c2",
+    "if(c2) cz q8, q17",
+    "if(c2) x a2"
+   ]
+  },
+  {
+   "element": "T23",
+   "route": "custom",
+   "gates": [
+    "cx q6, q7",
+    "cx q6, q7"
+   ]
+  },
+  {
+   "element": "T27",
+   "route": "custom",
+   "gates": [
+    "cx q6, q7",
+    "cx q6, q7"
+   ]
+  },
+  {
+   "element": "T28",
+   "route": "custom",
+   "gates": [
+    "cx q6, q7",
+    "cx q6, q7"
+   ]
+  },
+  {
+   "element": "T30",
+   "route": "custom",
+   "gates": [
+    "cx q6, q7",
+    "cx q6, q7"
+   ]
+  },
+  {
+   "element": "T31",
+   "route": "custom",
+   "gates": [
+    "cx q6, q7",
+    "cx q6, q7"
+   ]
+  },
+  {
+   "element": "T32",
+   "route": "custom",
+   "gates": [
+    "cx q6, q7",
+    "cx q6, q7"
+   ]
+  },
+  {
+   "element": "T33",
+   "route": "custom",
+   "gates": [
+    "cx q6, q7",
+    "cx q6, q7"
+   ]
+  },
+  {
+   "element": "T34",
+   "route": "custom",
+   "gates": [
+    "cx q6, q7",
+    "cx q6, q7"
+   ]
+  },
+  {
+   "element": "T0",
+   "route": "clean_and"
+  },
+  {
+   "element": "T8",
+   "route": "clean_and"
+  },
+  {
+   "element": "T15",
+   "route": "clean_and"
+  },
+  {
+   "element": "T21",
+   "route": "clean_and"
+  },
+  {
+   "element": "T26",
+   "route": "clean_and"
+  },
+  {
+   "element": "T1",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T2",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T3",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T4",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T5",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T6",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T7",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T9",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T10",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T11",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T12",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T13",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T14",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T16",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T17",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T18",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T19",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T20",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T22",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T24",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T25",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T29",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T36",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T37",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T38",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T39",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T40",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T41",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T42",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T43",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T44",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T45",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T46",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T47",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T48",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T49",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T50",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T51",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T52",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T53",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T54",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T55",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T56",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T57",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T58",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T59",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T60",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T61",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T62",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T63",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T64",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T65",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T66",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T67",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T68",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T69",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T70",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T71",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T72",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T73",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T74",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T75",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T76",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T77",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T78",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T79",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T80",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "All 81 Toffolis before the reduction CNOTs only XOR input products into outputs, so they commute. That lets T35 carry a 3-term Karatsuba block for the a6..a8 x b6..b8 products: 6 Gidney ANDs (24 T) replace 9 Toffolis (36 T), and T23/T27/T28/T30-T34 become identities. The other 72 Toffolis use 4-T clean_and (first writes) or jones_toffoli, for an expected 312 T versus the 324 accepted so far."
+}

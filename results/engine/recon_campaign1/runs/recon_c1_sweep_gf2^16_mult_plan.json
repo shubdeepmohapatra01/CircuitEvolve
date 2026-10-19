@@ -1,0 +1,1288 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T0",
+   "route": "clean_and"
+  },
+  {
+   "element": "T15",
+   "route": "clean_and"
+  },
+  {
+   "element": "T29",
+   "route": "clean_and"
+  },
+  {
+   "element": "T42",
+   "route": "clean_and"
+  },
+  {
+   "element": "T54",
+   "route": "clean_and"
+  },
+  {
+   "element": "T65",
+   "route": "clean_and"
+  },
+  {
+   "element": "T75",
+   "route": "clean_and"
+  },
+  {
+   "element": "T84",
+   "route": "clean_and"
+  },
+  {
+   "element": "T92",
+   "route": "clean_and"
+  },
+  {
+   "element": "T99",
+   "route": "clean_and"
+  },
+  {
+   "element": "T105",
+   "route": "clean_and"
+  },
+  {
+   "element": "T110",
+   "route": "clean_and"
+  },
+  {
+   "element": "T114",
+   "route": "clean_and"
+  },
+  {
+   "element": "T117",
+   "route": "clean_and"
+  },
+  {
+   "element": "T119",
+   "route": "clean_and"
+  },
+  {
+   "element": "T1",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T2",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T3",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T4",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T5",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T6",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T7",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T8",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T9",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T10",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T11",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T12",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T13",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T14",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T16",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T17",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T18",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T19",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T20",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T21",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T22",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T23",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T24",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T25",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T26",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T27",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T28",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T30",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T31",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T32",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T33",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T34",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T35",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T36",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T37",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T38",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T39",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T40",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T41",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T43",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T44",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T45",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T46",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T47",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T48",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T49",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T50",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T51",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T52",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T53",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T55",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T56",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T57",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T58",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T59",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T60",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T61",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T62",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T63",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T64",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T66",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T67",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T68",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T69",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T70",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T71",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T72",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T73",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T74",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T76",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T77",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T78",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T79",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T80",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T81",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T82",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T83",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T85",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T86",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T87",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T88",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T89",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T90",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T91",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T93",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T94",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T95",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T96",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T97",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T98",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T100",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T101",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T102",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T103",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T104",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T106",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T107",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T108",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T109",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T111",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T112",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T113",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T115",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T116",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T118",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T120",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T121",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T122",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T123",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T124",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T125",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T126",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T127",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T128",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T129",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T130",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T131",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T132",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T133",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T134",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T135",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T136",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T137",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T138",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T139",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T140",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T141",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T142",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T143",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T144",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T145",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T146",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T147",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T148",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T149",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T150",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T151",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T152",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T153",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T154",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T155",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T156",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T157",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T158",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T159",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T160",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T161",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T162",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T163",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T164",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T165",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T166",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T167",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T168",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T169",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T170",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T171",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T172",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T173",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T174",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T175",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T176",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T177",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T178",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T179",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T180",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T181",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T182",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T183",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T184",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T185",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T186",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T187",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T188",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T189",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T190",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T191",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T192",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T193",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T194",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T195",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T196",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T197",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T198",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T199",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T200",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T201",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T202",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T203",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T204",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T205",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T206",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T207",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T208",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T209",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T210",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T211",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T212",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T213",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T214",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T215",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T216",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T217",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T218",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T219",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T220",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T221",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T222",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T223",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T224",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T225",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T226",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T227",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T228",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T229",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T230",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T232",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T233",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T234",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T235",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T236",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T239",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T240",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T241",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T245",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T255",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q16, a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q16, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q32",
+    "cx a0, q33",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q0, q16",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T251",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q1, a0",
+    "tdg a0",
+    "cx q17, a0",
+    "t a0",
+    "cx q1, a0",
+    "tdg a0",
+    "cx q17, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q34",
+    "cx a0, q33",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q1, q17",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T254",
+   "route": "custom",
+   "gates": [
+    "cx q1, q0",
+    "cx q17, q16",
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q16, a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q16, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q33",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q0, q16",
+    "if(c0) x a0",
+    "cx q17, q16",
+    "cx q1, q0"
+   ]
+  },
+  {
+   "element": "T253",
+   "route": "custom",
+   "gates": [
+    "x q1",
+    "x q1"
+   ]
+  },
+  {
+   "element": "T250",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q16, a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q16, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q34",
+    "cx a0, q35",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q2, q16",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T242",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q3, a0",
+    "tdg a0",
+    "cx q17, a0",
+    "t a0",
+    "cx q3, a0",
+    "tdg a0",
+    "cx q17, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q36",
+    "cx a0, q35",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q3, q17",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T247",
+   "route": "custom",
+   "gates": [
+    "cx q3, q2",
+    "cx q17, q16",
+    "h a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q16, a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q16, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q35",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q2, q16",
+    "if(c0) x a0",
+    "cx q17, q16",
+    "cx q3, q2"
+   ]
+  },
+  {
+   "element": "T246",
+   "route": "custom",
+   "gates": [
+    "x q3",
+    "x q3"
+   ]
+  },
+  {
+   "element": "T252",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q18, a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q18, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q34",
+    "cx a0, q35",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q0, q18",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T244",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q1, a0",
+    "tdg a0",
+    "cx q19, a0",
+    "t a0",
+    "cx q1, a0",
+    "tdg a0",
+    "cx q19, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q36",
+    "cx a0, q35",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q1, q19",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T249",
+   "route": "custom",
+   "gates": [
+    "cx q1, q0",
+    "cx q19, q18",
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q18, a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q18, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q35",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q0, q18",
+    "if(c0) x a0",
+    "cx q19, q18",
+    "cx q1, q0"
+   ]
+  },
+  {
+   "element": "T248",
+   "route": "custom",
+   "gates": [
+    "x q1",
+    "x q1"
+   ]
+  },
+  {
+   "element": "T243",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q18, a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q18, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q36",
+    "cx a0, q37",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q2, q18",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T231",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q3, a0",
+    "tdg a0",
+    "cx q19, a0",
+    "t a0",
+    "cx q3, a0",
+    "tdg a0",
+    "cx q19, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q38",
+    "cx a0, q37",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q3, q19",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T238",
+   "route": "custom",
+   "gates": [
+    "cx q3, q2",
+    "cx q19, q18",
+    "h a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q18, a0",
+    "t a0",
+    "cx q2, a0",
+    "tdg a0",
+    "cx q18, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q37",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q2, q18",
+    "if(c0) x a0",
+    "cx q19, q18",
+    "cx q3, q2"
+   ]
+  },
+  {
+   "element": "T237",
+   "route": "custom",
+   "gates": [
+    "x q3",
+    "x q3"
+   ]
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "All Toffolis after the reduction CNOTs commute, so four disjoint 2x2 Karatsuba blocks on (a0..a3)x(b0..b3) replace 16 products with 12 Gidney 4-T ANDs. Each block sends a_x*b_u and a_y*b_v to their own outputs and to the cross output, plus (a_x+a_y)(b_u+b_v) to the cross output; the fourth Toffoli of each block becomes a Clifford identity. All other Toffolis stay at 4 T via clean_and or jones_toffoli, so T goes from 1024 to 1008 with the same single ancilla."
+}

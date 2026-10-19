@@ -1,0 +1,740 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "M0",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M1",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "P9",
+   "route": "custom",
+   "first": [
+    "x q11",
+    "h q17",
+    "t q17",
+    "cx q9, q17",
+    "tdg q17",
+    "cx q9, q17",
+    "cx q11, q17",
+    "tdg q17",
+    "cx q11, q17",
+    "cx q9, q17",
+    "cx q11, q17",
+    "t q17",
+    "cx q11, q17",
+    "cx q9, q17",
+    "h q17",
+    "s q17",
+    "x q11"
+   ],
+   "second": [
+    "x q11",
+    "h q17",
+    "measure q17 -> c0",
+    "if(c0) cz q9, q11",
+    "if(c0) x q17",
+    "x q11"
+   ]
+  },
+  {
+   "element": "P10",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P11",
+   "route": "temporary_and"
+  },
+  {
+   "element": "T23",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "P12",
+   "route": "custom",
+   "first": [
+    "x q16",
+    "x q16"
+   ],
+   "second": [
+    "x q16",
+    "x q16"
+   ]
+  },
+  {
+   "element": "P13",
+   "route": "custom",
+   "first": [
+    "x q15",
+    "x q15"
+   ],
+   "second": [
+    "x q15",
+    "x q15"
+   ]
+  },
+  {
+   "element": "T29",
+   "route": "custom",
+   "gates": [
+    "x q1",
+    "x q1"
+   ]
+  },
+  {
+   "element": "P14",
+   "route": "custom",
+   "first": [
+    "x q9",
+    "h q17",
+    "t q17",
+    "cx q2, q17",
+    "tdg q17",
+    "cx q2, q17",
+    "cx q9, q17",
+    "tdg q17",
+    "cx q9, q17",
+    "cx q2, q17",
+    "cx q9, q17",
+    "t q17",
+    "cx q9, q17",
+    "cx q2, q17",
+    "h q17",
+    "s q17",
+    "x q9"
+   ],
+   "second": [
+    "x q9",
+    "h q17",
+    "measure q17 -> c0",
+    "if(c0) cz q2, q9",
+    "if(c0) x q17",
+    "x q9"
+   ]
+  },
+  {
+   "element": "P15",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P16",
+   "route": "temporary_and"
+  },
+  {
+   "element": "T35",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "P17",
+   "route": "custom",
+   "first": [
+    "x q16",
+    "x q16"
+   ],
+   "second": [
+    "x q16",
+    "x q16"
+   ]
+  },
+  {
+   "element": "P18",
+   "route": "custom",
+   "first": [
+    "x q15",
+    "x q15"
+   ],
+   "second": [
+    "x q15",
+    "x q15"
+   ]
+  },
+  {
+   "element": "T41",
+   "route": "custom",
+   "gates": [
+    "x q1",
+    "x q1"
+   ]
+  },
+  {
+   "element": "M6",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M7",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M8",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "P27",
+   "route": "custom",
+   "first": [
+    "x q9",
+    "h q17",
+    "t q17",
+    "cx q2, q17",
+    "tdg q17",
+    "cx q2, q17",
+    "cx q9, q17",
+    "tdg q17",
+    "cx q9, q17",
+    "cx q2, q17",
+    "cx q9, q17",
+    "t q17",
+    "cx q9, q17",
+    "cx q2, q17",
+    "h q17",
+    "s q17",
+    "x q9"
+   ],
+   "second": [
+    "x q9",
+    "h q17",
+    "measure q17 -> c0",
+    "if(c0) cz q2, q9",
+    "if(c0) x q17",
+    "x q9"
+   ]
+  },
+  {
+   "element": "P28",
+   "route": "temporary_and"
+  },
+  {
+   "element": "P29",
+   "route": "temporary_and"
+  },
+  {
+   "element": "T66",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "P30",
+   "route": "custom",
+   "first": [
+    "x q16",
+    "x q16"
+   ],
+   "second": [
+    "x q16",
+    "x q16"
+   ]
+  },
+  {
+   "element": "P31",
+   "route": "custom",
+   "first": [
+    "x q15",
+    "x q15"
+   ],
+   "second": [
+    "x q15",
+    "x q15"
+   ]
+  },
+  {
+   "element": "T72",
+   "route": "custom",
+   "gates": [
+    "x q1",
+    "x q1"
+   ]
+  },
+  {
+   "element": "M11",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M12",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M13",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M14",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M15",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M16",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M17",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M18",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M19",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M20",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M21",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M22",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M23",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M24",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M25",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M26",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M27",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M28",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M29",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M30",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M31",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M32",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M33",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M34",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M35",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M36",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M37",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M38",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M39",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M40",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M41",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M42",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M43",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M44",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M45",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M46",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M47",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M48",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M49",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M50",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M51",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M52",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M53",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M54",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M55",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M56",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M57",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M58",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M59",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M60",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M61",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M62",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M63",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M64",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M65",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M66",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M67",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "T258",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T259",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T263",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T285",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q12, a0",
+    "tdg a0",
+    "cx q12, a0",
+    "cx q14, a0",
+    "tdg a0",
+    "cx q14, a0",
+    "cx q12, a0",
+    "cx q14, a0",
+    "t a0",
+    "cx q14, a0",
+    "cx q12, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q11",
+    "cx a0, q2",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q12, q14",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T286",
+   "route": "custom",
+   "gates": [
+    "x q2",
+    "x q2"
+   ]
+  },
+  {
+   "element": "T287",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T288",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T299",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q5, a0",
+    "tdg a0",
+    "cx q5, a0",
+    "cx q14, a0",
+    "tdg a0",
+    "cx q14, a0",
+    "cx q5, a0",
+    "cx q14, a0",
+    "t a0",
+    "cx q14, a0",
+    "cx q5, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q11",
+    "cx a0, q12",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q5, q14",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T300",
+   "route": "custom",
+   "gates": [
+    "x q12",
+    "x q12"
+   ]
+  },
+  {
+   "element": "T306",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T313",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T322",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T323",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T327",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T328",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q11, a0",
+    "tdg a0",
+    "cx q11, a0",
+    "cx q13, a0",
+    "tdg a0",
+    "cx q13, a0",
+    "cx q11, a0",
+    "cx q13, a0",
+    "t a0",
+    "cx q13, a0",
+    "cx q11, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q14",
+    "cx a0, q10",
+    "cx a0, q12",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q11, q13",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T329",
+   "route": "custom",
+   "gates": [
+    "x q10",
+    "x q10"
+   ]
+  },
+  {
+   "element": "T330",
+   "route": "custom",
+   "gates": [
+    "x q12",
+    "x q12"
+   ]
+  },
+  {
+   "element": "T339",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q12, a0",
+    "tdg a0",
+    "cx q12, a0",
+    "cx q14, a0",
+    "tdg a0",
+    "cx q14, a0",
+    "cx q12, a0",
+    "cx q14, a0",
+    "t a0",
+    "cx q14, a0",
+    "cx q12, a0",
+    "h a0",
+    "s a0",
+    "cx a0, q13",
+    "cx a0, q11",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q12, q14",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T340",
+   "route": "custom",
+   "gates": [
+    "x q11",
+    "x q11"
+   ]
+  },
+  {
+   "element": "T344",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T350",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "pyzx",
+ "request_cards": [],
+ "rationale": "Every cascade uses temporary ANDs with a Jones middle. Adjacent lone Toffolis that share controls (T285/286, T299/300, T328-330, T339/340) share one ancilla AND, which reproduces the 860 baseline. New here: the adjacent cascade pairs M2+M3, M4+M5 and M9+M10 are each fused into one negated-control ladder, since q1 ^= A*B xor A = A*(NOT B); this saves 36 more T, for a target of 824 T."
+}

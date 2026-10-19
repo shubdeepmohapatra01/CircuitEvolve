@@ -1,0 +1,102 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T0",
+   "route": "clean_and"
+  },
+  {
+   "element": "T5",
+   "route": "custom",
+   "gates": [
+    "h q4",
+    "measure q4 -> c0",
+    "if(c0) cz q1, q3",
+    "if(c0) x q4"
+   ]
+  },
+  {
+   "element": "T1",
+   "route": "clean_and"
+  },
+  {
+   "element": "T3",
+   "route": "custom",
+   "gates": [
+    "h q6",
+    "measure q6 -> c0",
+    "if(c0) cz q4, q5",
+    "if(c0) x q6"
+   ]
+  },
+  {
+   "element": "T2",
+   "route": "clean_and"
+  },
+  {
+   "element": "P1",
+   "route": "temporary_and"
+  },
+  {
+   "element": "T6",
+   "route": "clean_and"
+  },
+  {
+   "element": "T14",
+   "route": "custom",
+   "gates": [
+    "h q2",
+    "measure q2 -> c0",
+    "if(c0) cz q0, q1",
+    "if(c0) x q2"
+   ]
+  },
+  {
+   "element": "T7",
+   "route": "clean_and"
+  },
+  {
+   "element": "T12",
+   "route": "custom",
+   "gates": [
+    "h q4",
+    "measure q4 -> c0",
+    "if(c0) cz q2, q3",
+    "if(c0) x q4"
+   ]
+  },
+  {
+   "element": "T8",
+   "route": "clean_and"
+  },
+  {
+   "element": "T10",
+   "route": "custom",
+   "gates": [
+    "h q6",
+    "measure q6 -> c0",
+    "if(c0) cz q4, q5",
+    "if(c0) x q6"
+   ]
+  },
+  {
+   "element": "T9",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T11",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T13",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T15",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "These Toffoli pairs act as compute/uncompute pairs on declared-zero targets: (T0,T5) on q4, (T1,T3) and (T8,T10) on q6, (T6,T14) on q2, and (T7,T12) on q4. The intervening X gates cancel and the controls are effectively unchanged, so each compute uses a 4-T clean_and and each uncompute is a 0-T X-measurement with a CZ fix-up and reset. P1 uses the direct temporary AND, and the four remaining lone Toffolis use Jones, for 36 T total if every route is accepted."
+}

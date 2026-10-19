@@ -1,0 +1,13 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "M0",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "P0 is a clean pair on declared-zero q4, so a temporary AND computes it directly (4 T, with a 0-T measurement uncompute). The unpaired middle T1 targets data qubit q3, so it uses a Jones 4-T Toffoli with one fresh ancilla. That gives 8 T total, which equals the relaxed floor (4 per pair + 4 per unpaired Toffoli)."
+}

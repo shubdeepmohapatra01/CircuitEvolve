@@ -664,3 +664,24 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   material. SWEEP_RESERVED = ham15-med, gf2^6_mult, hwb6, mod_red_21 are therefore kept
   UNTOUCHED tonight as the future frozen evaluation set. The qcla family stays excluded
   (v2 verifier-coverage block); at-floor campaign circuits excluded (no T left to find).
+
+## 2026-10-19 recon_campaign1 overnight sweep + reserved frozen eval COMPLETE
+
+- Sweep: 23 circuits trained (4 sequential sub-sessions, ~430 proposer calls total incl.
+  reruns). Every parseable circuit reduced; highlights: mod5_4 28->4, barenco_tof_4 56->12,
+  gf2^4_mult 112->36, tof_10 119->36, grover_5 336->144, adder_8 399->168, ham15-high
+  2457->824, gf2^16_mult 1792->1008. gf2^32_mult UNCHANGED (8 calls, 0 parseable: a
+  1024-decision plan JSON exceeds the 16k reply cap - format limitation, disclosed, fix is a
+  segmented plan format not more calls). ham15-high's first row was a token-ceiling artifact,
+  superseded by the sweep2 rerun (both logs kept).
+- gf2^4_mult frozen held-out slot COMPLETED before learning touched it (phase held2, post-dev
+  frozen playbook): 112 -> 36 relaxed vs control 64 (-44%); addendum in HELDOUT_REPORT.md.
+- Reserved frozen transfer test (never trained; deterministic control bars computed fresh,
+  committed in SWEEP_REPORT.md): ham15-med 208 vs control 220 (-5%), gf2^6_mult 144 = control,
+  hwb6 52 vs 56 (-7%), mod_red_21 44 vs 56 (-21%). Frozen playbook beats the control on 3/4
+  untouched circuits - transfer holds beyond the adder family.
+- Playbook: 10 seeds -> 79 rule ids lived; now 15 active (R4 R9 R23 R28 R35 R36 R42 R44 R46
+  R59 R70 R71 R73 R78 R79), rest candidate/retired under the unchanged A/B machinery. Frozen
+  sha for the reserved eval recorded in SWEEP_REPORT.md.
+- Gates: suite 371 passed + 2 skipped; digest bc3eac23 unchanged; cvdv frozen OK. All run
+  logs + sweep_results.jsonl + reports committed append-only.

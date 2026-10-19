@@ -1,0 +1,48 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T0",
+   "route": "clean_and"
+  },
+  {
+   "element": "T1",
+   "route": "clean_and"
+  },
+  {
+   "element": "T2",
+   "route": "clean_and"
+  },
+  {
+   "element": "T3",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T4",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T5",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T6",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T7",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T8",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T9",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "pyzx_then_tket",
+ "request_cards": [],
+ "rationale": "T0, T1 and T2 are the first writes into declared zero-init targets (q3, q7, q12), so each can use a 4-T compute-only clean_and. The other seven Toffolis hit targets that were already written (q7, q9, q12, q14, q14, q13, q8), so each uses a 4-T Jones Toffoli with a fresh ancilla and a measurement. That gives 40 T versus the naive 70, with the global pass kept only where it lowers T further; the playbook's plan[TxN] rules use a different format and were not applied."
+}

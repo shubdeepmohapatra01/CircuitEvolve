@@ -1,0 +1,440 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "M1",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M3",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M4",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M6",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M7",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M8",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M10",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M11",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M12",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M13",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M15",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M16",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M17",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M18",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M19",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M21",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M22",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M23",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M24",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M25",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M26",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M28",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M29",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M30",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M31",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M32",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M33",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "M34",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  },
+  {
+   "element": "T0",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T2",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T11",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T27",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T52",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T88",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T137",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T201",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "T282",
+   "route": "jones_toffoli"
+  },
+  {
+   "element": "P0",
+   "route": "custom",
+   "first": [
+    "h q20",
+    "t q20",
+    "cx q7, q20",
+    "cx q17, q20",
+    "cx q20, q7",
+    "cx q20, q17",
+    "tdg q7",
+    "tdg q17",
+    "t q20",
+    "cx q20, q7",
+    "cx q20, q17",
+    "h q20",
+    "s q20"
+   ],
+   "second": [
+    "cx q20, q18"
+   ]
+  },
+  {
+   "element": "T4",
+   "route": "custom",
+   "gates": [
+    "h q20",
+    "measure q20 -> c0",
+    "if(c0) cz q7, q17",
+    "if(c0) x q20"
+   ]
+  },
+  {
+   "element": "P3",
+   "route": "custom",
+   "first": [
+    "h q20",
+    "t q20",
+    "cx q6, q20",
+    "cx q16, q20",
+    "cx q20, q6",
+    "cx q20, q16",
+    "tdg q6",
+    "tdg q16",
+    "t q20",
+    "cx q20, q6",
+    "cx q20, q16",
+    "h q20",
+    "s q20"
+   ],
+   "second": [
+    "cx q20, q17"
+   ]
+  },
+  {
+   "element": "T13",
+   "route": "custom",
+   "gates": [
+    "h q20",
+    "measure q20 -> c0",
+    "if(c0) cz q6, q16",
+    "if(c0) x q20"
+   ]
+  },
+  {
+   "element": "P9",
+   "route": "custom",
+   "first": [
+    "h q20",
+    "t q20",
+    "cx q5, q20",
+    "cx q15, q20",
+    "cx q20, q5",
+    "cx q20, q15",
+    "tdg q5",
+    "tdg q15",
+    "t q20",
+    "cx q20, q5",
+    "cx q20, q15",
+    "h q20",
+    "s q20"
+   ],
+   "second": [
+    "cx q20, q16"
+   ]
+  },
+  {
+   "element": "T29",
+   "route": "custom",
+   "gates": [
+    "h q20",
+    "measure q20 -> c0",
+    "if(c0) cz q5, q15",
+    "if(c0) x q20"
+   ]
+  },
+  {
+   "element": "P19",
+   "route": "custom",
+   "first": [
+    "h q20",
+    "t q20",
+    "cx q4, q20",
+    "cx q14, q20",
+    "cx q20, q4",
+    "cx q20, q14",
+    "tdg q4",
+    "tdg q14",
+    "t q20",
+    "cx q20, q4",
+    "cx q20, q14",
+    "h q20",
+    "s q20"
+   ],
+   "second": [
+    "cx q20, q15"
+   ]
+  },
+  {
+   "element": "T54",
+   "route": "custom",
+   "gates": [
+    "h q20",
+    "measure q20 -> c0",
+    "if(c0) cz q4, q14",
+    "if(c0) x q20"
+   ]
+  },
+  {
+   "element": "P34",
+   "route": "custom",
+   "first": [
+    "h q20",
+    "t q20",
+    "cx q3, q20",
+    "cx q13, q20",
+    "cx q20, q3",
+    "cx q20, q13",
+    "tdg q3",
+    "tdg q13",
+    "t q20",
+    "cx q20, q3",
+    "cx q20, q13",
+    "h q20",
+    "s q20"
+   ],
+   "second": [
+    "cx q20, q14"
+   ]
+  },
+  {
+   "element": "T90",
+   "route": "custom",
+   "gates": [
+    "h q20",
+    "measure q20 -> c0",
+    "if(c0) cz q3, q13",
+    "if(c0) x q20"
+   ]
+  },
+  {
+   "element": "P55",
+   "route": "custom",
+   "first": [
+    "h q20",
+    "t q20",
+    "cx q2, q20",
+    "cx q12, q20",
+    "cx q20, q2",
+    "cx q20, q12",
+    "tdg q2",
+    "tdg q12",
+    "t q20",
+    "cx q20, q2",
+    "cx q20, q12",
+    "h q20",
+    "s q20"
+   ],
+   "second": [
+    "cx q20, q13"
+   ]
+  },
+  {
+   "element": "T139",
+   "route": "custom",
+   "gates": [
+    "h q20",
+    "measure q20 -> c0",
+    "if(c0) cz q2, q12",
+    "if(c0) x q20"
+   ]
+  },
+  {
+   "element": "P83",
+   "route": "custom",
+   "first": [
+    "h q20",
+    "t q20",
+    "cx q1, q20",
+    "cx q11, q20",
+    "cx q20, q1",
+    "cx q20, q11",
+    "tdg q1",
+    "tdg q11",
+    "t q20",
+    "cx q20, q1",
+    "cx q20, q11",
+    "h q20",
+    "s q20"
+   ],
+   "second": [
+    "cx q20, q12"
+   ]
+  },
+  {
+   "element": "T203",
+   "route": "custom",
+   "gates": [
+    "h q20",
+    "measure q20 -> c0",
+    "if(c0) cz q1, q11",
+    "if(c0) x q20"
+   ]
+  },
+  {
+   "element": "P119",
+   "route": "custom",
+   "first": [
+    "h q20",
+    "t q20",
+    "cx q0, q20",
+    "cx q10, q20",
+    "cx q20, q0",
+    "cx q20, q10",
+    "tdg q0",
+    "tdg q10",
+    "t q20",
+    "cx q20, q0",
+    "cx q20, q10",
+    "h q20",
+    "s q20"
+   ],
+   "second": [
+    "cx q20, q11"
+   ]
+  },
+  {
+   "element": "T284",
+   "route": "custom",
+   "gates": [
+    "h q20",
+    "measure q20 -> c0",
+    "if(c0) cz q0, q10",
+    "if(c0) x q20"
+   ]
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "All AND-ladder MCX cascades use temporary ANDs (4 T each) plus Jones middles, and T0 uses a Jones Toffoli. In each of the eight C3X cascades, the trailing unpaired Toffoli has the same controls as the enclosing pair, so the pair's stored AND in q20 is CNOT-copied onto that target before the measurement-based uncompute (Gidney AND, phase polynomial checked by hand), which makes it free. This totals 120*4 + 36*4 + 4 = 628 T."
+}

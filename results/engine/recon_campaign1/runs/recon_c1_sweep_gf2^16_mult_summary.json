@@ -1,0 +1,103 @@
+{
+ "tag": "recon_c1_sweep_gf2^16_mult",
+ "name": "gf2^16_mult",
+ "input_source": "reconstruction",
+ "n": 48,
+ "eps": 0.001,
+ "calls": 12,
+ "stats": {
+  "proposal_calls": 11,
+  "reflect_calls": 1,
+  "llm_errors": 0,
+  "declined": 0,
+  "candidates": 9,
+  "parse_errors": 2,
+  "verified": 8,
+  "rejected_verifier": 1,
+  "rejected_metric": 5,
+  "rejected_ledger": 0,
+  "rejected_whole": 0,
+  "accepted": 3,
+  "accepted_t_reduced": 3,
+  "exact_accepts": 0,
+  "approx_accepts": 3,
+  "rules_added": 2,
+  "reflect_skipped_no_evidence": 0,
+  "plan_proposals": 9,
+  "accepted_plan": 3
+ },
+ "backend_stats": {
+  "calls": 11,
+  "input_tokens": 266510,
+  "output_tokens": 143278,
+  "ok": 11,
+  "failed": 0,
+  "truncated": 2,
+  "empty": 2,
+  "retries": 2
+ },
+ "t_before": 1792,
+ "t_after": 1008,
+ "before": {
+  "t_count": 1792,
+  "qubits": 48,
+  "t_depth": 225,
+  "measurements": 0,
+  "mode": "input"
+ },
+ "after": {
+  "t_count": 1008,
+  "qubits": 49,
+  "t_depth": 498,
+  "measurements": 237,
+  "mode": "relaxed"
+ },
+ "t_after_reclaimed": null,
+ "ledger": {
+  "eps_total": 0.001,
+  "window_pool": 0.00025,
+  "eps_synth": 0.001,
+  "d_input": 0.0,
+  "window_spent": 0.0,
+  "window_spent_rounded": 0.0,
+  "n_window_charges": 1,
+  "eps_rz": null,
+  "bound": 0.0,
+  "reclaimed_eps_synth": 0.001,
+  "rule": "v1: window pool cap 0.25 eps, synthesis = eps - d_input - ceil_q(spent)",
+  "note": "reconstruction charges 0 (exact branch-wise constructions, v2 conventions)"
+ },
+ "final_check_vs_original": {
+  "ok": true,
+  "mode": "relaxed",
+  "certified": false,
+  "reason": "",
+  "unitary_preserving": false
+ },
+ "archive": [
+  {
+   "t_count": 1008,
+   "qubits": 49,
+   "mode": "relaxed",
+   "digest": "4b0704396044d70a"
+  },
+  {
+   "t_count": 1024,
+   "qubits": 49,
+   "mode": "relaxed",
+   "digest": "a2abe1f830d30b3d"
+  },
+  {
+   "t_count": 1792,
+   "qubits": 48,
+   "mode": "input",
+   "digest": "input:bfec513cdd3f50f1"
+  }
+ ],
+ "seconds": 2325.2,
+ "verifier_digest": "bc3eac23a403dbc5",
+ "playbook": {
+  "live": 26,
+  "active": 15
+ }
+}

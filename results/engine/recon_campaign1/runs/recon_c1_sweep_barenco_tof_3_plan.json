@@ -1,0 +1,69 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T0",
+   "route": "custom",
+   "gates": [
+    "x q4",
+    "x q4"
+   ]
+  },
+  {
+   "element": "P0",
+   "route": "custom",
+   "first": [
+    "x q3",
+    "x q3"
+   ],
+   "second": [
+    "x q3",
+    "x q3"
+   ]
+  },
+  {
+   "element": "T2",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "t a0",
+    "cx q0, a0",
+    "cx q1, a0",
+    "cx a0, q0",
+    "cx a0, q1",
+    "tdg q0",
+    "tdg q1",
+    "t a0",
+    "cx a0, q0",
+    "cx a0, q1",
+    "h a0",
+    "s a0",
+    "h a1",
+    "t a1",
+    "cx a0, a1",
+    "cx q2, a1",
+    "cx a1, a0",
+    "cx a1, q2",
+    "tdg a0",
+    "tdg q2",
+    "t a1",
+    "cx a1, a0",
+    "cx a1, q2",
+    "h a1",
+    "s a1",
+    "cx a1, q4",
+    "h a1",
+    "measure a1 -> c0",
+    "if(c0) cz a0, q2",
+    "if(c0) x a1",
+    "h a0",
+    "measure a0 -> c1",
+    "if(c1) cz q0, q1",
+    "if(c1) x a0"
+   ]
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "The whole circuit is logically C3X(q0,q1,q2 -> q4), because q3 is restored and q4 ^= q2*(q3 xor q3 xor q0q1) = q0q1q2. So T0, T1 and T3 become identities, and T2 carries a two-level Gidney temporary-AND ladder (AND(q0,q1)->a0, AND(a0,q2)->a1, cx a1->q4, then measurement-based uncompute of both with CZ and X fix-ups). This costs 8 T with 2 clean ancillas, below the previous 12 T."
+}

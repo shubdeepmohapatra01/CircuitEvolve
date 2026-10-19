@@ -1,0 +1,13 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "M0",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  }
+ ],
+ "global_pass": "pyzx_then_tket",
+ "request_cards": [],
+ "rationale": "All eight enclosing pairs P0-P7 are clean declared-zero targets, so each becomes a direct Gidney temporary AND at 4 T with a 0 T measurement-based uncompute, for 32 T. The unpaired middle T8 targets the data qubit q18, so clean_and cannot be used; a Jones Toffoli costs 4 T plus one fresh ancilla, versus 7 T without it. That gives 36 T in total, against the 119 T naive cost, which matches the best known 4k-4 = 36 T for a 10-control X with clean ancillas."
+}
