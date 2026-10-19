@@ -575,3 +575,17 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
 - All origin=seed, zero counters, provenance in note fields: credit only accrues through the
   unchanged A/B machinery (invariant 7). Suite 371 passed + 2 skips after seeding; digest
   bc3eac23 unchanged.
+
+## 2026-10-19 recon_campaign1 start record (P1 backend pin)
+
+- Campaign driver committed: experiments/engine_recon_campaign.py (driven from the platform
+  kernel; host.llm backend). Models PINNED: proposer claude-opus-5-5, reflector
+  claude-sonnet-5-5, thinking disabled, max_tokens 8000, retries 3.
+- Protocol: single-stage reconstruction (manifest method override); DEV learning ON
+  (20 calls/circuit, batch 1, seed 0, reflect_every 8): cuccaro_4 cuccaro_8 barenco_tof_5
+  tof_5 rc_adder_6. HELD-OUT frozen (12 calls/circuit, playbook_frozen=True - new freeze
+  kwarg on the reconstruction runner, loop gates reflector+save on pb.frozen): cuccaro_16
+  adder_8 qcla_adder_10 barenco_tof_10 mod_adder_1024 gf2^4_mult.
+- Zero-LLM comparators: deterministic control, naive_T, committed B0/B1 (recon_bench).
+- Pre-campaign playbook sha256 (post-P0 seeds): 06d015e65b213c9cc47b77b18461d984a835de582bf3bc17200c11b23e5865ca
+- Start state: suite 371 passed + 2 skipped; digest bc3eac23 unchanged; commit 481f9ac.

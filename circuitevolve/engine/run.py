@@ -169,7 +169,8 @@ def _run_dv_windows(source, eps, complete, binding: MethodBinding, *, tag, playb
 
 
 def _run_reconstruction(source, eps, complete, binding: MethodBinding, *, tag, playbook_path=None,
-                        runs_dir=None, manifest=None, graduated: str = "on", **kw):
+                        runs_dir=None, manifest=None, graduated: str = "on",
+                        playbook_frozen: bool = False, **kw):
     """Reconstruction stage (PLAN_P3 P3.3): v2/tier1 plugin through the generic loop.
     RELAXED column; declared-zero qubits come from the caller's manifest
     ({'declared_zero': [...]}, the benchmark contract) — never guessed. `graduated` is
@@ -230,7 +231,9 @@ def _run_reconstruction(source, eps, complete, binding: MethodBinding, *, tag, p
     pb = None
     if playbook_path is not None:
         p = Path(playbook_path)
-        pb = Playbook.load(p) if p.exists() else Playbook(evidence="improvement")
+        # playbook_frozen=True = the campaign freeze procedure (docs/P2_CAMPAIGN.md): active
+        # rules shown, nothing mutated, reflector disabled (loop gates on pb.frozen), no save
+        pb = Playbook.load(p, frozen=playbook_frozen) if p.exists() else Playbook(evidence="improvement")
     loop = EvolveLoop(plugin, eps, complete, Ledger(eps), playbook=pb, tag=tag,
                       runs_dir=Path(runs_dir) if runs_dir else REPO / "results" / "engine" / "recon_runs",
                       **kw)
