@@ -71,7 +71,7 @@ class Progress:
         return wrapped
 
 
-def run_circuit(llm, name: str, calls: int, frozen: bool, seed: int = 0) -> dict:
+def run_circuit(llm, name: str, calls: int, frozen: bool, seed: int = 0, phase: str = None) -> dict:
     from circuitevolve.engine.run import optimize
     from circuitevolve.llm_backends import make_api_backend
     dzmap, rows = _manifest_dz()
@@ -87,7 +87,7 @@ def run_circuit(llm, name: str, calls: int, frozen: bool, seed: int = 0) -> dict
         kw = dict(playbook_path=str(PLAYBOOK), playbook_frozen=True)   # no mutation, no reflect,
     else:                                                              # never saved back
         kw = dict(playbook_path=str(PLAYBOOK))        # mutable: loop saves it back after the run
-    phase = "held" if frozen else "dev"
+    phase = phase or ("held" if frozen else "dev")
     t0 = time.time()
     summ = optimize(src, EPS, complete,
                     manifest={"declared_zero": dzmap[name], "method": "reconstruction"},
@@ -121,6 +121,55 @@ def run_dev(llm, calls: int = 20) -> list:
     p.write_text(json.dumps(dict(proposer=PROPOSER, reflector=REFLECTOR, calls=calls,
                                  playbook_sha_after=_playbook_sha(), circuits=results), indent=1))
     print("DEV phase complete ->", p.relative_to(ROOT), flush=True)
+    return results
+
+
+# ---------------------------------------------------------------- overnight sweep (approved
+# scope (a), 2026-10-19): learning ON over every structure-bearing, parseable, non-blocked
+# benchmark circuit EXCEPT the at-floor campaign circuits and SWEEP_RESERVED (kept untouched
+# as the FUTURE frozen held-out set — tonight's sweep converts everything it trains on into
+# dev circuits forever). gf2^4_mult's missed frozen slot (token ceiling) is completed
+# frozen-FIRST (phase='held2') before learning may touch it. Sequential execution only:
+# the playbook is a single mutable file (one writer).
+SWEEP_RESERVED = ["ham15-med", "gf2^6_mult", "hwb6", "mod_red_21"]
+SWEEP = {  # name -> proposer calls (giants capped: per-plan verification is minutes there)
+    "tof_3": 12, "barenco_tof_3": 12, "mod5_4": 12, "tof_4": 12, "mod_mult_55": 12,
+    "barenco_tof_4": 12, "vbe_adder_3": 12, "csla_mux_3": 12, "gf2^4_mult": 16,
+    "tof_10": 16, "ham15-low": 16, "gf2^5_mult": 16, "csum_mux_9": 16,
+    "grover_5": 24, "gf2^7_mult": 24, "adder_8": 24, "gf2^8_mult": 24, "gf2^9_mult": 24,
+    "gf2^10_mult": 24, "mod_adder_1024": 24, "ham15-high": 16, "gf2^16_mult": 12,
+    "gf2^32_mult": 8,
+}
+SWEEP_CHUNKS = [
+    ["tof_3", "barenco_tof_3", "mod5_4", "tof_4", "mod_mult_55", "barenco_tof_4",
+     "vbe_adder_3", "csla_mux_3", "gf2^4_mult"],
+    ["tof_10", "ham15-low", "gf2^5_mult", "csum_mux_9", "grover_5", "gf2^7_mult", "adder_8"],
+    ["gf2^8_mult", "gf2^9_mult", "gf2^10_mult", "mod_adder_1024", "ham15-high",
+     "gf2^16_mult", "gf2^32_mult"],
+]
+
+
+def run_sweep(llm, names: list, out_name: str = "sweep_results.jsonl") -> list:
+    """Resumable learning sweep: one JSONL row appended per finished circuit; circuits already
+    in the file are skipped on re-entry. STOP on first budget-ceiling signature (every call
+    ERR, 0s) and report rather than burn the remaining list."""
+    OUT.mkdir(parents=True, exist_ok=True)
+    p = OUT / out_name
+    done = {json.loads(l)["circuit"] for l in open(p)} if p.exists() else set()
+    results = []
+    for n in names:
+        assert n not in SWEEP_RESERVED, f"{n} is reserved as future held-out"
+        if n in done:
+            print(f"-- {n}: already in {out_name}, skipping", flush=True)
+            continue
+        r = run_circuit(llm, n, SWEEP[n], frozen=False, phase="sweep")
+        with open(p, "a") as fh:
+            fh.write(json.dumps(r) + "\n")
+        results.append(r)
+        st = r["stats"]
+        if st["llm_errors"] >= SWEEP[n] and st["accepted"] == 0 and r["seconds"] < 5:
+            print("!! budget-ceiling signature: stopping sweep", flush=True)
+            break
     return results
 
 

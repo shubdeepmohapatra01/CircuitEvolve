@@ -651,3 +651,16 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   (token budget); LLM lifting spotter + triage (budget-gated stubs).
 - Final gates: circuitevolve suite 371 passed + 2 skipped, cvdv 33 passed, both frozen
   digests unchanged.
+
+## 2026-10-19 recon_campaign1 overnight sweep protocol (approved scope (a))
+
+- Learning sweep over 23 structure-bearing benchmark circuits (SWEEP in
+  experiments/engine_recon_campaign.py; adaptive budgets 8-24 calls, giants capped), run as a
+  SEQUENTIAL chain of sub-sessions (per-session LLM token ceilings; single playbook writer).
+  Resumable via results/engine/recon_campaign1/sweep_results.jsonl (append-only, skip-done).
+- gf2^4_mult's missed frozen held-out slot is completed FIRST (phase held2, 12 calls, playbook
+  frozen at the post-dev sha) before learning may touch that circuit.
+- CONTAMINATION DISCLOSURE: every circuit the sweep trains on ceases to be valid held-out
+  material. SWEEP_RESERVED = ham15-med, gf2^6_mult, hwb6, mod_red_21 are therefore kept
+  UNTOUCHED tonight as the future frozen evaluation set. The qcla family stays excluded
+  (v2 verifier-coverage block); at-floor campaign circuits excluded (no T left to find).
