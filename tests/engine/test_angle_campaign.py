@@ -199,3 +199,16 @@ def test_infra_failure_restores_arm_a(camp):
     r = camp.run_cell(dead, dict(phase="dev", circuit="hubbard_8", arm="A", eps=1e-3, calls=8))
     assert r["infra_fail"] and not r["valid"] and r["a_playbook_restored"]
     assert _sha(camp.A_PB) == sha0 and not list(camp.OUT.glob("_A_backup_*"))
+
+
+def test_watchdog_retries_hung_batch(monkeypatch):
+    import time as _t
+    from circuitevolve.llm_backends import make_api_backend
+    n = {"k": 0}
+    def flaky(reqs, max_concurrency=4):
+        n["k"] += 1
+        if n["k"] == 1:
+            _t.sleep(1.0)                       # first batch "hangs"
+        return [{"text": "NONE"} for _ in reqs]
+    be = make_api_backend(ac.with_watchdog(flaky, timeout_s=0.2), model="m", backoff=0.0, sleep=lambda s: None)
+    assert be(["a", "b"]) == ["NONE", "NONE"] and n["k"] == 2

@@ -352,6 +352,30 @@ def check_freeze() -> None:
         raise RuntimeError("verifier digest drift since FREEZE.json")
 
 
+# ---------------------------------------------------------------------------- llm watchdog
+BATCH_TIMEOUT_S = 1500            # longest healthy 4-call batch seen ~6 min; a 65-min hang was seen
+
+
+def with_watchdog(llm, timeout_s: float = None):
+    """Wrap host.llm so a hung batch raises instead of blocking forever. The backend treats the
+    'timed out' message as transient and re-issues (retries=3). The abandoned call keeps running
+    in its daemon thread; its result is discarded (no state is touched by it)."""
+    import concurrent.futures as cf
+
+    def call(reqs, max_concurrency=4):
+        t = BATCH_TIMEOUT_S if timeout_s is None else timeout_s
+        ex = cf.ThreadPoolExecutor(1)
+        fut = ex.submit(llm, reqs, max_concurrency=max_concurrency)
+        try:
+            return fut.result(timeout=t)
+        except cf.TimeoutError:
+            print(f"!! host.llm batch timed out after {t:.0f}s - abandoning and retrying", flush=True)
+            raise TimeoutError(f"host.llm batch timed out after {t:.0f}s (watchdog)")
+        finally:
+            ex.shutdown(wait=False)
+    return call
+
+
 # ---------------------------------------------------------------------------- one cell
 def _tag(cell: dict) -> tuple:
     base = f"ac1_{cell['phase']}_{cell['circuit']}_{cell['arm']}_{elabel(cell['eps'])}"
@@ -400,6 +424,7 @@ def run_cell(llm, cell: dict) -> dict:
     n_prop, n_refl = expected_split(calls, learning)
     tag, prev = _tag(cell)
     bar = Progress(n_prop, f"{name} {arm} {elabel(eps)}")
+    llm = with_watchdog(llm)
     complete = bar.wrap(make_api_backend(llm, model=PROPOSER, thinking=THINKING,
                                          max_tokens=MAX_TOKENS, max_concurrency=BATCH))
     reflect = (make_api_backend(llm, model=REFLECTOR, thinking=THINKING, max_tokens=MAX_TOKENS,

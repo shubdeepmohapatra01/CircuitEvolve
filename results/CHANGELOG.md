@@ -778,3 +778,14 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   file, which arm-A learning mutates by protocol; they now read the sha-recorded pre-campaign
   snapshot results/engine/angle_campaign1/A_playbook_at_start.json (6876d37c..., byte-identical
   to the file at d054cea). Suite 383 passed + 2 skipped; digest bc3eac23 unchanged.
+
+## 2026-10-19 angle_campaign1: host.llm hang on hhl_8 A (tag _r3) + watchdog
+
+- ac1_dev_hhl_8_A_e3_r3 blocked in its FIRST host.llm batch for >65 min (no per-call line, no
+  error); interrupted on supervisor instruction. Log holds only the start record; no results row;
+  arm-A playbook verified unchanged (f32102c6...); its backup file moved to Trash. Next attempt
+  runs as _r4 (rerun_of recorded).
+- Driver: with_watchdog wraps host.llm per batch (BATCH_TIMEOUT_S 1500 s, ~4x the longest healthy
+  batch); a timeout surfaces as a transient 'timed out' error that the unchanged backend re-issues
+  (retries 3). Proposal-side plumbing only; acceptance, prompts, budgets untouched.
+  test_watchdog_retries_hung_batch; driver tests 8/8.
