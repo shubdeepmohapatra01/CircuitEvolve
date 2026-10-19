@@ -1,0 +1,13 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "M0",
+   "route": "ancilla_mcx",
+   "middle": "jones"
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "All three enclosing pairs (P0, P1, P2) are clean pairs on declared-zero targets, so each becomes a direct temporary AND at 4 T. The middle Toffoli T3 writes into data qubit q8, so it uses the Jones construction (4 T, one fresh ancilla, one measurement). This gives 16 T, which matches the relaxed floor of 3x4 + 4."
+}

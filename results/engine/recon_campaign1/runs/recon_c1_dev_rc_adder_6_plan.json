@@ -1,0 +1,37 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "P0",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "T1+T9",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "T2+T8",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "T3+T7",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "T4+T6",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "T5",
+   "route": "jones_toffoli"
+  }
+ ],
+ "global_pass": "pyzx_then_tket",
+ "request_cards": [],
+ "rationale": "Four Toffoli pairs (T1/T9, T2/T8, T3/T7, T4/T6) compute the same AND: in each, the second control c is changed in between only as c -> NOT(c xor a), so a AND c is unchanged, and the target is only read in between. Each pair, and the mirror pair P0, therefore takes a via-ancilla temporary AND (4 T), and the lone T5 takes a Jones Toffoli (4 T), for 24 T total, which looks like the floor for this toolbox. This keeps the accepted 24-T routing and tries the untried pyzx_then_tket global pass to lower T-depth."
+}

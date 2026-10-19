@@ -598,3 +598,20 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   amended: both backends thinking={"type":"adaptive"}, max_tokens 16000 (thinking tokens
   count toward the cap). Recorded BEFORE any campaign proposer call: the failed first launch
   spent 1 call that errored at request validation (0 tokens).
+
+## 2026-10-19 recon_campaign1 DEV phase complete
+
+- 5 dev circuits, 20 calls each (18 opus-5-5 proposer + 2 sonnet-5-5 reflect), ~30 min wall.
+  RESULT (relaxed column, frozen verifier, all final checks ok): cuccaro_4 56->16 (= control),
+  cuccaro_8 112->32 (= control), tof_5 49->16 (= control), barenco_tof_5 84->16 (control 36:
+  -56%), rc_adder_6 77->24 (control 40: -40%). The LLM arm BEAT the deterministic tier-1
+  control on 2/5 dev circuits and matched its relaxed floor on 3/5. Qubits rose where T fell
+  (lexicographic, T first). Full table + verbatim winning plans:
+  results/engine/recon_campaign1/DEV_REPORT.md.
+- Playbook (A/B machinery, unchanged settings): 18 reflector-born rules (R11-R28); seeds R4
+  (Maslov RCCX pairing) and R9 (ancilla-vs-T) PROMOTED active; 7 seeds retired (z_retire -1.0
+  on small negative deltas); reflector independently re-derived the floor-check lesson from
+  metric-rejection evidence plus procedural rules (copy parent multiplicities, one decision
+  per element, verbatim-resubmit check, verifier-counterexample support invariants).
+- Honest caveats recorded in the report: single seed, no variance estimate; transfer is the
+  held-out phase's question. Suite 371+2 green; digest bc3eac23 unchanged.

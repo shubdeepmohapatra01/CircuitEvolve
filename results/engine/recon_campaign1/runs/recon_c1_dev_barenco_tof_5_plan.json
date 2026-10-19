@@ -1,0 +1,163 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "T6",
+   "route": "custom",
+   "gates": [
+    "h a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q1, a0",
+    "t a0",
+    "cx q0, a0",
+    "tdg a0",
+    "cx q1, a0",
+    "t a0",
+    "h a0",
+    "s a0",
+    "h a1",
+    "cx q2, a1",
+    "tdg a1",
+    "cx a0, a1",
+    "t a1",
+    "cx q2, a1",
+    "tdg a1",
+    "cx a0, a1",
+    "t a1",
+    "h a1",
+    "s a1",
+    "h a2",
+    "cx q3, a2",
+    "tdg a2",
+    "cx a1, a2",
+    "t a2",
+    "cx q3, a2",
+    "tdg a2",
+    "cx a1, a2",
+    "t a2",
+    "h a2",
+    "s a2",
+    "h a3",
+    "cx q4, a3",
+    "tdg a3",
+    "cx a2, a3",
+    "t a3",
+    "cx q4, a3",
+    "tdg a3",
+    "cx a2, a3",
+    "t a3",
+    "h a3",
+    "s a3",
+    "cx a3, q8",
+    "h a3",
+    "measure a3 -> c3",
+    "if(c3) cz q4, a2",
+    "if(c3) x a3",
+    "h a2",
+    "measure a2 -> c2",
+    "if(c2) cz q3, a1",
+    "if(c2) x a2",
+    "h a1",
+    "measure a1 -> c1",
+    "if(c1) cz q2, a0",
+    "if(c1) x a1",
+    "h a0",
+    "measure a0 -> c0",
+    "if(c0) cz q0, q1",
+    "if(c0) x a0"
+   ]
+  },
+  {
+   "element": "T0",
+   "route": "custom",
+   "gates": [
+    "x q8",
+    "x q8"
+   ]
+  },
+  {
+   "element": "T1",
+   "route": "custom",
+   "gates": [
+    "x q7",
+    "x q7"
+   ]
+  },
+  {
+   "element": "T2",
+   "route": "custom",
+   "gates": [
+    "x q6",
+    "x q6"
+   ]
+  },
+  {
+   "element": "T3",
+   "route": "custom",
+   "gates": [
+    "x q5",
+    "x q5"
+   ]
+  },
+  {
+   "element": "T4",
+   "route": "custom",
+   "gates": [
+    "x q6",
+    "x q6"
+   ]
+  },
+  {
+   "element": "T5",
+   "route": "custom",
+   "gates": [
+    "x q7",
+    "x q7"
+   ]
+  },
+  {
+   "element": "T7",
+   "route": "custom",
+   "gates": [
+    "x q7",
+    "x q7"
+   ]
+  },
+  {
+   "element": "T8",
+   "route": "custom",
+   "gates": [
+    "x q6",
+    "x q6"
+   ]
+  },
+  {
+   "element": "T9",
+   "route": "custom",
+   "gates": [
+    "x q5",
+    "x q5"
+   ]
+  },
+  {
+   "element": "T10",
+   "route": "custom",
+   "gates": [
+    "x q6",
+    "x q6"
+   ]
+  },
+  {
+   "element": "T11",
+   "route": "custom",
+   "gates": [
+    "x q7",
+    "x q7"
+   ]
+  }
+ ],
+ "global_pass": "none",
+ "request_cards": [],
+ "rationale": "The whole 12-Toffoli barenco_tof_5 circuit is logically a single C5X (q0..q4 -> q8) with the dirty work qubits q5,q6,q7 restored, so it can be rebuilt as a clean-ancilla AND ladder: 4 Gidney ANDs at 4 T each, measurement-based uncompute at 0 T, giving 16 T on 13 qubits. This goes below the per-element relaxed floor of 36. The new construction is placed in T6, and every other Toffoli is replaced by an identity (x x). This only verifies if checked as a whole circuit; if elements are verified one by one, it will be rejected."
+}

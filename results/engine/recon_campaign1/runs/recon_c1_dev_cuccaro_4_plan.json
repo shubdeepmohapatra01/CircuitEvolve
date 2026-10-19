@@ -1,0 +1,28 @@
+{
+ "target": "relaxed",
+ "decisions": [
+  {
+   "element": "P0",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P1",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P2",
+   "route": "temporary_and",
+   "via_ancilla": true
+  },
+  {
+   "element": "P3",
+   "route": "temporary_and",
+   "via_ancilla": true
+  }
+ ],
+ "global_pass": "pyzx",
+ "request_cards": [],
+ "rationale": "All four Toffoli pairs have unchanged controls between their members, so each can compute a Gidney temporary AND into a fresh clean ancilla (4 T) and uncompute it by X-measurement plus a CZ fix-up (0 T). cx(ancilla, target) at both ends of each pair reproduces the target updates, giving about 16 T versus 56 T naive. The pyzx pass is kept only if it lowers the count further."
+}
