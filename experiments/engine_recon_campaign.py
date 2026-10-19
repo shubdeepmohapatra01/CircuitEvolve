@@ -59,8 +59,11 @@ class Progress:
             k = min(self.done, self.total)
             fill = int(20 * k / self.total)
             mins = (time.time() - self.t0) / 60
-            kinds = ",".join(("NONE" if (o or "").strip().upper().startswith("NONE") else "plan")
-                             for o in out)
+            def kind(o):                            # backend returns RuntimeError objects on failure
+                if not isinstance(o, str):
+                    return "ERR"
+                return "NONE" if o.strip().upper().startswith("NONE") else "plan"
+            kinds = ",".join(kind(o) for o in out)
             print(f"[{'#' * fill}{'.' * (20 - fill)}] {k:>3}/{self.total} {self.label}"
                   f" · {mins:4.1f}m · {kinds}", flush=True)
             return out
@@ -74,8 +77,12 @@ def run_circuit(llm, name: str, calls: int, frozen: bool, seed: int = 0) -> dict
     dzmap, rows = _manifest_dz()
     src = str(ROOT / "benchmarks/nam_arith" / rows[name]["logical_path"])
     bar = Progress(calls, name)
-    complete = bar.wrap(make_api_backend(llm, model=PROPOSER))
-    reflect = None if frozen else make_api_backend(llm, model=REFLECTOR)
+    # 5-5 generation models reject thinking=disabled; adaptive is their native mode. Thinking
+    # tokens count toward max_tokens, hence the raised cap (empty text retries as transient).
+    complete = bar.wrap(make_api_backend(llm, model=PROPOSER,
+                                         thinking={"type": "adaptive"}, max_tokens=16000))
+    reflect = None if frozen else make_api_backend(llm, model=REFLECTOR,
+                                                   thinking={"type": "adaptive"}, max_tokens=16000)
     if frozen:                                        # freeze procedure: active rules shown,
         kw = dict(playbook_path=str(PLAYBOOK), playbook_frozen=True)   # no mutation, no reflect,
     else:                                                              # never saved back

@@ -589,3 +589,12 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
 - Zero-LLM comparators: deterministic control, naive_T, committed B0/B1 (recon_bench).
 - Pre-campaign playbook sha256 (post-P0 seeds): 06d015e65b213c9cc47b77b18461d984a835de582bf3bc17200c11b23e5865ca
 - Start state: suite 371 passed + 2 skipped; digest bc3eac23 unchanged; commit 481f9ac.
+
+## 2026-10-19 recon_campaign1 pin amendment (adaptive thinking)
+
+- The pinned 5-5 generation models reject thinking=disabled (API: use adaptive).
+  llm_backends.make_api_backend now accepts a thinking DICT passed through verbatim
+  (default False -> disabled unchanged, bit-exact for existing callers). Campaign pins
+  amended: both backends thinking={"type":"adaptive"}, max_tokens 16000 (thinking tokens
+  count toward the cap). Recorded BEFORE any campaign proposer call: the failed first launch
+  spent 1 call that errored at request validation (0 tokens).

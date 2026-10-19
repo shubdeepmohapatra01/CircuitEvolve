@@ -50,7 +50,9 @@ def make_api_backend(llm, model=None, max_tokens: int = 8000, max_concurrency: i
         r = {"prompt": prompt, "max_tokens": max_tokens}
         if m:
             r["model"] = m
-        if not thinking:
+        if isinstance(thinking, dict):              # newest-gen models reject "disabled" and
+            r["thinking"] = thinking                # require e.g. {"type": "adaptive"}
+        elif not thinking:
             r["thinking"] = {"type": "disabled"}
         if system:
             r["system"] = system
