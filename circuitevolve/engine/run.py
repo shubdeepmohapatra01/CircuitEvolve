@@ -86,7 +86,13 @@ def optimize(source, eps: float, complete, *, manifest: dict | None = None, tag:
 
 
 def _run_dv_windows(source, eps, complete, binding: MethodBinding, *, tag, playbook_path, runs_dir,
-                    graduated: str = "on", tket: str = "auto", staged: bool = False, **kw):
+                    graduated: str = "on", tket: str = "auto", staged: bool = False,
+                    playbook_frozen: bool = False, playbook=None, **kw):
+    """Angle stage. playbook_frozen=True = the campaign freeze procedure (as for reconstruction):
+    the file at playbook_path is loaded frozen (active rules shown, nothing mutated, no reflector,
+    never saved back). playbook = a caller-owned Playbook object (e.g. a campaign placebo arm);
+    it is used as-is and NEVER saved back by this function (playbook_path must then be None).
+    Both default off: existing callers are bit-exact."""
     from ..core.circuit import Circuit, load_input, original_ops
     from ..core.loop import RUNS, WindowLoop
     from ..search.playbook import Playbook
@@ -147,9 +153,18 @@ def _run_dv_windows(source, eps, complete, binding: MethodBinding, *, tag, playb
             # the loop's standard input check measures the (original -> pre-opted) distance and
             # charges it to the ledger, so the pass spends no budget machinery of its own
     pb = None
-    if playbook_path is not None:
+    if playbook is not None:
+        if playbook_path is not None:
+            raise ValueError("pass either playbook (caller-owned object) or playbook_path, not both")
+        pb = playbook
+    elif playbook_path is not None:
         p = Path(playbook_path)
-        pb = Playbook.load(p) if p.exists() else Playbook(evidence="improvement")
+        if playbook_frozen:
+            if not p.exists():
+                raise FileNotFoundError(f"playbook_frozen=True but {p} does not exist")
+            pb = Playbook.load(p, frozen=True)
+        else:
+            pb = Playbook.load(p) if p.exists() else Playbook(evidence="improvement")
     loop = WindowLoop(circ, orig, eps, complete, playbook=pb, tag=tag,
                       runs_dir=Path(runs_dir) if runs_dir else RUNS, **kw)
     out = loop.run()

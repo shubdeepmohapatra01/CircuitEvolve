@@ -713,3 +713,39 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   LLM ceiling -> sequential sub-session chaining, append-only tag rules, arm semantics, pins:
   proposer claude-opus-5 / reflector claude-sonnet-5-5, adaptive thinking). Campaign itself
   NOT started in this entry.
+
+## 2026-10-19 angle_campaign1 start record (dv.windows 3-arm campaign, docs/P2_CAMPAIGN.md)
+
+- Driver experiments/engine_angle_campaign.py (runbook's "not yet built" item): resumable
+  append-only results.jsonl (skip-done on VALID rows; token-ceiling runs are invalid and rerun
+  under a fresh _rN tag), per-arm playbook handling, freeze procedure, futility check, zero-LLM
+  columns, five-column report. Outputs under results/engine/angle_campaign1/.
+- Engine: _run_dv_windows gains playbook_frozen (load frozen, as the reconstruction runner) and
+  playbook (caller-owned object, never saved back). Both default off -> existing callers
+  bit-exact. tests/engine/test_angle_campaign.py (6 tests, fake host.llm) covers arm semantics,
+  budget split, freeze ordering, frozen held-out leaves files unchanged, ceiling -> rerun tag,
+  futility + report.
+- Pins (unchanged from the runbook): proposer claude-opus-5, reflector claude-sonnet-5-5,
+  thinking adaptive, max_tokens 16000; batch 4 (= concurrency), seed 0, archive 4, p_best 0.7.
+  Preflight (not campaign data, untagged): 4 opus-5 calls on qft_8 = 39k tokens (~9.8k/call,
+  mostly thinking), ~200 s per 4-call batch.
+- Operationalization of the frozen contract (recorded BEFORE any campaign call; nothing weakened):
+  * Budget per DEV cell = 45 LLM calls total, reflector calls counted against it (invariant 7):
+    A and B ~40 proposer + <=5 reflector (reflect_every 8; the loop's own cadence, proposer
+    calls always >= 40), C = 45 proposer. HELD-OUT: 40 proposer calls per cell, reflector off.
+  * Arm B reconciles the contract ("same rule COUNT, neutral texts, reflector ON") with the
+    runbook ("playbook files loaded frozen for B; only arm A's playbook mutates"): B_dev.json =
+    arm A's live layout at start (1 active + 21 candidate; retired rules are never shown) with
+    hand-written generic task-agnostic texts (211-288 chars), candidates A/B-sampled by the same
+    select path so the per-prompt dose matches A; reflector called on A's cadence with the real
+    reflector prompt (calls + tokens counted) but its deltas DISCARDED (sham reflector, no gate
+    changes) - the file never changes (sha checked per run). Held-out B_held.json = as many
+    neutral ACTIVE rules as arm A has active at the freeze.
+  * Order: DEV circuit-major (A, B, C), then freeze, then HELD-OUT 1e-3 then the 1e-5 arm.
+  * Futility: evaluated once when the first 3 DEV circuits are complete in all arms (405/675 DEV
+    calls, first point >= half budget); fires iff mean(T-red% A - T-red% C) < -5 pp.
+- Zero-LLM columns written (zero_llm.json): engine-metric input T equals B0 on all 16
+  (circuit, eps) rows; G1 pass: qft_8 -11.5%, hhl_8 -10.4%, qpe_8 -14.7%, qae_13 -14.6% at 1e-3,
+  0 on heisenberg_6/hubbard_8/qml_13/tfim_6 (attributed to the pass, never to an arm).
+- START.json: arm-A playbook sha 6876d37c..., B_dev sha 68997b84..., verifier digest bc3eac23...
+  Campaign calls not yet issued in this entry.
