@@ -1,6 +1,6 @@
 {
  "blinded": false,
- "next_id": 37,
+ "next_id": 39,
  "settings": {
   "ab_fraction": 0.5,
   "min_exposure": 8,
@@ -695,6 +695,44 @@
    "with_improvements": 0,
    "without_prompts": 0,
    "without_improvements": 0
+  },
+  {
+   "id": "R37",
+   "text": "[seed 2026-10-18 literature harvest] Rotations are pi/4-parity-phase gadgets: two rz merge whenever their PARITIES agree, not only when they sit on the same qubit - re-routing a CNOT can make two rotations' parities equal, then they fuse to one rz(a+b). Look for a window rewrite that equalizes two rotation parities at the cost of Clifford-only changes.",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 0,
+   "improvements": 0,
+   "note": "provenance: de Beaudrap, Bian, Wang, 'Fast and effective techniques for T-count reduction via spider nest identities', TQC 2020",
+   "with_prompts": 0,
+   "with_improvements": 0,
+   "without_prompts": 0,
+   "without_improvements": 0
+  },
+  {
+   "id": "R38",
+   "text": "[seed 2026-10-18 literature harvest] In a Hadamard-free stretch the T-count is the number of DISTINCT odd parities in the phase polynomial. A candidate that reduces distinct odd parities beats one that only cancels adjacent gates; two equal odd parities kill 2 T at once.",
+   "status": "candidate",
+   "created_call": 0,
+   "origin": "seed",
+   "supersedes": null,
+   "with_props": 0,
+   "with_pass": 0,
+   "without_props": 0,
+   "without_pass": 0,
+   "exposures": 0,
+   "improvements": 0,
+   "note": "provenance: Heyfron & Campbell 'An efficient quantum compiler that reduces T count' (TODD, 2018); Vandaele, 'Lower T-count with faster algorithms', arXiv:2407.08695",
+   "with_prompts": 0,
+   "with_improvements": 0,
+   "without_prompts": 0,
+   "without_improvements": 0
   }
  ],
  "history": [
@@ -1087,6 +1125,11 @@
    "status": "candidate",
    "text": "[seed 2026-10-18 FTQC primer] Change ONE thing per candidate (one merge, one snap, or one fold) and keep the rest of the window byte-identical; multi-edit candidates are rejected far more often and teach nothing when they fail.",
    "supersedes": null
+  },
+  {
+   "call": 0,
+   "op": "seed",
+   "note": "P0 literature harvest (campaign recon_campaign1): R37-R38 phase-polynomial window lessons (spider-nest/TODD literature). Zero counters; for the (deferred) dv.windows campaign these enter arm A like any other seed."
   }
  ]
 }

@@ -559,3 +559,19 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   <tag>_s<i>_<method>.jsonl. Single-stage tagged runs keep the bare tag (pre-/1 behavior
   bit-exact; golden/B0 untouched). Found during a demo dry run. Suite 371+2; digest
   bc3eac23 unchanged.
+
+## 2026-10-19 recon_campaign1 P0 (literature seed harvest)
+
+- Approved campaign plan: reconstruction-method training (dev learning + frozen held-out),
+  literature harvest first; models pinned by the user: proposer = claude-opus-5-5,
+  reflector/rule-compiler = claude-sonnet-5-5 (user: "opus for reasoning, sonnet for
+  compiling rules"). The dv.windows 3-arm P2 campaign is DEFERRED (not run).
+- playbooks/families/reconstruction.json +4 seeds (R7-R10, next_id 11): whole-adder pairing
+  strategy + compute/uncompute asymmetry (Gidney arXiv:1709.06648), ancilla-vs-T tradeoff
+  (Barenco 1995; ICCS 2022 4n-4 survey), floor awareness (arXiv:2610.01024 isotropy bound,
+  2026). playbooks/families/dv.windows.json +2 seeds (R37-R38, next_id 39): parity-phase
+  fusion + distinct-odd-parity lessons (de Beaudrap et al. TQC 2020; Heyfron-Campbell TODD;
+  Vandaele arXiv:2407.08695) for the deferred angle campaign.
+- All origin=seed, zero counters, provenance in note fields: credit only accrues through the
+  unchanged A/B machinery (invariant 7). Suite 371 passed + 2 skips after seeding; digest
+  bc3eac23 unchanged.
