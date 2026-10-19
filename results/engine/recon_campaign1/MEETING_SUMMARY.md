@@ -17,8 +17,9 @@ with every accepted circuit certified by exact D[omega] arithmetic, never floats
 ## Results (see recon_campaign_results.png)
 - Trained circuits: matches the 4T/pair floor where the control is optimal; **-56%**
   (barenco_tof_5 36->16) and **-40%** (rc_adder_6 40->24) where pairing is irregular.
-- **Frozen transfer (never trained): beats control on 7/9, matches 2/9** — gf2^4_mult -44%,
-  mod_red_21 -21%, adder_8 -11%, hwb6 -7%, ham15-med/mod_adder_1024 -5%.
+- **Frozen transfer (never trained): beats control on 6/9, matches 3/9** — gf2^4_mult -44%,
+  mod_red_21 -21%, adder_8 -11%, hwb6 -7%, ham15-med/mod_adder_1024 -5%; matches on
+  cuccaro_16, barenco_tof_10, gf2^6_mult.
 - Overnight sweep additionally trained 22 more circuits (e.g. ham15-high 2457->824).
 
 ## What the LLM actually discovered
