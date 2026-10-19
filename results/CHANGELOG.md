@@ -629,3 +629,25 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   token ceiling (2.0M) instantly at campaign end; recorded as a gap, never as a zero-accept
   result. mod_adder_1024 call 10 errored once (2 accepts stand).
 - results/engine/recon_campaign1/HELDOUT_REPORT.md; suite 371+2 green; digest unchanged.
+
+## 2026-10-19 recon_campaign1 CLOSE
+
+- First real-LLM campaign on the unified engine, executed end to end: P0 literature seeds
+  (481f9ac) -> backend pin + adaptive amendment (3e00e1f, 1b289ed) -> DEV learning (96109e3)
+  -> HELD-OUT frozen transfer (2f066fc). ~204 LLM calls total (92+10 dev, 71 held-out incl.
+  13 errored, plus probes); the platform 2.0M-token conversation ceiling ended the campaign
+  one circuit early (gf2^4_mult gap, disclosed).
+- HEADLINE (relaxed column, frozen verifier bc3eac23 checked start/end of all 11 runs):
+  the Opus proposer with the seeded+evolved playbook MATCHED the deterministic tier-1
+  control's floor on 5 circuits and BEAT it on 4 - dev: barenco_tof_5 36->16 (-56%),
+  rc_adder_6 40->24 (-40%); held-out FROZEN: adder_8 180->160 (-11%, also below the exact
+  control 173), mod_adder_1024 660->628 (-5%). qcla_adder_10 remains verifier-coverage
+  blocked (parity with v2).
+- Playbook: 10 seeds -> 28 rules (18 reflector-born); R4 + R9 promoted active on dev
+  evidence; frozen sha 111ab24a recorded pre-held-out. All plans literal-parsed; ledger
+  charge 0 throughout; results append-only (2 crashed-launch debris files removed before
+  any result existed, documented above).
+- Deferred: dv.windows 3-arm P2 campaign (user scope choice); gf2^4_mult held-out slot
+  (token budget); LLM lifting spotter + triage (budget-gated stubs).
+- Final gates: circuitevolve suite 371 passed + 2 skipped, cvdv 33 passed, both frozen
+  digests unchanged.
