@@ -1,6 +1,13 @@
 \documentclass[10pt]{beamer}
 \usetheme[progressbar=frametitle]{metropolis}
-\usecolortheme{wolf}
+% 'wolf' color theme replaced inline: that file isn't a standard Beamer package (it lived
+% alongside the other project's main.tex) and Overleaf cannot find it. This reproduces its
+% one visible effect here -- NC State red as the accent color -- without depending on the file.
+\definecolor{ncred}{RGB}{204,0,0}
+\setbeamercolor{frametitle}{bg=ncred, fg=white}
+\setbeamercolor{progress bar}{fg=ncred, bg=ncred!20}
+\setbeamercolor{title separator}{fg=ncred}
+\setbeamercolor{alerted text}{fg=ncred}
 \usepackage{appendixnumberbeamer}
 
 \usepackage{booktabs}
@@ -19,9 +26,6 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,decorations.pathreplacing,positioning}
 
-\makeatletter
-\@ifundefined{color@ncred}{\definecolor{ncred}{RGB}{204,0,0}}{}
-\makeatother
 
 
 \title{CircuitEvolve}
