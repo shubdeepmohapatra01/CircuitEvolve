@@ -56,180 +56,227 @@
 \end{frame}
 
 
-% =====================================================================
-\section{The loop}
-% =====================================================================
-
-\begin{frame}{The LLM proposes, an exact verifier decides}
+\begin{frame}{One pipeline, one slot that changes}
 
 \centering
 \begin{tikzpicture}[x=1cm, y=1cm,
-    box/.style={draw=gray!70!black, fill=gray!10, rounded corners=2pt, minimum width=2.7cm, minimum height=1.15cm,
-                inner sep=3pt, align=center, font=\footnotesize},
-    llm/.style={box, draw=orange!75!black, fill=orange!16, line width=0.9pt},
-    ver/.style={box, draw=blue!60!black, fill=blue!10, line width=0.9pt},
-    arr/.style={-{Stealth[length=2.2mm]}, line width=0.7pt},
+    fix/.style={draw=gray!70!black, fill=gray!12, rounded corners=2pt, minimum width=1.8cm,
+                minimum height=0.95cm, font=\footnotesize, align=center},
+    slot/.style={draw=gray!50, dashed, rounded corners=3pt, minimum width=4.3cm, minimum height=3.4cm},
+    opt/.style={rounded corners=2pt, minimum width=3.9cm, minimum height=0.5cm, font=\scriptsize,
+                anchor=west, inner sep=3pt, align=left},
+    arr/.style={-{Stealth[length=2.2mm]}, line width=0.8pt}]
+  \node[fix] (T) at (0,0) {TKET};
+  \node[slot] (S) at (4.2,0) {};
+  \node[fix] (G) at (8.4,0) {gridsynth};
+  \node[fix] (N) at (11.1,0) {\textbf{T-count}};
+  \draw[arr] (T) -- (S); \draw[arr] (S) -- (G); \draw[arr] (G) -- (N);
+  \node[font=\scriptsize\itshape] at (4.2,1.95) {the optimizer slot};
+  \node[opt, fill=gray!10]            at (2.25, 1.25) {\textbf{B0}\; nothing};
+  \node[opt, fill=gray!18]            at (2.25, 0.65) {\textbf{B1}\; pyzx};
+  \node[opt, fill=violet!18]          at (2.25, 0.05) {\textbf{B2}\; BQSKit-FT};
+  \node[opt, fill=violet!10]          at (2.25,-0.55) {\textbf{B3}\; BQSKit-DPF};
+  \node[opt, fill=orange!22, draw=orange!75!black, line width=0.8pt] at (2.25,-1.25)
+       {\textbf{ours}\; LLM loop};
+\end{tikzpicture}
+
+\vspace{0.35cm}
+\begin{itemize}
+  \item Every bar in this talk is \textbf{T-count $\div$ B0} --- same circuit, same error budget, one slot swapped
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Inside our slot}
+
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm,
+    box/.style={draw=gray!70!black, fill=gray!10, rounded corners=2pt, minimum width=2.5cm,
+                minimum height=1.0cm, font=\footnotesize, align=center},
+    llm/.style={box, draw=orange!75!black, fill=orange!18, line width=1pt},
+    ver/.style={box, draw=blue!60!black, fill=blue!10, line width=1pt},
+    arr/.style={-{Stealth[length=2.2mm]}, line width=0.8pt},
     lab/.style={font=\scriptsize, midway, fill=white, inner sep=1pt, align=center}]
-  \node[box] (A) at (0,0)      {Circuit +\\playbook rules};
-  \node[llm] (B) at (4.0,0)    {\textbf{1} Proposer\\LLM};
-  \node[ver] (C) at (8.0,0)    {Frozen\\verifier};
-  \node[box] (F) at (0,-2.3)   {Playbook\\rules};
-  \node[llm] (E) at (4.0,-2.3) {\textbf{2} Reflector\\LLM};
-  \node[box] (D) at (8.0,-2.3) {Accept if verified\\\textbf{and} T drops};
-  \draw[arr] (A) -- node[lab]{prompt} (B);
-  \draw[arr] (B) -- node[lab]{candidates} (C);
-  \draw[arr] (C) -- node[lab]{verdict} (D);
-  \draw[arr] (D) -- node[lab]{accepts,\\rejects} (E);
-  \draw[arr] (E) -- node[lab]{$\leq 3$\\edits} (F);
-  \draw[arr] (F) -- node[lab]{rules\\shown} (A);
-  % legend
-  \node[llm, minimum width=0.5cm, minimum height=0.3cm] at (0.0,-3.9) {};
-  \node[right, font=\scriptsize] at (0.35,-3.9) {LLM call};
-  \node[ver, minimum width=0.5cm, minimum height=0.3cm] at (3.2,-3.9) {};
-  \node[right, font=\scriptsize] at (3.55,-3.9) {frozen verifier};
-  \node[box, minimum width=0.5cm, minimum height=0.3cm] at (6.9,-3.9) {};
-  \node[right, font=\scriptsize] at (7.25,-3.9) {deterministic code};
+  \node[llm] (P) at (0,0)   {\textbf{1} propose};
+  \node[ver] (V) at (3.9,0) {verify\\(frozen)};
+  \node[box] (A) at (7.8,0) {accept if\\T drops};
+  \node[llm] (R) at (3.9,-2.1) {\textbf{2} reflect};
+  \node[box] (B) at (0,-2.1)  {playbook};
+  \draw[arr] (P) -- (V); \draw[arr] (V) -- (A);
+  \draw[arr] (A) -- node[lab]{accepts,\\rejects} (R);
+  \draw[arr] (R) -- (B);
+  \draw[arr] (B) -- node[lab]{rules} (P);
+  \node[llm, minimum width=0.45cm, minimum height=0.3cm, font=\tiny] at (0.3,-3.4) {};
+  \node[right, font=\scriptsize] at (0.6,-3.4) {LLM};
+  \node[ver, minimum width=0.45cm, minimum height=0.3cm, font=\tiny] at (2.6,-3.4) {};
+  \node[right, font=\scriptsize] at (2.9,-3.4) {exact verifier};
+  \node[box, minimum width=0.45cm, minimum height=0.3cm, font=\tiny] at (6.0,-3.4) {};
+  \node[right, font=\scriptsize] at (6.3,-3.4) {deterministic};
 \end{tikzpicture}
 
 \vspace{0.2cm}
 \begin{itemize}
-  \item Verifier is \textbf{frozen}: exact $D[\omega]$ arithmetic for Clifford+T, error-budgeted distance for rotations
+  \item Two methods use this loop: \textbf{reconstruction} (Toffoli circuits) and \textbf{angle} (rotation circuits)
 \end{itemize}
 
 \end{frame}
 
-
-\begin{frame}{Two methods share the loop}
-
-\centering
-\renewcommand{\arraystretch}{1.35}
-\small
-\begin{tabular}{>{\centering}m{2.4cm} >{\centering}m{4.2cm} >{\centering\arraybackslash}m{4.2cm}}
-  \rowcolor{ncred}
-  \color{white}\textbf{} & \color{white}\textbf{Reconstruction} & \color{white}\textbf{Angle} \\
-  \rowcolor{lightgray}
-  LLM proposes & plan for the whole circuit & replacement for one window \\
-  Scope & Toffoli-level reversible circuit & $\leq 4$ qubits, $\leq 40$ gates \\
-  \rowcolor{lightgray}
-  Input & decomposed on the fly & TKET-optimized Clifford+$R_z$ \\
-  Contract & relaxed: ancillas, measurement & unitary, error budget $\varepsilon$ \\
-\end{tabular}
-
-\vspace{0.4cm}
-\alert{Same engine, same verifier --- different search space.}
-
-\end{frame}
-
-
-\begin{frame}{Campaign setup}
+\begin{frame}{Reconstruction: the LLM picks a compilation plan}
 
 \centering
-\small
-\renewcommand{\arraystretch}{1.3}
-\begin{tabular}{>{\centering}m{2.4cm} >{\centering}m{4.2cm} >{\centering\arraybackslash}m{4.2cm}}
-  \rowcolor{ncred}
-  \color{white}\textbf{} & \color{white}\textbf{Reconstruction} & \color{white}\textbf{Angle} \\
-  \rowcolor{lightgray}
-  Proposer & claude-opus-5-5 & claude-opus-5 \\
-  Reflector & claude-sonnet-5-5 & claude-sonnet-5-5 \\
-  \rowcolor{lightgray}
-  Calls / circuit & 20 train, 12 frozen & 45 train (incl. reflector) \\
-  Circuits & 5 train, 9 never trained & 5 train, 3 held-out \\
-\end{tabular}
+\begin{tikzpicture}[x=1cm, y=1cm,
+    sec/.style={draw=gray!60, fill=gray!8, rounded corners=1pt, minimum width=5.1cm, minimum height=0.44cm,
+                inner sep=2pt, font=\scriptsize, anchor=north west},
+    llm/.style={draw=orange!75!black, fill=orange!16, rounded corners=2pt, minimum width=2.1cm,
+                minimum height=0.8cm, font=\footnotesize, align=center, line width=0.9pt},
+    out/.style={draw=blue!55!black, fill=blue!7, rounded corners=2pt, minimum width=5.4cm,
+                minimum height=0.8cm, font=\tiny, align=left, inner sep=4pt},
+    arr/.style={-{Stealth[length=2mm]}, line width=0.7pt}]
+  \node[sec] (s0) at (0,-0.00) {Objective + contract (exact | relaxed)};
+  \node[sec] (s1) at (0,-0.52) {Circuit summary, qubit roles};
+  \node[sec] (s2) at (0,-1.04) {Recognized structure: Toffolis, pairs, C^kX cascades};
+  \node[sec] (s3) at (0,-1.56) {Technique cards (toolbox)};
+  \node[sec] (s4) at (0,-2.08) {Best verified so far + recent results};
+  \node[sec] (s5) at (0,-2.60) {Playbook rules};
+  \node[sec] (s6) at (0,-3.12) {Reply format: one JSON plan};
+  \node[font=\scriptsize\itshape, anchor=north west] at (0,0.42) {prompt sections};
+  \node[out, anchor=north west, minimum width=5.4cm] (ex) at (0,-3.84) {\texttt{CIRCUIT barenco_tof_5: 9 qubits, 12 gates (ccx:12)}\\\texttt{PAIRS  P0 = T3+T9 (g3..g9) target q5 controls q0 q1: mirror}\\\texttt{M0: C5X controls [q0..q4] -> q8, middle T6, pairs [P2,P1,P0]}};
+  \node[llm] (L) at (7.3,-1.82) {proposer\\LLM};
+  \node[out, anchor=north] (R) at (7.3,-2.47) {\texttt{{"target": "relaxed", "decisions": [}\\\texttt{  {"element": "M0", "route": "ancilla_mcx", "middle": "jones"},}\\\texttt{  {"element": "T0", "route": "jones_toffoli"}, ...]}}};
+  \node[font=\scriptsize\itshape, anchor=south] at (7.3,-1.37) {returns a JSON plan};
+  \draw[arr] (5.25,-1.82) -- (L.west);
+\end{tikzpicture}
 
-\vspace{0.3cm}
+\vspace{0.1cm}
 \raggedright\footnotesize
-Single seed per circuit. Reflector calls count against each arm's call budget. Playbooks are frozen (and the reflector off) on held-out circuits.
+A deterministic compiler executes the plan; the frozen verifier accepted it: $84 \to 36$ T (barenco\_tof\_5, call 1).
+
+\end{frame}
+
+\begin{frame}{Angle: the LLM rewrites one window}
+
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm,
+    sec/.style={draw=gray!60, fill=gray!8, rounded corners=1pt, minimum width=5.1cm, minimum height=0.44cm,
+                inner sep=2pt, font=\scriptsize, anchor=north west},
+    llm/.style={draw=orange!75!black, fill=orange!16, rounded corners=2pt, minimum width=2.1cm,
+                minimum height=0.8cm, font=\footnotesize, align=center, line width=0.9pt},
+    out/.style={draw=blue!55!black, fill=blue!7, rounded corners=2pt, minimum width=5.4cm,
+                minimum height=0.8cm, font=\tiny, align=left, inner sep=4pt},
+    arr/.style={-{Stealth[length=2mm]}, line width=0.7pt}]
+  \node[sec] (s0) at (0,-0.00) {Task + gate set};
+  \node[sec] (s1) at (0,-0.52) {Cost model (gridsynth T per rotation)};
+  \node[sec] (s2) at (0,-1.04) {Error allowance for this window};
+  \node[sec] (s3) at (0,-1.56) {Two actions: rewrite window | fix rotations};
+  \node[sec] (s4) at (0,-2.08) {The window itself (<= 4 qubits, <= 40 gates)};
+  \node[sec] (s5) at (0,-2.60) {Playbook rules};
+  \node[sec] (s6) at (0,-3.12) {Recent verifier feedback};
+  \node[font=\scriptsize\itshape, anchor=north west] at (0,0.42) {prompt sections};
+  \node[out, anchor=north west, minimum width=5.4cm] (ex) at (0,-3.84) {\texttt{rz at a multiple of pi/4 is exact; every other rz costs ~46 T}\\\texttt{allowance = 6.250e-05 (phase-aligned operator-norm distance)}\\\texttt{cx q3 q1 / rz(-0.3926990816987246) q1  # op 5 / h q2 ...}};
+  \node[llm] (L) at (7.3,-1.82) {proposer\\LLM};
+  \node[out, anchor=north] (R) at (7.3,-2.47) {\texttt{op 9 rz(+pi/8) and op 17 t q1 share Pauli frame +IZII}\\\texttt{-> exact merge, angle 0.3927 + pi/4 = 3pi/8}\\\texttt{```window  cx q3 q2 / tdg q2 / ... / rz(1.1780972450961724) q1}};
+  \node[font=\scriptsize\itshape, anchor=south] at (7.3,-1.37) {returns replacement gates};
+  \draw[arr] (5.25,-1.82) -- (L.west);
+\end{tikzpicture}
+
+\vspace{0.1cm}
+\raggedright\footnotesize
+Verifier accepted the two frame merges: $2115 \to 2114$ T (qft\_8, call 2). Parsed by regex --- never executed.
+
+\end{frame}
+
+\begin{frame}{Every 8 calls: the reflector edits the playbook}
+
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm,
+    sec/.style={draw=gray!60, fill=gray!8, rounded corners=1pt, minimum width=5.1cm, minimum height=0.44cm,
+                inner sep=2pt, font=\scriptsize, anchor=north west},
+    llm/.style={draw=orange!75!black, fill=orange!16, rounded corners=2pt, minimum width=2.1cm,
+                minimum height=0.8cm, font=\footnotesize, align=center, line width=0.9pt},
+    out/.style={draw=blue!55!black, fill=blue!7, rounded corners=2pt, minimum width=5.4cm,
+                minimum height=0.8cm, font=\tiny, align=left, inner sep=4pt},
+    arr/.style={-{Stealth[length=2mm]}, line width=0.7pt}]
+  \node[sec] (s0) at (0,-0.00) {Current playbook with A/B statistics};
+  \node[sec] (s1) at (0,-0.52) {Accepted improvements (parent -> child)};
+  \node[sec] (s2) at (0,-1.04) {Recent rejections + exact verifier reason};
+  \node[sec] (s3) at (0,-1.56) {Reply: <= 3 add / edit / retire};
+  \node[font=\scriptsize\itshape, anchor=north west] at (0,0.42) {prompt sections};
+  \node[out, anchor=north west, minimum width=5.4cm] (ex) at (0,-2.28) {\texttt{R18 [candidate; shown 20; improving prompts with 0/20, without 0/19]}\\\texttt{# rejected: op 24->0: distance 2.330e-04 > allowance 6.250e-05}\\\texttt{# fitness 84 -> 36 T  ## parent ... ## child ...}};
+  \node[llm] (L) at (7.3,-1.04) {reflector\\LLM};
+  \node[out, anchor=north] (R) at (7.3,-1.69) {\texttt{{"op": "edit", "id": "R18", "text": "..."}}\\\texttt{{"op": "retire", "id": "R17", "why": "..."}}\\\texttt{{"op": "add", "text": "..."}   -> enters as CANDIDATE}};
+  \node[font=\scriptsize\itshape, anchor=south] at (7.3,-0.59) {returns rule edits};
+  \draw[arr] (5.25,-1.04) -- (L.west);
+\end{tikzpicture}
+
+\vspace{0.1cm}
+\raggedright\footnotesize
+New rules enter as CANDIDATES and are shown to half the prompts; only measured T reduction promotes them.
 
 \end{frame}
 
 
 % =====================================================================
-\section{Reconstruction}
+\section{Results}
 % =====================================================================
 
-\begin{frame}{Trained circuits: the LLM beats the planner on 2 of 5}
+\begin{frame}{Reconstruction, trained circuits}
 
 \centering
-\includegraphics[width=0.94\textwidth]{circuitevolve_figs/bar_recon_trained.png}
+\includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_recon_trained.png}
 
 \begin{itemize}
-  \setlength\itemsep{3pt}
-  \item barenco\_tof\_5: $36 \to 16$ T; rc\_adder\_6: $40 \to 24$ T
-  \item Ties: the planner is already at the relaxed floor
+  \item Beats the deterministic planner on 2 of 5; ties at its floor on the rest
 \end{itemize}
-\vspace{-0.1cm}
+\vspace{-0.05cm}
 \raggedright\scriptsize
-Reduction vs naive 7 T per Toffoli. Planner and LLM use the relaxed contract (ancillas, measurement; every branch verified exactly); TKET and pyzx are exact.
+Planner and ours use the relaxed contract (ancillas + measurement, every branch verified exactly); B0, B1 are exact. These circuits carry no continuous rotations, so gridsynth is a no-op.
 
 \end{frame}
 
 
-\begin{frame}{Never trained: 6 of 9 circuits beat the planner}
+\begin{frame}{Reconstruction, circuits it never saw}
 
 \centering
-\includegraphics[width=0.94\textwidth]{circuitevolve_figs/bar_recon_frozen.png}
+\includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_recon_frozen.png}
 
 \begin{itemize}
-  \setlength\itemsep{3pt}
-  \item Playbook frozen, reflector off: gf2$^4$\_mult $-44\%$, mod\_red\_21 $-21\%$, adder\_8 $-11\%$
+  \item Playbook frozen, reflector off --- still beats the planner on 3 of these 5
 \end{itemize}
-\vspace{-0.1cm}
+\vspace{-0.05cm}
 \raggedright\scriptsize
-Labels: T saved vs the planner. Planner and LLM: relaxed; TKET, pyzx: exact (not computed for ham15-med, gf2$^6$\_mult, hwb6, mod\_red\_21).
+Four further frozen circuits have no B0/B1 reference: ham15-med $-5\%$, gf2$^6$\_mult $0\%$, hwb6 $-7\%$, mod\_red\_21 $-21\%$ vs the planner.
 
 \end{frame}
 
 
-\begin{frame}{What the LLM found}
-
-\begin{itemize}
-  \setlength\itemsep{10pt}
-  \item \textbf{Re-identification:} the 12 Toffolis of barenco\_tof\_5 are one C$^5$X; rebuilt as a 4-AND ladder, $4k-4 = 16$ T
-  \item \textbf{AND-preserving pairing:} rc\_adder\_6 Toffolis whose control is rewritten in between, as long as $c_0 c_1$ is preserved
-  \item \textbf{Graduated:} the pairing is now exact code (G2) and reproduces 24 T and 44 T with zero LLM calls
-\end{itemize}
-
-\vspace{0.3cm}
-\centering
-\alert{LLM discovers, verifier certifies, rule becomes deterministic}
-
-\end{frame}
-
-
-% =====================================================================
-\section{Angle}
-% =====================================================================
-
-\begin{frame}{Beyond the G1 pass, the LLM adds almost nothing}
+\begin{frame}{Angle: the LLM adds almost nothing}
 
 \centering
-\includegraphics[width=0.94\textwidth]{circuitevolve_figs/bar_angle.png}
+\includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_angle.png}
 
 \begin{itemize}
-  \setlength\itemsep{3pt}
-  \item G1 (same-Pauli merge, no LLM): $-10$ to $-15\%$ on qft, hhl, qpe, qae
-  \item LLM on top: $-2$ T on qft\_8, $-147$ T on hhl\_8, nothing elsewhere
+  \item B2 lands exactly on B0; B3 is worse than B0 on 4 of 5
+  \item Our gain is the \textbf{deterministic} merge pass --- the LLM adds $\leq 0.5\%$
 \end{itemize}
-\vspace{-0.1cm}
+\vspace{-0.05cm}
 \raggedright\scriptsize
-$\varepsilon = 10^{-3}$. BQSKit-FT baseline without DPF (B2) equals TKET on all 8 circuits.
+A supplementary DPF variant does better than all of these on hhl\_8 ($0.55\times$ B0); appendix table.
 
 \end{frame}
 
 
-\begin{frame}{Why windows had no headroom}
+\begin{frame}{Where the two stages compose}
+
+\centering
+\includegraphics[width=0.72\textwidth]{circuitevolve_figs/fig_stages.png}
 
 \begin{itemize}
-  \setlength\itemsep{10pt}
-  \item \textbf{TKET already saturated the windows.} heisenberg\_6, hubbard\_8, qml\_13: zero accepts in every arm
-  \item \textbf{Rotations are expensive, merges are rare.} $\approx 3\log_2(1/\varepsilon_{rz})$ T per synthesized $R_z$ (about 46 T each on qft\_8); snapping an angle spends error budget
-  \item \textbf{The remaining gains are global.} pyzx and DPF act on the whole circuit; a $\leq 4$-qubit window cannot see them
+  \item Reconstruction does the work; the angle stage adds nothing after it
 \end{itemize}
-
-\vspace{0.3cm}
-\centering
-\alert{Local windows cannot reach global gains}
+\vspace{-0.05cm}
+\raggedright\scriptsize
+Zero-LLM demo (deterministic planner + merge pass). Reconstruction alone is not defined on the mixed circuit: it leaves the rotations untouched. An LLM cascade run is still to do.
 
 \end{frame}
 
@@ -240,31 +287,9 @@ $\varepsilon = 10^{-3}$. BQSKit-FT baseline without DPF (B2) equals TKET on all 
 \includegraphics[width=0.74\textwidth]{circuitevolve_figs/bar_rules.png}
 
 \begin{itemize}
-  \setlength\itemsep{3pt}
-  \item Reconstruction: 15 rules promoted by the A/B test; the frozen playbook transferred to unseen circuits
-  \item Angle: 0 promoted; arms A (playbook), B (placebo), C (none) end at the same T on all four DEV circuits run in every arm
+  \item 15 rules promoted by the A/B test, then used frozen on unseen circuits
+  \item Angle: 0 promoted --- playbook, placebo and no-playbook arms end at the same T
 \end{itemize}
-
-\end{frame}
-
-
-% =====================================================================
-\section{Combining the stages}
-% =====================================================================
-
-\begin{frame}{Stages compose: reconstruction first, then angle}
-
-\centering
-\includegraphics[width=0.94\textwidth]{circuitevolve_figs/bar_cascade.png}
-
-\begin{itemize}
-  \setlength\itemsep{3pt}
-  \item Mixed circuit: angle alone $162$ T, cascade $130$ T (angle metric)
-  \item Toffoli segment $56 \to 16$ named T; the angle stage then finds nothing more
-\end{itemize}
-\vspace{-0.1cm}
-\raggedright\scriptsize
-Zero-LLM demo (deterministic planner + G1). An LLM cascade run is still to do.
 
 \end{frame}
 
@@ -273,10 +298,10 @@ Zero-LLM demo (deterministic planner + G1). An LLM cascade run is still to do.
 
 \begin{itemize}
   \setlength\itemsep{10pt}
-  \item Reconstruction: the LLM beats the deterministic planner on \textbf{8 of 14} circuits, \textbf{6 of 9} never trained on
-  \item Rules learned there transfer, and one discovery became \textbf{exact code} (G2)
-  \item Angle windows: no headroom after TKET + G1; the LLM adds $\leq 0.5\%$
-  \item Next: let the LLM propose \textbf{passes}, not windows --- G1 started as a seed rule
+  \item Reconstruction: beats the deterministic planner on \textbf{8 of 14} circuits, \textbf{6 of 9} never trained on
+  \item One discovery became \textbf{exact code} and now runs with zero LLM calls
+  \item Angle windows: no headroom after TKET; the remaining gains are global, not local
+  \item Next: let the LLM propose \textbf{passes}, not windows
 \end{itemize}
 
 \end{frame}
@@ -284,139 +309,69 @@ Zero-LLM demo (deterministic planner + G1). An LLM cascade run is still to do.
 
 \appendix
 
-% ---- backup slides -------------------------------------------------
-
-\begin{frame}[fragile]{Appendix: reconstruction proposer call (clipped)}
-\tiny
-\textbf{Prompt}
-\begin{verbatim}
-OBJECTIVE: minimise T-count (then qubits, then T-depth). Two separate leaderboards:
-THIS CALL TARGETS: RELAXED.
-CIRCUIT barenco_tof_5: 9 qubits, 12 gates (ccx:12); classical reversible (x/cx/ccx + diagonal).
-Naive cost: 84 T (7 per Toffoli, 12 Toffolis).
-TOFFOLIS (id: gate index, kind, controls -> target):
-  T0:g0 ccx q4 q7->q8; T1:g1 ccx q3 q6->q7; T2:g2 ccx q2 q5->q6; T3:g3 ccx q0 q1->q5; T4:g4 ccx q2 q ...
-PAIRS (same Toffoli repeated, controls unchanged in between; class: clean = declared-zero target, |0 ...
-  P0 = T3+T9 (g3..g9) target q5 controls q0 q1: mirror
-UNPAIRED TOFFOLIS: T0, T1, T2, T6, T10, T11
-MULTI-CONTROLLED-X CASCADES (middle Toffoli + enclosing pairs):
-  M0: C5X controls ['q0', 'q1', 'q2', 'q3', 'q4'] -> q8, middle T6, pairs ['P2', 'P1', 'P0'], work q ...
-PLAYBOOK RULES (apply where relevant):
-- [seed 2026-10-18 tier-1 toolbox] Relative-phase Toffoli pairing (Maslov RCCX): a mirror pair (same ...
-\end{verbatim}
-\textbf{LLM response}
-\begin{verbatim}
-{"target": "relaxed", "decisions": [{"element": "M0", "route": "ancilla_mcx", "middle": "jones"}, {" ...
-"rationale": "The C5X cascade M0 sends its three mirror pairs (P0, P1, P2) to temporary ANDs via fre ...
-\end{verbatim}
-\normalsize
-\vspace{0.1cm}
-\footnotesize Verdict: accepted, $84 \to 36$ T (call 1, barenco\_tof\_5).
-\end{frame}
-
-
-\begin{frame}[fragile]{Appendix: angle proposer call (clipped)}
-\tiny
-\textbf{Prompt}
-\begin{verbatim}
-You are optimizing a fault-tolerant quantum circuit compiled to Clifford+T. You get one WINDOW of the
-circuit (a sub-circuit on 4 local qubits q0..q3) and propose a cheaper replacement that implements t ...
-...
-Cost model (lower is better, compared lexicographically): total T-count of the whole circuit, where
-Acceptance (decided by an exact/numerical verifier, not by you): phase-aligned operator-norm distance
-...
-Window (time order, top to bottom; angles reduced to [-pi, pi]; `# op i` = index for fix blocks):
-```window
-cx q3 q2
-tdg q2
-cx q3 q2
-t q2
-cx q3 q1
-rz(-0.3926990816987246) q1  # op 5
-  ...
-\end{verbatim}
-\textbf{LLM response}
-\begin{verbatim}
-Analysis (short). No two *synthesized* rotations share a Pauli frame, and every snap distance (>=9.8 ...
-
-...
-```window
-cx q3 q2
-tdg q2
-cx q3 q2
-t q2
-  ...
-\end{verbatim}
-\normalsize
-\vspace{0.1cm}
-\footnotesize Verdict: accepted, $2115 \to 2114$ T (call 2, qft\_8, arm A).
-\end{frame}
-
-
-\begin{frame}{Appendix: reconstruction, T-count per circuit}
+\begin{frame}{Appendix: reconstruction, T-count}
 
 \centering
 \scriptsize
 \renewcommand{\arraystretch}{1.05}
-\begin{tabular}{>{\centering}m{2.5cm} >{\centering}m{1.1cm} >{\centering}m{1.1cm} >{\centering}m{1.1cm} >{\centering}m{1.6cm} >{\centering}m{1.7cm} >{\centering\arraybackslash}m{1.6cm}}
+\begin{tabular}{>{\centering}m{2.3cm} >{\centering}m{1.5cm} >{\centering}m{1.2cm} >{\centering}m{1.2cm} >{\centering}m{1.3cm} >{\centering\arraybackslash}m{1.2cm}}
   \rowcolor{ncred}
-  \color{white}\textbf{Circuit} & \color{white}\textbf{naive} & \color{white}\textbf{TKET} & \color{white}\textbf{pyzx} & \color{white}\textbf{planner exact} & \color{white}\textbf{planner relaxed} & \color{white}\textbf{LLM relaxed} \\
+  \color{white}\textbf{Circuit} & \color{white}\textbf{split} & \color{white}\textbf{B0} & \color{white}\textbf{B1} & \color{white}\textbf{planner} & \color{white}\textbf{ours} \\
   \rowcolor{lightgray}
-  cuccaro\_4 & 56 & 48 & 32 & 32 & 16 & 16 \\
-  cuccaro\_8 & 112 & 96 & 64 & 64 & 32 & 32 \\
+  cuccaro\_4 & dev & 48 & 32 & 16 & 16 \\
+  cuccaro\_8 & dev & 96 & 64 & 32 & 32 \\
   \rowcolor{lightgray}
-  barenco\_tof\_5 & 84 & 72 & 40 & 40 & 36 & \textbf{16} \\
-  tof\_5 & 49 & 43 & 31 & 31 & 16 & 16 \\
+  barenco\_tof\_5 & dev & 72 & 40 & 36 & \textbf{16} \\
+  tof\_5 & dev & 43 & 31 & 16 & 16 \\
   \rowcolor{lightgray}
-  rc\_adder\_6 & 77 & 59 & 47 & 47 & 40 & \textbf{24} \\
-  cuccaro\_16 & 224 & 192 & 128 & 128 & 64 & 64 \\
+  rc\_adder\_6 & dev & 59 & 47 & 40 & \textbf{24} \\
+  cuccaro\_16 & held-out & 192 & 128 & 64 & 64 \\
   \rowcolor{lightgray}
-  adder\_8 & 399 & 361 & 173 & 173 & 180 & \textbf{160} \\
-  barenco\_tof\_10 & 224 & 192 & 100 & 100 & 96 & 96 \\
+  adder\_8 & held-out & 361 & 173 & 180 & \textbf{160} \\
+  barenco\_tof\_10 & held-out & 192 & 100 & 96 & 96 \\
   \rowcolor{lightgray}
-  mod\_adder\_1024 & 1995 & 1711 & 1011 & 1011 & 660 & \textbf{628} \\
-  gf2$^4$\_mult & 112 & 96 & 68 & 68 & 64 & \textbf{36} \\
+  mod\_adder\_1024 & held-out & 1711 & 1011 & 660 & \textbf{628} \\
+  gf2$^4$\_mult & held-out & 96 & 68 & 64 & \textbf{36} \\
   \rowcolor{lightgray}
-  ham15-med & 574 & -- & -- & 212 & 220 & \textbf{208} \\
-  gf2$^6$\_mult & 252 & -- & -- & 150 & 144 & 144 \\
+  ham15-med & reserved & -- & -- & 220 & \textbf{208} \\
+  gf2$^6$\_mult & reserved & -- & -- & 144 & 144 \\
   \rowcolor{lightgray}
-  hwb6 & 105 & -- & -- & 75 & 56 & \textbf{52} \\
-  mod\_red\_21 & 119 & -- & -- & 73 & 56 & \textbf{44} \\
+  hwb6 & reserved & -- & -- & 56 & \textbf{52} \\
+  mod\_red\_21 & reserved & -- & -- & 56 & \textbf{44} \\
 \end{tabular}
 
 \vspace{0.1cm}
 \raggedright\tiny
-Bold: LLM below the planner. Relaxed = ancillas + measurement; exact = unitary-preserving. $\mathrm{--}$: not computed.
+Bold: below the planner. B0 = TKET, B1 = pyzx (both exact); planner and ours relaxed. $\mathrm{--}$: not computed.
 
 \end{frame}
 
 
-\begin{frame}{Appendix: angle, T-count per circuit at $\varepsilon = 10^{-3}$}
+\begin{frame}{Appendix: angle, T-count at $\varepsilon = 10^{-3}$}
 
 \centering
 \scriptsize
 \renewcommand{\arraystretch}{1.1}
-\begin{tabular}{>{\centering}m{2.2cm} >{\centering}m{1.05cm} >{\centering}m{1.05cm} >{\centering}m{1.05cm} >{\centering}m{1.05cm} >{\centering}m{1.05cm} >{\centering}m{1.05cm} >{\centering}m{1.05cm} >{\centering}m{1.05cm} >{\centering\arraybackslash}m{1.05cm}}
+\begin{tabular}{>{\centering}m{2.0cm} >{\centering}m{1.1cm} >{\centering}m{1.1cm} >{\centering}m{1.1cm} >{\centering}m{1.1cm} >{\centering}m{1.25cm} >{\centering}m{1.3cm} >{\centering\arraybackslash}m{1.1cm}}
   \rowcolor{ncred}
-  \color{white}\textbf{Circuit} & \color{white}\textbf{B0} & \color{white}\textbf{B1} & \color{white}\textbf{B2} & \color{white}\textbf{B3} & \color{white}\textbf{B3g} & \color{white}\textbf{G1} & \color{white}\textbf{A} & \color{white}\textbf{B} & \color{white}\textbf{C} \\
+  \color{white}\textbf{Circuit} & \color{white}\textbf{B0} & \color{white}\textbf{B1} & \color{white}\textbf{B2} & \color{white}\textbf{B3} & \color{white}\textbf{B3 (var.)} & \color{white}\textbf{merge pass} & \color{white}\textbf{+ LLM} \\
   \rowcolor{lightgray}
-  qft\_8 & 2391 & 1577 & 2391 & 2226 & 2029 & 2115 & 2113 & 2113 & 2113 \\
-  heisenberg\_6 & 8200 & 8200 & 8200 & 10128 & 8600 & 8200 & 8200 & 8200 & 8200 \\
+  qft\_8 & 2391 & 1577 & 2391 & 2226 & 2029 & 2115 & 2113 \\
+  heisenberg\_6 & 8200 & 8200 & 8200 & 10128 & 8600 & 8200 & 8200 \\
   \rowcolor{lightgray}
-  hubbard\_8 & 4312 & 4312 & 4312 & 7588 & 4712 & 4312 & 4312 & 4312 & 4312 \\
-  qml\_13 & 6326 & 6326 & 6326 & 7668 & 6790 & 6326 & 6326 & 6326 & 6326 \\
+  hubbard\_8 & 4312 & 4312 & 4312 & 7588 & 4712 & 4312 & 4312 \\
+  qml\_13 & 6326 & 6326 & 6326 & 7668 & 6790 & 6326 & 6326 \\
   \rowcolor{lightgray}
-  hhl\_8 & 35450 & 29205 & 35450 & 93637 & 19443 & 31762 & 31615 & -- & -- \\
-  qpe\_8 & 14761 & 11485 & 14761 & 39565 & 8020 & 12597 & -- & -- & -- \\
+  hhl\_8 & 35450 & 29205 & 35450 & 93637 & 19443 & 31762 & 31615 \\
+  qpe\_8 & 14761 & 11485 & 14761 & 39565 & 8020 & 12597 & -- \\
   \rowcolor{lightgray}
-  qae\_13 & 7821 & 4527 & 7821 & 7516 & 6909 & 6683 & -- & -- & -- \\
-  tfim\_6 & 8560 & 8560 & 8560 & 12990 & 9600 & 8560 & -- & -- & -- \\
+  qae\_13 & 7821 & 4527 & 7821 & 7516 & 6909 & 6683 & -- \\
+  tfim\_6 & 8560 & 8560 & 8560 & 12990 & 9600 & 8560 & -- \\
 \end{tabular}
 
 \vspace{0.1cm}
 \raggedright\tiny
-B0 TKET + gridsynth; B1 pyzx; B2 BQSKit-FT baseline (no DPF); B3 published DPF workflow; B3g DPF + gridsynth variant; G1 merge pass (no LLM);
-A, B, C: LLM loop with playbook / placebo / none, on top of G1. Blank = not run.
+B3 (var.) = supplementary DPF + gridsynth variant. Last two columns: our slot without and with the LLM. Blank = not run (campaign paused).
 
 \end{frame}
 
