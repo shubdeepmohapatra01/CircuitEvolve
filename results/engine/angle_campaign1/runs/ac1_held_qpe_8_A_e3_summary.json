@@ -1,0 +1,105 @@
+{
+ "tag": "ac1_held_qpe_8_A_e3",
+ "name": "qpe_8",
+ "input_source": "results/bqskit_baselines/stage1/inputs/qpe_8_tket.qasm",
+ "n": 8,
+ "eps": 0.001,
+ "calls": 40,
+ "stats": {
+  "proposal_calls": 40,
+  "reflect_calls": 0,
+  "llm_errors": 39,
+  "declined": 0,
+  "candidates": 3,
+  "parse_errors": 0,
+  "verified": 2,
+  "rejected_verifier": 1,
+  "rejected_metric": 0,
+  "rejected_ledger": 0,
+  "rejected_whole": 0,
+  "accepted": 1,
+  "accepted_t_reduced": 1,
+  "exact_accepts": 0,
+  "approx_accepts": 1,
+  "rules_added": 0,
+  "reflect_skipped_no_evidence": 0,
+  "window_proposals": 0,
+  "accepted_window": 0,
+  "fix_proposals": 3,
+  "accepted_fix": 1,
+  "refit_failed": 0,
+  "rotations_removed_window": 0,
+  "rotations_removed_fix": 1
+ },
+ "backend_stats": {
+  "calls": 40,
+  "input_tokens": 18007,
+  "output_tokens": 100698,
+  "empty": 6,
+  "ok": 1,
+  "retries": 6,
+  "error": 39,
+  "failed": 39
+ },
+ "t_before": 12597,
+ "t_after": 12545,
+ "before": {
+  "t": 12597,
+  "t_fixed": 157,
+  "t_gs": 12440,
+  "rz": 224,
+  "cx": 268,
+  "gates": 1011,
+  "eps_rz": 4.464285713853327e-06
+ },
+ "after": {
+  "t": 12545,
+  "t_fixed": 157,
+  "t_gs": 12388,
+  "rz": 223,
+  "cx": 268,
+  "gates": 1010,
+  "eps_rz": 4.483210131292131e-06
+ },
+ "t_after_reclaimed": 12545,
+ "ledger": {
+  "eps_total": 0.001,
+  "window_pool": 0.00025,
+  "eps_synth": 0.0009997558592781451,
+  "d_input": 9.685486008241907e-14,
+  "window_spent": 9.90812298233499e-15,
+  "window_spent_rounded": 2.44140625e-07,
+  "n_window_charges": 1,
+  "eps_rz": 4.483210131292131e-06,
+  "bound": 0.000999755859384908,
+  "reclaimed_eps_synth": 0.0009999999998932371,
+  "rule": "v1: window pool cap 0.25 eps, synthesis = eps - d_input - ceil_q(spent)"
+ },
+ "final_check_vs_original": {
+  "ok": true,
+  "verified": true,
+  "method": "unitary",
+  "dist": 1.0395199126413453e-13,
+  "bound": 1.0676298306475406e-13
+ },
+ "archive": [
+  {
+   "t": 12545,
+   "rz": 223,
+   "spent": 9.90812298233499e-15,
+   "digest": "20a6a97e3793f550"
+  },
+  {
+   "t": 12597,
+   "rz": 224,
+   "spent": 0.0,
+   "digest": "cc7479e9e36c0111"
+  }
+ ],
+ "seconds": 460.4,
+ "verifier_digest": "bc3eac23a403dbc5",
+ "playbook": {
+  "live": 14,
+  "active": 1
+ }
+}

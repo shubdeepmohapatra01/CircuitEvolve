@@ -801,3 +801,10 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   DEV learning promoted nothing (every seed and reflector addition ended retired). Held-out arm A
   therefore evaluates R3 alone vs B_held = 1 neutral active rule vs C = none (same shape as
   ablation v1); this is reported as a DEV outcome, not adjusted.
+
+## 2026-10-20 angle_campaign1: plan usage limit during held-out A @1e-3
+
+- ac1_held_qpe_8_A_e3 (39/40 calls errored) and ac1_held_qae_13_A_e3 (40/40) hit "Claude usage
+  limit reached - plan's usage window exhausted" (~01:00 UTC; reset 09:00 UTC). Both rows recorded
+  valid=False (append-only); the driver stopped the chunk on infra_fail before tfim_6. Freeze shas
+  re-checked unchanged by the driver after each cell. Reruns use _r2 tags.
