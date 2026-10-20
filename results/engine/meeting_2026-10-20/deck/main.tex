@@ -240,11 +240,11 @@ New rules enter as CANDIDATES and are shown to half the prompts; only measured T
 \includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_recon_trained.png}
 
 \begin{itemize}
-  \item Beats the deterministic planner on 2 of 5; ties at its floor on the rest
+  \item Beats pyzx on 5 of 5; largest gain on barenco\_tof\_5, $-24$ T
 \end{itemize}
 \vspace{-0.05cm}
 \raggedright\scriptsize
-Planner and ours use the relaxed contract (ancillas + measurement, every branch verified exactly); B0, B1 are exact. These circuits carry no continuous rotations, so gridsynth is a no-op.
+Ours uses the relaxed contract (ancillas + measurement, every branch verified exactly); B0, B1 are exact. These circuits carry no continuous rotations, so gridsynth is a no-op.
 
 \end{frame}
 
@@ -255,23 +255,23 @@ Planner and ours use the relaxed contract (ancillas + measurement, every branch 
 \includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_recon_frozen.png}
 
 \begin{itemize}
-  \item Playbook frozen, reflector off --- still beats the planner on 3 of these 5
+  \item Playbook frozen, reflector off --- beats pyzx on all 5, up to $-383$ T on mod\_adder\_1024
 \end{itemize}
 \vspace{-0.05cm}
 \raggedright\scriptsize
-Four further frozen circuits have no B0/B1 reference: ham15-med $-5\%$, gf2$^6$\_mult $0\%$, hwb6 $-7\%$, mod\_red\_21 $-21\%$ vs the planner.
+Four further frozen circuits have no B0/B1 reference: ham15-med $-5\%$, gf2$^6$\_mult $0\%$, hwb6 $-7\%$, mod\_red\_21 $-21\%$ vs the deterministic control route.
 
 \end{frame}
 
 
-\begin{frame}{Angle: the LLM adds almost nothing}
+\begin{frame}{Angle: our approach barely moves}
 
 \centering
 \includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_angle.png}
 
 \begin{itemize}
   \item B2 lands exactly on B0; B3 is worse than B0 on 4 of 5
-  \item Our gain is the \textbf{deterministic} merge pass --- the LLM adds $\leq 0.5\%$
+  \item Ours is close to B0 everywhere --- a deterministic merge pass does almost all of it, the LLM adds $\leq 0.5\%$ on top
 \end{itemize}
 \vspace{-0.05cm}
 \raggedright\scriptsize

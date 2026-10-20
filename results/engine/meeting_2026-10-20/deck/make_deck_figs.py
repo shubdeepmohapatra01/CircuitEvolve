@@ -40,9 +40,11 @@ dev = ["qft_8", "hhl_8", "heisenberg_6", "hubbard_8", "qml_13"]
 a = ang.set_index("circuit").loc[dev].reset_index()
 rat = lambda col: [r[col] / r.B0_tket if not pd.isna(r[col]) else np.nan for _, r in a.iterrows()]
 fig, ax = plt.subplots(figsize=(W, H)); fig.subplots_adjust(left=0.125, right=0.995, top=0.84, bottom=0.3)
+# "merge pass, no LLM" (the deterministic G1 pass) removed from the chart per user request;
+# "ours" is now the single LLM-loop bar (which runs on top of that pass, per the pipeline slide).
 grouped(ax, dev, [("B1 pyzx", rat("B1_pyzx"), CB1), ("B2 BQSKit-FT", rat("B2_bqskit_ft"), CB2),
                   ("B3 BQSKit-DPF", rat("B3_bqskit_dpf_published"), CB3),
-                  ("ours: merge pass, no LLM", rat("G1_pass"), CDET), ("ours: + LLM", rat("llm_arm_A"), CLLM)],
+                  ("ours", rat("llm_arm_A"), CLLM)],
         ymax=2.0)
 ax.set_ylabel(YL); ax.set_yticks([0, 0.5, 1.0, 1.5, 2.0])
 ax.text(-0.5, 1.04, "B0", fontsize=6.5, color="#64748B", va="bottom")
@@ -52,20 +54,22 @@ save(fig, "fig_angle.png")
 
 # ---------- B. Toffoli circuits: reconstruction applies; no BQSKit arms computed here
 def recon_fig(names, name):
+    # "planner, no LLM" (the deterministic control route) removed from the chart per user request;
+    # the comparison here is now B1 pyzx (generic, no Toffoli-structure awareness) vs our LLM loop.
     d = rec.set_index("circuit").loc[names].reset_index()
     r_ = lambda col: [x[col] / x.B0_tket for _, x in d.iterrows()]
     fig, ax = plt.subplots(figsize=(W, H)); fig.subplots_adjust(left=0.125, right=0.995, top=0.86, bottom=0.3)
-    xs, bw = grouped(ax, names, [("B1 pyzx", r_("B1_pyzx"), CB1), ("planner, no LLM", r_("control_relaxed"), CPLAN),
+    xs, bw = grouped(ax, names, [("B1 pyzx", r_("B1_pyzx"), CB1),
                                  ("ours: LLM reconstruction", r_("llm_relaxed"), CLLM)], ymax=1.25)
-    v = np.array(r_("llm_relaxed"))
-    for j, (_, x) in enumerate(d.iterrows()):
-        dT = int(x.llm_relaxed - x.control_relaxed)
-        if dT < 0:
+    v = np.array(r_("llm_relaxed")); p = np.array(r_("B1_pyzx"))
+    for j in range(len(d)):
+        if v[j] < p[j]:
+            dT = int(d.llm_relaxed.iloc[j] - d.B1_pyzx.iloc[j])
             ax.text(xs[j] + bw, v[j] + 0.03, f"\u2212{abs(dT)} T", ha="center", va="bottom", fontsize=6.5,
                     color=CLLM, fontweight="bold")
     ax.set_ylabel(YL); ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
     ax.text(-0.5, 1.03, "B0", fontsize=6.5, color="#64748B", va="bottom")
-    ax.legend(frameon=False, ncol=3, loc="lower center", bbox_to_anchor=(0.5, 0.99), handlelength=1.0,
+    ax.legend(frameon=False, ncol=2, loc="lower center", bbox_to_anchor=(0.5, 0.99), handlelength=1.0,
               columnspacing=0.9, borderaxespad=0.0)
     save(fig, name)
 
