@@ -1,0 +1,15 @@
+circuit,split,naive_T,control_exact,control_relaxed,llm_relaxed,B0_tket,B1_pyzx
+cuccaro_4,dev,56,32,16,16,48.0,32.0
+cuccaro_8,dev,112,64,32,32,96.0,64.0
+barenco_tof_5,dev,84,40,36,16,72.0,40.0
+tof_5,dev,49,31,16,16,43.0,31.0
+rc_adder_6,dev,77,47,40,24,59.0,47.0
+cuccaro_16,held-out,224,128,64,64,192.0,128.0
+adder_8,held-out,399,173,180,160,361.0,173.0
+barenco_tof_10,held-out,224,100,96,96,192.0,100.0
+mod_adder_1024,held-out,1995,1011,660,628,1711.0,1011.0
+gf2^4_mult,held-out,112,68,64,36,96.0,68.0
+ham15-med,reserved,574,212,220,208,,
+gf2^6_mult,reserved,252,150,144,144,,
+hwb6,reserved,105,75,56,52,,
+mod_red_21,reserved,119,73,56,44,,

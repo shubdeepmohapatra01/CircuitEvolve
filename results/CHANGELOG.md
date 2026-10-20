@@ -808,3 +808,16 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   limit reached - plan's usage window exhausted" (~01:00 UTC; reset 09:00 UTC). Both rows recorded
   valid=False (append-only); the driver stopped the chunk on infra_fail before tfim_6. Freeze shas
   re-checked unchanged by the driver after each cell. Reruns use _r2 tags.
+
+## 2026-10-20 angle_campaign1 PAUSED (user) + group-meeting materials
+
+- Campaign paused on user request after a stalled held-out session (ac1_held_qpe_8_A_e3_r2 and
+  _r3: start records only, no proposals; no results rows). Valid cells: 13 DEV (A,B,C x 4 + hhl_8 A);
+  held-out: 0 valid. Arm-A playbook = FREEZE sha 77e3f828 (verified), no backup files left.
+  Diagnostic (not campaign data): a 4-call qpe_8 batch completed normally in 217 s; 1 of 4 calls
+  spent its 16k max_tokens on adaptive thinking (empty text, retried by the backend) - the stalls
+  were infrastructure, not the method. Resume = ac.run_chunk(host.llm) (A-first schedule intact).
+- results/engine/meeting_2026-10-20/: 5 figures (pipeline flowchart with LLM call sites, rule
+  counts, reconstruction vs baselines, angle vs B0-B3g, zero-LLM cascade), MEETING_SUMMARY.md,
+  SAMPLE_PROMPTS.md (verbatim log excerpts), two tables + data.py. Built from committed files only
+  (data.py cross-checks every LLM number against the run summaries); no new runs.
