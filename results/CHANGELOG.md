@@ -789,3 +789,15 @@ The P1.1+P1.2 entry (and commit d25948f message) says "306 passed (300 + 6 new c
   batch); a timeout surfaces as a transient 'timed out' error that the unchanged backend re-issues
   (retries 3). Proposal-side plumbing only; acceptance, prompts, budgets untouched.
   test_watchdog_retries_hung_batch; driver tests 8/8.
+
+## 2026-10-20 angle_campaign1 DEV arm A complete + FREEZE
+
+- hhl_8 A (tag ac1_dev_hhl_8_A_e3_r4, rerun_of _r3): valid, T 31762 -> 31615 (-0.46%), 2 approx
+  accepts, 2 errored calls of 40 proposer; 6815 s. Arm-A DEV totals: qft_8 -2, hhl_8 -147, three
+  TKET-saturated circuits 0.
+- FREEZE.json written (arm-A DEV complete; B/C DEV backfill follows under the A-first schedule):
+  arm-A playbook sha 77e3f828..., B_held sha 0e059320..., verifier digest bc3eac23 unchanged.
+  Frozen arm-A playbook = 1 ACTIVE rule, R3 - the rule inherited ACTIVE from stage-1 dev_v1;
+  DEV learning promoted nothing (every seed and reflector addition ended retired). Held-out arm A
+  therefore evaluates R3 alone vs B_held = 1 neutral active rule vs C = none (same shape as
+  ablation v1); this is reported as a DEV outcome, not adjusted.
