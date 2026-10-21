@@ -151,7 +151,7 @@
   \node[sec] (s6) at (0,-3.12) {Reply format: one JSON plan};
   \node[font=\scriptsize\itshape, anchor=north west] at (0,0.42) {prompt sections};
   \node[out, anchor=north west, minimum width=5.6cm] (ex) at (0,-3.84) {\texttt{CIRCUIT barenco\_tof\_5: 9 qubits, 12 gates (ccx:12)}\\\texttt{PAIRS  P0 = T3+T9 (g3..g9) target q5 controls q0 q1: mirror}\\\texttt{M0: C5X controls [q0..q4] -> q8, middle T6, pairs [P2,P1,P0]}};
-  \node[llm] (L) at (7.5,-1.82) {proposer\textbackslash\{\}\textbackslash\{\}LLM};
+  \node[llm] (L) at (7.5,-1.82) {proposer\\LLM};
   \node[out, anchor=north] (R) at (7.5,-2.47) {\texttt{\{"target": "relaxed", "decisions": [}\\\texttt{  \{"element": "M0", "route": "ancilla\_mcx", "middle": "jones"\},}\\\texttt{  \{"element": "T0", "route": "jones\_toffoli"\}, ...]\}}};
   \node[font=\scriptsize\itshape, anchor=south] at (7.5,-1.37) {returns a JSON plan};
   \draw[arr] (5.35,-1.82) -- (L.west);
@@ -185,7 +185,7 @@ A deterministic compiler executes the plan; the frozen verifier accepted it: $84
   \node[sec] (s6) at (0,-3.12) {Recent verifier feedback};
   \node[font=\scriptsize\itshape, anchor=north west] at (0,0.42) {prompt sections};
   \node[out, anchor=north west, minimum width=5.6cm] (ex) at (0,-3.84) {\texttt{rz at a multiple of pi/4 is exact; every other rz costs \textasciitilde{}46 T}\\\texttt{allowance = 6.250e-05 (phase-aligned operator-norm distance)}\\\texttt{cx q3 q1 / rz(-0.3926990816987246) q1  \# op 5 / h q2 ...}};
-  \node[llm] (L) at (7.5,-1.82) {proposer\textbackslash\{\}\textbackslash\{\}LLM};
+  \node[llm] (L) at (7.5,-1.82) {proposer\\LLM};
   \node[out, anchor=north] (R) at (7.5,-2.47) {\texttt{op 9 rz(+pi/8) and op 17 t q1 share Pauli frame +IZII}\\\texttt{-> exact merge, angle 0.3927 + pi/4 = 3pi/8}\\\texttt{window: cx q3 q2 / tdg q2 / ... / rz(1.178...) q1}};
   \node[font=\scriptsize\itshape, anchor=south] at (7.5,-1.37) {returns replacement gates};
   \draw[arr] (5.35,-1.82) -- (L.west);
@@ -216,7 +216,7 @@ Verifier accepted the two frame merges: $2115 \to 2114$ T (qft\_8, call 2). Pars
   \node[sec] (s3) at (0,-1.56) {Reply: at most 3 add / edit / retire};
   \node[font=\scriptsize\itshape, anchor=north west] at (0,0.42) {prompt sections};
   \node[out, anchor=north west, minimum width=5.6cm] (ex) at (0,-2.28) {\texttt{R18 [candidate; shown 20; improving w/ 0/20, w/o 0/19]}\\\texttt{rejected: op 24->0: distance 2.330e-04 > allowance 6.250e-05}\\\texttt{fitness 84 -> 36 T  \# parent ... \# child ...}};
-  \node[llm] (L) at (7.5,-1.04) {reflector\textbackslash\{\}\textbackslash\{\}LLM};
+  \node[llm] (L) at (7.5,-1.04) {reflector\\LLM};
   \node[out, anchor=north] (R) at (7.5,-1.69) {\texttt{\{"op": "edit", "id": "R18", "text": "..."\}}\\\texttt{\{"op": "retire", "id": "R17", "why": "..."\}}\\\texttt{\{"op": "add", "text": "..."\}   -> enters as CANDIDATE}};
   \node[font=\scriptsize\itshape, anchor=south] at (7.5,-0.59) {returns rule edits};
   \draw[arr] (5.35,-1.04) -- (L.west);
@@ -237,7 +237,7 @@ New rules enter as CANDIDATES and are shown to half the prompts; only measured T
 \begin{frame}{Reconstruction, trained circuits}
 
 \centering
-\includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_recon_trained.png}
+\includegraphics[width=0.96\textwidth]circuitevolve_figs/fig_recon_trained.png
 
 \begin{itemize}
   \item Beats pyzx on 5 of 5; largest gain on cuccaro\_8, $-32$ T
@@ -252,7 +252,7 @@ Ours uses the relaxed contract (ancillas + measurement, every branch verified ex
 \begin{frame}{Reconstruction, circuits it never saw}
 
 \centering
-\includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_recon_frozen.png}
+\includegraphics[width=0.96\textwidth]circuitevolve_figs/fig_recon_frozen.png
 
 \begin{itemize}
   \item Playbook frozen, reflector off --- beats pyzx on all 5, up to $-383$ T on mod\_adder\_1024
@@ -267,7 +267,7 @@ Four further frozen circuits have no B0/B1 reference: ham15-med $-5\%$, gf2$^6$\
 \begin{frame}{Angle: our approach barely moves}
 
 \centering
-\includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_angle.png}
+\includegraphics[width=0.96\textwidth]circuitevolve_figs/fig_angle.png
 
 \begin{itemize}
   \item B2 lands exactly on B0; B3 is worse than B0 on 4 of 5
@@ -283,7 +283,7 @@ A supplementary DPF variant does better than all of these on hhl\_8 ($0.55\times
 \begin{frame}{Where the two stages compose}
 
 \centering
-\includegraphics[width=0.72\textwidth]{circuitevolve_figs/fig_stages.png}
+\includegraphics[width=0.72\textwidth]circuitevolve_figs/fig_stages.png
 
 \begin{itemize}
   \item Reconstruction does the work; the angle stage adds nothing after it
@@ -298,7 +298,7 @@ Zero-LLM demo (deterministic planner + merge pass). Reconstruction alone is not 
 \begin{frame}{Reconstruction learned rules; angle did not}
 
 \centering
-\includegraphics[width=0.74\textwidth]{circuitevolve_figs/bar_rules.png}
+\includegraphics[width=0.74\textwidth]circuitevolve_figs/bar_rules.png
 
 \begin{itemize}
   \item 15 rules promoted by the A/B test, then used frozen on unseen circuits
