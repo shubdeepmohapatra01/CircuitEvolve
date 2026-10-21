@@ -132,33 +132,23 @@
 
 \begin{frame}{Reconstruction: the LLM picks a compilation plan}
 
-\centering
-\resizebox{0.96\textwidth}{!}{%
-\begin{tikzpicture}[x=1cm, y=1cm,
-    sec/.style={draw=gray!60, fill=gray!8, rounded corners=1pt, minimum width=5.3cm, minimum height=0.46cm,
-                inner sep=2pt, font=\scriptsize, anchor=north west, align=left},
-    llm/.style={draw=orange!75!black, fill=orange!16, rounded corners=2pt, minimum width=2.1cm,
-                minimum height=0.8cm, font=\footnotesize, align=center, line width=0.9pt},
-    out/.style={draw=blue!55!black, fill=blue!7, rounded corners=2pt, minimum width=5.6cm,
-                minimum height=0.8cm, font=\tiny, align=left, inner sep=4pt},
-    arr/.style={-{Stealth[length=2mm]}, line width=0.7pt}]
-  \node[sec] (s0) at (0,-0.00) {Objective + contract (exact / relaxed)};
-  \node[sec] (s1) at (0,-0.52) {Circuit summary, qubit roles};
-  \node[sec] (s2) at (0,-1.04) {Recognized structure: Toffolis, pairs, multi-controlled cascades};
-  \node[sec] (s3) at (0,-1.56) {Technique cards (toolbox)};
-  \node[sec] (s4) at (0,-2.08) {Best verified so far + recent results};
-  \node[sec] (s5) at (0,-2.60) {Playbook rules};
-  \node[sec] (s6) at (0,-3.12) {Reply format: one JSON plan};
-  \node[font=\scriptsize\itshape, anchor=north west] at (0,0.42) {prompt sections};
-  \node[out, anchor=north west, minimum width=5.6cm] (ex) at (0,-3.84) {\texttt{CIRCUIT barenco\_tof\_5: 9 qubits, 12 gates (ccx:12)}\\\texttt{PAIRS  P0 = T3+T9 (g3..g9) target q5 controls q0 q1: mirror}\\\texttt{M0: C5X controls [q0..q4] -> q8, middle T6, pairs [P2,P1,P0]}};
-  \node[llm] (L) at (7.5,-1.82) {proposer\\LLM};
-  \node[out, anchor=north] (R) at (7.5,-2.47) {\texttt{\{"target": "relaxed", "decisions": [}\\\texttt{  \{"element": "M0", "route": "ancilla\_mcx", "middle": "jones"\},}\\\texttt{  \{"element": "T0", "route": "jones\_toffoli"\}, ...]\}}};
-  \node[font=\scriptsize\itshape, anchor=south] at (7.5,-1.37) {returns a JSON plan};
-  \draw[arr] (5.35,-1.82) -- (L.west);
-\end{tikzpicture}%
-}
+{\footnotesize\itshape What the prompt contains:}\\[1pt]
+{\scriptsize Objective + contract (exact / relaxed) \textbullet\ Circuit summary, qubit roles \textbullet\ Recognized structure: Toffolis, pairs, multi-controlled cascades \textbullet\ Technique cards (toolbox) \textbullet\ Best verified so far + recent results \textbullet\ Playbook rules \textbullet\ Reply format: one JSON plan}
 
-\vspace{0.15cm}
+\vspace{0.2cm}
+\colorbox{blue!7}{\parbox{0.97\linewidth}{\scriptsize \texttt{CIRCUIT barenco\_tof\_5: 9 qubits, 12 gates (ccx:12)}\\\texttt{PAIRS  P0 = T3+T9 (g3..g9) target q5 controls q0 q1: mirror}}}
+
+\vspace{0.35cm}
+\begin{center}
+\colorbox{orange!16}{\parbox{2.8cm}{\centering\normalsize proposer LLM}}
+\qquad$\Longrightarrow$\qquad
+{\scriptsize\itshape returns a JSON plan}
+\end{center}
+
+\vspace{0.35cm}
+\colorbox{blue!7}{\parbox{0.97\linewidth}{\scriptsize \texttt{\{"target": "relaxed", "decisions": [}\\\texttt{  \{"element": "M0", "route": "ancilla\_mcx", "middle": "jones"\},}}}
+
+\vspace{0.25cm}
 \raggedright\footnotesize
 A deterministic compiler executes the plan; the frozen verifier accepted it: $84 \to 36$ T (barenco\_tof\_5, call 1).
 
@@ -166,33 +156,23 @@ A deterministic compiler executes the plan; the frozen verifier accepted it: $84
 
 \begin{frame}{Angle: the LLM rewrites one window}
 
-\centering
-\resizebox{0.96\textwidth}{!}{%
-\begin{tikzpicture}[x=1cm, y=1cm,
-    sec/.style={draw=gray!60, fill=gray!8, rounded corners=1pt, minimum width=5.3cm, minimum height=0.46cm,
-                inner sep=2pt, font=\scriptsize, anchor=north west, align=left},
-    llm/.style={draw=orange!75!black, fill=orange!16, rounded corners=2pt, minimum width=2.1cm,
-                minimum height=0.8cm, font=\footnotesize, align=center, line width=0.9pt},
-    out/.style={draw=blue!55!black, fill=blue!7, rounded corners=2pt, minimum width=5.6cm,
-                minimum height=0.8cm, font=\tiny, align=left, inner sep=4pt},
-    arr/.style={-{Stealth[length=2mm]}, line width=0.7pt}]
-  \node[sec] (s0) at (0,-0.00) {Task + gate set};
-  \node[sec] (s1) at (0,-0.52) {Cost model (gridsynth T per rotation)};
-  \node[sec] (s2) at (0,-1.04) {Error allowance for this window};
-  \node[sec] (s3) at (0,-1.56) {Two actions: rewrite window or fix rotations};
-  \node[sec] (s4) at (0,-2.08) {The window itself (at most 4 qubits, 40 gates)};
-  \node[sec] (s5) at (0,-2.60) {Playbook rules};
-  \node[sec] (s6) at (0,-3.12) {Recent verifier feedback};
-  \node[font=\scriptsize\itshape, anchor=north west] at (0,0.42) {prompt sections};
-  \node[out, anchor=north west, minimum width=5.6cm] (ex) at (0,-3.84) {\texttt{rz at a multiple of pi/4 is exact; every other rz costs \textasciitilde{}46 T}\\\texttt{allowance = 6.250e-05 (phase-aligned operator-norm distance)}\\\texttt{cx q3 q1 / rz(-0.3926990816987246) q1  \# op 5 / h q2 ...}};
-  \node[llm] (L) at (7.5,-1.82) {proposer\\LLM};
-  \node[out, anchor=north] (R) at (7.5,-2.47) {\texttt{op 9 rz(+pi/8) and op 17 t q1 share Pauli frame +IZII}\\\texttt{-> exact merge, angle 0.3927 + pi/4 = 3pi/8}\\\texttt{window: cx q3 q2 / tdg q2 / ... / rz(1.178...) q1}};
-  \node[font=\scriptsize\itshape, anchor=south] at (7.5,-1.37) {returns replacement gates};
-  \draw[arr] (5.35,-1.82) -- (L.west);
-\end{tikzpicture}%
-}
+{\footnotesize\itshape What the prompt contains:}\\[1pt]
+{\scriptsize Task + gate set \textbullet\ Cost model (gridsynth T per rotation) \textbullet\ Error allowance for this window \textbullet\ Two actions: rewrite window or fix rotations \textbullet\ The window itself (at most 4 qubits, 40 gates) \textbullet\ Playbook rules \textbullet\ Recent verifier feedback}
 
-\vspace{0.15cm}
+\vspace{0.2cm}
+\colorbox{blue!7}{\parbox{0.97\linewidth}{\scriptsize \texttt{rz at a multiple of pi/4 is exact; every other rz costs \textasciitilde{}46 T}\\\texttt{allowance = 6.250e-05 (phase-aligned operator-norm distance)}}}
+
+\vspace{0.35cm}
+\begin{center}
+\colorbox{orange!16}{\parbox{2.8cm}{\centering\normalsize proposer LLM}}
+\qquad$\Longrightarrow$\qquad
+{\scriptsize\itshape returns replacement gates}
+\end{center}
+
+\vspace{0.35cm}
+\colorbox{blue!7}{\parbox{0.97\linewidth}{\scriptsize \texttt{op 9 rz(+pi/8) and op 17 t q1 share Pauli frame +IZII}\\\texttt{-> exact merge, angle 0.3927 + pi/4 = 3pi/8}}}
+
+\vspace{0.25cm}
 \raggedright\footnotesize
 Verifier accepted the two frame merges: $2115 \to 2114$ T (qft\_8, call 2). Parsed by regex --- never executed.
 
@@ -200,30 +180,23 @@ Verifier accepted the two frame merges: $2115 \to 2114$ T (qft\_8, call 2). Pars
 
 \begin{frame}{Every 8 calls: the reflector edits the playbook}
 
-\centering
-\resizebox{0.96\textwidth}{!}{%
-\begin{tikzpicture}[x=1cm, y=1cm,
-    sec/.style={draw=gray!60, fill=gray!8, rounded corners=1pt, minimum width=5.3cm, minimum height=0.46cm,
-                inner sep=2pt, font=\scriptsize, anchor=north west, align=left},
-    llm/.style={draw=orange!75!black, fill=orange!16, rounded corners=2pt, minimum width=2.1cm,
-                minimum height=0.8cm, font=\footnotesize, align=center, line width=0.9pt},
-    out/.style={draw=blue!55!black, fill=blue!7, rounded corners=2pt, minimum width=5.6cm,
-                minimum height=0.8cm, font=\tiny, align=left, inner sep=4pt},
-    arr/.style={-{Stealth[length=2mm]}, line width=0.7pt}]
-  \node[sec] (s0) at (0,-0.00) {Current playbook with A/B statistics};
-  \node[sec] (s1) at (0,-0.52) {Accepted improvements (parent to child)};
-  \node[sec] (s2) at (0,-1.04) {Recent rejections and the exact verifier reason};
-  \node[sec] (s3) at (0,-1.56) {Reply: at most 3 add / edit / retire};
-  \node[font=\scriptsize\itshape, anchor=north west] at (0,0.42) {prompt sections};
-  \node[out, anchor=north west, minimum width=5.6cm] (ex) at (0,-2.28) {\texttt{R18 [candidate; shown 20; improving w/ 0/20, w/o 0/19]}\\\texttt{rejected: op 24->0: distance 2.330e-04 > allowance 6.250e-05}\\\texttt{fitness 84 -> 36 T  \# parent ... \# child ...}};
-  \node[llm] (L) at (7.5,-1.04) {reflector\\LLM};
-  \node[out, anchor=north] (R) at (7.5,-1.69) {\texttt{\{"op": "edit", "id": "R18", "text": "..."\}}\\\texttt{\{"op": "retire", "id": "R17", "why": "..."\}}\\\texttt{\{"op": "add", "text": "..."\}   -> enters as CANDIDATE}};
-  \node[font=\scriptsize\itshape, anchor=south] at (7.5,-0.59) {returns rule edits};
-  \draw[arr] (5.35,-1.04) -- (L.west);
-\end{tikzpicture}%
-}
+{\footnotesize\itshape What the prompt contains:}\\[1pt]
+{\scriptsize Current playbook with A/B statistics \textbullet\ Accepted improvements (parent to child) \textbullet\ Recent rejections and the exact verifier reason \textbullet\ Reply: at most 3 add / edit / retire}
 
-\vspace{0.15cm}
+\vspace{0.2cm}
+\colorbox{blue!7}{\parbox{0.97\linewidth}{\scriptsize \texttt{R18 [candidate; shown 20; improving w/ 0/20, w/o 0/19]}\\\texttt{rejected: op 24->0: distance 2.330e-04 > allowance 6.250e-05}}}
+
+\vspace{0.35cm}
+\begin{center}
+\colorbox{orange!16}{\parbox{2.8cm}{\centering\normalsize reflector LLM}}
+\qquad$\Longrightarrow$\qquad
+{\scriptsize\itshape returns rule edits}
+\end{center}
+
+\vspace{0.35cm}
+\colorbox{blue!7}{\parbox{0.97\linewidth}{\scriptsize \texttt{\{"op": "edit", "id": "R18", "text": "..."\}}\\\texttt{\{"op": "retire", "id": "R17", "why": "..."\}}}}
+
+\vspace{0.25cm}
 \raggedright\footnotesize
 New rules enter as CANDIDATES and are shown to half the prompts; only measured T reduction promotes them.
 

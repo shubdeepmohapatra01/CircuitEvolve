@@ -1,0 +1,103 @@
+% Requires (already in main.tex): \usepackage{tikz}, \usetikzlibrary{arrows.meta,positioning}
+% Drop these two frames in after "Inside our slot".
+
+\begin{frame}{What changes: the LLM writes rules, not edits}
+
+\centering
+\resizebox{0.97\textwidth}{!}{%
+\begin{tikzpicture}[x=1cm, y=1cm,
+    box/.style={draw=gray!70!black, fill=gray!10, rounded corners=2pt, minimum width=2.4cm,
+                minimum height=0.95cm, font=\footnotesize, align=center},
+    llm/.style={box, draw=orange!75!black, fill=orange!18, line width=1pt},
+    ver/.style={box, draw=blue!60!black, fill=blue!10, line width=1pt},
+    arr/.style={-{Stealth[length=2.2mm]}, line width=0.8pt},
+    lab/.style={font=\scriptsize, midway, fill=white, inner sep=1pt, align=center}]
+
+  % ---------------- BEFORE ----------------
+  \node[font=\small\bfseries] at (2.0,1.5) {Before: LLM = editor};
+  \node[llm] (P)  at (0,0)    {propose\\one window};
+  \node[ver] (V)  at (3.6,0)  {verify\\(frozen)};
+  \node[box] (A)  at (3.6,-1.7) {accept if\\T drops};
+  \node[llm] (R)  at (0,-1.7) {reflect};
+  \node[box] (B)  at (0,-3.3) {playbook\\(prose lessons)};
+  \draw[arr] (P) -- (V);
+  \draw[arr] (V) -- (A);
+  \draw[arr] (A) -- node[lab]{accepts,\\rejects} (R);
+  \draw[arr] (R) -- (B);
+  \draw[arr] (B.west) -- ++(-1.1,0) |- node[lab, pos=0.75]{hints} (P.west);
+  \node[font=\scriptsize, align=center, text=gray!50!black] at (1.8,-4.4)
+       {output = one edited circuit\\$\sim$45 LLM calls \emph{per circuit}, every time};
+
+  % ---------------- divider ----------------
+  \draw[gray!40, dashed, line width=0.7pt] (5.6,2.0) -- (5.6,-4.9);
+
+  % ---------------- NOW ----------------
+  \node[font=\small\bfseries] at (10.6,1.5) {Now: LLM = rule writer};
+  \node[llm] (S)  at (7.4,0)    {scout\\(Opus): find\\the idea};
+  \node[llm] (I)  at (10.8,0)   {implement\\(Sonnet): write\\rule.py};
+  \node[ver] (T)  at (14.2,0)   {test\_rule\\(frozen judge)};
+  \node[box] (AD) at (14.2,-1.7){admit:\\correct everywhere\\\& helps $\geq 1$ circuit};
+  \node[box] (BK) at (10.8,-1.7){rule book\\(executable)};
+  \node[box] (RU) at (7.4,-1.7) {runner:\\apply to\\every circuit};
+  \draw[arr] (S) -- node[lab]{rule card} (I);
+  \draw[arr] (I) -- (T);
+  \draw[arr] (T) -- (AD);
+  \draw[arr] (AD) -- (BK);
+  \draw[arr] (BK) -- (RU);
+  \draw[arr] (T.north) -- ++(0,0.8) -| node[lab, pos=0.25]{fix (max 5)} (I.north);
+  \node[font=\scriptsize, align=center, text=gray!50!black] at (10.8,-4.4)
+       {output = a rule \emph{code} applies\\0 LLM calls per circuit once admitted};
+
+  % ---------------- legend ----------------
+  \node[llm, minimum width=0.4cm, minimum height=0.28cm, font=\tiny] at (0.3,-5.6) {};
+  \node[right, font=\scriptsize] at (0.6,-5.6) {LLM};
+  \node[ver, minimum width=0.4cm, minimum height=0.28cm, font=\tiny] at (3.0,-5.6) {};
+  \node[right, font=\scriptsize] at (3.3,-5.6) {exact verifier (frozen, unchanged)};
+  \node[box, minimum width=0.4cm, minimum height=0.28cm, font=\tiny] at (9.6,-5.6) {};
+  \node[right, font=\scriptsize] at (9.9,-5.6) {deterministic};
+\end{tikzpicture}%
+}
+
+\vspace{0.15cm}
+{\footnotesize
+\begin{itemize}
+  \item Same frozen verifier, same benchmarks, same baselines --- only the LLM's \emph{output} changed.
+  \item A rule = trigger $\to$ action $\to$ contract (exact / $\varepsilon$-approx / ancilla returned clean).
+  \item One book holds all methods: exact rewrites, angle procedures (DPF-style), ancilla reconstruction.
+\end{itemize}}
+
+\end{frame}
+
+
+\begin{frame}{Why the editor formulation stalled}
+
+{\footnotesize
+\begin{columns}[T]
+\begin{column}{0.5\textwidth}
+\textbf{Three causes}
+\begin{enumerate}
+  \item \textbf{Hidden information.} Whether an angle can be fixed depends on a numerical
+        re-fit the model cannot run --- it had to guess.
+  \item \textbf{No reuse.} One accepted edit helps one window of one circuit; the next circuit
+        starts from zero.
+  \item \textbf{Unchecked lessons.} The reflector wrote prose that nothing verifies ---
+        and one lesson \emph{banned the move that works}.
+\end{enumerate}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Evidence (angle campaign, hhl\_8)}
+\begin{itemize}
+  \item Lesson written: ``never snap unless within $10^{-4}$\,rad of $k\pi/4$''.
+  \item Reality: fixes at $0.05$--$0.10$\,rad re-fitted to distance $\sim\!10^{-14}$,
+        allowance $6.25\times10^{-5}$ --- accepted.
+  \item 34 of $\sim$500 rotations ever visited; best arm $-147$\,T ($0.5\%$).
+  \item BQSKit-DPF, the same idea applied to \emph{every} rotation: $35{,}450 \to 19{,}443$\,T.
+\end{itemize}
+\end{column}
+\end{columns}}
+
+\vspace{0.25cm}
+{\footnotesize \alert{The gap was never knowledge --- DPF is a procedure the model can describe.
+It was that a chat turn cannot execute one, and an edit cannot be reused.}}
+
+\end{frame}
