@@ -237,7 +237,7 @@ New rules enter as CANDIDATES and are shown to half the prompts; only measured T
 \begin{frame}{Reconstruction, trained circuits}
 
 \centering
-\includegraphics[width=0.96\textwidth]circuitevolve_figs/fig_recon_trained.png
+\includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_recon_trained.png}
 
 \begin{itemize}
   \item Beats pyzx on 5 of 5; largest gain on cuccaro\_8, $-32$ T
@@ -252,7 +252,7 @@ Ours uses the relaxed contract (ancillas + measurement, every branch verified ex
 \begin{frame}{Reconstruction, circuits it never saw}
 
 \centering
-\includegraphics[width=0.96\textwidth]circuitevolve_figs/fig_recon_frozen.png
+\includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_recon_frozen.png}
 
 \begin{itemize}
   \item Playbook frozen, reflector off --- beats pyzx on all 5, up to $-383$ T on mod\_adder\_1024
@@ -267,7 +267,7 @@ Four further frozen circuits have no B0/B1 reference: ham15-med $-5\%$, gf2$^6$\
 \begin{frame}{Angle: our approach barely moves}
 
 \centering
-\includegraphics[width=0.96\textwidth]circuitevolve_figs/fig_angle.png
+\includegraphics[width=0.96\textwidth]{circuitevolve_figs/fig_angle.png}
 
 \begin{itemize}
   \item B2 lands exactly on B0; B3 is worse than B0 on 4 of 5
@@ -283,7 +283,7 @@ A supplementary DPF variant does better than all of these on hhl\_8 ($0.55\times
 \begin{frame}{Where the two stages compose}
 
 \centering
-\includegraphics[width=0.72\textwidth]circuitevolve_figs/fig_stages.png
+\includegraphics[width=0.72\textwidth]{circuitevolve_figs/fig_stages.png}
 
 \begin{itemize}
   \item Reconstruction does the work; the angle stage adds nothing after it
@@ -298,7 +298,7 @@ Zero-LLM demo (deterministic planner + merge pass). Reconstruction alone is not 
 \begin{frame}{Reconstruction learned rules; angle did not}
 
 \centering
-\includegraphics[width=0.74\textwidth]circuitevolve_figs/bar_rules.png
+\includegraphics[width=0.74\textwidth]{circuitevolve_figs/bar_rules.png}
 
 \begin{itemize}
   \item 15 rules promoted by the A/B test, then used frozen on unseen circuits
