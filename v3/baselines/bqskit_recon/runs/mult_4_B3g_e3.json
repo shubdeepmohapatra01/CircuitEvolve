@@ -1,0 +1,76 @@
+{
+ "circuit": "mult_4",
+ "arm": "B3g",
+ "eps": 0.001,
+ "status": "ok",
+ "t_count": 112,
+ "cx": 99,
+ "n_rz": 0,
+ "eps_per_rz": null,
+ "gridsynth_algorithmic_error": 0.0004,
+ "residual_rz": 0,
+ "other_ops": {},
+ "runtime_s": 0.4,
+ "verify_s": 0.1,
+ "state_dist_vs_orig": 1.3330115884459447e-15,
+ "state_dist_vs_input": 1.761317144229493e-15,
+ "state_dist_input_vs_cliffrz": 1.761317144229493e-15,
+ "stages": {
+  "input": {
+   "rz": 0,
+   "t": 112,
+   "params": 0,
+   "ops": 225
+  },
+  "after_dpf": {
+   "rz": 0,
+   "t": 112,
+   "params": 0,
+   "ops": 225,
+   "elapsed_s": 0.4
+  },
+  "output": {
+   "rz": 0,
+   "t": 112,
+   "params": 0,
+   "ops": 225
+  }
+ },
+ "gate_counts": {
+  "TGate": 58,
+  "TdgGate": 54,
+  "CNOTGate": 99,
+  "HGate": 14
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 0,
+    "algorithmic_error": 0.0004,
+    "precision_per_rz": null
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 16,
+   "distinct": [
+    2.5e-05
+   ]
+  },
+  "assign_errors": [],
+  "partitions": [
+   {
+    "num_blocks": 16,
+    "block_size": 4,
+    "partitioner": "Scan",
+    "ops_before": 225
+   }
+  ],
+  "dump_pregs": "v3/baselines/bqskit_recon/outputs/mult_4_B3g_e3_pregs.qasm.gz",
+  "gridsynth_panic_retries": []
+ },
+ "output": "mult_4_B3g_e3.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1",
+ "qubits": 12,
+ "wall_s": 0.6,
+ "driver": "v3/baselines/run_bqskit_recon.py -> stage1/run_bqskit_arms.run_job (unchanged)"
+}

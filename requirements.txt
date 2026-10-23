@@ -1,0 +1,16 @@
+# Versions used for the results in v3/results (Python 3.11)
+
+# judge, runner, rules, reports
+numpy==2.4.6
+scipy==1.17.1
+sympy==1.14.0
+mpmath            # installed with sympy (results used 1.4.1; pip pairs sympy 1.14 with mpmath < 1.4)
+matplotlib==3.11.0
+pygridsynth==2.0.0
+pytest==9.1.1
+
+# baselines (benchmarks/run_baselines.py) and circuit conversion
+bqskit==1.2.1
+pytket==2.18.5
+pyzx==0.10.7
+qiskit==2.5.2

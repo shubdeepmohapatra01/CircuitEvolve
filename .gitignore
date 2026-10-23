@@ -1,0 +1,9 @@
+.venv/
+.venv*/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+v3/.cache/
+*.log
+v3/results/p2/STOP

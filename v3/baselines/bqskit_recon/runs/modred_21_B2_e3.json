@@ -1,0 +1,68 @@
+{
+ "circuit": "modred_21",
+ "arm": "B2",
+ "eps": 0.001,
+ "status": "ok",
+ "t_count": 119,
+ "cx": 105,
+ "n_rz": 0,
+ "eps_per_rz": null,
+ "gridsynth_algorithmic_error": 0.001,
+ "residual_rz": 0,
+ "other_ops": {},
+ "runtime_s": 0.2,
+ "verify_s": 0.1,
+ "state_dist_vs_orig": 1.6782013444044858e-15,
+ "state_dist_vs_input": 1.0377620703074656e-15,
+ "state_dist_input_vs_cliffrz": 1.0377620703074656e-15,
+ "stages": {
+  "input": {
+   "rz": 0,
+   "t": 119,
+   "params": 0,
+   "ops": 278
+  },
+  "clifford_rz": {
+   "rz": 0,
+   "t": 119,
+   "params": 0,
+   "ops": 278,
+   "eps_per_gate": 0.001
+  },
+  "output": {
+   "rz": 0,
+   "t": 119,
+   "params": 0,
+   "ops": 278
+  }
+ },
+ "gate_counts": {
+  "XGate": 24,
+  "CNOTGate": 105,
+  "HGate": 30,
+  "TGate": 60,
+  "TdgGate": 59
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 0,
+    "algorithmic_error": 0.001,
+    "precision_per_rz": null
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 0,
+   "distinct": []
+  },
+  "assign_errors": [],
+  "partitions": [],
+  "dump_pregs": "v3/baselines/bqskit_recon/outputs/modred_21_B2_e3_pregs.qasm.gz",
+  "gridsynth_panic_retries": []
+ },
+ "output": "modred_21_B2_e3.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1",
+ "qubits": 11,
+ "wall_s": 0.4,
+ "driver": "v3/baselines/run_bqskit_recon.py -> stage1/run_bqskit_arms.run_job (unchanged)"
+}

@@ -1,0 +1,209 @@
+{
+ "candidate": "v3/rules/candidates/harness_dryrun_planted.py",
+ "static": "",
+ "circuits": [
+  {
+   "label": "qft_8",
+   "eps": 0.001,
+   "matches_on_input": 12,
+   "fired": true,
+   "applications_tried": 43,
+   "verified": 32,
+   "accepted": 19,
+   "timeout": false,
+   "seconds": 0.4,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "first_failure": {
+    "match": 0,
+    "mode": "approx",
+    "method": "unitary",
+    "distance": 0.6737797067844404,
+    "reason": "distance 6.738e-01 > eps 1.000e-08"
+   },
+   "cost_before": 2391,
+   "cost_after": 1583,
+   "qubits_before": 8,
+   "qubits_after": 8,
+   "err_bound": 0.001,
+   "err_rules": 8.184869177567511e-15
+  },
+  {
+   "label": "qpe_8",
+   "eps": 0.001,
+   "matches_on_input": 51,
+   "fired": true,
+   "applications_tried": 146,
+   "verified": 65,
+   "accepted": 65,
+   "timeout": false,
+   "seconds": 1.6,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "first_failure": {
+    "match": 0,
+    "mode": "approx",
+    "method": "unitary",
+    "distance": 1.2352144244556695,
+    "reason": "distance 1.235e+00 > eps 1.000e-08"
+   },
+   "cost_before": 14761,
+   "cost_after": 11633,
+   "qubits_before": 8,
+   "qubits_after": 8,
+   "err_bound": 0.001,
+   "err_rules": 8.709806563815226e-14
+  },
+  {
+   "label": "hhl_8",
+   "eps": 0.001,
+   "matches_on_input": 102,
+   "fired": true,
+   "applications_tried": 377,
+   "verified": 202,
+   "accepted": 127,
+   "timeout": false,
+   "seconds": 3.9,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "first_failure": {
+    "match": 0,
+    "mode": "approx",
+    "method": "unitary",
+    "distance": 0.8534680055691392,
+    "reason": "distance 8.535e-01 > eps 1.000e-08"
+   },
+   "cost_before": 35450,
+   "cost_after": 29593,
+   "qubits_before": 8,
+   "qubits_after": 8,
+   "err_bound": 0.001,
+   "err_rules": 8.71633008082018e-14
+  },
+  {
+   "label": "qae_13",
+   "eps": 0.001,
+   "matches_on_input": 36,
+   "fired": true,
+   "applications_tried": 243,
+   "verified": 61,
+   "accepted": 61,
+   "timeout": false,
+   "seconds": 9.7,
+   "certified": false,
+   "verify_methods": [
+    "statevector",
+    "unitary"
+   ],
+   "first_failure": {
+    "match": 0,
+    "mode": "approx",
+    "method": "unitary",
+    "distance": 0.1504000000000019,
+    "reason": "distance 1.504e-01 > eps 1.000e-08"
+   },
+   "cost_before": 7821,
+   "cost_after": 4853,
+   "qubits_before": 13,
+   "qubits_after": 13,
+   "err_bound": 0.001,
+   "err_rules": 5.711366661233831e-14
+  },
+  {
+   "label": "tfim_6",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.0,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "adder_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.0,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "adder_6",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.0,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mult_4",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.0,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mcx_10",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.0,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "modred_21",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.0,
+   "certified": true,
+   "verify_methods": []
+  }
+ ],
+ "decision": "reject",
+ "reason": "verification failed on qft_8 (eps 0.001): {'match': 0, 'mode': 'approx', 'method': 'unitary', 'distance': 0.6737797067844404, 'reason': 'distance 6.738e-01 > eps 1.000e-08'}",
+ "rule": {
+  "name": "harness_dryrun_planted",
+  "domain": "dv",
+  "kind": "rewrite",
+  "contract": "exact"
+ },
+ "event": "admission",
+ "origin": "LLM (P2, qft_8 a0)",
+ "seconds": 15.7,
+ "time": 1792540480.542173
+}

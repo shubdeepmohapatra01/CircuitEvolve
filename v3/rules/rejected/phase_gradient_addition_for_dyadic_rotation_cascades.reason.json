@@ -1,0 +1,178 @@
+{
+ "candidate": "v3/rules/candidates/phase_gradient_addition_for_dyadic_rotation_cascades.py",
+ "static": "",
+ "circuits": [
+  {
+   "label": "qft_8",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 2,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 15.0,
+   "certified": true,
+   "verify_methods": [
+    "literal"
+   ],
+   "first_failure": {
+    "match": 0,
+    "mode": "relaxed",
+    "method": "literal",
+    "distance": null,
+    "reason": "candidate not exact: rz(-0.01227184630308513) is not a multiple of pi/4"
+   },
+   "cost_before": 1583,
+   "cost_after": 1583,
+   "qubits_before": 8,
+   "qubits_after": 8,
+   "err_bound": 0.001,
+   "err_rules": 1.2124696055411382e-14
+  },
+  {
+   "label": "qpe_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 82.2,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "hhl_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 296.2,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "qae_13",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 2,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 117.9,
+   "certified": true,
+   "verify_methods": [
+    "literal"
+   ],
+   "first_failure": {
+    "match": 0,
+    "mode": "relaxed",
+    "method": "literal",
+    "distance": null,
+    "reason": "candidate not exact: rz(-0.0007669903939428206) is not a multiple of pi/4"
+   },
+   "cost_before": 4526,
+   "cost_after": 4526,
+   "qubits_before": 13,
+   "qubits_after": 13,
+   "err_bound": 0.001,
+   "err_rules": 4.9896864250297724e-14
+  },
+  {
+   "label": "tfim_6",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 1.0,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "adder_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 180.7,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "adder_6",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 177.5,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mult_4",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 226.7,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mcx_10",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 204.5,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "modred_21",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 45.1,
+   "certified": true,
+   "verify_methods": []
+  }
+ ],
+ "decision": "reject",
+ "reason": "verification failed on qft_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(-0.01227184630308513) is not a multiple of pi/4'}",
+ "rule": {
+  "name": "phase_gradient_addition_for_dyadic_rotation_cascades",
+  "domain": "dv",
+  "kind": "reconstruction",
+  "contract": "relaxed"
+ },
+ "event": "admission",
+ "origin": "LLM (P2, qae_13 a2)",
+ "seconds": 1347.0,
+ "time": 1792648740.947364
+}

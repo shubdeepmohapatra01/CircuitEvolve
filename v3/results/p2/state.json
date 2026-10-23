@@ -1,0 +1,84 @@
+{
+ "plan": [
+  [
+   "qpe_8",
+   5
+  ],
+  [
+   "hhl_8",
+   5
+  ],
+  [
+   "adder_8",
+   4
+  ],
+  [
+   "mult_4",
+   4
+  ],
+  [
+   "mcx_10",
+   4
+  ],
+  [
+   "adder_6",
+   3
+  ],
+  [
+   "modred_21",
+   3
+  ],
+  [
+   "qft_8",
+   3
+  ],
+  [
+   "qae_13",
+   3
+  ],
+  [
+   "tfim_6",
+   2
+  ]
+ ],
+ "done": {
+  "qpe_8": 5,
+  "hhl_8": 5,
+  "adder_8": 4,
+  "mult_4": 4,
+  "mcx_10": 4,
+  "adder_6": 3,
+  "modred_21": 3,
+  "qft_8": 3,
+  "qae_13": 3,
+  "tfim_6": 2
+ },
+ "status": {
+  "qpe_8": "done",
+  "hhl_8": "done",
+  "adder_8": "done",
+  "mult_4": "done",
+  "mcx_10": "done",
+  "adder_6": "done",
+  "modred_21": "done",
+  "qft_8": "done",
+  "qae_13": "done",
+  "tfim_6": "done"
+ },
+ "stopped": null,
+ "started": 1792540704.561692,
+ "resumes": [
+  1792540704.561693,
+  1792541211.061701,
+  1792547486.032744
+ ],
+ "finished": 1792745522.0926862,
+ "voided": [
+  {
+   "label": "adder_8",
+   "attempt": 1,
+   "time": 1792547485.877099,
+   "reason": "harness edit (runner speed fix) during the implementer retry tripped the outside-candidates guard; attempt voided and redone"
+  }
+ ]
+}

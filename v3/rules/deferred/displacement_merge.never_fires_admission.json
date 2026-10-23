@@ -1,0 +1,83 @@
+{
+ "candidate": "v3/rules/candidates/displacement_merge.py",
+ "static": "",
+ "circuits": [
+  {
+   "label": "kerr_small",
+   "eps": null,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.2,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "boseHubbard_small",
+   "eps": null,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.2,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "z2Higgs_small",
+   "eps": null,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.2,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "heisenberg_small",
+   "eps": null,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.2,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "electronicVibration_small",
+   "eps": null,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.2,
+   "certified": true,
+   "verify_methods": []
+  }
+ ],
+ "decision": "never_fires",
+ "reason": "trigger matched on none of the 5 suite runs of domain cvdv",
+ "rule": {
+  "name": "displacement_merge",
+  "domain": "cvdv",
+  "kind": "rewrite",
+  "contract": "exact"
+ },
+ "event": "admission",
+ "origin": "hand-written (P1)",
+ "seconds": 1.0,
+ "time": 1792539502.8691058
+}
