@@ -56,18 +56,18 @@ def sandbox(tmp_path, monkeypatch):
 
 
 def test_train_accepts_verified_improving_rule_then_test_applies_it(sandbox):
-    loop.train("L0", [{"name": "a"}], stub_ask(GIDNEY_RULE), ideas=1, attempts=1)
+    loop.train("L0", [{"name": "a", "family": "rotation"}], stub_ask(GIDNEY_RULE), ideas=1, attempts=1)
     rules = glob.glob(str(sandbox / "playbook" / "L0" / "001_*.py"))
     assert len(rules) == 1
     log = [json.loads(l) for l in open(sandbox / "playbook" / "L0" / "log.jsonl")]
     att = [r for r in log if r["phase"] == "attempt"][0]
     assert att["accepted"] and att["t_before"] == 21 and att["t_after"] == 12
-    rows = loop.test("L0", [{"name": "b"}])
-    assert rows[0]["t"] == 8 and rows[0]["t_prepared"] == 14 and rows[0]["e2e_check"] == "ok"
+    rows = loop.test("L0", [{"name": "b", "family": "rotation"}])
+    assert rows[0]["t"] == 8 and rows[0]["t_no_playbook"] == 14 and rows[0]["e2e_check"] == "ok"
 
 
 def test_train_rejects_non_equivalent_rule(sandbox):
-    loop.train("L0", [{"name": "a"}], stub_ask(BROKEN_RULE), ideas=1, attempts=2)
+    loop.train("L0", [{"name": "a", "family": "rotation"}], stub_ask(BROKEN_RULE), ideas=1, attempts=2)
     assert not glob.glob(str(sandbox / "playbook" / "L0" / "0*.py"))
     log = [json.loads(l) for l in open(sandbox / "playbook" / "L0" / "log.jsonl")]
     atts = [r for r in log if r["phase"] == "attempt"]

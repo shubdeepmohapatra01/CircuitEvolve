@@ -147,3 +147,30 @@ def test_many_site_rule_with_one_bad_site():
     i = max(k for k, g in enumerate(new.gates) if g.name == "cz" and g.cond == 1)
     new.gates[i] = Gate("cz", (7, 11), cond=1)               # wrong correction at the middle site
     assert not check(old, new, Req(ancillas=3, measure=True)).ok
+
+
+# ---- benchmark-declared clean ancillas (zero_init) ------------------------------------------------
+def _ladder_old():
+    """tof_4-like: q2 is a clean ancilla holding q0 AND q1 while it is used, then uncomputed."""
+    return C(4, [("ccx", (0, 1, 2)), ("cx", (2, 3)), ("ccx", (0, 1, 2))])
+
+
+def _ladder_new():
+    """Compute the AND into the clean ancilla with 4 T, use it, uncompute by measurement (0 T)."""
+    return C(4, gidney_and(0, 1, 2) + [("cx", (2, 3)), ("h", (2,)), Gate("measure", (2,), cbit=0),
+                                       Gate("cz", (0, 1), cond=0), Gate("x", (2,), cond=0)], nc=1)
+
+
+def test_zero_init_ancilla_allows_measured_uncompute():
+    assert check(_ladder_old(), _ladder_new(), Req(measure=True), zero_init=[2]).ok
+
+
+def test_without_zero_init_the_same_rewrite_is_rejected():
+    assert not check(_ladder_old(), _ladder_new(), Req(measure=True)).ok
+
+
+def test_zero_init_not_assumed_after_qubit_was_touched():
+    old, new = _ladder_old(), _ladder_new()
+    old.gates.insert(0, Gate("cx", (3, 2)))
+    new.gates.insert(0, Gate("cx", (3, 2)))                # q2 no longer |0> when the rewrite starts
+    assert not check(old, new, Req(measure=True), zero_init=[2]).ok

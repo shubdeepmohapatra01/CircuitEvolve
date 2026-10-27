@@ -8,7 +8,12 @@
                 if it verifies AND lowers the final T-count of i': add it to the playbook, and continue from the new i'
     test(arm, circuits): prepare + apply the final playbook, no LLM calls.
 
-Arms: L0 = TKET -> playbook -> gridsynth;  L1 = TKET -> pyzx -> playbook -> gridsynth;  L2 = TKET -> DPF -> playbook -> gridsynth.
+Arms (rotation family): L0 = TKET -> playbook -> gridsynth;  L1 = TKET -> pyzx -> playbook -> gridsynth;
+                        L2 = TKET -> DPF -> playbook -> gridsynth.
+Arms (Toffoli family) : the playbook goes FIRST, on the logical ccx/ccz circuit (TKET/pyzx dissolve the Toffolis):
+                        L0 = playbook -> TKET -> gridsynth;  L1 = playbook -> TKET -> pyzx -> gridsynth  (no L2).
+                        TKET/pyzx run piecewise between measurement gadgets (library.piecewise).
+Every T-count (acceptance in training, numbers in testing) is taken after the full pipeline: score().
 Files: playbook/<arm>/NNN_<name>.py (accepted rules only), playbook/<arm>/log.jsonl (every application and attempt,
 rejected code included), results/prepared/<arm>/<circuit>.qasm (+ .json eps used) as a cache.
 """
@@ -33,21 +38,37 @@ RULE_TIMEOUT, CIRCUIT_BUDGET_S = 30, 30 * 60
 
 # ---- preparation (baseline stages before the playbook) -------------------------------------------------------------
 def prepare(entry: dict, arm: str) -> tuple[Circuit, float]:
-    """Load, TKET, then the arm's library stage. Cached on disk (DPF is slow). Returns (circuit, eps_used)."""
+    """The stages BEFORE the playbook. Cached on disk (DPF is slow). Returns (circuit, eps_used)."""
     path = os.path.join(ROOT, "results", "prepared", arm, entry["name"])
     if os.path.exists(path + ".qasm"):
         return load(path + ".qasm"), json.load(open(path + ".json"))["eps_used"]
-    c, eps = library.tket(library.load(os.path.join(ROOT, entry["path"]))), 0.0
-    if arm == "L1":
-        c = library.pyzx_reduce(c)
-    elif arm == "L2" and counts(c)["rz"]:
-        from .dpf import dpf
-        c, eps = dpf(c, metric.EPS_TOTAL, label=entry.get("plot_name", entry["name"]))
-        assert eps <= metric.EPS_DPF, f"DPF spent {eps} > {metric.EPS_DPF}"
+    c, eps = library.load(os.path.join(ROOT, entry["path"])), 0.0
+    if entry["family"] != "toffoli":
+        c = library.tket(c)
+        if arm == "L1":
+            c = library.pyzx_reduce(c)
+        elif arm == "L2" and counts(c)["rz"]:
+            from .dpf import dpf
+            c, eps = dpf(c, metric.EPS_TOTAL, label=entry.get("plot_name", entry["name"]))
+            assert eps <= metric.EPS_DPF, f"DPF spent {eps} > {metric.EPS_DPF}"
     os.makedirs(os.path.dirname(path), exist_ok=True)
     save(c, path + ".qasm")
     json.dump({"eps_used": eps}, open(path + ".json", "w"))
     return c, eps
+
+
+def finish(arm: str, family: str, c: Circuit) -> Circuit:
+    """The stages AFTER the playbook (before gridsynth). Only the Toffoli family has any."""
+    if family != "toffoli":
+        return c
+    if arm == "L0":
+        return library.piecewise(library.tket, c)
+    return library.piecewise(lambda x: library.pyzx_reduce(library.tket(x)), c)
+
+
+def score(arm: str, family: str, c: Circuit, eps: float) -> int:
+    """Final T-count of the full pipeline from the playbook's output c."""
+    return metric.t(finish(arm, family, c), eps)
 
 
 # ---- running one rule (in a subprocess: hard timeout, LLM code never shares a process with the verifier) ------------
@@ -74,20 +95,20 @@ def _worker(rule_path, src, dst):
 
 
 # ---- one application of one rule: run, verify, budget, measure ----------------------------------------------------
-def apply_once(rule_path: str, c: Circuit, eps: float, eps_llm: float) -> dict:
+def apply_once(rule_path: str, c: Circuit, eps: float, eps_llm: float, sc, zinit=()) -> dict:
     """Returns a log record; record['new'] holds the (circuit, eps, eps_llm) to continue from, or None if skipped."""
     t0 = time.time()
-    rec = dict(rule=os.path.basename(rule_path), t_before=metric.t(c, eps), new=None)
+    rec = dict(rule=os.path.basename(rule_path), t_before=sc(c, eps), new=None)
     try:
         new, req = run_rule(rule_path, c)
     except Exception as e:                                       # includes subprocess.TimeoutExpired
         return rec | dict(verdict="error", reason=str(e)[-600:], s=round(time.time() - t0, 2))
     req = Req(eps=min(req.eps, metric.EPS_LLM - eps_llm), ancillas=req.ancillas, measure=req.measure)
-    v = check(c, new, req)
+    v = check(c, new, req, zero_init=zinit)
     rec |= dict(verdict="ok" if v.ok else "rejected", mode=v.mode, dist=v.dist, reason=v.reason, req=req.kind)
     if v.ok and v.mode != "nochange":
         d = v.dist if req.eps > 0 else 0.0
-        rec |= dict(t_after=metric.t(new, eps + d), qubits_after=new.n, new=(new, eps + d, eps_llm + d))
+        rec |= dict(t_after=sc(new, eps + d), qubits_after=new.n, new=(new, eps + d, eps_llm + d))
     return rec | dict(s=round(time.time() - t0, 2))
 
 
@@ -95,10 +116,10 @@ def playbook_rules(arm: str) -> list:
     return sorted(glob.glob(os.path.join(ROOT, "playbook", arm, "[0-9][0-9][0-9]_*.py")))
 
 
-def apply_playbook(arm: str, c: Circuit, eps: float, log, circuit_name: str):
+def apply_playbook(arm: str, c: Circuit, eps: float, log, circuit_name: str, sc, zinit=()):
     eps_llm = 0.0
     for path in playbook_rules(arm):
-        rec = apply_once(path, c, eps, eps_llm)
+        rec = apply_once(path, c, eps, eps_llm, sc, zinit)
         if rec["new"] is not None:
             c, eps, eps_llm = rec["new"]
         log(dict(phase="apply", circuit=circuit_name) | {k: v for k, v in rec.items() if k != "new"})
@@ -123,13 +144,15 @@ def train(arm: str, circuits: list, ask, ideas: int = IDEAS, attempts: int = ATT
     log = _logger(arm)
     for entry in circuits:
         start, name = time.time(), entry["name"]
+        sc = lambda x, e, fam=entry["family"]: score(arm, fam, x, e)
         c, eps = prepare(entry, arm)
-        c, eps, eps_llm = apply_playbook(arm, c, eps, log, name)
-        t_cur = metric.t(c, eps)
+        zinit = entry.get("zero_init", [])
+        c, eps, eps_llm = apply_playbook(arm, c, eps, log, name, sc, zinit)
+        t_cur = sc(c, eps)
         log(dict(phase="start", circuit=name, t=t_cur, counts=counts(c)))
         book = [dict(name=os.path.basename(p)[4:-3], doc=_doc(p)) for p in playbook_rules(arm)]
         try:
-            found = agents.scout(ask, arm, c, metric.EPS_LLM - eps_llm, book, ideas)
+            found = agents.scout(ask, arm, entry["family"], c, metric.EPS_LLM - eps_llm, book, ideas, zinit)
         except Exception as e:
             log(dict(phase="scout", circuit=name, error=str(e)[-600:])); continue
         log(dict(phase="scout", circuit=name, ideas=found))
@@ -139,7 +162,7 @@ def train(arm: str, circuits: list, ask, ideas: int = IDEAS, attempts: int = ATT
                 if time.time() - start > CIRCUIT_BUDGET_S:
                     break
                 try:
-                    code = agents.implement(ask, arm, c, metric.EPS_LLM - eps_llm, book, idea, feedback, code)
+                    code = agents.implement(ask, arm, entry["family"], c, metric.EPS_LLM - eps_llm, book, idea, feedback, code, zinit)
                 except Exception as e:
                     feedback = f"implementer error: {e}"
                     log(dict(phase="attempt", circuit=name, idea=idea["name"], attempt=k, accepted=False,
@@ -148,7 +171,7 @@ def train(arm: str, circuits: list, ask, ideas: int = IDEAS, attempts: int = ATT
                 os.makedirs(os.path.join(ROOT, ".cache", "candidates"), exist_ok=True)
                 with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False, dir=os.path.join(ROOT, ".cache", "candidates")) as f:
                     f.write(code)
-                rec = apply_once(f.name, c, eps, eps_llm)
+                rec = apply_once(f.name, c, eps, eps_llm, sc, zinit)
                 accepted = rec["new"] is not None and rec["t_after"] < t_cur
                 if accepted:
                     n = len(playbook_rules(arm)) + 1
@@ -177,12 +200,15 @@ def _safe(s):
 def test(arm: str, circuits: list) -> list:
     log, rows = _logger(arm), []
     for entry in circuits:
-        start = time.time()
+        start, fam = time.time(), entry["family"]
+        sc = lambda x, e: score(arm, fam, x, e)
         c0, eps0 = prepare(entry, arm)
-        c, eps, _ = apply_playbook(arm, c0, eps0, lambda r: log(r | dict(split="test")), entry["name"])
-        v = check(c0, c, Req(eps=metric.EPS_LLM, ancillas=c.n - c0.n, measure=True))   # end-to-end re-check
-        rows.append(dict(circuit=entry.get("plot_name", entry["name"]), arm=arm, **metric.final(c, eps),
-                         t_prepared=metric.t(c0, eps0), e2e_check=("ok" if v.ok else "too large" if v.mode == "refused" else "FAILED"),
+        zinit = entry.get("zero_init", [])
+        c, eps, _ = apply_playbook(arm, c0, eps0, lambda r: log(r | dict(split="test")), entry["name"], sc, zinit)
+        v = check(c0, c, Req(eps=metric.EPS_LLM, ancillas=c.n - c0.n, measure=True), zero_init=zinit)   # end-to-end
+        rows.append(dict(circuit=entry.get("plot_name", entry["name"]), arm=arm, **metric.final(finish(arm, fam, c), eps),
+                         t_no_playbook=sc(c0, eps0),
+                         e2e_check=("ok" if v.ok else "too large" if v.mode == "refused" else "FAILED"),
                          e2e_mode=v.mode, e2e_reason=v.reason, s=round(time.time() - start, 1)))
     return rows
 

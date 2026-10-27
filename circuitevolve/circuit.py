@@ -139,6 +139,10 @@ def from_qasm(text: str) -> Circuit:
     rz/u1/p differ only by a global phase, which the verifier ignores. Several named qreg/creg are
     concatenated in declaration order (e.g. qreg eval[3]; qreg q[3]; -> eval = 0..2, q = 3..5)."""
     qoff, coff, n, nc, gates = {}, {}, 0, 0, []
+    for name in re.findall(r"gate\s+(\w+)[^{]*\{[^}]*\}", text):      # definitions of our own native gates
+        if name not in ARITY:
+            raise ValueError(f"custom gate {name!r} is not in the gate set")
+    text = re.sub(r"gate\s+\w+[^{]*\{[^}]*\}", "", text)
     ref = re.compile(r"(\w+)\[(\d+)\]")
     for raw in re.sub(r"//.*", "", text).split(";"):
         line = " ".join(raw.split())

@@ -22,8 +22,16 @@ _SCI = re.compile(r"(?<![\w.])-?\d+\.?\d*[eE][-+]?\d+")
 
 
 def _safe_qasm(c: Circuit) -> str:
-    """to_qasm, with scientific-notation angles expanded to fixed-point (pyzx/pytket angle parsers choke on 1e-05)."""
-    return _SCI.sub(lambda m: format(float(m.group(0)), ".25f"), to_qasm(c))
+    """to_qasm, with scientific-notation angles expanded to fixed-point (pyzx/pytket angle parsers choke on 1e-05),
+    and ccz written as h-ccx-h (pytket's qelib1 has no ccz)."""
+    gates = []
+    for g in c.gates:
+        if g.name == "ccz":
+            t = g.qubits[2]
+            gates += [Gate("h", (t,)), Gate("ccx", g.qubits), Gate("h", (t,))]
+        else:
+            gates.append(g)
+    return _SCI.sub(lambda m: format(float(m.group(0)), ".25f"), to_qasm(Circuit(c.n, gates, c.nc)))
 
 
 def name_gates(c: Circuit) -> Circuit:
@@ -142,3 +150,20 @@ def t_count(c: Circuit) -> int:
     """T-count of a Clifford+T circuit, i.e. c after gridsynth (asserts no arbitrary rz remains)."""
     assert not any(is_arbitrary_rz(g) for g in c.gates), "t_count expects a gridsynth'd (pure Clifford+T) circuit"
     return counts(c)["t"]
+
+
+def piecewise(fn, c: Circuit) -> Circuit:
+    """Apply a unitary-only optimizer (tket, pyzx_reduce) to each maximal unitary stretch of c, leaving
+    measure/reset/classically-controlled gates in place. Sound: each stretch is replaced by an equivalent one."""
+    out, chunk = [], []
+    def flush():
+        if chunk:
+            out.extend(fn(Circuit(c.n, list(chunk))).gates)
+            chunk.clear()
+    for g in c.gates:
+        if g.name in C.UNITARY and g.cond is None:
+            chunk.append(g)
+        else:
+            flush(); out.append(g)
+    flush()
+    return Circuit(c.n, out, c.nc)

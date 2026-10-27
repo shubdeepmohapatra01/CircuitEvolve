@@ -1,169 +1,223 @@
 {
  "version": "overhaul-1",
  "eps_total": 0.001,
- "note": "Every arm runs TKET FullPeepholeOptimise first. Test set = the 13 circuits with stored B0/B1/B2 in baselines/baselines.csv.",
+ "note": "Toffoli family: logical (ccx/ccz) form, playbook FIRST, then TKET (L0) or TKET+pyzx (L1) piecewise between measurement gadgets, then gridsynth. Rotation family: TKET -> (pyzx | DPF) -> playbook -> gridsynth. Test set = the 13 circuits with stored B0/B1/B2.",
  "train": [
   {
    "name": "tof_3",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/tof_3.qasm"
+   "path": "benchmarks/nam_arith/logical/tof_3.qasm",
+   "zero_init": [
+    4
+   ]
   },
   {
    "name": "tof_4",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/tof_4.qasm"
+   "path": "benchmarks/nam_arith/logical/tof_4.qasm",
+   "zero_init": [
+    4,
+    5
+   ]
   },
   {
    "name": "tof_5",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/tof_5.qasm"
+   "path": "benchmarks/nam_arith/logical/tof_5.qasm",
+   "zero_init": [
+    5,
+    6,
+    7
+   ]
   },
   {
    "name": "barenco_tof_3",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/barenco_tof_3.qasm"
+   "path": "benchmarks/nam_arith/logical/barenco_tof_3.qasm",
+   "zero_init": []
   },
   {
    "name": "barenco_tof_4",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/barenco_tof_4.qasm"
+   "path": "benchmarks/nam_arith/logical/barenco_tof_4.qasm",
+   "zero_init": []
   },
   {
    "name": "barenco_tof_5",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/barenco_tof_5.qasm"
+   "path": "benchmarks/nam_arith/logical/barenco_tof_5.qasm",
+   "zero_init": []
   },
   {
    "name": "vbe_adder_3",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/vbe_adder_3.qasm"
+   "path": "benchmarks/nam_arith/logical/vbe_adder_3.qasm",
+   "zero_init": []
   },
   {
    "name": "mod5_4",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/mod5_4.qasm"
+   "path": "benchmarks/nam_arith/logical/mod5_4.qasm",
+   "zero_init": []
   },
   {
    "name": "mod_mult_55",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/mod_mult_55.qasm"
+   "path": "benchmarks/nam_arith/logical/mod_mult_55.qasm",
+   "zero_init": []
   },
   {
    "name": "gf2^5_mult",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/gf2^5_mult.qasm"
+   "path": "benchmarks/nam_arith/logical/gf2^5_mult.qasm",
+   "zero_init": []
   },
   {
    "name": "cuccaro_4",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/generated/cuccaro_4.qasm"
+   "path": "benchmarks/nam_arith/generated/cuccaro_4.qasm",
+   "zero_init": [
+    0
+   ]
   },
   {
    "name": "cuccaro_8",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/generated/cuccaro_8.qasm"
+   "path": "benchmarks/nam_arith/generated/cuccaro_8.qasm",
+   "zero_init": [
+    0
+   ]
   },
   {
    "name": "qft_6",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/qft/qft_6.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/qft/qft_6.qasm",
+   "zero_init": []
   },
   {
    "name": "qpe_6",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/qpe/qpe_6.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/qpe/qpe_6.qasm",
+   "zero_init": []
   },
   {
    "name": "tfim_4",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/tfim/tfim_4.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/tfim/tfim_4.qasm",
+   "zero_init": []
   },
   {
    "name": "qae_11",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/qae/qae_11.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/qae/qae_11.qasm",
+   "zero_init": []
   },
   {
    "name": "heisenberg_4",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/heisenberg/heisenberg_4.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/heisenberg/heisenberg_4.qasm",
+   "zero_init": []
   },
   {
    "name": "hubbard_4",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/hubbard/hubbard_4.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/hubbard/hubbard_4.qasm",
+   "zero_init": []
   }
  ],
  "test": [
   {
    "name": "rc_adder_6",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/rc_adder_6.qasm",
-   "plot_name": "adder_6"
+   "path": "benchmarks/nam_arith/logical/rc_adder_6.qasm",
+   "plot_name": "adder_6",
+   "zero_init": [
+    2
+   ]
   },
   {
    "name": "gf2^4_mult",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/gf2^4_mult.qasm",
-   "plot_name": "mult_4"
+   "path": "benchmarks/nam_arith/logical/gf2^4_mult.qasm",
+   "plot_name": "mult_4",
+   "zero_init": []
   },
   {
    "name": "adder_8",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/adder_8.qasm",
-   "plot_name": "adder_8"
+   "path": "benchmarks/nam_arith/logical/adder_8.qasm",
+   "plot_name": "adder_8",
+   "zero_init": [
+    4,
+    9,
+    10,
+    15,
+    16,
+    17,
+    23
+   ]
   },
   {
    "name": "barenco_tof_10",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/barenco_tof_10.qasm",
-   "plot_name": "mcx_10"
+   "path": "benchmarks/nam_arith/logical/barenco_tof_10.qasm",
+   "plot_name": "mcx_10",
+   "zero_init": []
   },
   {
    "name": "mod_red_21",
    "family": "toffoli",
-   "path": "benchmarks/nam_arith/cliffordt/mod_red_21.qasm",
-   "plot_name": "modred_21"
+   "path": "benchmarks/nam_arith/logical/mod_red_21.qasm",
+   "plot_name": "modred_21",
+   "zero_init": []
   },
   {
    "name": "qft_8",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/qft/qft_8.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/qft/qft_8.qasm",
+   "zero_init": []
   },
   {
    "name": "qpe_8",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/qpe/qpe_8.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/qpe/qpe_8.qasm",
+   "zero_init": []
   },
   {
    "name": "hhl_8",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/hhl/hhl_8.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/hhl/hhl_8.qasm",
+   "zero_init": []
   },
   {
    "name": "qae_13",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/qae/qae_13.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/qae/qae_13.qasm",
+   "zero_init": []
   },
   {
    "name": "tfim_6",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/tfim/tfim_6.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/tfim/tfim_6.qasm",
+   "zero_init": []
   },
   {
    "name": "heisenberg_6",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/heisenberg/heisenberg_6.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/heisenberg/heisenberg_6.qasm",
+   "zero_init": []
   },
   {
    "name": "hubbard_8",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/hubbard/hubbard_8.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/hubbard/hubbard_8.qasm",
+   "zero_init": []
   },
   {
    "name": "qml_13",
    "family": "rotation",
-   "path": "benchmarks/bqskit_qseed/qasm/qml/qml_13.qasm"
+   "path": "benchmarks/bqskit_qseed/qasm/qml/qml_13.qasm",
+   "zero_init": []
   }
  ]
 }

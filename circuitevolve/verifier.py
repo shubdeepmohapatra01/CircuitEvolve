@@ -15,6 +15,10 @@ Tags (Req) only say what the rule is ALLOWED to use; the verifier measures what 
 Distance = phase-invariant operator-norm distance of the data maps, plus the non-determinism residual of each side.
 For small supports (<= DENSE_MAX data qubits) the check uses every basis input (exact up to float precision); for larger
 supports it uses N_SAMPLES random input states and the verdict is marked mode="sampled".
+
+zero_init (benchmark spec): qubits of `old` that are clean ancillas, i.e. |0> at the START of the circuit. Inside a
+changed segment such a qubit is taken to be |0> on input if no earlier gate touched it; its output is still compared
+like a data qubit (so a rewrite may rely on it being |0> before first use, never on anything else).
 """
 from __future__ import annotations
 
@@ -96,16 +100,17 @@ def _branches(gates, state, pos, cbits, i=0, count=None):
     yield state
 
 
-def _data_map(gates, data, fresh, inputs):
-    """Run `gates` on inputs (2^d x K, data qubits) with fresh ancillas in |0>.
-    Returns (W, residual): W is the 2^d x K data output (common to all branches, up to phase), residual measures how
-    far the ancillas/branches are from factoring out (0 for a valid deterministic protocol)."""
-    order = list(data) + list(fresh)
+def _data_map(gates, data, fresh, inputs, zinit=()):
+    """Run `gates` on inputs (2^d x K, data qubits) with zero-init qubits and fresh ancillas in |0>.
+    Returns (W, residual): W is the 2^(d+z) x K output on data + zero-init qubits (common to all branches, up to
+    phase); residual measures how far fresh ancillas/branches are from factoring out (0 for a valid protocol)."""
+    order = list(data) + list(zinit) + list(fresh)
     pos = {q: i for i, q in enumerate(order)}
-    d, a, K = len(data), len(fresh), inputs.shape[1]
-    init = np.zeros((2 ** d, 2 ** a, K), complex)
-    init[:, 0, :] = inputs
-    init = init.reshape((2,) * (d + a) + (K,))
+    d, z, a, K = len(data), len(zinit), len(fresh), inputs.shape[1]
+    init = np.zeros((2 ** d, 2 ** z, 2 ** a, K), complex)
+    init[:, 0, 0, :] = inputs
+    init = init.reshape((2,) * (d + z + a) + (K,))
+    d += z
     w_ref, resid2, rows = None, 0.0, []
     for s in _branches(gates, init, pos, {}):
         R = s.reshape(2 ** d, 2 ** a, K).transpose(1, 0, 2).reshape(2 ** a, -1)   # ancilla x (data out, input)
@@ -132,15 +137,16 @@ def _segment(old: Circuit, new: Circuit):
     return p, s
 
 
-def _phase_invariant_dist(A, B):
-    """min over phase of ||A - e^{i phi} B||_2 (phase from the overlap; an upper bound on the true minimum)."""
+def _phase_invariant_dist(A, B, dense: bool):
+    """min over phase of ||A - e^{i phi} B|| (phase from the overlap; an upper bound on the true minimum).
+    dense: operator 2-norm over all basis inputs; sampled: worst sampled input state."""
     ov = np.vdot(B, A)
     ph = ov / abs(ov) if abs(ov) > 1e-15 else 1.0
     D = A - ph * B
-    return float(np.linalg.norm(D, 2)) if D.shape[1] == D.shape[0] else float(np.max(np.linalg.norm(D, axis=0)))
+    return float(np.linalg.norm(D, 2)) if dense else float(np.max(np.linalg.norm(D, axis=0)))
 
 
-def verify(old: Circuit, new: Circuit, req: Req = Req(), seed: int = 0) -> Verdict:
+def verify(old: Circuit, new: Circuit, req: Req = Req(), seed: int = 0, zero_init=()) -> Verdict:
     if new.n - old.n > req.ancillas:
         return Verdict(False, np.inf, "refused", reason=f"uses {new.n - old.n} extra qubits, req allows {req.ancillas}")
     if new.n < old.n:
@@ -152,7 +158,9 @@ def verify(old: Circuit, new: Circuit, req: Req = Req(), seed: int = 0) -> Verdi
     if not om and not nm:
         return Verdict(True, 0.0, "nochange")
     touched = sorted({q for g in om + nm for q in g.qubits})
-    data = [q for q in touched if q < old.n]        # prefix/suffix are shared with old: they never touch fresh qubits
+    before = {q for g in old.gates[:p] for q in g.qubits}
+    zinit = [q for q in touched if q in set(zero_init) and q not in before]     # still |0> at segment start
+    data = [q for q in touched if q < old.n and q not in zinit]  # prefix/suffix are shared with old: no fresh qubits
     fresh = [q for q in touched if q >= old.n]
     seg_bits = {g.cbit for g in om + nm if g.name == "measure"}
     outside = new.gates[:p] + new.gates[len(new.gates) - sfx:]
@@ -160,7 +168,7 @@ def verify(old: Circuit, new: Circuit, req: Req = Req(), seed: int = 0) -> Verdi
         return Verdict(False, np.inf, "refused", reason="a bit measured in the changed segment is used outside it")
     if len(data) + len(fresh) > STATE_MAX:
         return Verdict(False, np.inf, "refused", support=len(touched), reason=f"support {len(touched)} > {STATE_MAX}")
-    d, a = len(data), len(fresh)
+    d, a = len(data), len(fresh) + len(zinit)
     if 2 ** (d + a) * N_SAMPLES > MAX_AMPLITUDES:
         return Verdict(False, np.inf, "refused", support=len(touched), reason=f"segment too large to simulate ({d}+{a} qubits)")
     if d <= DENSE_MAX and 2 ** (2 * d + a) <= MAX_AMPLITUDES:
@@ -171,18 +179,18 @@ def verify(old: Circuit, new: Circuit, req: Req = Req(), seed: int = 0) -> Verdi
         inputs /= np.linalg.norm(inputs, axis=0)
         mode = "sampled"
     try:
-        W_old, r_old = _data_map(om, data, [], inputs)
-        W_new, r_new = _data_map(nm, data, fresh, inputs)
+        W_old, r_old = _data_map(om, data, [], inputs, zinit)
+        W_new, r_new = _data_map(nm, data, fresh, inputs, zinit)
     except ValueError as e:
         return Verdict(False, np.inf, "refused", support=len(touched), reason=str(e))
-    dist = _phase_invariant_dist(W_new, W_old) + r_old + r_new
+    dist = _phase_invariant_dist(W_new, W_old, mode == "dense") + r_old + r_new
     allowed = max(req.eps, TOL)
     ok = dist <= allowed
     why = "" if ok else f"distance {dist:.3e} > allowed {allowed:.1e} (ancilla/branch residual {r_new:.1e})"
     return Verdict(bool(ok), float(dist), mode, len(touched), why)
 
 
-def check(old: Circuit, new: Circuit, req: Req = Req()) -> Verdict:
+def check(old: Circuit, new: Circuit, req: Req = Req(), zero_init=()) -> Verdict:
     """Main entry point. A rule may change many places of a circuit. Align the two gate lists, then verify each
     changed block in turn on the circuit with the earlier blocks already replaced (each step is a local segment
     replacement, so it is sound, and distances add). If that fails (e.g. the alignment split a valid change badly),
@@ -196,7 +204,8 @@ def check(old: Circuit, new: Circuit, req: Req = Req()) -> Verdict:
             shift += (j2 - j1) - (i2 - i1)
             used = max((q for g in gates for q in g.qubits), default=-1) + 1
             nxt = Circuit(max(cur.n, used), gates, max(cur.nc, new.nc))
-            v = verify(cur, nxt, Req(eps=max(req.eps - total, 0.0), ancillas=new.n - cur.n, measure=req.measure))
+            v = verify(cur, nxt, Req(eps=max(req.eps - total, 0.0), ancillas=new.n - cur.n, measure=req.measure),
+                       zero_init=zero_init)
             if not v.ok:
                 worst = v
                 break
@@ -206,7 +215,7 @@ def check(old: Circuit, new: Circuit, req: Req = Req()) -> Verdict:
             assert cur.gates == new.gates
             if new.n - old.n <= req.ancillas and total <= max(req.eps, TOL):
                 return Verdict(True, total, "blockwise", reason=f"{len(ops)} blocks")
-    whole = verify(old, new, req)
+    whole = verify(old, new, req, zero_init=zero_init)
     if whole.ok or len(ops) <= 1:
         return whole
     return worst if worst is not None and whole.mode == "refused" else whole
