@@ -1,2 +1,0 @@
-{"label": "kerr_small", "best_seed": 0, "total": 595, "two_op": 142, "error_level": "logical", "err_trotter": 0.999600433166732, "err_exact": 0.9996004331667317, "cutoffs_agree": true}
-{"label": "boseHubbard_small", "best_seed": 1, "total": 112, "two_op": 40, "error_level": "physical", "err_trotter": 0.9872646817789938, "err_exact": 0.9974367481431639, "cutoffs_agree": true}

@@ -1,1 +1,0 @@
-{"circuit": "mod_red_21", "seconds": 22.7, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 73, true], ["tier1_control", "relaxed", 56, true], ["tier2_final", "exact", 73, true], ["tier2_lexsec", "exact", 73, true], ["tier1+tier2_final", "exact", 73, true], ["tier1+tier2_lexsec", "exact", 73, true]]}

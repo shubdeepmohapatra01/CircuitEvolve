@@ -1,5 +1,0 @@
-seed_program             add_65    valid=False T=132728 rz=1414 bound=1.424e-06 charged=415.3004030000001 wall=964.43 reason=error bound 1.424e-06 > 1e-06
-best_classical_program   add_65    valid=False T=132728 rz=1414 bound=1.424e-06 charged=412.797264 wall=959.8 reason=error bound 1.424e-06 > 1e-06
-llm_v2_s2                add_65    valid=False T=None rz=None bound=None charged=None wall=2700.4 reason=BudgetError: block_optimize would use 0.00e+00 > error left -4.24e-07 line 41
-llm_v1_s0                add_65    valid=False T=None rz=None bound=None charged=None wall=3690.04 reason=wall-time limit exceeded (3690 s)
-control_greedy_s2        add_65    valid=False T=None rz=None bound=None charged=None wall=3690.06 reason=wall-time limit exceeded (3690 s)

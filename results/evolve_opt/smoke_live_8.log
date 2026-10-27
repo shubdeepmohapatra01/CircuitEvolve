@@ -1,3 +1,0 @@
-20:02:57 [smoke_live_8] seed: fast 0.97291 dev 0.9827914047857496
-20:04:23 [smoke_live_8] call 4/8: best fast 0.97291 best dev 0.98279 | {"proposer_calls": 4, "reflector_calls": 0, "llm_errors": 0, "parse_errors": 0, "static_errors": 0, "duplicates": 0, "fast_evals": 5, "dev_evals": 5, "valid_fast": 5, "improved": 0, "new_cells": 3}
-20:05:27 [smoke_live_8] call 8/8: best fast 0.96990 best dev 0.98070 | {"proposer_calls": 8, "reflector_calls": 1, "llm_errors": 0, "parse_errors": 1, "static_errors": 0, "duplicates": 0, "fast_evals": 8, "dev_evals": 7, "valid_fast": 7, "improved": 2, "new_cells": 5}

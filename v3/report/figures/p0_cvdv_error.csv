@@ -1,3 +1,0 @@
-label,method,err_exact,err_trotter,error_level,cutoffs_agree
-kerr_small,Genesis,0.9996004331667317,0.999600433166732,logical,True
-boseHubbard_small,Genesis,0.9974367481431639,0.9872646817789938,physical,True

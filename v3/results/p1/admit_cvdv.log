@@ -1,2 +1,0 @@
-{"rule": "cond_displacement_merge_wrong", "decision": "never_fires", "reason": "trigger matched on none of the 5 suite runs of domain cvdv", "moved_to": "rules/never_fires/cond_displacement_merge_wrong.py", "seconds": 1.0}
-{"rule": "displacement_merge", "decision": "never_fires", "reason": "trigger matched on none of the 5 suite runs of domain cvdv", "moved_to": "rules/never_fires/displacement_merge.py", "seconds": 1.0}

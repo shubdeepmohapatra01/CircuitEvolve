@@ -1,1 +1,0 @@
-{"circuit": "mult_4", "arm": "B3g", "eps": 0.001, "status": "ok", "t_count": 112, "n_rz": 0, "cx": 99, "qubits": 12, "runtime_s": 0.4, "state_dist_vs_orig": 1.3330115884459447e-15, "error": null}

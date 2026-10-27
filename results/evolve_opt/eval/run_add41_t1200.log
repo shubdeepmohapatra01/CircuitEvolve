@@ -1,5 +1,0 @@
-seed_program             add_41    valid=True T=60468 rz=646 bound=6.56e-07 charged=80.66549400000002 wall=1.07 reason=None
-best_classical_program   add_41    valid=True T=60468 rz=646 bound=6.56e-07 charged=80.225335 wall=1.05 reason=None
-llm_v2_s2                add_41    valid=True T=60468 rz=646 bound=6.560000063975657e-07 charged=210.8331590000001 wall=1.88 reason=None
-llm_v1_s0                add_41    valid=True T=60468 rz=646 bound=6.56e-07 charged=385.37587300000007 wall=156.2 reason=None
-control_greedy_s2        add_41    valid=True T=60468 rz=646 bound=6.56e-07 charged=428.14744599999995 wall=472.96 reason=None

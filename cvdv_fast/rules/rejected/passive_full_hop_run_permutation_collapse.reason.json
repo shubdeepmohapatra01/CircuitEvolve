@@ -1,9 +1,0 @@
-{
- "file": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/cvdv_fast/rules/candidates/passive_full_hop_run_permutation_collapse.py",
- "origin": "LLM (boseHubbard_small a9.1)",
- "mechanism": "exact group homomorphism U(m)->Fock (passive linear optics) restricted to monomial matrices; transposition-product collapse with Z4 phase bookkeeping",
- "decision": "reject",
- "reason": "static/load: ValueError('from collections import not allowed')",
- "moved_to": "rules/rejected/passive_full_hop_run_permutation_collapse.py",
- "seconds": 0.0
-}

@@ -1,3 +1,0 @@
-// Generated for: Result;
-bosonic: exp(prod((-0.392699075j),dagger(b(0)),b(0)));
-bosonic: exp(prod((-0.1963495375j),dagger(b(0)),dagger(b(0)),b(0),b(0)));

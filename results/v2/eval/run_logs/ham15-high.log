@@ -1,1 +1,0 @@
-{"circuit": "ham15-high", "seconds": 3730.3, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 1019, false], ["tier1_control", "relaxed", 880, false], ["tier2_final", "exact", 1019, false], ["tier2_lexsec", "exact", 1019, false], ["tier1+tier2_final", "exact", 1019, false], ["tier1+tier2_lexsec", "exact", 1019, false]]}

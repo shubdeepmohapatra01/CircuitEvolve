@@ -1,5 +1,0 @@
-seed_program             shor_16   valid=False T=140843 rz=1508 bound=1.518e-06 charged=356.24990899999995 wall=6.65 reason=error bound 1.518e-06 > 1e-06
-best_classical_program   shor_16   valid=False T=140843 rz=1508 bound=1.518e-06 charged=354.38087399999995 wall=3.94 reason=error bound 1.518e-06 > 1e-06
-llm_v2_s2                shor_16   valid=False T=None rz=None bound=None charged=None wall=1626.43 reason=BudgetError: time budget exceeded (1401.3 s > 1200 s charged CPU) line 22
-llm_v1_s0                shor_16   valid=False T=None rz=None bound=None charged=None wall=2490.07 reason=wall-time limit exceeded (2490 s)
-control_greedy_s2        shor_16   valid=False T=140843 rz=1508 bound=1.518e-06 charged=1798.228777 wall=2462.06 reason=error bound 1.518e-06 > 1e-06

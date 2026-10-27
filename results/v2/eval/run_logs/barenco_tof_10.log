@@ -1,1 +1,0 @@
-{"circuit": "barenco_tof_10", "seconds": 68.6, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 100, false], ["tier1_control", "relaxed", 96, false], ["tier2_final", "exact", 100, false], ["tier2_lexsec", "exact", 100, false], ["tier1+tier2_final", "exact", 100, false], ["tier1+tier2_lexsec", "exact", 100, false]]}

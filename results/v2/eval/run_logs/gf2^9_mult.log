@@ -1,1 +1,0 @@
-{"circuit": "gf2^9_mult", "seconds": 2104.2, "skipped": null, "error": null, "arms": [["tier1_control", "exact", 351, false], ["tier1_control", "relaxed", 324, false], ["tier2_final", "exact", 351, false], ["tier2_lexsec", "exact", 351, false], ["tier1+tier2_final", "exact", 351, false], ["tier1+tier2_lexsec", "exact", 351, false]]}
