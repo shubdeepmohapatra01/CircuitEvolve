@@ -1,0 +1,14 @@
+// Generated for: Result;
+pauli(0.78539815j) XXII;
+pauli(0.78539815j) YYII;
+pauli(0.78539815j) ZZII;
+pauli(0.78539815j) IXXI;
+pauli(0.78539815j) IYYI;
+pauli(0.78539815j) IZZI;
+pauli(0.78539815j) IIXX;
+pauli(0.78539815j) IIYY;
+pauli(0.78539815j) IIZZ;
+pauli(0.78539815j) ZIII;
+pauli(0.78539815j) IZII;
+pauli(0.78539815j) IIZI;
+pauli(0.78539815j) IIIZ;

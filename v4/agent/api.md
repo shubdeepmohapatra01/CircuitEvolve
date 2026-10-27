@@ -32,6 +32,19 @@ gridsynth pays nothing). `reduce_angle`, `is_clifford`, `is_rotation`, `is_diago
 result (rz at pi/4 multiples become Clifford/T gates).
 `IRCircuit` / `IRGate` for Toffoli-level circuits (`x z h s sdg t tdg cx cz ccx ccz`, `measure`,
 classically controlled gates, and the gadgets `and_compute` (4 T) / `and_uncompute` (0 T)).
+
+**READ THE GATE LIST THE RIGHT WAY - the two circuit types are different objects.** NEITHER is
+iterable, so `for op in c` raises `TypeError: 'Circuit' object is not iterable`. Two independent
+implementer attempts lost their whole try to exactly that, so this is spelled out:
+
+| family | type you are handed | gate list | width | build the result |
+|---|---|---|---|---|
+| `dv_angle` | `Circuit` | `c.ops` - tuples `(name, qubits, angle)` | `c.n` | `with_ops(c, new_ops)` |
+| `dv_recon` | `IRCircuit` | `c.gates` - `IRGate` objects, use `g.name` | `c.n_qubits` | `ir_with_gates(c, new_gates)` |
+
+So a reconstruction rule starts `gates = list(c.gates)` and an angle rule starts `ops = list(c.ops)`.
+Reading `c.ops` off an `IRCircuit` raises `AttributeError`, and so does `c.n`; the IR spells them
+`c.gates` and `c.n_qubits`. Check your rule's `Precondition(families=...)` to know which one you get.
 `ir_with_gates(c, gates, n_qubits=...)`, `append_ancillas(c, k)` -> extra qubits appended as n, n+1, ...
 (they must start and end in |0>). `count_t(c)` for an exact circuit.
 

@@ -1,0 +1,138 @@
+{
+ "label": "qft_8",
+ "family": "dv_angle",
+ "kind": "Clifford+Rz op list (TKET FullPeepholeOptimise output)",
+ "qubits": 8,
+ "ops": 139,
+ "gate_histogram": {
+  "h": 8,
+  "rz": 48,
+  "cx": 68,
+  "tdg": 7,
+  "t": 8
+ },
+ "nonclifford_rotations": 48,
+ "explicit_t": 15,
+ "distinct_rz_angles": 18,
+ "rz_angle_histogram_top30": [
+  [
+   12.173672,
+   6
+  ],
+  [
+   0.392699,
+   6
+  ],
+  [
+   12.370021,
+   5
+  ],
+  [
+   0.19635,
+   5
+  ],
+  [
+   12.468196,
+   4
+  ],
+  [
+   0.098175,
+   4
+  ],
+  [
+   12.517283,
+   3
+  ],
+  [
+   0.049087,
+   3
+  ],
+  [
+   12.541827,
+   2
+  ],
+  [
+   0.024544,
+   2
+  ],
+  [
+   7.84171,
+   1
+  ],
+  [
+   1.546253,
+   1
+  ],
+  [
+   1.521709,
+   1
+  ],
+  [
+   12.554099,
+   1
+  ],
+  [
+   1.472622,
+   1
+  ],
+  [
+   0.012272,
+   1
+  ],
+  [
+   1.374447,
+   1
+  ],
+  [
+   1.178097,
+   1
+  ]
+ ],
+ "t_count_input": 2391,
+ "eps_total": 0.001,
+ "eps_rz_input": 2.0833333333333333e-05,
+ "current_t_with_book": 1583,
+ "top_gate_trigrams": [
+  [
+   "cx rz cx",
+   24
+  ],
+  [
+   "rz cx rz",
+   21
+  ],
+  [
+   "rz cx cx",
+   8
+  ],
+  [
+   "cx rz rz",
+   5
+  ],
+  [
+   "rz rz cx",
+   5
+  ],
+  [
+   "cx t cx",
+   5
+  ],
+  [
+   "cx rz h",
+   5
+  ],
+  [
+   "cx cx cx",
+   5
+  ],
+  [
+   "rz cx tdg",
+   4
+  ],
+  [
+   "cx tdg cx",
+   4
+  ]
+ ],
+ "input_file": "circuit.qasm (OpenQASM 2, rz angles in radians)"
+}

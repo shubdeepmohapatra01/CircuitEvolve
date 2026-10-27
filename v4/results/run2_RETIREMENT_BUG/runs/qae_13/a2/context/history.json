@@ -1,0 +1,27 @@
+[
+ {
+  "attempt": 1,
+  "kind": "prefiltered",
+  "level": "idea",
+  "card": {
+   "name": "qft_ladder_register_add_into_catalytic_phase_gradient",
+   "domain": "dv",
+   "kind": "reconstruction",
+   "error_class": "exact",
+   "resource_class": "measured",
+   "lever": "ancilla_reconstruction",
+   "precondition": "family dv_angle; needs nonclifford_rz and ancilla_room; 4 <= qubits <= 13. Requires at least one Hadamard-free segment containing >= 4 non-Clifford rz whose angles are EXACTLY dyadic (k*pi/2^m, k odd, m >= 3) and whose front-frame axes are weight-1 Z on DISTINCT qubits with consecutive levels m, m+1, ..., m+r (geometric halving). qae_13's angle histogram is exactly this triangle (pi/8 x11, pi/16 x10, pi/32 x9, ..., pi/4096 x2, plus the pi/2-pi/2^m family = S-dag times the same ladder), so the trigger is the inverse-QFT ladder of the counting register.",
+   "identity": "Let a maximal ladder be rotations Rz(s*2pi/2^{j+1}) on distinct qubits q_0..q_{K-1}, s = +-1, i.e. the diagonal map |y> -> e^{i*s*2pi*y/2^K}|y> where y = sum_j 2^j x_{q_j} is the register value read in the ladder's own bit order. Allocate ONE K-qubit catalyst register in the phase-gradient state |grad_K> = 2^{-K/2} sum_g e^{2pi i g/2^K}|g> (prepared once per circuit by K single-qubit rz(2pi/2^{j+1}) on |+>^K, and restored unchanged by every use, so no uncompute and no per-use prep). Replace the whole ladder by ONE K-bit in-place addition |y>|g> -> |y>|g - s*y mod 2^K> implemented with Gidney temporary-AND adders (and_compute 4 T, measurement-based and_uncompute 0 T, classically controlled fix-ups), using 1 extra clean ancilla for the carry. Partial ladders (a sub-triangle of levels) use a K' = (number of levels present) wide window of the same shared gradient register; a ladder whose angles are k*pi/2^m with k odd and not a power-of-two multiple is first split into its binary digits, each digit landing on a different gradient bit of the SAME addition.",
+   "correctness": "Phase kickback into the gradient (Kitaev; Gidney 2018). ADD_{-s*y}|grad_K> = 2^{-K/2} sum_g e^{2pi i g/2^K}|g - s*y> = e^{i*s*2pi*y/2^K} * 2^{-K/2} sum_{g'} e^{2pi i g'/2^K}|g'> = e^{i*s*2pi*y/2^K}|grad_K>. So the data register acquires exactly the ladder's diagonal phase on every computational basis state and the catalyst comes out in |grad_K> exactly (it is a catalyst, not an ancilla that must be uncomputed). The identity is exact in Z[omega] up to the synthesis of the K prep rotations, which are ordinary off-grid rz charged to final synthesis as always. The Gidney adder is exact and measurement-based: for each measurement branch m the applied Kraus operator is K_m|x> = c_m|f(x)>, the classically controlled fix-ups make c_m branch-independent, and the AND ancillas return to |0>, so invariant 2 holds branch-wise. Mod-2^K wraparound is harmless: the phase is e^{2pi i (.) /2^K}, periodic mod 2^K.",
+   "trigger": "For each Hadamard-free segment (api.dv.segments) take api.pauli.frames / api.phasepoly.rotation_labels; keep rotations whose axis is weight-1 Z and whose angle satisfies api.angles.nearest(theta, kmax=14) with distance 0 and m >= 3. Bucket by qubit, sort by m, and emit a match for every maximal set of >= 4 such rotations on DISTINCT qubits with consecutive m and a common sign pattern (sign absorbed into the direction of the addition). Rotations left over (the 12 off-ladder, non-dyadic angles) are untouched.",
+   "error_budget": 0.0,
+   "expected_effect": "Removes the ~65 exactly-dyadic ladder rotations (the 10 histogram peaks pi/8..pi/4096) and the pi/2-pi/2^m family's tiny parts, ~3300 T of gridsynth, and replaces them with ~8-10 K-bit Gidney additions (~4 T per bit, so ~40 T each -> ~400 T) plus a one-time 10-12 rotation gradient prep (~600 T). N_Rz falls from 88 to ~35, which also enlarges eps_rz for the survivors. The differentiator against DPF Synth (which already uses a k_reg=10 measured gradient and still pays 4264 because it spends one addition PER ROTATION, leaving n_rz=37 plus ~2400 T of adders): here one addition serves the ENTIRE register-wide ladder, so the number of additions is the number of ladders (~8-10), not the number of rotations (~22+). Cost: 11-13 extra qubits (10-12 catalyst + 1 carry); cost order is T-first so this is admissible, and the catalyst register can be narrowed to the coarsest level that actually appears if the qubit term binds.",
+   "expected_t_saving_on_target": 1500,
+   "source": "Gidney, 'Halving the cost of quantum addition', Quantum 2 (2018) 74 (temporary-AND adder, 4 T/bit, measured uncompute); Kitaev phase kickback / addition into a phase-gradient register; Gidney & Fowler 2019 on catalytic phase-gradient states; Coppersmith's QFT ladder structure as the trigger."
+  },
+  "loop_done": 1,
+  "summary": "lever 'ancilla_reconstruction' has no headroom left on qae_13 (consumed by relaxed rules only)",
+  "estimate": 1500,
+  "measured": null
+ }
+]

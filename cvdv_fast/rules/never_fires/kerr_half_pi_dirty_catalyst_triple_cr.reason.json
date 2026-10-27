@@ -1,0 +1,137 @@
+{
+ "file": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/cvdv_fast/rules/candidates/kerr_half_pi_dirty_catalyst_triple_cr.py",
+ "origin": "LLM (z2Higgs_small a2.1)",
+ "mechanism": "exact block-scalar identity in the qubit\u2297Fock decomposition (centre of SU(2) per photon-number block); dirty-qubit catalyst",
+ "rule": {
+  "name": "kerr_half_pi_dirty_catalyst_triple_cr",
+  "kind": "synth",
+  "contract": "exact",
+  "idea": "Target exp(-i theta n^2) at theta == pi/2 (mod 2pi), or its mirror -pi/2. On each photon-number block n, the product W = CR_Z(pi).CR_X(pi).CR_Y(pi) of three qubit-controlled rotations acts on the qubit as (-iZ)^n(-iX)^n(-iY)^n = s(n)*I (period-4 sign pattern), exactly, for every n: W is the identity on the qubit for any qubit state, so no clean ancilla is needed -- the site qubit already co-located with the mode can be used as a dirty catalyst and returns unchanged. Multiplying by R(-pi/2) turns s(n) into exp(-i pi n^2/2) exactly, since n^2 mod 4 = n mod 2. CR_X/CR_Y are CR(pi) conjugated by H / S.H respectively. Y must be applied first in time, then X, then Z (order of the operator product matters). The mirrored theta = -pi/2 case is the Hermitian conjugate circuit: reverse the gate order, CR(pi) -> CR(-pi), swap s/sdg, and R(-pi/2) -> R(+pi/2).",
+  "term_kinds": [
+   "n2"
+  ],
+  "stage": "logical"
+ },
+ "instances": [
+  {
+   "label": "kerr_small",
+   "part": "n2(('qm', 0),)(0.785398,)",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "boseHubbard_small",
+   "part": "n2(('qm', 0),)(0.785398,)",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "z2Higgs_small",
+   "part": "n2(('qm', 0),)(1.570796,)",
+   "r": 1,
+   "declined": true
+  }
+ ],
+ "per_benchmark": [
+  {
+   "label": "kerr_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null,
+    "err_ledger": 3.0008958610294543e-15
+   }
+  },
+  {
+   "label": "boseHubbard_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null,
+    "err_ledger": 1.4070128500482678e-14
+   }
+  },
+  {
+   "label": "z2Higgs_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 144,
+    "two_op": 49,
+    "duration": 398,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 144,
+    "two_op": 49,
+    "duration": 398,
+    "reason": null,
+    "err_ledger": 2.4238882366506667e-13
+   }
+  },
+  {
+   "label": "heisenberg_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null,
+    "err_ledger": 7.330651724579932e-06
+   }
+  },
+  {
+   "label": "electronicVibration_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 879,
+    "two_op": 325,
+    "duration": 5701,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 879,
+    "two_op": 325,
+    "duration": 5701,
+    "reason": null,
+    "err_ledger": 4.21668617778168e-09
+   }
+  }
+ ],
+ "rule_failures": [],
+ "decision": "never_fires",
+ "reason": "rule never chosen/applied on any benchmark ",
+ "moved_to": "rules/never_fires/kerr_half_pi_dirty_catalyst_triple_cr.py",
+ "seconds": 1.2
+}

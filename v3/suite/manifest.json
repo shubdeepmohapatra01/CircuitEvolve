@@ -1,0 +1,329 @@
+{
+ "version": 1,
+ "created": "P0",
+ "circuits": [
+  {
+   "label": "qft_8",
+   "family": "dv_angle",
+   "domain": "dv",
+   "source": "results/bqskit_baselines/stage1/inputs/qft_8_tket.qasm",
+   "input": "suite/inputs/qft_8.qasm",
+   "sha256": "c87f117cabac10021740eb9fcb32442c3c688dcb6071bd125ff903155465b4c2",
+   "qubits": 8,
+   "eps": [
+    0.001,
+    1e-05
+   ],
+   "control": false,
+   "input_kind": "clifford_rz (TKET FullPeepholeOptimise output)"
+  },
+  {
+   "label": "qpe_8",
+   "family": "dv_angle",
+   "domain": "dv",
+   "source": "results/bqskit_baselines/stage1/inputs/qpe_8_tket.qasm",
+   "input": "suite/inputs/qpe_8.qasm",
+   "sha256": "4ae486728d04520dd72a0a47e6e66b0d59644f8460908eb97f5b8b4b8348e49b",
+   "qubits": 8,
+   "eps": [
+    0.001,
+    1e-05
+   ],
+   "control": false,
+   "input_kind": "clifford_rz (TKET FullPeepholeOptimise output)"
+  },
+  {
+   "label": "hhl_8",
+   "family": "dv_angle",
+   "domain": "dv",
+   "source": "results/bqskit_baselines/stage1/inputs/hhl_8_tket.qasm",
+   "input": "suite/inputs/hhl_8.qasm",
+   "sha256": "73cc6301705bc035b57ac5a3b140436a66e4d2c2fe9c9a4a0e481eb7fd85bdbf",
+   "qubits": 8,
+   "eps": [
+    0.001,
+    1e-05
+   ],
+   "control": false,
+   "input_kind": "clifford_rz (TKET FullPeepholeOptimise output)"
+  },
+  {
+   "label": "qae_13",
+   "family": "dv_angle",
+   "domain": "dv",
+   "source": "results/bqskit_baselines/stage1/inputs/qae_13_tket.qasm",
+   "input": "suite/inputs/qae_13.qasm",
+   "sha256": "a5b3e94e9986d5cc82c0106efad89ae42460151d4e2d66a3f6ed9a649c386cde",
+   "qubits": 13,
+   "eps": [
+    0.001,
+    1e-05
+   ],
+   "control": false,
+   "input_kind": "clifford_rz (TKET FullPeepholeOptimise output)"
+  },
+  {
+   "label": "tfim_6",
+   "family": "dv_angle",
+   "domain": "dv",
+   "source": "results/bqskit_baselines/stage1/inputs/tfim_6_tket.qasm",
+   "input": "suite/inputs/tfim_6.qasm",
+   "sha256": "fe4182fcf6ae06b7dc124527866e6b805302e417b90b9af4c9e7604f8bfc08b3",
+   "qubits": 6,
+   "eps": [
+    0.001,
+    1e-05
+   ],
+   "control": true,
+   "input_kind": "clifford_rz (TKET FullPeepholeOptimise output)"
+  },
+  {
+   "label": "adder_8",
+   "family": "dv_recon",
+   "domain": "dv",
+   "source": "benchmarks/nam_arith/logical/adder_8.qasm",
+   "input": "suite/inputs/adder_8.qasm",
+   "sha256": "3b99792af757d9e1f08c759abdd8b9979689eedadb06b30acc0eae610320798a",
+   "qubits": 24,
+   "eps": [
+    0.001
+   ],
+   "input_kind": "toffoli_logical (ccz/ccx + Clifford; every method decomposes it itself)",
+   "bqskit_input": "suite/inputs/adder_8.cliffordt.qasm",
+   "bqskit_input_source": "benchmarks/nam_arith/cliffordt/adder_8.qasm",
+   "bqskit_input_sha256": "bccd16382d294249a2cd1a625a431dc1cfdf7f77cb9b44f76193e3b74a15e6f0"
+  },
+  {
+   "label": "adder_6",
+   "family": "dv_recon",
+   "domain": "dv",
+   "source": "benchmarks/nam_arith/logical/rc_adder_6.qasm",
+   "input": "suite/inputs/adder_6.qasm",
+   "sha256": "786ace0cff599da739654efe74646cbe27421bde39d52fa1c5163cd2380c8626",
+   "qubits": 14,
+   "eps": [
+    0.001
+   ],
+   "input_kind": "toffoli_logical (ccz/ccx + Clifford; every method decomposes it itself)",
+   "bqskit_input": "suite/inputs/adder_6.cliffordt.qasm",
+   "bqskit_input_source": "benchmarks/nam_arith/cliffordt/rc_adder_6.qasm",
+   "bqskit_input_sha256": "2932a0690aaef5d494cc5b5f5e07ab89e5e33e43b8b3b3e703778c378ffc3bf5"
+  },
+  {
+   "label": "mult_4",
+   "family": "dv_recon",
+   "domain": "dv",
+   "source": "benchmarks/nam_arith/logical/gf2^4_mult.qasm",
+   "input": "suite/inputs/mult_4.qasm",
+   "sha256": "74c1dcf669c4f170d982235be6fa41e0c71b011f0e41504a489358d5fbecd294",
+   "qubits": 12,
+   "eps": [
+    0.001
+   ],
+   "input_kind": "toffoli_logical (ccz/ccx + Clifford; every method decomposes it itself)",
+   "bqskit_input": "suite/inputs/mult_4.cliffordt.qasm",
+   "bqskit_input_source": "benchmarks/nam_arith/cliffordt/gf2^4_mult.qasm",
+   "bqskit_input_sha256": "b820ed212c68fc058cc7a684914549127f721ca33bb968dd1af0aaca95e0b22c"
+  },
+  {
+   "label": "mcx_10",
+   "family": "dv_recon",
+   "domain": "dv",
+   "source": "benchmarks/nam_arith/logical/barenco_tof_10.qasm",
+   "input": "suite/inputs/mcx_10.qasm",
+   "sha256": "39a48285527f7e61c4700c8ab6a6c428ead2af0e3695930818eafce706182291",
+   "qubits": 19,
+   "eps": [
+    0.001
+   ],
+   "input_kind": "toffoli_logical (ccz/ccx + Clifford; every method decomposes it itself)",
+   "bqskit_input": "suite/inputs/mcx_10.cliffordt.qasm",
+   "bqskit_input_source": "benchmarks/nam_arith/cliffordt/barenco_tof_10.qasm",
+   "bqskit_input_sha256": "035d67d4225bc3b741c6803737dec960f123e16318333421da9f6a6459f78c54"
+  },
+  {
+   "label": "modred_21",
+   "family": "dv_recon",
+   "domain": "dv",
+   "source": "benchmarks/nam_arith/logical/mod_red_21.qasm",
+   "input": "suite/inputs/modred_21.qasm",
+   "sha256": "7ea2874b2fe974a38ca97201efb505bb80ccb9bce925f6ae56d6f1621ca790b5",
+   "qubits": 11,
+   "eps": [
+    0.001
+   ],
+   "input_kind": "toffoli_logical (ccz/ccx + Clifford; every method decomposes it itself)",
+   "bqskit_input": "suite/inputs/modred_21.cliffordt.qasm",
+   "bqskit_input_source": "benchmarks/nam_arith/cliffordt/mod_red_21.qasm",
+   "bqskit_input_sha256": "0a9dee7e699bcf16704a9cee17692ce682e158222c682258ebee09da72fd60cc"
+  },
+  {
+   "label": "kerr_small",
+   "family": "cvdv",
+   "domain": "cvdv",
+   "source": "cvdv/third_party/genesis/benchmark/kerr_small.ham",
+   "input": "suite/inputs/kerr_small.ham",
+   "sha256": "83547a6c87413083ea00ce6a94e8601a924fc3aade4054c165b3b1b84813b066",
+   "spec_source": "cvdv/results/genesis_baseline/kerr_small/intermediate_kerr_small.cvdvqasm",
+   "spec": "suite/inputs/kerr_small.ir.cvdvqasm",
+   "spec_sha256": "c0ecc9a2234c6dfc8cfe4410963e96f2452303e8dae08dac35970576db69349c",
+   "trotter_steps": 1,
+   "time": 1.0,
+   "term_order": "as listed in the IR file",
+   "n_probe": 3,
+   "cutoffs": [
+    16,
+    22
+   ],
+   "exact_pad": 12,
+   "probes": {
+    "exact_basis_max_dim": 64,
+    "n_random": 8,
+    "seed": 0,
+    "note": "process fidelity |Tr(V^dag P0 U)/d|^2 on the probe subspace, P0 = ancillas back in |0>/vacuum; exact over the basis when d <= exact_basis_max_dim, else estimated as |mean_k <t_k|P0 g_k>|^2 over n_random Haar probes (seeded); same probes for every method"
+   },
+   "genesis_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "label": "boseHubbard_small",
+   "family": "cvdv",
+   "domain": "cvdv",
+   "source": "cvdv/third_party/genesis/benchmark/boseHubbard_small.ham",
+   "input": "suite/inputs/boseHubbard_small.ham",
+   "sha256": "8848a52a24b8c564704b48b8807635ebcb54ca0603505ebfb8eca68b6c40f9e3",
+   "spec_source": "cvdv/results/genesis_baseline/boseHubbard_small/intermediate_boseHubbard_small.cvdvqasm",
+   "spec": "suite/inputs/boseHubbard_small.ir.cvdvqasm",
+   "spec_sha256": "b42c3bfd6f149a26900f857cb55ce7f173b6811479dca8a80199d0dbe9097557",
+   "trotter_steps": 1,
+   "time": 1.0,
+   "term_order": "as listed in the IR file",
+   "n_probe": 2,
+   "cutoffs": [
+    12,
+    16
+   ],
+   "exact_pad": 8,
+   "probes": {
+    "exact_basis_max_dim": 64,
+    "n_random": 8,
+    "seed": 0,
+    "note": "process fidelity |Tr(V^dag P0 U)/d|^2 on the probe subspace, P0 = ancillas back in |0>/vacuum; exact over the basis when d <= exact_basis_max_dim, else estimated as |mean_k <t_k|P0 g_k>|^2 over n_random Haar probes (seeded); same probes for every method"
+   },
+   "genesis_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "label": "z2Higgs_small",
+   "family": "cvdv",
+   "domain": "cvdv",
+   "source": "cvdv/third_party/genesis/benchmark/z2Higgs_small.ham",
+   "input": "suite/inputs/z2Higgs_small.ham",
+   "sha256": "865920c8a2da56269198a67a4b726036f497f7d65592c491b59dfff950fcba2f",
+   "spec_source": "cvdv/results/genesis_baseline/z2Higgs_small/intermediate_z2Higgs_small.cvdvqasm",
+   "spec": "suite/inputs/z2Higgs_small.ir.cvdvqasm",
+   "spec_sha256": "22cba76c0189bbac8c2002c4662778340e5ceb3f3c83183834e3724b9abec8bd",
+   "trotter_steps": 1,
+   "time": 1.0,
+   "term_order": "as listed in the IR file",
+   "n_probe": 2,
+   "cutoffs": [
+    12,
+    16
+   ],
+   "exact_pad": 8,
+   "probes": {
+    "exact_basis_max_dim": 64,
+    "n_random": 8,
+    "seed": 0,
+    "note": "process fidelity |Tr(V^dag P0 U)/d|^2 on the probe subspace, P0 = ancillas back in |0>/vacuum; exact over the basis when d <= exact_basis_max_dim, else estimated as |mean_k <t_k|P0 g_k>|^2 over n_random Haar probes (seeded); same probes for every method"
+   },
+   "genesis_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "label": "heisenberg_small",
+   "family": "cvdv",
+   "domain": "cvdv",
+   "source": "cvdv/third_party/genesis/benchmark/heisenberg_small.ham",
+   "input": "suite/inputs/heisenberg_small.ham",
+   "sha256": "a3b1af1be892f36e98dc4035f5b9184896eb508d4cb0dc7904ae5eb1da086c4c",
+   "spec_source": "cvdv/results/genesis_baseline/heisenberg_small/intermediate_heisenberg_small.cvdvqasm",
+   "spec": "suite/inputs/heisenberg_small.ir.cvdvqasm",
+   "spec_sha256": "cbe69f1c86d58ff20095518eb8ed7b376ea1d3b12d2d80f269292bd2e8970466",
+   "trotter_steps": 1,
+   "time": 1.0,
+   "term_order": "as listed in the IR file",
+   "n_probe": 1,
+   "cutoffs": [
+    12,
+    16
+   ],
+   "exact_pad": 8,
+   "probes": {
+    "exact_basis_max_dim": 64,
+    "n_random": 8,
+    "seed": 0,
+    "note": "process fidelity |Tr(V^dag P0 U)/d|^2 on the probe subspace, P0 = ancillas back in |0>/vacuum; exact over the basis when d <= exact_basis_max_dim, else estimated as |mean_k <t_k|P0 g_k>|^2 over n_random Haar probes (seeded); same probes for every method"
+   },
+   "genesis_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "label": "electronicVibration_small",
+   "family": "cvdv",
+   "domain": "cvdv",
+   "source": "cvdv/third_party/genesis/benchmark/electronicVibration_small.ham",
+   "input": "suite/inputs/electronicVibration_small.ham",
+   "sha256": "4aa863f1c4c3a38c54e87defa73cd43e97a318587126e0d63ededefe3e965b61",
+   "spec_source": "cvdv/results/genesis_baseline/electronicVibration_small/intermediate_electronicVibration_small.cvdvqasm",
+   "spec": "suite/inputs/electronicVibration_small.ir.cvdvqasm",
+   "spec_sha256": "006f5a91e56a497a01aa303ef4721d2ccae36d98e313f61491ef66faf673341c",
+   "trotter_steps": 1,
+   "time": 1.0,
+   "term_order": "as listed in the IR file",
+   "n_probe": 1,
+   "cutoffs": [
+    3,
+    4
+   ],
+   "exact_pad": 1,
+   "probes": {
+    "exact_basis_max_dim": 64,
+    "n_random": 8,
+    "seed": 0,
+    "note": "process fidelity |Tr(V^dag P0 U)/d|^2 on the probe subspace, P0 = ancillas back in |0>/vacuum; exact over the basis when d <= exact_basis_max_dim, else estimated as |mean_k <t_k|P0 g_k>|^2 over n_random Haar probes (seeded); same probes for every method"
+   },
+   "genesis_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ ],
+ "excluded": {
+  "hubbardHolstein_small": "IR has non-unitary terms (cvdv/results/P0_genesis_reproduction.md)"
+ }
+}

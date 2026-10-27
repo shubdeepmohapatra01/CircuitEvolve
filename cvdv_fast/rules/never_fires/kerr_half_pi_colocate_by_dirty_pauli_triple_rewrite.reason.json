@@ -1,0 +1,116 @@
+{
+ "file": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/cvdv_fast/rules/candidates/kerr_half_pi_colocate_by_dirty_pauli_triple_rewrite.py",
+ "origin": "LLM (z2Higgs_small a8.1)",
+ "mechanism": "exact number-theoretic identity (period-4 in n) + product of three anticommuting Pauli-conditioned pi rotations is a qubit scalar; routing-aware ancilla relocation rewrite (pre-routing, accepted on routed cost)",
+ "rule": {
+  "name": "kerr_half_pi_colocate_by_dirty_pauli_triple_rewrite",
+  "kind": "rewrite",
+  "contract": "exact",
+  "idea": "Replace an ancilla-mediated half-pi Kerr block H(a) CR(pi)(a,m) rx(phi~pi)(a) CR(-pi)(a,m) H(a) [R(k pi)(m)], where the ancilla a is a dirty co-located qubit of m (any state, untouched elsewhere in the window), by a 3-CR dirty-qubit construction: since CR(pi)=(-iZ)^n, A=-iZ,B=-iX,C=-iY satisfy A^n B^n C^n = s(n) a qubit scalar with s(n) period 4, and e^{-i(pi/2)n^2} = R(3pi/2) A^n B^n C^n exactly (verified n mod 4 = 0..3). B^n = H CR(pi) H, C^n = S H CR(pi) H Sdg (time order: C^n acts first), giving sdg,h,CR(pi),h,s,h,CR(pi),h,CR(pi),R(3pi/2+k pi) with the qubit returned to its input state untouched up to the enclosing scalar. All CR gates act on the natively coupled (q_m, m) pair, so routing inserts no SWAPs, trading 2 two-op gates for 3 but removing most ancilla-relocation SWAP overhead. Residual phase error from the angle-tolerant kickback's delta stays within the 1e-6 exact-contract tolerance, matching the admitted parity-kickback rule's own handling of the same delta. Kept only when the routed cost (duration, then 2-op count) decreases versus leaving the original clean-ancilla block in place.",
+  "term_kinds": [],
+  "stage": "logical"
+ },
+ "instances": [],
+ "per_benchmark": [
+  {
+   "label": "kerr_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null,
+    "err_ledger": 3.0008958610294543e-15
+   }
+  },
+  {
+   "label": "boseHubbard_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null,
+    "err_ledger": 1.4070128500482678e-14
+   }
+  },
+  {
+   "label": "z2Higgs_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null,
+    "err_ledger": 7.502568674000943e-07
+   }
+  },
+  {
+   "label": "heisenberg_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null,
+    "err_ledger": 7.330651724579932e-06
+   }
+  },
+  {
+   "label": "electronicVibration_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null,
+    "err_ledger": 4.216684815159914e-09
+   }
+  }
+ ],
+ "rule_failures": [],
+ "decision": "never_fires",
+ "reason": "rule never chosen/applied on any benchmark ",
+ "moved_to": "rules/never_fires/kerr_half_pi_colocate_by_dirty_pauli_triple_rewrite.py",
+ "seconds": 1.3
+}

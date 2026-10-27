@@ -60,6 +60,22 @@ IMPL = "implementation"
 CIRCUIT_ORDER = ("tfim_6", "hhl_8", "qpe_8", "qae_13", "qft_8", "adder_8", "mult_4", "mcx_10",
                  "adder_6", "modred_21")
 
+# Attempts first on the circuits with the most REACHABLE gain per unit of wall clock, which is not the
+# same as the most gain. Measured on the current book:
+#   modred_21  119 vs pyzx  73   (-46, 39%)  0 applications - nothing in the book fires
+#   mult_4     112 vs pyzx  68   (-44, 39%)  0 applications
+#   adder_8    216 vs pyzx 173   (-43, 20%)
+#   adder_6     77 vs pyzx  47   (-30, 39%)  0 applications
+#   qft_8     1583 vs DPF 1064  (-519)       attributed to gap B
+#   qae_13    4526 vs DPF 4264  (-262)       attributed to gap B
+# The first four are small and exact, so an attempt costs the two LLM calls and little else, and pyzx
+# already reaches those numbers by exact-unitary means - the headroom is known to exist. qpe_8 and hhl_8
+# are dropped from this order, not because their gap is small but because it is the LARGEST (+3812,
+# +7184) and is attributed to free-CNOT block resynthesis, a missing primitive rather than a missing
+# rule; at 2269 s an attempt they would eat the budget for the gap least likely to move. tfim_6 and
+# mcx_10 are dropped because they are already at or better than every baseline - zero headroom.
+GAIN_ORDER = ("modred_21", "mult_4", "adder_8", "adder_6", "qft_8", "qae_13")
+
 
 @dataclass
 class LoopConfig:
@@ -72,6 +88,7 @@ class LoopConfig:
     retire_after_loops: int = 2
     opcode_budget: int = DEFAULT_BUDGET
     subprocess_limit_s: float = 1800.0         # LLM / candidate wall clock: infrastructure, not science
+    wall_clock_s: float | None = None          # stop cleanly before a deadline, mid-loop if need be
     order_on_admission: str = "min_all"        # section 5.2
     tag: str = "p7"
     reachable_attempts: int = 0                # derived in __post_init__
@@ -355,9 +372,14 @@ class Loop:
         return o
 
     def _evaluate(self, path: Path, label: str) -> dict:
-        from .tools.evaluate import evaluate
-        return evaluate(path, bk=self.book, eps=self.cfg.eps, target=label,
-                        opcode_budget=self.cfg.opcode_budget)
+        """ISOLATED (see `v4.isolate`). An in-process call here took the loop down twice: the candidate's
+        own output width sets the cost of the whole-circuit check, and a wide `ancilla`-class rewrite
+        allocated past RAM, so the loop was killed with no row and no traceback after 2 of 60 attempts.
+        A child that times out or dies now comes back as `not_evaluated` and the loop moves on."""
+        from .isolate import evaluate_isolated
+        return evaluate_isolated(path, bk=self.book, eps=self.cfg.eps, target=label,
+                                 opcode_budget=self.cfg.opcode_budget,
+                                 limit_s=self.cfg.subprocess_limit_s)
 
     def _record(self, label, k, card, o: Outcome, t0, ctx, tries=0) -> None:
         self.attempts_used += 1
@@ -375,15 +397,39 @@ class Loop:
         self._append("attempts.jsonl", row)
         B.write_book_md(self.book)
 
+    def _opportunities(self) -> set:
+        """Names of accepted rules whose precondition admits at least one circuit in this run's order.
+
+        Retirement is only evidence about a rule that had a chance to fire. A run restricted to six
+        circuits must not retire the rule behind tfim_6 because tfim_6 was not one of them."""
+        out = set()
+        for r in self.book:
+            if r.tier == "floor":
+                continue
+            for lab in self.cfg.circuit_order:
+                if not r.precondition.excludes(describe(J.load(lab))):
+                    out.add(r.name)
+                    break
+        return out
+
     # ---------------------------------------------------------------- the global loop
     def run(self) -> dict:
         check_frozen()
+        B.joined([r.name for r in self.book], 0)      # the starting book gets its grace window
         t0 = time.time()
-        while self.budget_remains() and self.loop < self.cfg.max_loops:
+        def out_of_time() -> bool:
+            return (self.cfg.wall_clock_s is not None
+                    and time.time() - t0 > self.cfg.wall_clock_s)
+
+        stopped = ""
+        while self.budget_remains() and self.loop < self.cfg.max_loops and not out_of_time():
             self.loop += 1
             used_names = set()
             for label in self.cfg.circuit_order:
                 if not self.budget_remains():
+                    break
+                if out_of_time():
+                    stopped = f"wall clock {self.cfg.wall_clock_s:g}s reached"
                     break
                 if any(h.get("loop_done") == self.loop for h in self.history[label]):
                     continue                      # already attempted in this global loop (resumed run)
@@ -391,7 +437,8 @@ class Loop:
                 if o.admitted:
                     used_names.add(o.report["admission"]["rule"])
             B.credit(used_names | {r.name for r in self.book if r.tier == "floor"}, self.loop)
-            kept, gone = B.retire(self.book, self.loop, self.cfg.retire_after_loops)
+            kept, gone = B.retire(self.book, self.loop, self.cfg.retire_after_loops,
+                                  opportunities=self._opportunities())
             if gone:
                 self._append("retired.jsonl", dict(loop=self.loop, retired=gone))
                 self.book = kept
@@ -399,7 +446,7 @@ class Loop:
                                              attempts_used=self.attempts_used,
                                              seconds=round(time.time() - t0, 1)))
         recheck_frozen()
-        out = dict(loops=self.loop, attempts_used=self.attempts_used,
+        out = dict(stopped=stopped or None, loops=self.loop, attempts_used=self.attempts_used,
                    book=[r.name for r in self.book], book_digest=B.digest(self.book),
                    seconds=round(time.time() - t0, 1),
                    final={lab: optimize_memo(lab, self.book, self.cfg.eps,

@@ -1,0 +1,82 @@
+{
+ "label": "qft_8",
+ "eps": 0.001,
+ "family": "dv_angle",
+ "qubits": 8,
+ "n_ops": 120,
+ "current_t": 1583,
+ "rotations": 44,
+ "offgrid_rotations": 33,
+ "distinct_angles": 14,
+ "pauli_axis_classes": 42,
+ "parity_classes": 44,
+ "foldable": 2,
+ "foldable_remaining": 2,
+ "exactly_dyadic": {
+  "2": 0,
+  "3": 8,
+  "4": 15,
+  "5": 21,
+  "6": 26,
+  "7": 30,
+  "8": 33,
+  "9": 33,
+  "10": 33,
+  "12": 33,
+  "14": 33
+ },
+ "dyadic_fraction": {
+  "2": 0.0,
+  "3": 0.24242424242424243,
+  "4": 0.45454545454545453,
+  "5": 0.6363636363636364,
+  "6": 0.7878787878787878,
+  "7": 0.9090909090909091,
+  "8": 1.0,
+  "9": 1.0,
+  "10": 1.0,
+  "12": 1.0,
+  "14": 1.0
+ },
+ "fixable_at_k": {
+  "2": 0,
+  "3": 8,
+  "4": 15,
+  "5": 21,
+  "6": 26,
+  "7": 30,
+  "8": 33,
+  "9": 33,
+  "10": 33,
+  "12": 33,
+  "14": 33
+ },
+ "free_fermion": false,
+ "majorana_planes": 14,
+ "generator_algebra_rank": 42,
+ "ccz_count": 0,
+ "shared_control_pairs": 0,
+ "best_baseline": "DPF Synth",
+ "best_baseline_t": 1064,
+ "lever_consumed_by": {
+  "rotation_count": "pyzx (and the floor tier reproduces it)",
+  "angle_cost": "DPF Synth",
+  "algebraic_structure": "nobody",
+  "ancilla_reconstruction": "relaxed rules only"
+ },
+ "residual": {
+  "t_gap_to_best": 519,
+  "headroom": {
+   "rotation_count": 2,
+   "angle_cost": 66,
+   "algebraic_structure": 0,
+   "ancilla_reconstruction": 0
+  }
+ },
+ "headroom": {
+  "rotation_count": 2,
+  "angle_cost": 66,
+  "algebraic_structure": 0,
+  "ancilla_reconstruction": 0
+ }
+}

@@ -1,0 +1,14 @@
+
+Processing job 1 of 1
+Parsing input file: benchmark/z2Higgs_small.ham
+Found 1 result(s) in benchmark/z2Higgs_small.ham
+Writing intermediate result 'Result' to: output/intermediate_z2Higgs_small.cvdvqasm
+Writing logical result 'Result' to: output/logical_z2Higgs_small.cvdvqasm
+Writing final result 'Result' to: output/z2Higgs_small.cvdvqasm
+Mapping output/logical_z2Higgs_small.cvdvqasm_depth_sum_simulated_annealing_tsp_qbstuck
+Finish all parsing, decomposition, and mapping for input file: benchmark/z2Higgs_small.ham
+Time taken: 50.89377689361572 seconds
+
+Total time taken: 50.8938250541687 seconds
+
+exit=0 wall_s=51.2 PYTHONHASHSEED=0

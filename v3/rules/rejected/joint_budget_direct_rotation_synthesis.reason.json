@@ -1,0 +1,180 @@
+{
+ "candidate": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/v3/rules/candidates/joint_budget_direct_rotation_synthesis.py",
+ "static": "",
+ "circuits": [
+  {
+   "label": "qft_8",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 21.1,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "cost_before": 1583,
+   "cost_after": 1507,
+   "qubits_before": 8,
+   "qubits_after": 8,
+   "err_bound": 0.00031016807539890494,
+   "err_rules": 0.00031016807539890494
+  },
+  {
+   "label": "qpe_8",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 330.7,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "cost_before": 11485,
+   "cost_after": 10587,
+   "qubits_before": 8,
+   "qubits_after": 8,
+   "err_bound": 0.00034039924560426606,
+   "err_rules": 0.00034039924560426606
+  },
+  {
+   "label": "hhl_8",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 852.3,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "cost_before": 29029,
+   "cost_after": 24967,
+   "qubits_before": 8,
+   "qubits_after": 8,
+   "err_bound": 0.0002688754444966479,
+   "err_rules": 0.0002688754444966479
+  },
+  {
+   "label": "qae_13",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 118.2,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "tfim_6",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 18.8,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "cost_before": 3354,
+   "cost_after": 3010,
+   "qubits_before": 6,
+   "qubits_after": 6,
+   "err_bound": 0.00036669124565150385,
+   "err_rules": 0.00036669124565150385
+  },
+  {
+   "label": "adder_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 181.4,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "adder_6",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 178.9,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mult_4",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 226.5,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mcx_10",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 206.4,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "modred_21",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 45.5,
+   "certified": true,
+   "verify_methods": []
+  }
+ ],
+ "decision": "reject",
+ "reason": "runtime limit 300.0s exceeded on qpe_8",
+ "rule": {
+  "name": "joint_budget_direct_rotation_synthesis",
+  "domain": "dv",
+  "kind": "procedure",
+  "contract": "approx"
+ },
+ "event": "admission",
+ "origin": "LLM (P2, qft_8 a2)",
+ "seconds": 2180.1,
+ "time": 1792646984.874301
+}

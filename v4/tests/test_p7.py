@@ -301,8 +301,23 @@ def test_a_real_rule_is_admitted_and_the_book_and_BOOK_md_both_change(tmp_path):
         assert saved["starting_book"] == [] and saved["floor_tier"], "the ablation must be recorded"
     finally:
         Path("v4/rules/BOOK.md").write_text(before)
-        if dst.exists():
-            dst.unlink()
+        # The loop PERSISTS an admission into rules/accepted/ (see `Loop._persist`), so cleaning up the
+        # candidate is not enough: a leftover copy there joins the real book via `book.book()` and travels
+        # into every later gate, sweep and report. It did exactly that once - the test rule showed up as a
+        # tenth book member in the pre-loop status - which is why both locations are removed here and the
+        # next test asserts the accepted/ directory is unchanged.
+        for leftover in (dst, Path("v4/rules/accepted") / dst.name):
+            if leftover.exists():
+                leftover.unlink()
+
+
+def test_the_e2e_test_leaves_no_rule_behind_in_the_live_book():
+    """A guard on the test above, not on the product: `rules/accepted/` must hold no `t_` test rule.
+
+    Ordering is not relied on - the name is purged by the e2e test's own `finally`, and this fails if any
+    future test persists one and forgets."""
+    strays = sorted(p.name for p in Path("v4/rules/accepted").glob("t_*.py"))
+    assert strays == [], f"test rules leaked into the live book: {strays}"
 
 
 # ------------------------------------------------------------------------------------------ prefilter precision

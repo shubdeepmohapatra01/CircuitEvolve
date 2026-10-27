@@ -1,0 +1,70 @@
+{
+ "input": "qpe_8_tket.qasm",
+ "eps": 0.001,
+ "max_k": 10,
+ "arm": "B4",
+ "bqskit_ft_commit": "c04a32245d88a0877277dccbcb8001cd85a7eef0",
+ "qubits_in": 8,
+ "qubits_out": 27,
+ "ancillas": 19,
+ "num_blocks": 7,
+ "block_threshold": 5.714285714285715e-05,
+ "eps_split": {
+  "dpf": 0.0004,
+  "synth": 0.0004
+ },
+ "err_bound_accounted": 0.001,
+ "contract": "relaxed (measured temporary-AND uncompute: ancillas + mid-circuit measurement)",
+ "seconds_pk": 183.6,
+ "seconds_total": 186.1,
+ "stages": {
+  "eps_per_gate": 7.858546168958743e-07,
+  "after_cliffordrz": {
+   "qudits": 8,
+   "ops": 1000,
+   "params": 257,
+   "rz": 257,
+   "t": 157
+  },
+  "num_blocks": 7,
+  "block_threshold": 5.714285714285715e-05,
+  "after_greedy_ntro": {
+   "qudits": 8,
+   "ops": 1000,
+   "params": 120,
+   "rz": 120,
+   "t": 157
+  },
+  "after_pkac": {
+   "qudits": 27,
+   "ops": 24624,
+   "params": 127,
+   "rz": 127,
+   "t": 3810
+  },
+  "max_k": 10
+ },
+ "gates": {
+  "CNOTGate": 11683,
+  "SGate": 917,
+  "TdgGate": 1919,
+  "RZGate": 127,
+  "HGate": 1954,
+  "SqrtXGate": 140,
+  "SdgGate": 39,
+  "XGate": 5022,
+  "ZGate": 19,
+  "LogicalAndDgGate": 913,
+  "TGate": 1891
+ },
+ "t_count": 11160,
+ "t_explicit": 3810,
+ "t_quarter_rz": 0,
+ "t_gridsynth": 7350,
+ "n_rz_synthesized": 127,
+ "eps_rz": 3.1496062992125985e-06,
+ "worst_word_distance": 1.5741982799269313e-06,
+ "eps_rz_respected": true,
+ "logical_and_dg": 913,
+ "status": "ok"
+}

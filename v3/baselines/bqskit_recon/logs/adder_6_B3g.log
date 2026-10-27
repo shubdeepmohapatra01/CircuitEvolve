@@ -1,0 +1,1 @@
+{"circuit": "adder_6", "arm": "B3g", "eps": 0.001, "status": "ok", "t_count": 77, "n_rz": 0, "cx": 93, "qubits": 14, "runtime_s": 0.2, "state_dist_vs_orig": 1.1933034867338785e-15, "error": null}

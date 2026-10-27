@@ -1,0 +1,82 @@
+{
+ "label": "tfim_6",
+ "eps": 0.001,
+ "family": "dv_angle",
+ "qubits": 6,
+ "n_ops": 761,
+ "current_t": 3354,
+ "rotations": 66,
+ "offgrid_rotations": 66,
+ "distinct_angles": 66,
+ "pauli_axis_classes": 11,
+ "parity_classes": 66,
+ "foldable": 55,
+ "foldable_remaining": 0,
+ "exactly_dyadic": {
+  "2": 0,
+  "3": 0,
+  "4": 0,
+  "5": 0,
+  "6": 0,
+  "7": 0,
+  "8": 0,
+  "9": 0,
+  "10": 0,
+  "12": 0,
+  "14": 0
+ },
+ "dyadic_fraction": {
+  "2": 0.0,
+  "3": 0.0,
+  "4": 0.0,
+  "5": 0.0,
+  "6": 0.0,
+  "7": 0.0,
+  "8": 0.0,
+  "9": 0.0,
+  "10": 0.0,
+  "12": 0.0,
+  "14": 0.0
+ },
+ "fixable_at_k": {
+  "2": 0,
+  "3": 0,
+  "4": 0,
+  "5": 0,
+  "6": 0,
+  "7": 0,
+  "8": 0,
+  "9": 0,
+  "10": 1,
+  "12": 2,
+  "14": 13
+ },
+ "free_fermion": true,
+ "majorana_planes": 12,
+ "generator_algebra_rank": 11,
+ "ccz_count": 0,
+ "shared_control_pairs": 0,
+ "best_baseline": "TKET",
+ "best_baseline_t": 8560,
+ "lever_consumed_by": {
+  "rotation_count": "pyzx (and the floor tier reproduces it)",
+  "angle_cost": "DPF Synth",
+  "algebraic_structure": "nobody",
+  "ancilla_reconstruction": "relaxed rules only"
+ },
+ "residual": {
+  "t_gap_to_best": -5206,
+  "headroom": {
+   "rotation_count": 0,
+   "angle_cost": 13,
+   "algebraic_structure": 67,
+   "ancilla_reconstruction": 0
+  }
+ },
+ "headroom": {
+  "rotation_count": 0,
+  "angle_cost": 13,
+  "algebraic_structure": 67,
+  "ancilla_reconstruction": 0
+ }
+}

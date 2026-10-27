@@ -1,0 +1,14 @@
+
+Processing job 1 of 1
+Parsing input file: benchmark/heisenberg_small.ham
+Found 1 result(s) in benchmark/heisenberg_small.ham
+Writing intermediate result 'Result' to: output/intermediate_heisenberg_small.cvdvqasm
+Writing logical result 'Result' to: output/logical_heisenberg_small.cvdvqasm
+Writing final result 'Result' to: output/heisenberg_small.cvdvqasm
+Mapping output/logical_heisenberg_small.cvdvqasm_depth_sum_simulated_annealing_tsp_qbstuck
+Finish all parsing, decomposition, and mapping for input file: benchmark/heisenberg_small.ham
+Time taken: 0.036535024642944336 seconds
+
+Total time taken: 0.036557674407958984 seconds
+
+exit=0 wall_s=1.1 PYTHONHASHSEED=3

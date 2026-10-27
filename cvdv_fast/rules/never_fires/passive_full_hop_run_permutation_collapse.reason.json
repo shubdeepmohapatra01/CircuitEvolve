@@ -1,0 +1,129 @@
+{
+ "file": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/cvdv_fast/rules/candidates/passive_full_hop_run_permutation_collapse.py",
+ "origin": "LLM (boseHubbard_small a9.2)",
+ "mechanism": "exact group homomorphism U(m)->Fock (passive linear optics) restricted to monomial matrices; transposition-product collapse with Z4 phase bookkeeping",
+ "rule": {
+  "name": "passive_full_hop_run_permutation_collapse",
+  "kind": "rewrite",
+  "contract": "exact",
+  "idea": "A maximal contiguous run of oscillator-only passive gates (BS at t=pi mod 2pi, phase a multiple of pi/2; R at phi a multiple of pi/2) is, on the single-photon subspace, exactly a monomial matrix M = Perm(sigma) * diag(i^{c_x}); since passive linear optics U(m)->Fock is a phase-free homomorphism fixing vacuum, two such circuits agree on all of Fock space iff their m x m matrices agree. Content tracking through the run (integer phases mod 4, ints only) gives sigma and per-content phases exactly; sigma is then resynthesized as a shortest sequence of BS(pi,0) transpositions along already-coupled qumode edges (BFS), and the residual integer phase per final mode is emitted as a single R(k*pi/2). This collapses e.g. a 12-BS all-pairs hopping block (which needs 24 router SWAPs when routed naively) into 2 BS + 4 R with zero router SWAPs, verified by exact integer matrix recomputation before acceptance.",
+  "term_kinds": [],
+  "stage": "logical"
+ },
+ "instances": [],
+ "per_benchmark": [
+  {
+   "label": "kerr_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null,
+    "err_ledger": 3.0008958610294543e-15
+   }
+  },
+  {
+   "label": "boseHubbard_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null,
+    "err_ledger": 1.4070128500482678e-14
+   }
+  },
+  {
+   "label": "z2Higgs_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null,
+    "err_ledger": 7.502568674000943e-07
+   }
+  },
+  {
+   "label": "heisenberg_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null,
+    "err_ledger": 7.330651724579932e-06
+   }
+  },
+  {
+   "label": "electronicVibration_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null,
+    "err_ledger": 4.216684815159914e-09
+   }
+  }
+ ],
+ "rule_failures": [
+  {
+   "event": "rewrite_verify_fail",
+   "rule": "passive_full_hop_run_permutation_collapse",
+   "stage": "logical",
+   "dist": 1.9347225090179165
+  },
+  {
+   "event": "rewrite_verify_fail",
+   "rule": "passive_full_hop_run_permutation_collapse",
+   "stage": "logical",
+   "dist": 1.9347225090179165
+  }
+ ],
+ "decision": "never_fires",
+ "reason": "rule never chosen/applied on any benchmark (failures: [{'event': 'rewrite_verify_fail', 'rule': 'passive_full_hop_run_permutation_collapse', 'stage': 'logical', 'dist': 1.9347225090179165}, {'event': 'rewrite_verify_fail', 'rule': 'passive_full_hop_run_permutation_collapse', 'stage': 'logical', 'dist': 1.9347225090179165}])",
+ "moved_to": "rules/never_fires/passive_full_hop_run_permutation_collapse.py",
+ "seconds": 1.5
+}

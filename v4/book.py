@@ -63,6 +63,11 @@ def static_check(path: Path) -> str:
     return ""
 
 
+# name -> the file it was loaded from. `Rule` is frozen and carries no path, and `v4.isolate` needs to
+# rebuild a book in a child process, so the mapping is recorded here as rules load.
+SRC: dict[str, Path] = {}
+
+
 def load_rule(path, tier: str | None = None) -> Rule:
     path = Path(path)
     spec = importlib.util.spec_from_file_location(f"v4_rule_{path.stem}", path)
@@ -76,6 +81,7 @@ def load_rule(path, tier: str | None = None) -> Rule:
     t = tier or ("floor" if path.parent.name == "floor" else "accepted")
     if r.tier != t:
         r = Rule(**{**{f: getattr(r, f) for f in r.__dataclass_fields__}, "tier": t})
+    SRC[r.name] = path.resolve()
     return r
 
 
@@ -126,17 +132,42 @@ def credit(names, loop: int) -> dict:
     return c
 
 
-def retire(bk, loop: int, loops: int = 2) -> tuple:
+def joined(names, loop: int) -> dict:
+    """Record that each rule in `names` entered the book at global loop `loop`, without crediting it.
+
+    A rule that is already in the book when a run STARTS has no credit entry, and `retire` used to read
+    that as "never used" and drop it at the first retirement check - ignoring the grace window entirely.
+    Seeding the joining loop here is what gives such a rule its `loops` loops to earn its place."""
+    c = _credit()
+    for n in names:
+        c.setdefault("joined", {}).setdefault(n, int(loop))
+    CREDIT_FILE.write_text(json.dumps(c, indent=1) + "\n")
+    return c
+
+
+def retire(bk, loop: int, loops: int = 2, opportunities=None) -> tuple:
     """(kept, [(name, reason)]) - an `accepted` rule with no accepted application in `loops` consecutive
-    global loops leaves the book. Floor rules never retire."""
+    global loops leaves the book. Floor rules never retire.
+
+    `opportunities` is the set of rule names that COULD have fired in this window - a rule whose
+    precondition admits no circuit in the run's `circuit_order` never had a chance, and retiring it is
+    not evidence about the rule. Leaving this out once retired all seven accepted rules after a single
+    loop of a six-circuit run, including the one behind the project's best result (tfim_6 -60.8%), purely
+    because tfim_6 was not among the six; the book collapsed to the floor tier and adder_8 went 216 ->
+    399 mid-run."""
     c = _credit()
     kept, gone = [], []
     for r in bk:
         if r.tier == "floor":
             kept.append(r)
             continue
+        if opportunities is not None and r.name not in opportunities:
+            kept.append(r)
+            continue
         last = c["last_used"].get(r.name)
-        if last is None or loop - last >= loops:
+        if last is None:
+            last = c.get("joined", {}).get(r.name)
+        if last is not None and loop - last >= loops:
             gone.append((r.name, f"no accepted application since loop {last} (now {loop}, limit {loops})"))
         else:
             kept.append(r)

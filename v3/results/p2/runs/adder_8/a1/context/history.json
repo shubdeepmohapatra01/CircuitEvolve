@@ -1,0 +1,14 @@
+[
+ {
+  "attempt": 1,
+  "cards": [],
+  "decision": "harness_error",
+  "reason": "RuntimeError: implementer changed files outside rules/candidates/: ['runner.py']",
+  "admitted": null,
+  "estimate": null,
+  "measured": null,
+  "limitation": null,
+  "voided": true,
+  "note": "attempt voided: the guard stop was caused by the operator editing v3/runner.py mid-attempt, not by the implementer; attempt 1 is redone. First try (temporary_and_toffoli_lowering, rules/rejected/*.try1.py) verified on all 5 recon circuits (adder_8 399->156, adder_6 77->40, mult_4 112->64, mcx_10 224->96, modred_21 119->56) but was rejected on runtime caused by redundant harness checks (since fixed)."
+ }
+]

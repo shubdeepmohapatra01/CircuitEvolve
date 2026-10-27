@@ -1,0 +1,167 @@
+{
+ "file": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/cvdv_fast/rules/candidates/open_ended_swap_loop_vacuum_carrier_pauli_pair.py",
+ "origin": "LLM (heisenberg_small a9.1)",
+ "mechanism": "Heisenberg-Weyl closed loop + exact action of BS on two-mode vacuum (drop the trailing swap)",
+ "rule": {
+  "name": "open_ended_swap_loop_vacuum_carrier_pauli_pair",
+  "kind": "synth",
+  "contract": "exact",
+  "idea": "Weight-2 Pauli ZZ/XX/YY gadget on neighbouring qubits whose co-located qumodes are vacuum ancillas: drop the trailing BS of the accepted 8-gate closed Heisenberg-Weyl loop (CD_j, BS, CD_k, BS, CD_j, BS, CD_k, BS) since carrier tracking shows both modes are already in vacuum after 7 gates, and a passive linear-optics unitary (BS) acting on vacuum is the identity with no phase. Saves one 2-op gate per pair term with an unchanged alpha/beta relation and identical accuracy to the 8-gate version.",
+  "term_kinds": [
+   "pauli"
+  ],
+  "stage": "logical"
+ },
+ "instances": [
+  {
+   "label": "z2Higgs_small",
+   "part": "pauli(('q', 0),)(-1.570796,) X",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "heisenberg_small",
+   "part": "pauli(('q', 0), ('q', 1))(-0.785398,) XX",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "heisenberg_small",
+   "part": "pauli(('q', 0), ('q', 1))(-0.785398,) YY",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "heisenberg_small",
+   "part": "pauli(('q', 0), ('q', 1))(-0.785398,) ZZ",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "heisenberg_small",
+   "part": "pauli(('q', 0),)(-0.785398,) Z",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "electronicVibration_small",
+   "part": "pauli(('q', 0),)(-0.5,) Z",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "electronicVibration_small",
+   "part": "pauli(('q', 0), ('q', 1))(0.25,) XX",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "electronicVibration_small",
+   "part": "pauli(('q', 0), ('q', 1))(0.25,) YY",
+   "r": 1,
+   "declined": true
+  }
+ ],
+ "per_benchmark": [
+  {
+   "label": "kerr_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null,
+    "err_ledger": 3.0008958610294543e-15
+   }
+  },
+  {
+   "label": "boseHubbard_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null,
+    "err_ledger": 1.4070128500482678e-14
+   }
+  },
+  {
+   "label": "z2Higgs_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null,
+    "err_ledger": 7.502568674000943e-07
+   }
+  },
+  {
+   "label": "heisenberg_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null,
+    "err_ledger": 7.330651724579932e-06
+   }
+  },
+  {
+   "label": "electronicVibration_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null,
+    "err_ledger": 4.216684815159914e-09
+   }
+  }
+ ],
+ "rule_failures": [],
+ "decision": "never_fires",
+ "reason": "rule never chosen/applied on any benchmark ",
+ "moved_to": "rules/never_fires/open_ended_swap_loop_vacuum_carrier_pauli_pair.py",
+ "seconds": 1.3
+}

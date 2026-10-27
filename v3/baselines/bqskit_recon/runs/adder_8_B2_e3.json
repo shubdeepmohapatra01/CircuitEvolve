@@ -1,0 +1,68 @@
+{
+ "circuit": "adder_8",
+ "arm": "B2",
+ "eps": 0.001,
+ "status": "ok",
+ "t_count": 399,
+ "cx": 409,
+ "n_rz": 0,
+ "eps_per_rz": null,
+ "gridsynth_algorithmic_error": 0.001,
+ "residual_rz": 0,
+ "other_ops": {},
+ "runtime_s": 0.4,
+ "verify_s": 0.0,
+ "state_dist_vs_orig": null,
+ "state_dist_vs_input": null,
+ "state_dist_input_vs_cliffrz": null,
+ "stages": {
+  "input": {
+   "rz": 0,
+   "t": 399,
+   "params": 0,
+   "ops": 900
+  },
+  "clifford_rz": {
+   "rz": 0,
+   "t": 399,
+   "params": 0,
+   "ops": 900,
+   "eps_per_gate": 0.001
+  },
+  "output": {
+   "rz": 0,
+   "t": 399,
+   "params": 0,
+   "ops": 900
+  }
+ },
+ "gate_counts": {
+  "CNOTGate": 409,
+  "HGate": 80,
+  "TGate": 201,
+  "XGate": 12,
+  "TdgGate": 198
+ },
+ "log": {
+  "gridsynth_calls": [
+   {
+    "num_rzs": 0,
+    "algorithmic_error": 0.001,
+    "precision_per_rz": null
+   }
+  ],
+  "dpf_thresholds": {
+   "n": 0,
+   "distinct": []
+  },
+  "assign_errors": [],
+  "partitions": [],
+  "dump_pregs": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/v3/baselines/bqskit_recon/outputs/adder_8_B2_e3_pregs.qasm.gz",
+  "gridsynth_panic_retries": []
+ },
+ "output": "adder_8_B2_e3.qasm.gz",
+ "bqskit_ft_commit": "2e99ba614d48970b9afefc0b8c32860c3a3dc9f1",
+ "qubits": 24,
+ "wall_s": 0.7,
+ "driver": "v3/baselines/run_bqskit_recon.py -> stage1/run_bqskit_arms.run_job (unchanged)"
+}

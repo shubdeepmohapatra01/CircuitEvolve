@@ -1,0 +1,7 @@
+{"label": "kerr_small", "who": "ours", "max_infid_vs_exact": 3.3306690738754696e-15, "mean_infid_vs_exact": 1.1379786002407855e-15, "cutoffs": [3], "ideal_trotter_vs_exact_max": 2.6645352591003757e-15}
+{"label": "boseHubbard_small", "who": "ours", "max_infid_vs_exact": 0.983084382428455, "mean_infid_vs_exact": 0.9443545352055793, "cutoffs": [3], "ideal_trotter_vs_exact_max": 0.983084382428455}
+{"label": "boseHubbard_small", "who": "genesis", "max_infid_vs_exact": 0.9978467042002435, "mean_infid_vs_exact": 0.9757982751874561, "cutoffs": [3], "ideal_trotter_vs_exact_max": 0.983084382428455}
+{"label": "z2Higgs_small", "who": "ours", "max_infid_vs_exact": 0.9995850986594514, "mean_infid_vs_exact": 0.9950222051325076, "cutoffs": [3], "ideal_trotter_vs_exact_max": 0.9995850989447267}
+{"label": "z2Higgs_small", "who": "genesis", "max_infid_vs_exact": 0.9999928415631588, "mean_infid_vs_exact": 0.9996813902367456, "cutoffs": [10, 12], "ideal_trotter_vs_exact_max": 0.9995850989447267}
+{"label": "heisenberg_small", "who": "ours", "max_infid_vs_exact": 0.9918953199734788, "mean_infid_vs_exact": 0.9057956877427977, "cutoffs": [10, 12], "ideal_trotter_vs_exact_max": 0.9918953199126157}
+{"label": "heisenberg_small", "who": "genesis", "max_infid_vs_exact": 0.9999998553614033, "mean_infid_vs_exact": 0.9999928942736835, "cutoffs": [10, 12], "ideal_trotter_vs_exact_max": 0.9918953199126157}

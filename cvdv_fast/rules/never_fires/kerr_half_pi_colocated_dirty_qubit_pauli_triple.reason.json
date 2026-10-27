@@ -1,0 +1,137 @@
+{
+ "file": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/cvdv_fast/rules/candidates/kerr_half_pi_colocated_dirty_qubit_pauli_triple.py",
+ "origin": "LLM (z2Higgs_small a7.1)",
+ "mechanism": "exact number-theoretic identity (n^2 mod 4 = n mod 2) + product of three anticommuting Pauli-conditioned pi rotations is a qubit scalar on every Fock level (dirty co-located qubit, no ancilla, no routing)",
+ "rule": {
+  "name": "kerr_half_pi_colocated_dirty_qubit_pauli_triple",
+  "kind": "synth",
+  "contract": "exact",
+  "idea": "Implement exp(-i theta n^2) for theta = pi/2 + k*pi + delta using only the mode's co-located qubit as a dirty catalyst (arbitrary state, no ancilla). Uses n^2 mod 4 = n mod 2 so that exp(-i(pi/2)n^2) = R(pi/2) (-iZ)^n (-iY)^n (-iX)^n exactly; each (-iP)^n is CR(pi) conjugated by the Clifford taking Z to P (H for X, SH for Y). The product of the three P-conditioned pi rotations is a pure phase on the qubit for every Fock level, so the dirty qubit returns unchanged and no ancilla or SWAP routing is needed. Residual k*pi and small delta fold into a mode-only R rotation (3*delta from the n<=3 angle-matching expansion).",
+  "term_kinds": [
+   "n2"
+  ],
+  "stage": "logical"
+ },
+ "instances": [
+  {
+   "label": "kerr_small",
+   "part": "n2(('qm', 0),)(0.785398,)",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "boseHubbard_small",
+   "part": "n2(('qm', 0),)(0.785398,)",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "z2Higgs_small",
+   "part": "n2(('qm', 0),)(1.570796,)",
+   "r": 1,
+   "declined": true
+  }
+ ],
+ "per_benchmark": [
+  {
+   "label": "kerr_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null,
+    "err_ledger": 3.0008958610294543e-15
+   }
+  },
+  {
+   "label": "boseHubbard_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null,
+    "err_ledger": 1.4070128500482678e-14
+   }
+  },
+  {
+   "label": "z2Higgs_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null,
+    "err_ledger": 7.502568674000943e-07
+   }
+  },
+  {
+   "label": "heisenberg_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null,
+    "err_ledger": 7.330651724579932e-06
+   }
+  },
+  {
+   "label": "electronicVibration_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null,
+    "err_ledger": 4.216684815159914e-09
+   }
+  }
+ ],
+ "rule_failures": [],
+ "decision": "never_fires",
+ "reason": "rule never chosen/applied on any benchmark ",
+ "moved_to": "rules/never_fires/kerr_half_pi_colocated_dirty_qubit_pauli_triple.py",
+ "seconds": 1.2
+}

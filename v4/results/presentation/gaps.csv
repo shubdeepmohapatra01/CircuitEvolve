@@ -1,0 +1,11 @@
+circuit,best_baseline,best_baseline_t,ours,gap_to_best,pct_vs_best,ours_is_input,verdict
+qft_8,DPF Synth,1064,1583,519,48.8,False,we lose
+qpe_8,DPF Synth,7552,11364,3812,50.5,False,we lose
+hhl_8,DPF Synth,18701,25885,7184,38.4,False,we lose
+qae_13,DPF Synth,4264,4526,262,6.1,False,we lose
+tfim_6,TKET,8560,3354,-5206,-60.8,False,we win
+adder_8,pyzx,173,216,43,,False,we lose
+adder_6,pyzx,47,77,30,,True,we lose
+mult_4,pyzx,68,112,44,,True,we lose
+mcx_10,pyzx,100,36,-64,,False,we win
+modred_21,pyzx,73,119,46,,True,we lose

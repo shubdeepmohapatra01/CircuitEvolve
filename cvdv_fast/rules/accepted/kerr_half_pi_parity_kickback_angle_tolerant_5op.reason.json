@@ -1,0 +1,151 @@
+{
+ "file": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/cvdv_fast/rules/candidates/kerr_half_pi_parity_kickback_angle_tolerant_5op.py",
+ "origin": "LLM (z2Higgs_small a6.1)",
+ "mechanism": "exact number-theoretic identity (n^2 mod 4 = n mod 2) + parity phase kickback on a clean ancilla, with an explicit near-pi/2 angle match that absorbs the IR's rounding of pi/2 into the exact 1e-6 budget",
+ "rule": {
+  "name": "kerr_half_pi_parity_kickback_angle_tolerant_5op",
+  "kind": "synth",
+  "contract": "exact",
+  "idea": "Exact identity n^2 mod 4 = n mod 2 turns exp(-i(pi/2)n^2) into a parity-dependent phase diag(1,-i,1,-i,...). A clean ancilla is put in |+> via H, CR(pi) = (-iZ)^n kicks back parity p=(-1)^n onto the ancilla's Z eigenvalue, rx(phi) on the ancilla multiplies by exp(-i(phi/2)p), CR(-pi) un-kicks and H restores the ancilla to |0>, factorising out exactly and leaving exp(-i(phi/2)p) on the mode. theta = pi/2 + k*pi + delta is handled by matching phi = -pi/2 + 3*delta (absorbing the -delta*(3/2)p piece of the n<=3 expansion n^2 = 3n - p n + (3/2)p - 3/2 exactly) and emitting R(k*pi) on the mode only when k is odd; the residual exp(-i delta(3n - p n)) is bounded by about 3|delta| in operator distance on the verified truncated subspace and is well under the 1e-6 exact contract, so it is charged nothing against the eps ledger. This removes the IR's rounding of pi/2 as an obstacle: a tight exact-equality predicate would reject theta = 1.5707963 (delta = theta - pi/2 ~= -2.68e-8) even though it is physically pi/2.",
+  "term_kinds": [
+   "n2"
+  ],
+  "stage": "logical"
+ },
+ "instances": [
+  {
+   "label": "kerr_small",
+   "part": "n2(('qm', 0),)(0.785398,)",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "boseHubbard_small",
+   "part": "n2(('qm', 0),)(0.785398,)",
+   "r": 1,
+   "declined": true
+  },
+  {
+   "label": "z2Higgs_small",
+   "part": "n2(('qm', 0),)(1.570796,)",
+   "r": 1,
+   "dist": 1.875642167660835e-07,
+   "one_op": 3,
+   "two_op": 2,
+   "total": 5,
+   "duration": 43
+  }
+ ],
+ "per_benchmark": [
+  {
+   "label": "kerr_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null,
+    "err_ledger": 3.0008958610294543e-15
+   }
+  },
+  {
+   "label": "boseHubbard_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null,
+    "err_ledger": 1.4070128500482678e-14
+   }
+  },
+  {
+   "label": "z2Higgs_small",
+   "used": true,
+   "before": {
+    "valid": true,
+    "total": 144,
+    "two_op": 49,
+    "duration": 398,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null,
+    "err_ledger": 7.502568674000943e-07
+   }
+  },
+  {
+   "label": "heisenberg_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null,
+    "err_ledger": 7.330651724579932e-06
+   }
+  },
+  {
+   "label": "electronicVibration_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null,
+    "err_ledger": 4.216684815159914e-09
+   }
+  }
+ ],
+ "rule_failures": [],
+ "whole_check": {
+  "z2Higgs_small": {
+   "max_infid": 1.1324274851176597e-14,
+   "cutoff_gap": 0.0,
+   "valid": true
+  }
+ },
+ "whole_check_deferred": [],
+ "decision": "admit",
+ "improved": [
+  "z2Higgs_small"
+ ],
+ "moved_to": "rules/accepted/kerr_half_pi_parity_kickback_angle_tolerant_5op.py",
+ "seconds": 4.0
+}

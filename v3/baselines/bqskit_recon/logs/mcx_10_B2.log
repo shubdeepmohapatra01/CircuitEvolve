@@ -1,0 +1,1 @@
+{"circuit": "mcx_10", "arm": "B2", "eps": 0.001, "status": "ok", "t_count": 224, "n_rz": 0, "cx": 192, "qubits": 19, "runtime_s": 0.5, "state_dist_vs_orig": 3.004537851501372e-15, "error": null}

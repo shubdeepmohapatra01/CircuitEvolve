@@ -1,0 +1,120 @@
+{
+ "label": "qft_8",
+ "kind": "Clifford+Rz op list, AFTER the current book",
+ "qubits": 8,
+ "ops": 120,
+ "gate_histogram": {
+  "h": 8,
+  "rz": 33,
+  "cx": 68,
+  "tdg": 7,
+  "t": 4
+ },
+ "nonclifford_rotations": 33,
+ "explicit_t": 11,
+ "distinct_rz_angles": 14,
+ "rz_angle_histogram_top30": [
+  [
+   -0.39269908,
+   6
+  ],
+  [
+   -0.19634954,
+   5
+  ],
+  [
+   -0.09817477,
+   4
+  ],
+  [
+   -0.04908739,
+   3
+  ],
+  [
+   1.55852448,
+   2
+  ],
+  [
+   1.54625263,
+   2
+  ],
+  [
+   1.17809725,
+   2
+  ],
+  [
+   1.37444679,
+   2
+  ],
+  [
+   -0.02454369,
+   2
+  ],
+  [
+   0.68722339,
+   1
+  ],
+  [
+   1.52170894,
+   1
+  ],
+  [
+   0.73631078,
+   1
+  ],
+  [
+   -0.01227185,
+   1
+  ],
+  [
+   1.47262156,
+   1
+  ]
+ ],
+ "current_t_with_book": 1583,
+ "eps_total": 0.001,
+ "eps_rz": 3.0303030303030302e-05,
+ "top_gate_trigrams": [
+  [
+   "cx rz cx",
+   17
+  ],
+  [
+   "rz cx cx",
+   12
+  ],
+  [
+   "cx cx rz",
+   11
+  ],
+  [
+   "cx cx cx",
+   10
+  ],
+  [
+   "rz cx rz",
+   8
+  ],
+  [
+   "cx tdg cx",
+   5
+  ],
+  [
+   "rz h cx",
+   5
+  ],
+  [
+   "cx cx tdg",
+   5
+  ],
+  [
+   "cx rz h",
+   5
+  ],
+  [
+   "tdg cx cx",
+   4
+  ]
+ ],
+ "input_file": "circuit.qasm (the ORIGINAL input; your rule runs on the circuit after the book, whose statistics are the ones above)"
+}

@@ -28,7 +28,7 @@ from pathlib import Path
 from .. import book as B
 from ..loop import LoopConfig, admit as order_safe_admit
 from ..paths import RESULTS, RULES
-from .evaluate import evaluate
+from ..isolate import evaluate_isolated
 
 FOLDER = dict(admit="accepted", reject="rejected", never_fires="never_fires")
 
@@ -37,7 +37,7 @@ def admit_one(path: Path, origin: str = "harness", eps: float = 1e-3, cfg: LoopC
               dry: bool = False) -> dict:
     cfg = cfg or LoopConfig(eps=eps)
     t0 = time.time()
-    rep = evaluate(path, eps=eps)
+    rep = evaluate_isolated(path, eps=eps, limit_s=cfg.subprocess_limit_s)
     rep.update(event="admission", origin=origin, candidate=str(path), time=time.time())
     if rep["decision"] == "admit":
         rule = B.load_rule(path, "accepted")

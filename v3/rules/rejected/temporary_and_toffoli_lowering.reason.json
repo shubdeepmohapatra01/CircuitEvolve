@@ -1,0 +1,188 @@
+{
+ "candidate": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/v3/rules/candidates/temporary_and_toffoli_lowering.py",
+ "static": "",
+ "circuits": [
+  {
+   "label": "qft_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 7.5,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "qpe_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 27.8,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "hhl_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 36.3,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "qae_13",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 41.3,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "tfim_6",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.0,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "adder_8",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 416.4,
+   "certified": false,
+   "verify_methods": [
+    "branchwise-sampled+sampled-branches"
+   ],
+   "cost_before": 399,
+   "cost_after": 156,
+   "qubits_before": 24,
+   "qubits_after": 30,
+   "err_bound": 0.0,
+   "err_rules": 0.0
+  },
+  {
+   "label": "adder_6",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 500.4,
+   "certified": false,
+   "verify_methods": [
+    "branchwise-exhaustive+sampled-branches"
+   ],
+   "cost_before": 77,
+   "cost_after": 40,
+   "qubits_before": 14,
+   "qubits_after": 16,
+   "err_bound": 0.0,
+   "err_rules": 0.0
+  },
+  {
+   "label": "mult_4",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 168.9,
+   "certified": false,
+   "verify_methods": [
+    "branchwise-exhaustive+sampled-branches"
+   ],
+   "cost_before": 112,
+   "cost_after": 64,
+   "qubits_before": 12,
+   "qubits_after": 13,
+   "err_bound": 0.0,
+   "err_rules": 0.0
+  },
+  {
+   "label": "mcx_10",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 487.4,
+   "certified": false,
+   "verify_methods": [
+    "branchwise-sampled+sampled-branches"
+   ],
+   "cost_before": 224,
+   "cost_after": 96,
+   "qubits_before": 19,
+   "qubits_after": 28,
+   "err_bound": 0.0,
+   "err_rules": 0.0
+  },
+  {
+   "label": "modred_21",
+   "eps": 0.001,
+   "matches_on_input": 1,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 868.2,
+   "certified": false,
+   "verify_methods": [
+    "branchwise-exhaustive+sampled-branches"
+   ],
+   "cost_before": 119,
+   "cost_after": 56,
+   "qubits_before": 11,
+   "qubits_after": 14,
+   "err_bound": 0.0,
+   "err_rules": 0.0
+  }
+ ],
+ "decision": "reject",
+ "reason": "runtime limit 300.0s exceeded on adder_8",
+ "rule": {
+  "name": "temporary_and_toffoli_lowering",
+  "domain": "dv",
+  "kind": "reconstruction",
+  "contract": "relaxed"
+ },
+ "event": "admission",
+ "origin": "LLM (P2, adder_8 a1)",
+ "seconds": 2554.3,
+ "time": 1792545116.715404
+}

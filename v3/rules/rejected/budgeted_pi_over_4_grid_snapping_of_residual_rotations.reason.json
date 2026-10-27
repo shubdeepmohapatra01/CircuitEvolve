@@ -1,0 +1,186 @@
+{
+ "candidate": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/v3/rules/candidates/budgeted_pi_over_4_grid_snapping_of_residual_rotations.py",
+ "static": "",
+ "circuits": [
+  {
+   "label": "qft_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 14.7,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "qpe_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 83.2,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "hhl_8",
+   "eps": 0.001,
+   "matches_on_input": 2,
+   "fired": true,
+   "applications_tried": 1,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 313.2,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "cost_before": 28509,
+   "cost_after": 28451,
+   "qubits_before": 8,
+   "qubits_after": 8,
+   "err_bound": 0.001,
+   "err_rules": 1.2281152803353363e-05
+  },
+  {
+   "label": "qae_13",
+   "eps": 0.001,
+   "matches_on_input": 3,
+   "fired": true,
+   "applications_tried": 5,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 116.5,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "first_failure": {
+    "match": 0,
+    "mode": "approx",
+    "method": "unitary",
+    "distance": 0.00038349519462140637,
+    "reason": "distance 3.835e-04 > eps 1.165e-04"
+   },
+   "cost_before": 4526,
+   "cost_after": 4668,
+   "qubits_before": 13,
+   "qubits_after": 13,
+   "err_bound": 0.001,
+   "err_rules": 0.00038349519467099935
+  },
+  {
+   "label": "tfim_6",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": true,
+   "applications_tried": 3,
+   "verified": 1,
+   "accepted": 1,
+   "timeout": false,
+   "seconds": 1.6,
+   "certified": true,
+   "verify_methods": [
+    "unitary"
+   ],
+   "first_failure": {
+    "match": 0,
+    "mode": "approx",
+    "method": "unitary",
+    "distance": 0.0003272562281521378,
+    "reason": "distance 3.273e-04 > eps 2.038e-04"
+   },
+   "cost_before": 3354,
+   "cost_after": 3390,
+   "qubits_before": 6,
+   "qubits_after": 6,
+   "err_bound": 0.001,
+   "err_rules": 0.0002961790801445007
+  },
+  {
+   "label": "adder_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 181.7,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "adder_6",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 177.3,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mult_4",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 225.6,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mcx_10",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 206.1,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "modred_21",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 45.8,
+   "certified": true,
+   "verify_methods": []
+  }
+ ],
+ "decision": "reject",
+ "reason": "verification failed on qae_13 (eps 0.001): {'match': 0, 'mode': 'approx', 'method': 'unitary', 'distance': 0.00038349519462140637, 'reason': 'distance 3.835e-04 > eps 1.165e-04'}",
+ "rule": {
+  "name": "budgeted_pi_over_4_grid_snapping_of_residual_rotations",
+  "domain": "dv",
+  "kind": "procedure",
+  "contract": "approx"
+ },
+ "event": "admission",
+ "origin": "LLM (P2, qae_13 a3)",
+ "seconds": 1365.9,
+ "time": 1792696588.31118
+}

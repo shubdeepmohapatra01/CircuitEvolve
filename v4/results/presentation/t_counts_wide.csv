@@ -1,0 +1,11 @@
+circuit,family,B0 TKET+gridsynth,B1 pyzx,B2 BQSKit-DPF (best),ours,dpf_t_min,dpf_t_max,dpf_k,dpf_ancillas,dpf_resource_class,ours_error_class,ours_resource_class,ours_certified,best_baseline,best_baseline_t,gap_to_best,pct_vs_best,applications,ours_is_input
+qft_8,dv_angle,2391,1577,1064.0,1583,1064.0,1136.0,7.0,13.0,measured,exact,unitary,True,DPF Synth,1064,519,48.8,19,False
+qpe_8,dv_angle,14761,11485,7552.0,11364,7552.0,8506.0,3.0,0.0,unitary,approx,unitary,True,DPF Synth,7552,3812,50.5,69,False
+hhl_8,dv_angle,35450,29205,18701.0,25885,18701.0,19912.0,3.0,0.0,unitary,approx,unitary,True,DPF Synth,18701,7184,38.4,171,False
+qae_13,dv_angle,7821,4527,4264.0,4526,4264.0,4450.0,10.0,19.0,measured,approx,unitary,False,DPF Synth,4264,262,6.1,62,False
+tfim_6,dv_angle,8560,8560,9600.0,3354,9600.0,9600.0,7.0,0.0,unitary,approx,unitary,True,TKET,8560,-5206,-60.8,1,False
+adder_8,dv_recon,361,173,,216,,,,,,exact,measured,False,pyzx,173,43,,1,False
+adder_6,dv_recon,59,47,,77,,,,,,exact,unitary,True,pyzx,47,30,,0,True
+mult_4,dv_recon,96,68,,112,,,,,,exact,unitary,True,pyzx,68,44,,0,True
+mcx_10,dv_recon,192,100,,36,,,,,,exact,measured,False,pyzx,100,-64,,1,False
+modred_21,dv_recon,107,73,,119,,,,,,exact,unitary,True,pyzx,73,46,,0,True

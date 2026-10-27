@@ -1,0 +1,35 @@
+{
+ "TKET": {
+  "method": "TKET",
+  "arm": "tket_fpo_logical",
+  "t_count": 107,
+  "qubits": 11,
+  "err_bound": 0.0,
+  "error_class": "approx",
+  "resource_class": "unitary",
+  "note": "TKET FullPeepholeOptimise ... on the logical input (ccx native, ccz as h-ccx-h); verify unitary_dense ok=True dist=1.1e-14 qcec=equivalent -> verified=True",
+  "source": "v3 baselines.csv"
+ },
+ "pyzx": {
+  "method": "pyzx",
+  "arm": "pyzx_fr",
+  "t_count": 73,
+  "qubits": 11,
+  "err_bound": 0.0,
+  "error_class": "exact",
+  "resource_class": "unitary",
+  "note": "pyzx 0.10.7 full_reduce -> extract_circuit -> to_basic_gates -> basic_optimization (Clifford+T input); verify unitary_dense ok=True dist=1.1e-15 qcec=equivalent_up_to_global_phase -> verified=True; gr",
+  "source": "v3 baselines.csv"
+ },
+ "BQSKit-FT": {
+  "method": "BQSKit-FT",
+  "arm": "B2",
+  "t_count": 119,
+  "qubits": 11,
+  "err_bound": 0.0,
+  "error_class": "approx",
+  "resource_class": "unitary",
+  "note": "input benchmarks/nam_arith/cliffordt/mod_red_21.qasm (Clifford+T, 7 T/Toffoli; BQSKit leaves ccx undecomposed); state_dist_vs_logical=1.7e-15; n_rz=0",
+  "source": "v3 baselines.csv"
+ }
+}

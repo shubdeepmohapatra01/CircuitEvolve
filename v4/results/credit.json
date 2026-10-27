@@ -1,9 +1,20 @@
 {
- "loop": 3,
+ "loop": 1,
  "last_used": {
-  "pauli_frame_rotation_merge": 3,
-  "pauli_exponential_commutation_merge": 3,
-  "dpf_dyadic_angle_fixing": 3,
-  "t_e2e_merge": 1
+  "pauli_exponential_commutation_merge": 1,
+  "dpf_dyadic_angle_fixing": 1,
+  "pauli_frame_rotation_merge": 1
+ },
+ "joined": {
+  "dpf_dyadic_angle_fixing": 0,
+  "pauli_exponential_commutation_merge": 0,
+  "pauli_frame_rotation_merge": 0,
+  "and_ancilla_ccz_lowering_with_measured_uncompute": 0,
+  "bilinear_rank_resynthesis_karatsuba": 0,
+  "free_fermion_gaussian_resynthesis": 0,
+  "generator_equality_angle_teleportation": 0,
+  "mcx_and_tree_resynthesis": 0,
+  "pauli_subalgebra_dimension_recompression": 0,
+  "template_descent_block_resynthesis": 0
  }
 }

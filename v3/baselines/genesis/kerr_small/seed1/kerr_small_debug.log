@@ -1,0 +1,214 @@
+18:40:52 - DEBUG: visitProgram at line 2
+18:40:52 - DEBUG: visitStatementList
+18:40:52 - DEBUG: visitStatement at line 2
+18:40:52 - DEBUG: visitConstDeclaration at line 2
+18:40:52 - DEBUG: visitAddExpr at line 2
+18:40:52 - DEBUG: visitMulExpr at line 2
+18:40:52 - DEBUG: visitPowerExpr at line 2
+18:40:52 - DEBUG: visitUnaryExpr at line 2
+18:40:52 - DEBUG: visitPrimaryExpr at line 2
+18:40:52 - DEBUG: Created NumberLiteralNode with value 1.5707963
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Evaluated Const 'omega' to numeric value 1.5707963
+18:40:52 - DEBUG: Added statement node: ConstDeclarationNode
+18:40:52 - DEBUG: visitStatement at line 3
+18:40:52 - DEBUG: visitConstDeclaration at line 3
+18:40:52 - DEBUG: visitAddExpr at line 3
+18:40:52 - DEBUG: visitMulExpr at line 3
+18:40:52 - DEBUG: visitPowerExpr at line 3
+18:40:52 - DEBUG: visitUnaryExpr at line 3
+18:40:52 - DEBUG: visitPrimaryExpr at line 3
+18:40:52 - DEBUG: Created NumberLiteralNode with value 1.5707963
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Evaluated Const 'kerr' to numeric value 1.5707963
+18:40:52 - DEBUG: Added statement node: ConstDeclarationNode
+18:40:52 - DEBUG: visitStatement at line 4
+18:40:52 - DEBUG: visitRangeDeclaration at line 4
+18:40:52 - DEBUG: visitAddExpr at line 4
+18:40:52 - DEBUG: visitMulExpr at line 4
+18:40:52 - DEBUG: visitPowerExpr at line 4
+18:40:52 - DEBUG: visitUnaryExpr at line 4
+18:40:52 - DEBUG: visitPrimaryExpr at line 4
+18:40:52 - DEBUG: Created NumberLiteralNode with value 0
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: visitAddExpr at line 4
+18:40:52 - DEBUG: visitMulExpr at line 4
+18:40:52 - DEBUG: visitPowerExpr at line 4
+18:40:52 - DEBUG: visitUnaryExpr at line 4
+18:40:52 - DEBUG: visitPrimaryExpr at line 4
+18:40:52 - DEBUG: Created NumberLiteralNode with value 1
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: visitAddExpr at line 4
+18:40:52 - DEBUG: visitMulExpr at line 4
+18:40:52 - DEBUG: visitPowerExpr at line 4
+18:40:52 - DEBUG: visitUnaryExpr at line 4
+18:40:52 - DEBUG: visitPrimaryExpr at line 4
+18:40:52 - DEBUG: Created NumberLiteralNode with value 1
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Created RangeDeclarationNode for 'i'
+18:40:52 - DEBUG: Added statement node: RangeDeclarationNode
+18:40:52 - DEBUG: visitStatement at line 6
+18:40:52 - DEBUG: visitAddExpr at line 6
+18:40:52 - DEBUG: visitMulExpr at line 6
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: visitAccumulationExpr at line 6
+18:40:52 - DEBUG: visitRangeVars at line 6
+18:40:52 - DEBUG: visitRangeVar at line 6
+18:40:52 - DEBUG: Created simple RangeVarNode for 'i'
+18:40:52 - DEBUG: Added RangeVarNode for 'i'
+18:40:52 - DEBUG: visitAddExpr at line 6
+18:40:52 - DEBUG: visitMulExpr at line 6
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: Created IdentifierNode for 'omega'
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: visitQuantumOp at line 6
+18:40:52 - DEBUG: visitBracketedIndices at line 6
+18:40:52 - DEBUG: visitAddExpr at line 6
+18:40:52 - DEBUG: visitMulExpr at line 6
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: Created IdentifierNode for 'i'
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Bracketed indices: 1 indices found
+18:40:52 - DEBUG: Created QuantumOpNode for 'BC'
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: visitQuantumOp at line 6
+18:40:52 - DEBUG: visitBracketedIndices at line 6
+18:40:52 - DEBUG: visitAddExpr at line 6
+18:40:52 - DEBUG: visitMulExpr at line 6
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: Created IdentifierNode for 'i'
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Bracketed indices: 1 indices found
+18:40:52 - DEBUG: Created QuantumOpNode for 'BA'
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: visitMulExpr at line 6
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: Created IdentifierNode for 'kerr'
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: Created NumberLiteralNode with value 2
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: visitQuantumOp at line 6
+18:40:52 - DEBUG: visitBracketedIndices at line 6
+18:40:52 - DEBUG: visitAddExpr at line 6
+18:40:52 - DEBUG: visitMulExpr at line 6
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: Created IdentifierNode for 'i'
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Bracketed indices: 1 indices found
+18:40:52 - DEBUG: Created QuantumOpNode for 'BC'
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: visitQuantumOp at line 6
+18:40:52 - DEBUG: visitBracketedIndices at line 6
+18:40:52 - DEBUG: visitAddExpr at line 6
+18:40:52 - DEBUG: visitMulExpr at line 6
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: Created IdentifierNode for 'i'
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Bracketed indices: 1 indices found
+18:40:52 - DEBUG: Created QuantumOpNode for 'BC'
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: visitQuantumOp at line 6
+18:40:52 - DEBUG: visitBracketedIndices at line 6
+18:40:52 - DEBUG: visitAddExpr at line 6
+18:40:52 - DEBUG: visitMulExpr at line 6
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: Created IdentifierNode for 'i'
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Bracketed indices: 1 indices found
+18:40:52 - DEBUG: Created QuantumOpNode for 'BA'
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: visitQuantumOp at line 6
+18:40:52 - DEBUG: visitBracketedIndices at line 6
+18:40:52 - DEBUG: visitAddExpr at line 6
+18:40:52 - DEBUG: visitMulExpr at line 6
+18:40:52 - DEBUG: visitPowerExpr at line 6
+18:40:52 - DEBUG: visitUnaryExpr at line 6
+18:40:52 - DEBUG: visitPrimaryExpr at line 6
+18:40:52 - DEBUG: Created IdentifierNode for 'i'
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Bracketed indices: 1 indices found
+18:40:52 - DEBUG: Created QuantumOpNode for 'BA'
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Created AccumulationNode of type Sum_over
+18:40:52 - DEBUG: Created BinaryOpNode for mulExpr
+18:40:52 - DEBUG: Created BinaryOpNode for addExpr
+18:40:52 - DEBUG: Created AssignmentNode for identifier 'Result' at line 6
+18:40:52 - DEBUG: Added statement node: AssignmentNode
+18:40:52 - DEBUG: Created ProgramNode
+18:40:52 - DEBUG: `-- ProgramNode [line: 2, col: 0]
+18:40:52 - DEBUG:     |-- ConstDeclarationNode(omega) [line: 2, col: 0]
+18:40:52 - DEBUG:     |   `-- NumberLiteralNode(1.5707963) [line: 2, col: 14]
+18:40:52 - DEBUG:     |-- ConstDeclarationNode(kerr) [line: 3, col: 0]
+18:40:52 - DEBUG:     |   `-- NumberLiteralNode(1.5707963) [line: 3, col: 13]
+18:40:52 - DEBUG:     |-- RangeDeclarationNode(i) [line: 4, col: 0]
+18:40:52 - DEBUG:     |   |-- NumberLiteralNode(1) [line: 4, col: 14]
+18:40:52 - DEBUG:     |   |-- NumberLiteralNode(0) [line: 4, col: 11]
+18:40:52 - DEBUG:     |   `-- NumberLiteralNode(1) [line: 4, col: 17]
+18:40:52 - DEBUG:     `-- AssignmentNode [line: 6, col: 0]
+18:40:52 - DEBUG:         `-- AccumulationNode(Sum_over) [line: 6, col: 9]
+18:40:52 - DEBUG:             |-- BinaryOpNode(+) [line: 6, col: 21]
+18:40:52 - DEBUG:             |   |-- BinaryOpNode(*) [line: 6, col: 21]
+18:40:52 - DEBUG:             |   |   |-- BinaryOpNode(*) [line: 6, col: 21]
+18:40:52 - DEBUG:             |   |   |   |-- IdentifierNode(omega) [line: 6, col: 21]
+18:40:52 - DEBUG:             |   |   |   `-- QuantumOpNode [line: 6, col: 29]
+18:40:52 - DEBUG:             |   |   |       `-- IdentifierNode(i) [line: 6, col: 32]
+18:40:52 - DEBUG:             |   |   `-- QuantumOpNode [line: 6, col: 37]
+18:40:52 - DEBUG:             |   |       `-- IdentifierNode(i) [line: 6, col: 40]
+18:40:52 - DEBUG:             |   `-- BinaryOpNode(*) [line: 6, col: 45]
+18:40:52 - DEBUG:             |       |-- BinaryOpNode(*) [line: 6, col: 45]
+18:40:52 - DEBUG:             |       |   |-- BinaryOpNode(*) [line: 6, col: 45]
+18:40:52 - DEBUG:             |       |   |   |-- BinaryOpNode(*) [line: 6, col: 45]
+18:40:52 - DEBUG:             |       |   |   |   |-- BinaryOpNode(/) [line: 6, col: 45]
+18:40:52 - DEBUG:             |       |   |   |   |   |-- IdentifierNode(kerr) [line: 6, col: 45]
+18:40:52 - DEBUG:             |       |   |   |   |   `-- NumberLiteralNode(2) [line: 6, col: 52]
+18:40:52 - DEBUG:             |       |   |   |   `-- QuantumOpNode [line: 6, col: 56]
+18:40:52 - DEBUG:             |       |   |   |       `-- IdentifierNode(i) [line: 6, col: 59]
+18:40:52 - DEBUG:             |       |   |   `-- QuantumOpNode [line: 6, col: 64]
+18:40:52 - DEBUG:             |       |   |       `-- IdentifierNode(i) [line: 6, col: 67]
+18:40:52 - DEBUG:             |       |   `-- QuantumOpNode [line: 6, col: 72]
+18:40:52 - DEBUG:             |       |       `-- IdentifierNode(i) [line: 6, col: 75]
+18:40:52 - DEBUG:             |       `-- QuantumOpNode [line: 6, col: 80]
+18:40:52 - DEBUG:             |           `-- IdentifierNode(i) [line: 6, col: 83]
+18:40:52 - DEBUG:             `-- RangeVarNode [line: 6, col: 18]

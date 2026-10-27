@@ -1,0 +1,18 @@
+{
+ "TKET": {
+  "t_count": 14761,
+  "qubits": 8
+ },
+ "pyzx": {
+  "t_count": 11485,
+  "qubits": 8
+ },
+ "BQSKit-FT": {
+  "t_count": 14761,
+  "qubits": 8
+ },
+ "BQSKit-DPF": {
+  "t_count": 8020,
+  "qubits": 8
+ }
+}

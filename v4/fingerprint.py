@@ -100,6 +100,9 @@ class LeverReport:
         return d
 
 
+T_PER_CCZ = 7          # exact: 7 T per Toffoli/CCZ unitarily (4 with a measured uncompute)
+
+
 def _angle_levers(angs, eps_each: float, levels=(2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14)) -> tuple:
     """(exactly_dyadic, dyadic_fraction, fixable_at_k) over the off-grid angles."""
     off = [a for a in angs if not dv.on_grid(a)]
@@ -279,9 +282,22 @@ def _proposes_better_synthesis(card: dict) -> str:
 
 
 def _lever_t_bound(lever: str, rep: LeverReport):
-    """An upper bound on the T a lever can still save, from the fingerprint alone."""
+    """An upper bound on the T a lever can still save, from the fingerprint alone, or None for "cannot
+    price this from the fingerprint" - which is NOT the same as a bound of zero.
+
+    The distinction is the whole point. The first version opened with `if not rep.offgrid_rotations:
+    return 0`, which priced EVERY lever at zero on any rotation-free circuit, so every card with a
+    positive estimate on a Toffoli-level circuit was rejected before it was written. That silently made
+    modred_21, mult_4, adder_6 and adder_8 unimprovable: 14 of the first 16 live attempts died here with
+    "predicted saving N exceeds the computed upper bound 0", on three circuits where pyzx demonstrably
+    finds 39%. A lever that cannot be priced must be let through to the judge, which is what None does.
+    `prefilter` already rejects a lever with no HEADROOM, so nothing is lost by declining to price."""
+    if lever == "ancilla_reconstruction":
+        # Priceable with no rotations at all: a CCZ/Toffoli is exactly 7 T unitarily, 4 with a measured
+        # uncompute, so the whole lever is worth at most 7 T per CCZ still in the circuit.
+        return rep.ccz_count * T_PER_CCZ if rep.ccz_count else None
     if not rep.offgrid_rotations:
-        return 0
+        return None
     per_rotation = rep.current_t / rep.offgrid_rotations          # mean T per synthesized rotation
     h = rep.headroom(lever)
     if lever in ("rotation_count", "angle_cost", "algebraic_structure"):

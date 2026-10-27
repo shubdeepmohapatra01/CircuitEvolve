@@ -1,0 +1,6 @@
+{"loop": 1, "book": ["dpf_dyadic_angle_fixing", "pauli_exponential_commutation_merge", "pauli_frame_rotation_merge"], "attempts_used": 6, "seconds": 97.3}
+{"loop": 2, "book": ["dpf_dyadic_angle_fixing", "pauli_exponential_commutation_merge", "pauli_frame_rotation_merge"], "attempts_used": 12, "seconds": 99.2}
+{"loop": 3, "book": ["dpf_dyadic_angle_fixing", "pauli_exponential_commutation_merge", "pauli_frame_rotation_merge"], "attempts_used": 18, "seconds": 99.2}
+{"loop": 4, "book": ["dpf_dyadic_angle_fixing", "pauli_exponential_commutation_merge", "pauli_frame_rotation_merge"], "attempts_used": 24, "seconds": 99.3}
+{"loop": 5, "book": ["dpf_dyadic_angle_fixing", "pauli_exponential_commutation_merge", "pauli_frame_rotation_merge"], "attempts_used": 30, "seconds": 99.3}
+{"loop": 6, "book": ["dpf_dyadic_angle_fixing", "pauli_exponential_commutation_merge", "pauli_frame_rotation_merge"], "attempts_used": 36, "seconds": 99.3}

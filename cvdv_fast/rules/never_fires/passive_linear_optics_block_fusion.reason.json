@@ -1,0 +1,127 @@
+{
+ "file": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/cvdv_fast/rules/candidates/passive_linear_optics_block_fusion.py",
+ "origin": "LLM (boseHubbard_small a3.1)",
+ "mechanism": "exact homomorphism U(m) -> Fock unitaries for passive Gaussian (number-conserving) circuits; fuse a block into its m x m mode matrix and re-synthesize minimally",
+ "rule": {
+  "name": "passive_linear_optics_block_fusion",
+  "kind": "rewrite",
+  "contract": "exact",
+  "idea": "Any product of oscillator-only number-conserving gates (BS(t,p), R(t)) on a fixed set of modes implements exactly U(M), the Fock-space (metaplectic/passive) representation of a single unitary mode matrix M defined by U^dag a_i U = sum_j M_ij a_j. This map is a group homomorphism with no phase ambiguity (U(M) fixes the vacuum), so two passive blocks sharing the same M are equal operators on the full Fock space, exactly -- for every photon number. The rule scans for maximal runs of passive gates (allowing disjoint-wire ops to be skipped over), numerically multiplies out the per-gate 1x1/2x2 mode-matrix action in time order to get M, and when M is monomial (permutation times phases -- e.g. the i-weighted SWAPs that arise from pi/2 hopping terms) re-synthesizes it as a minimal sequence of BS(pi,phi) transpositions (cycle decomposition) plus a trailing R(theta) per mode carrying the residual phase. The rewrite is accepted only if it strictly reduces the number of two-mode (BS) gates. Non-monomial M is declined here (left for a Clements-mesh rule with routing awareness).",
+  "term_kinds": [],
+  "stage": "logical"
+ },
+ "instances": [],
+ "per_benchmark": [
+  {
+   "label": "kerr_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null,
+    "err_ledger": 3.0008958610294543e-15
+   }
+  },
+  {
+   "label": "boseHubbard_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null,
+    "err_ledger": 1.4070128500482678e-14
+   }
+  },
+  {
+   "label": "z2Higgs_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 144,
+    "two_op": 49,
+    "duration": 398,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 144,
+    "two_op": 49,
+    "duration": 398,
+    "reason": null,
+    "err_ledger": 2.4238882366506667e-13
+   }
+  },
+  {
+   "label": "heisenberg_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null,
+    "err_ledger": 7.330651724579932e-06
+   }
+  },
+  {
+   "label": "electronicVibration_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 879,
+    "two_op": 325,
+    "duration": 5701,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 879,
+    "two_op": 325,
+    "duration": 5701,
+    "reason": null,
+    "err_ledger": 4.21668617778168e-09
+   }
+  }
+ ],
+ "rule_failures": [
+  {
+   "event": "apply_exception",
+   "rule": "passive_linear_optics_block_fusion",
+   "err": "TypeError('must be real number, not complex')"
+  },
+  {
+   "event": "apply_exception",
+   "rule": "passive_linear_optics_block_fusion",
+   "err": "TypeError('must be real number, not complex')"
+  }
+ ],
+ "decision": "never_fires",
+ "reason": "rule never chosen/applied on any benchmark (failures: [{'event': 'apply_exception', 'rule': 'passive_linear_optics_block_fusion', 'err': \"TypeError('must be real number, not complex')\"}, {'event': 'apply_exception', 'rule': 'passive_linear_optics_block_fusion', 'err': \"TypeError('must be real number, not complex')\"}])",
+ "moved_to": "rules/never_fires/passive_linear_optics_block_fusion.py",
+ "seconds": 1.2
+}

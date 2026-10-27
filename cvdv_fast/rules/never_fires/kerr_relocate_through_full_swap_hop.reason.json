@@ -1,0 +1,116 @@
+{
+ "file": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/cvdv_fast/rules/candidates/kerr_relocate_through_full_swap_hop.py",
+ "origin": "LLM (z2Higgs_small a9.1)",
+ "mechanism": "Heisenberg conjugation: a pi/2 conditional hop is a full mode swap in both qubit branches, so any function of photon number is relabelled, f(n_a) -> f(n_b)",
+ "rule": {
+  "name": "kerr_relocate_through_full_swap_hop",
+  "kind": "rewrite",
+  "contract": "exact",
+  "idea": "A pi/2 conditional (Z-controlled) hop CBS(+-pi/2, phi) implements a full mode swap in each qubit branch: U = exp(i (pi/2) Z (e^{i phi} a^+ b + h.c.)) gives U a U^+ = -i Z e^{-i phi} b, U b U^+ = -i Z e^{i phi} a, so U n_a U^+ = n_b and U n_b U^+ = n_a exactly (Z^2 = 1, Z commutes with the modes). Hence for any function of photon number, f(n_a) immediately before the swap equals f(n_b) immediately after it, and vice versa: [f(n_a), then U] = [U, then f(n_b)]. R(theta) and CD(a) (both diagonal in / functions of photon number on one mode) sitting adjacent to a full-swap z_hop can therefore be relabelled to the other leg and slid to the opposite side of the hop, with any intervening ops on unrelated wires simply kept in place. This is an exact reordering of the IR/physical product, used to relocate Kerr-type terms to whichever mode ends up local to a cheap ancilla qubit, cutting routed SWAPs without changing the logical circuit.",
+  "term_kinds": [],
+  "stage": "both"
+ },
+ "instances": [],
+ "per_benchmark": [
+  {
+   "label": "kerr_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 10,
+    "two_op": 3,
+    "duration": 65,
+    "reason": null,
+    "err_ledger": 3.0008958610294543e-15
+   }
+  },
+  {
+   "label": "boseHubbard_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 116,
+    "two_op": 48,
+    "duration": 621,
+    "reason": null,
+    "err_ledger": 1.4070128500482678e-14
+   }
+  },
+  {
+   "label": "z2Higgs_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 77,
+    "two_op": 28,
+    "duration": 331,
+    "reason": null,
+    "err_ledger": 7.502568674000943e-07
+   }
+  },
+  {
+   "label": "heisenberg_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 148,
+    "two_op": 84,
+    "duration": 1673,
+    "reason": null,
+    "err_ledger": 7.330651724579932e-06
+   }
+  },
+  {
+   "label": "electronicVibration_small",
+   "used": false,
+   "before": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null
+   },
+   "after": {
+    "valid": true,
+    "total": 783,
+    "two_op": 297,
+    "duration": 5392,
+    "reason": null,
+    "err_ledger": 4.216684815159914e-09
+   }
+  }
+ ],
+ "rule_failures": [],
+ "decision": "never_fires",
+ "reason": "rule never chosen/applied on any benchmark ",
+ "moved_to": "rules/never_fires/kerr_relocate_through_full_swap_hop.py",
+ "seconds": 1.3
+}

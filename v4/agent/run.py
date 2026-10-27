@@ -38,7 +38,7 @@ from pathlib import Path
 from .. import baselines as Ba, book as B, fingerprint as FP
 from ..judge import dv as J
 from ..judge.frozen import check_frozen, recheck_frozen
-from ..loop import CIRCUIT_ORDER, Loop, LoopConfig
+from ..loop import CIRCUIT_ORDER, GAIN_ORDER, Loop, LoopConfig
 from ..paths import CANDIDATES, MANIFEST, REPO, RESULTS, RULES, V4
 
 SCOUT_MODEL = "claude-opus-5"
@@ -255,13 +255,28 @@ def main():
     ap.add_argument("--eps", type=float, default=1e-3)
     ap.add_argument("--budget", type=int, default=60, help="global attempt budget (ONE pool)")
     ap.add_argument("--loops", type=int, default=4)
-    ap.add_argument("--order", default=",".join(CIRCUIT_ORDER))
+    ap.add_argument("--order", default=",".join(CIRCUIT_ORDER),
+                    help="comma-separated circuit labels, or 'gain' for loop.GAIN_ORDER "
+                         "(most reachable gain per unit of wall clock first)")
+    ap.add_argument("--retire-after", type=int, default=2,
+                    help="retire an accepted rule after this many loops with no accepted application; "
+                         "0 disables retirement (book hygiene for long runs, no upside in a short one)")
+    ap.add_argument("--hours", type=float, default=None,
+                    help="stop cleanly after this many hours, mid-loop if need be")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
-    cfg = LoopConfig(eps=a.eps, circuit_order=tuple(a.order.split(",")), global_budget_attempts=a.budget,
-                     max_loops=a.loops, tag=a.tag)
+    order = GAIN_ORDER if a.order == "gain" else tuple(a.order.split(","))
+    cfg = LoopConfig(eps=a.eps, circuit_order=order, global_budget_attempts=a.budget,
+                     max_loops=a.loops, tag=a.tag,
+                     retire_after_loops=(10 ** 6 if a.retire_after == 0 else a.retire_after),
+                     wall_clock_s=None if a.hours is None else a.hours * 3600)
     n = check_frozen()
     print(f"frozen files checked: {n}", flush=True)
+    if a.dry_run:
+        # A dry run must never share a results namespace with a real one. It did once: the dry run wrote
+        # 36 stub attempts to results/<tag>/, and the live run under the same tag RESUMED from them and
+        # would have exited having done no work at all.
+        cfg.tag = f"{cfg.tag}_dry"
     drv = AgentDriver(cfg, a.dry_run)
     lp = Loop(cfg, drv.scout, drv.implement, drv.dir)
     try:

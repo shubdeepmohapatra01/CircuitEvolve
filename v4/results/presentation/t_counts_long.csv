@@ -1,0 +1,36 @@
+circuit,arm,t_count,family
+adder_6,B0 TKET+gridsynth,59,dv_recon
+adder_6,B1 pyzx,47,dv_recon
+adder_6,ours,77,dv_recon
+adder_8,B0 TKET+gridsynth,361,dv_recon
+adder_8,B1 pyzx,173,dv_recon
+adder_8,ours,216,dv_recon
+hhl_8,B0 TKET+gridsynth,35450,dv_angle
+hhl_8,B1 pyzx,29205,dv_angle
+hhl_8,B2 BQSKit-DPF (best),18701,dv_angle
+hhl_8,ours,25885,dv_angle
+mcx_10,B0 TKET+gridsynth,192,dv_recon
+mcx_10,B1 pyzx,100,dv_recon
+mcx_10,ours,36,dv_recon
+modred_21,B0 TKET+gridsynth,107,dv_recon
+modred_21,B1 pyzx,73,dv_recon
+modred_21,ours,119,dv_recon
+mult_4,B0 TKET+gridsynth,96,dv_recon
+mult_4,B1 pyzx,68,dv_recon
+mult_4,ours,112,dv_recon
+qae_13,B0 TKET+gridsynth,7821,dv_angle
+qae_13,B1 pyzx,4527,dv_angle
+qae_13,B2 BQSKit-DPF (best),4264,dv_angle
+qae_13,ours,4526,dv_angle
+qft_8,B0 TKET+gridsynth,2391,dv_angle
+qft_8,B1 pyzx,1577,dv_angle
+qft_8,B2 BQSKit-DPF (best),1064,dv_angle
+qft_8,ours,1583,dv_angle
+qpe_8,B0 TKET+gridsynth,14761,dv_angle
+qpe_8,B1 pyzx,11485,dv_angle
+qpe_8,B2 BQSKit-DPF (best),7552,dv_angle
+qpe_8,ours,11364,dv_angle
+tfim_6,B0 TKET+gridsynth,8560,dv_angle
+tfim_6,B1 pyzx,8560,dv_angle
+tfim_6,B2 BQSKit-DPF (best),9600,dv_angle
+tfim_6,ours,3354,dv_angle

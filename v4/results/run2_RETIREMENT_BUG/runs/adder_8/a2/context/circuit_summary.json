@@ -1,0 +1,57 @@
+{
+ "label": "adder_8",
+ "kind": "Toffoli-level ir.Circuit",
+ "qubits": 24,
+ "gates": 216,
+ "gate_histogram": {
+  "cx": 67,
+  "h": 80,
+  "ccz": 57,
+  "x": 12
+ },
+ "toffoli_ccz": 57,
+ "current_t_with_book": 399,
+ "top_gate_trigrams": [
+  [
+   "cx cx cx",
+   43
+  ],
+  [
+   "h h h",
+   43
+  ],
+  [
+   "ccz ccz ccz",
+   20
+  ],
+  [
+   "ccz h h",
+   14
+  ],
+  [
+   "h h ccz",
+   13
+  ],
+  [
+   "ccz ccz h",
+   12
+  ],
+  [
+   "h ccz ccz",
+   11
+  ],
+  [
+   "x x x",
+   8
+  ],
+  [
+   "cx cx ccz",
+   6
+  ],
+  [
+   "cx ccz ccz",
+   6
+  ]
+ ],
+ "input_file": "circuit.qasm (the ORIGINAL input; your rule runs on the circuit after the book, whose statistics are the ones above)"
+}

@@ -25,7 +25,7 @@
      "after": 1583
     }
    ],
-   "seconds": 0.24
+   "seconds": 0.27
   },
   {
    "control": "same_pauli_merge_planted",
@@ -42,7 +42,7 @@
      "after": 1583
     }
    ],
-   "seconds": 0.15
+   "seconds": 0.12
   },
   {
    "control": "ancilla_parity_rotation_lowering",

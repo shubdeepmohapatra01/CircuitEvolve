@@ -1,0 +1,163 @@
+{
+ "candidate": "/Users/shubdeepmohapatra/Documents/CircuitEvolve/v3/rules/candidates/hamming_weight_phasing_same_angle_group.py",
+ "static": "",
+ "circuits": [
+  {
+   "label": "qft_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 14.9,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "qpe_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 84.3,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "hhl_8",
+   "eps": 0.001,
+   "matches_on_input": 2,
+   "fired": true,
+   "applications_tried": 2,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 293.8,
+   "certified": true,
+   "verify_methods": [
+    "literal"
+   ],
+   "first_failure": {
+    "match": 0,
+    "mode": "relaxed",
+    "method": "literal",
+    "distance": null,
+    "reason": "candidate not exact: rz(12.035814816574787) is not a multiple of pi/4"
+   },
+   "cost_before": 28509,
+   "cost_after": 28509,
+   "qubits_before": 8,
+   "qubits_after": 8,
+   "err_bound": 0.001,
+   "err_rules": 1.2588493105623934e-13
+  },
+  {
+   "label": "qae_13",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 117.5,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "tfim_6",
+   "eps": 0.001,
+   "matches_on_input": 3,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 0.4,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "adder_8",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 181.1,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "adder_6",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 179.3,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mult_4",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 225.7,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "mcx_10",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 204.9,
+   "certified": true,
+   "verify_methods": []
+  },
+  {
+   "label": "modred_21",
+   "eps": 0.001,
+   "matches_on_input": 0,
+   "fired": false,
+   "applications_tried": 0,
+   "verified": 0,
+   "accepted": 0,
+   "timeout": false,
+   "seconds": 46.0,
+   "certified": true,
+   "verify_methods": []
+  }
+ ],
+ "decision": "reject",
+ "reason": "verification failed on hhl_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(12.035814816574787) is not a multiple of pi/4'}",
+ "rule": {
+  "name": "hamming_weight_phasing_same_angle_group",
+  "domain": "dv",
+  "kind": "reconstruction",
+  "contract": "relaxed"
+ },
+ "event": "admission",
+ "origin": "LLM (P2, hhl_8 a4)",
+ "seconds": 1348.4,
+ "time": 1792715173.614902
+}

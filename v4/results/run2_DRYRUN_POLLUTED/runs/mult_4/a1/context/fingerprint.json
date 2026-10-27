@@ -1,0 +1,46 @@
+{
+ "label": "mult_4",
+ "eps": 0.001,
+ "family": "dv_recon",
+ "qubits": 12,
+ "n_ops": 33,
+ "current_t": 112,
+ "rotations": 0,
+ "offgrid_rotations": 0,
+ "distinct_angles": 0,
+ "pauli_axis_classes": 0,
+ "parity_classes": 0,
+ "foldable": 0,
+ "foldable_remaining": 0,
+ "exactly_dyadic": {},
+ "dyadic_fraction": {},
+ "fixable_at_k": {},
+ "free_fermion": false,
+ "majorana_planes": 0,
+ "generator_algebra_rank": 0,
+ "ccz_count": 16,
+ "shared_control_pairs": 0,
+ "best_baseline": "pyzx",
+ "best_baseline_t": 68,
+ "lever_consumed_by": {
+  "rotation_count": "pyzx (and the floor tier reproduces it)",
+  "angle_cost": "DPF Synth",
+  "algebraic_structure": "nobody",
+  "ancilla_reconstruction": "relaxed rules only"
+ },
+ "residual": {
+  "t_gap_to_best": 44,
+  "headroom": {
+   "rotation_count": 0,
+   "angle_cost": 0,
+   "algebraic_structure": 0,
+   "ancilla_reconstruction": 16
+  }
+ },
+ "headroom": {
+  "rotation_count": 0,
+  "angle_cost": 0,
+  "algebraic_structure": 0,
+  "ancilla_reconstruction": 16
+ }
+}

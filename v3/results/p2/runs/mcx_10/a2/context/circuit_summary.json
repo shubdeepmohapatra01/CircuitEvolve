@@ -1,0 +1,33 @@
+{
+ "label": "mcx_10",
+ "family": "dv_recon",
+ "kind": "Toffoli-level ir.Circuit",
+ "qubits": 19,
+ "gates": 66,
+ "gate_histogram": {
+  "h": 34,
+  "ccz": 32
+ },
+ "toffoli_ccz": 32,
+ "t_count_naive_7_per_toffoli": 224,
+ "current_t_with_book": 128,
+ "top_gate_trigrams": [
+  [
+   "h ccz h",
+   32
+  ],
+  [
+   "ccz h ccz",
+   30
+  ],
+  [
+   "ccz h h",
+   1
+  ],
+  [
+   "h h ccz",
+   1
+  ]
+ ],
+ "input_file": "circuit.qasm (OpenQASM 2, `gate ccz` = h-ccx-h)"
+}

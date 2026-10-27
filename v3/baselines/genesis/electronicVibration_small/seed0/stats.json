@@ -1,0 +1,15 @@
+{
+    "output/logical_electronicVibration_small.cvdvqasm_depth_sum_simulated_annealing_tsp_qbstuck": {
+        "single op gate count": 566,
+        "multi op gate count": 305,
+        "total gate count": 871,
+        "depth": 5358.0,
+        "matching_time": 14.462647914886475,
+        "mapping_time": 0.040058135986328125,
+        "total_time": 14.502706050872803,
+        "pstrings_count": 16,
+        "non_pstring_initial_gate_count": 224,
+        "intermediate_qbit_count": 4,
+        "intermediate_qmode_count": 8
+    }
+}

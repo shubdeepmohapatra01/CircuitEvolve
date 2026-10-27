@@ -1,0 +1,1 @@
+{"circuit": "modred_21", "arm": "B3g", "eps": 0.001, "status": "ok", "t_count": 119, "n_rz": 0, "cx": 105, "qubits": 11, "runtime_s": 0.3, "state_dist_vs_orig": 1.6782013444044858e-15, "error": null}
