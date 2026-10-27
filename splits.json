@@ -219,5 +219,331 @@
    "path": "benchmarks/bqskit_qseed/qasm/qml/qml_13.qasm",
    "zero_init": []
   }
+ ],
+ "train_v2": [
+  {
+   "name": "qasmbench_small_fredkin_n3",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_small_fredkin_n3.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_teleportation_n3",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_small_teleportation_n3.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_toffoli_n3",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_small_toffoli_n3.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_adder_n4",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_small_adder_n4.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_bell_n4",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_small_bell_n4.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_qec_en_n5",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_small_qec_en_n5.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_simon_n6",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_small_simon_n6.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_sat_n7",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_small_sat_n7.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_adder_n10",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_small_adder_n10.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_medium_sat_n11",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_medium_sat_n11.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_medium_seca_n11",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_medium_seca_n11.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_medium_multiply_n13",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_medium_multiply_n13.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_medium_multiplier_n15",
+   "family": "toffoli",
+   "path": "benchmarks/train_v2/toffoli/qasmbench_medium_multiplier_n15.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_dnn_n2",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_dnn_n2.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_quantumwalks_n2",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_quantumwalks_n2.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_basis_change_n3",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_basis_change_n3.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_linearsolver_n3",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_linearsolver_n3.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_qaoa_n3",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_qaoa_n3.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_wstate_n3",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_wstate_n3.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_basis_trotter_n4",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_basis_trotter_n4.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_qft_n4",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_qft_n4.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_variational_n4",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_variational_n4.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_vqe_n4",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_vqe_n4.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_hamsim_4",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_hamsim_4.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_4_z",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_4_z.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_4_x",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_4_x.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoavanilla_4",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoavanilla_4.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoafsp_4",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoafsp_4.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_pea_n5",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_pea_n5.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_qaoa_n6",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_qaoa_n6.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_hamsim_6",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_hamsim_6.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_6_z",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_6_z.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_6_x",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_6_x.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoavanilla_6",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoavanilla_6.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoafsp_6",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoafsp_6.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_hhl_n7",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_hhl_n7.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_dnn_n8",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_dnn_n8.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_hamsim_8",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_hamsim_8.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_8_z",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_8_z.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_8_x",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_8_x.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoavanilla_8",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoavanilla_8.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoafsp_8",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoafsp_8.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_qpe_n9",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_qpe_n9.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "qasmbench_small_ising_n10",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/qasmbench_small_ising_n10.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_hamsim_10",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_hamsim_10.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_10_z",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_10_z.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_10_x",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_10_x.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoavanilla_10",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoavanilla_10.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoafsp_10",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoafsp_10.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_hamsim_12",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_hamsim_12.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_12_z",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_12_z.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_vqeproxy_12_x",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_vqeproxy_12_x.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoavanilla_12",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoavanilla_12.qasm",
+   "zero_init": []
+  },
+  {
+   "name": "supermarq_qaoafsp_12",
+   "family": "rotation",
+   "path": "benchmarks/train_v2/rotation/supermarq_qaoafsp_12.qasm",
+   "zero_init": []
+  }
  ]
 }
