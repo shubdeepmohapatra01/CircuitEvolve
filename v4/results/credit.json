@@ -3,6 +3,7 @@
  "last_used": {
   "pauli_frame_rotation_merge": 3,
   "pauli_exponential_commutation_merge": 3,
-  "dpf_dyadic_angle_fixing": 3
+  "dpf_dyadic_angle_fixing": 3,
+  "t_e2e_merge": 1
  }
 }

@@ -675,3 +675,15 @@ would have been the worst kind of error this project can make.
 
 The claim "qft_8 below pyzx" is therefore withdrawn until some rule earns it under the cross-checked
 verifier. The floor's qft_8 number stands at 1583.
+
+## Test suite, on the fixed code
+
+`.venv/bin/python -m pytest v4/tests -q` -> **111 passed in 760.47 s** (2026-10-27).
+
+| file | what it covers |
+|---|---|
+| `test_p0.py` | the scaffold changes nothing the judge decides: `pauli.conjugate` bit-identical to v3 on all 4,096 x 7 gate/input combinations, `frames` against the per-rotation backward pass, the cached `circuit_check` bit-for-bit against the frozen one, `verify_memo` re-deciding a cached approx verdict, precondition SOUNDNESS over the whole suite, the ledger bound, the opcode budget |
+| `test_p3.py` | both re-expressed Pauli rules return match lists IDENTICAL to v3's own rule files, loaded and run; the API primitives (block round-trip, the phase-polynomial witness on every Hadamard-free segment of every circuit, `rz_distance` against the judge's own measurement, Givens reconstruction to 1e-12, least-squares with pinned angles, Lie closure) |
+| `test_p4.py` | the algebraic certificate's own planted-bug suite - 9 mutations of a correct merge and 4 of a correct phase-polynomial rewrite, each asserted genuinely wrong AND refused - plus soundness on every real suite window it accepts, the three-verdict distinction, and the structural invariant that the algebraic layer never certifies a refutation |
+| `test_p5.py` | `branch_kraus` against the FROZEN `sim.run`, branch by branch, on circuits with both gadgets / Clifford+T / Toffoli-level; that the frozen gadget expansion is used rather than reimplemented; relaxed-window verdicts agreeing with whole-circuit verdicts; the ancilla-leak rejection |
+| `test_p7.py` | the loop's control flow with stub LLM calls: outcome classification at the right level, fire-and-fail retrying the IMPLEMENTER while an idea failure returns to the SCOUT, the prefilter (including the real tfim_6 card as a regression fixture), admission refusing a no-gain rule, memoisation, resume, termination, and one end-to-end admission with a real rule |
