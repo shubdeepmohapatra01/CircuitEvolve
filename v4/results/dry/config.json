@@ -1,0 +1,16 @@
+{
+ "eps": 0.001,
+ "circuit_order": [
+  "tfim_6",
+  "hhl_8"
+ ],
+ "max_attempts_per_circuit": 3,
+ "global_budget_attempts": 2,
+ "global_budget_usd": null,
+ "max_loops": 4,
+ "retire_after_loops": 2,
+ "opcode_budget": 200000000,
+ "subprocess_limit_s": 1800.0,
+ "order_on_admission": "min_all",
+ "tag": "dry"
+}

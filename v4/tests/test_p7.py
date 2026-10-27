@@ -27,9 +27,11 @@ def _cfg(tmp_path, **kw):
 
 
 def _card(name, lever="rotation_count", **kw):
-    return dict(name=name, domain="dv", kind="rewrite", lever=lever, error_class="exact",
+    base = dict(name=name, domain="dv", kind="rewrite", lever=lever, error_class="exact",
                 resource_class="unitary", identity="x", correctness="x", trigger="x",
-                expected_effect="x", expected_t_saving_on_target=1, source="test", **kw)
+                expected_effect="x", expected_t_saving_on_target=1, source="test")
+    base.update(kw)
+    return base
 
 
 NOOP = '''from v4.api import Precondition, Rule
@@ -175,38 +177,39 @@ def test_prefilter_rejects_an_overclaimed_gain(tmp_path):
 
 
 # ------------------------------------------------------------------------------------------ admission
-def test_admission_refuses_a_rule_that_raises_t_anywhere():
-    """V4_README 5.2. A rule that makes qft_8 worse must not enter the book even if it helps elsewhere."""
-    import v4.rules.floor.pauli_frame_rotation_merge as _  # noqa: F401  (ensure the package imports)
-    cfg = L.LoopConfig(circuit_order=("qft_8",), tag="test")
+def _worse_rule(extra_t=8):
+    """A rule that fires and makes the circuit strictly worse."""
+    from v4.api import ANY, Rule, dv
+
+    def trig(c):
+        return [0] if dv.is_angle_circuit(c) else []
+
+    def app(c, m):
+        return dv.with_ops(c, list(c.ops) + [("t", (0,), None)] * extra_t)
+    return Rule(name="t_worse", domain="dv", kind="rewrite", error_class="exact",
+                resource_class="unitary", precondition=ANY, source="test",
+                idea="makes it worse", trigger=trig, apply=app)
+
+
+def test_admission_refuses_a_rule_that_raises_t_under_book_order():
+    """V4_README 5.2's guard, observed where it can fire: a plain book-order admission re-run."""
+    cfg = L.LoopConfig(circuit_order=("qft_8",), order_on_admission="book", tag="test")
     bk = B.floor_tier()
-
-    class Worse:
-        name = "t_worse"
-        kind = "rewrite"
-        tier = "accepted"
-        error_class = "exact"
-        resource_class = "unitary"
-        precondition = __import__("v4.api", fromlist=["ANY"]).ANY
-        certificate = "auto"
-
-        def tags(self):
-            return dict(error_class="exact", resource_class="unitary")
-
-        def trigger(self, c):
-            from v4.api import dv
-            if not dv.is_angle_circuit(c):
-                return []
-            return [0]
-
-        def apply(self, c, m):
-            from v4.api import dv
-            return dv.with_ops(c, list(c.ops) + [("t", (0,), None)] * 8)
-    w = Worse()
-    w.trigger, w.apply = w.trigger, w.apply
-    new_bk, rec = L.admit(w, bk, cfg)
+    new_bk, rec = L.admit(_worse_rule(), bk, cfg)
     assert [r.name for r in new_bk] == [r.name for r in bk], "the rule must NOT be admitted"
-    assert rec.get("refused") is None or "never score worse" in rec["refused"]
+    assert "raises T" in rec["refused"], rec
+
+
+def test_min_all_makes_regression_impossible_but_still_refuses_a_no_gain_rule():
+    """Under `min(book_order, gain_order, best_single_rule)` adding a rule CANNOT raise T - the minimum
+    is taken over a superset. So 5.2's regression guard is vacuous there, and the binding guard is the
+    other one: a rule that lowers T on no circuit under that ordering is refused."""
+    cfg = L.LoopConfig(circuit_order=("qft_8",), order_on_admission="min_all", tag="test")
+    bk = B.floor_tier()
+    new_bk, rec = L.admit(_worse_rule(), bk, cfg)
+    assert not rec["regressed"], "min_all cannot regress: the minimum is over a superset"
+    assert [r.name for r in new_bk] == [r.name for r in bk]
+    assert "lowers T on no circuit" in rec["refused"], rec
 
 
 # ------------------------------------------------------------------------------------------ memo

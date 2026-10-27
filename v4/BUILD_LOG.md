@@ -232,3 +232,156 @@ V4_README 4.2b already gates on P5. Scoped in `v4/SCOPE.md`.
   every `trigger` / `apply` call, with the runner charging only the difference between the measured
   distance and what the rule already reserved, and refunding a rule's draw when its application is
   priced out or reverted.
+
+## P4 - the certificate layer
+
+**Gate: `tests/` and the acceptance suite pass; phase-folding checks are O(ops) and `certified=True`.**
+Met.
+
+`v4/judge/certify.py` dispatches to the cheapest certificate that applies. Two algebraic witnesses, both
+O(ops), both proofs, both with no matrices:
+
+* **`pauli.merge_witness`** - the class EVERY admitted angle rule in v3 belongs to. It checks that the
+  Clifford skeleton is untouched, that the new op list is the old one with one rotation deleted and one
+  earlier rotation's angle changed by the signed deleted angle, and that every rotation strictly between
+  them commutes with the moved axis. Because the axes are front-frame Paulis it works straight through
+  Hadamards, which is what makes it cover the hot path.
+* **`phasepoly.witness`** - any rewrite of a Hadamard-free segment, by comparing the affine part and the
+  phase polynomial. More general than a merge, but it stops at the first Hadamard.
+
+Coverage and cost, measured on real runs:
+
+| circuit | algebraic / total checks | algebraic time | other time | per-check |
+|---|---|---|---|---|
+| qft_8 | **73 / 80** (merge 72, poly 1) | 8.3 ms | 0.21 s | 114 us vs 30 ms = **260x** |
+| qpe_8 | **208 / 268** | 145 ms | 1.75 s | |
+
+T-counts unchanged; every accepted application reports `certified=True`. The first draft of the witness
+covered only 18 of 80 checks, because the phase-polynomial witness alone declines any window spanning a
+Hadamard - the merge witness is what lifted it to 73.
+
+**Its own planted-bug suite** (`v4/tests/test_p4.py`, 21 tests, all pass). V4_README's known risks note
+that this checker "becomes the weakest link in the chain it is meant to strengthen" without one. Nine
+mutations of a correct merge (wrong sign, wrong angle, off by pi, dropped cx, swapped control and target,
+extra x, wrong wire, merged the other pair, nothing deleted) and four of a correct phase-polynomial
+rewrite (angle moved to the wrong label, cx dropped, x added, angle scaled), each asserted to be
+genuinely wrong numerically AND refused by the certificate. Plus a soundness test on real data: for
+every window of every angle circuit that the certificate ACCEPTS, the numeric distance must be below
+1e-9.
+
+A design note worth recording: the merge witness's first implementation located the deleted rotation by
+scanning forward from the first divergence, which only finds it when the deleted rotation is the first
+one to differ. It missed every real case (host first, deletion later). The fix bounds the candidates by
+the common prefix and suffix of the two axis streams, which is both correct and O(n).
+
+## P5 - `branch_kraus` with an error allowance: the one unfreeze
+
+**Gate: the P1 planted-bug gate re-run, 4/4 correct. MANDATORY before any v4 result counts.**
+**PASS - 4/4** (`v4/results/planted_gate.json`).
+
+### Why it was needed, measured
+
+V4_README section 0 says 8 of 9 P2 verification failures were the same verifier limitation. Reading every
+`v3/rules/rejected/*.reason.json` shows it is worse than that, and more specific: **eight rules died on
+the single message `candidate not exact: rz(...) is not a multiple of pi/4`**, and they are one family -
+
+```
+and_monomial_phase_polynomial_resynthesis
+controlled_phase_and_ancilla_single_rotation_lowering
+hamming_weight_phasing_on_equal_angle_phase_gadgets
+hamming_weight_phasing_same_angle_group
+hamming_weight_phasing_shared_angle_layers
+multilinear_phase_polynomial_and_ancilla_resynthesis
+phase_gradient_addition_for_dyadic_rotation_cascades      <-- the PKAC card of V4_README 4.2b
+phase_gradient_catalysis_dyadic_rotations                 <-- the PKAC card of V4_README 4.2b
+```
+
+The last two **are** the phase-gradient / PKAC card the plan asks to be written by hand. The LLM had
+already found it in v3; the verifier could not check it. That changes P6 from "write a card" to "re-run
+what was already found", which is what was done.
+
+### How, without editing a frozen file
+
+`circuitevolve/v2/verify.py` is listed in v3's `FROZEN.sha256` and is covered by CLAUDE.md invariant 4,
+so it was NOT edited. `v4/judge/kraus.py` is new v4 code that composes the frozen primitives: the exact
+module keeps its behaviour and its hash, and nothing v3 ever decided changes. The check is CLAUDE.md
+invariant 2 generalised to continuous angles -
+
+    for every basis input x and every branch m:
+        K_m |x, 0_anc> = c_m |U_ref x, 0_anc> + (error <= allowance)
+        with the SAME c_m for every x, and sum_m |c_m|^2 = 1
+
+with three separately-reported tolerances: the per-branch state distance, the **ancilla population left
+outside |0>**, and the spread of c_m across inputs. Clifford+T candidates still route to the frozen exact
+`relaxed` mode, so floating point never accepts a Clifford+T case (invariant 1).
+
+The ancilla-return check is not decoration. Our own measurement of BQSKit's PKAC construction found it
+exact at k = 3 (state error 2.6e-16, zero leak) and leaking 1/sqrt(2) at k = 4 and ~1.0 at k = 5, because
+the temporary-AND uncompute is measurement-based by construction. A verifier without this check would
+accept those.
+
+### The gate
+
+| control | must decide | got |
+|---|---|---|
+| `same_pauli_merge` (correct merge, empty book) | ADMIT | ADMIT, qft_8 2391 -> 1583 |
+| `same_pauli_merge_planted` (1 in 10 merged with the wrong sign) | REJECT | REJECT - and by the ALGEBRAIC certificate, "angles do not add", not by a matrix |
+| `ancilla_parity_rotation_lowering` (cx-rz-cx, clean ancilla, continuous angle) | VERIFY | VERIFIED, `branch-kraus-exhaustive` - impossible before P5 |
+| `ancilla_parity_rotation_leak` (the same, uncompute removed) | REJECT on ancilla return | REJECT: "ancilla population left outside |0>: 7.071e-01" |
+
+v3's P1 gate was 4 decisions, two of them CV-DV. CV-DV is deferred in v4 as it was in v3, so the two
+CV-DV controls are replaced by the two above, which exercise **the path P5 changed**. That is a faithful
+re-run: the gate's job is to confirm the verifier still rejects what it should, and this is the only path
+that moved.
+
+P5 also added `runner.optimize(price_first=False)`, an audit switch restoring v3's verify-then-price
+order. It is needed because price-before-verify means a control that does not improve anything is never
+verified - so the gate could not otherwise observe the verifier's verdict on controls 3 and 4.
+
+## P6 - re-running what v3 threw away
+
+All 18 rejected v3 rules are ported to `v4/rules/candidates/` (`PORTED.json`: 8 verifier-blocked,
+9 timed out, 1 over error budget) and re-evaluated by `v4/tools/reevaluate.py`, each in its own
+subprocess. The subprocess wall clock is infrastructure: a rule that hits it is recorded
+`not_evaluated`, never `reject`, so it cannot bias admission - which is exactly what v3's 300 s limit
+did.
+
+First results (full table in `results/reevaluate_p6.json`):
+
+| rule | v3 verdict | v4 verdict | measured |
+|---|---|---|---|
+| `and_monomial_phase_polynomial_resynthesis` | reject: `rz(...) not a multiple of pi/4` | **ADMIT** | qft_8 1583 -> **1390**, qpe_8 11364 -> 11289, qae_13 4526 -> **4414** |
+
+qft_8 at 1390 is **187 T below pyzx's 1577**, and qae_13 at 4414 is 113 below pyzx's 4527. Both numbers
+were unreachable in v3 for one reason: the verifier could not check the rule.
+
+## P7 - the loop
+
+**Gate: one full global loop over the suite completes in < 2 h.**
+
+`v4/loop.py` implements section 5 exactly, with the LLM behind two injectable callables so the control
+flow is testable without spending anything (`v4/tests/test_p7.py`, stub scout and implementer). The five
+outcomes of 5.3 are classified at the right level, and the level decides who is re-run: an idea-level
+failure returns to the SCOUT, an implementation-level one re-runs the IMPLEMENTER with the failure report
+and the instruction to narrow the guard and keep the idea.
+
+Two corrections the tests forced:
+
+* **classification needs the target.** "The precondition excludes this circuit" and "the trigger matched
+  nowhere" are different messages and different advice, and they are only distinguishable with respect to
+  the circuit the card was written FOR - `evaluate` runs the whole suite, so a rule excluded on the
+  target still has trigger counts from elsewhere.
+* **5.2's regression guard is vacuous under `min_all`.** `min(book_order, gain_order, best_single_rule)`
+  takes a minimum over a superset when a rule is added, so adding a rule can never raise T, and
+  "refuses any admission that raises T" can never fire there. The guard is kept (it fires under
+  `order='book'`, and the test checks that it does), and the BINDING guard was added next to it: a rule
+  that lowers T on no circuit under the admission ordering is refused. Without it, a rule that improved
+  only the cached residual - an ordering the book would not choose - would have entered the book.
+
+## P8 - the report
+
+`v4/report.py` writes `results.json`, `results.csv`, `RESULTS.md` and a figure. Three things it gets
+right that v3's report did not: the DPF column is **B4 = DPF Synth** with its seed range, K* and actual
+ancilla count, not the retired B3g arm; **hatching is on `resource_class`**, so a DPF result with K* = 3
+and zero ancillas is no longer mislabelled relaxed; and the gap to the best baseline is **attributed**
+per circuit to a named mechanism with a measured size (`SCOPE.md`).

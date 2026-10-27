@@ -166,6 +166,16 @@ def admit(rule: Rule, bk: list, cfg: LoopConfig) -> tuple:
                           ", ".join(f"{w['label']} {w['before']}->{w['after']}" for w in worse) +
                           ". A book must never score worse than it did without the rule (V4_README 5.2).")
         return bk, rec
+    if not rec["helped"]:
+        # `evaluate` measured the improvement on the book's cached RESIDUAL, in book order. The admission
+        # re-run measures it under `min(book_order, gain_order, best_single_rule)`, and a rule can improve
+        # the residual while improving none of those - it only helped an ordering the book would not
+        # choose. That is not an improvement to the book, so it is refused.
+        rec["refused"] = (f"admission refused: under order={cfg.order_on_admission} the rule lowers T on "
+                          f"no circuit. It improved the cached residual (book order) but not the book's "
+                          f"own best ordering, so the book is no better with it than without "
+                          f"(V4_README 5.2).")
+        return bk, rec
     return cand, rec
 
 
