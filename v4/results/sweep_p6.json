@@ -1,0 +1,358 @@
+{
+ "eps": 0.001,
+ "order": "best",
+ "book": [
+  "dpf_dyadic_angle_fixing",
+  "pauli_exponential_commutation_merge",
+  "pauli_frame_rotation_merge",
+  "and_ancilla_ccz_lowering_with_measured_uncompute",
+  "bilinear_rank_resynthesis_karatsuba",
+  "free_fermion_gaussian_resynthesis",
+  "pauli_subalgebra_dimension_recompression"
+ ],
+ "book_digest": "7b482f36d40c8c48",
+ "total_seconds": 217.29,
+ "rows": [
+  {
+   "label": "qft_8",
+   "family": "dv_angle",
+   "t_count": 1583,
+   "qubits": 8,
+   "cx": 68,
+   "rotations": 33,
+   "err_rules": 0.0,
+   "err_bound": 0.001,
+   "seconds": 0.61,
+   "applications": 19,
+   "attempts": 92,
+   "verify_failures": 0,
+   "priced_out": 73,
+   "certified": true,
+   "whole_checks": 1,
+   "order_choice": {
+    "gain": 1583,
+    "book": 1583,
+    "chosen": "gain",
+    "solos": null
+   },
+   "excluded": {
+    "and_ancilla_ccz_lowering_with_measured_uncompute": "family dv_angle not in ('dv_recon',)",
+    "bilinear_rank_resynthesis_karatsuba": "family dv_angle not in ('dv_recon',)"
+   },
+   "never_fired": [
+    "free_fermion_gaussian_resynthesis",
+    "dpf_dyadic_angle_fixing"
+   ]
+  },
+  {
+   "label": "qpe_8",
+   "family": "dv_angle",
+   "t_count": 11364,
+   "qubits": 8,
+   "cx": 268,
+   "rotations": 204,
+   "err_rules": 1.2900351683443523e-14,
+   "err_bound": 0.001,
+   "seconds": 47.61,
+   "applications": 69,
+   "attempts": 180,
+   "verify_failures": 0,
+   "priced_out": 111,
+   "certified": true,
+   "whole_checks": 3,
+   "order_choice": {
+    "gain": 11364,
+    "book": 11487,
+    "chosen": "gain",
+    "solos": null
+   },
+   "excluded": {
+    "and_ancilla_ccz_lowering_with_measured_uncompute": "family dv_angle not in ('dv_recon',)",
+    "bilinear_rank_resynthesis_karatsuba": "family dv_angle not in ('dv_recon',)"
+   },
+   "never_fired": [
+    "free_fermion_gaussian_resynthesis"
+   ]
+  },
+  {
+   "label": "hhl_8",
+   "family": "dv_angle",
+   "t_count": 27745,
+   "qubits": 8,
+   "cx": 547,
+   "rotations": 464,
+   "err_rules": 1.2089202122004773e-09,
+   "err_bound": 0.001,
+   "seconds": 54.41,
+   "applications": 146,
+   "attempts": 775,
+   "verify_failures": 0,
+   "priced_out": 629,
+   "certified": true,
+   "whole_checks": 5,
+   "order_choice": {
+    "gain": 28129,
+    "book": 27745,
+    "chosen": "book",
+    "solos": null
+   },
+   "excluded": {
+    "and_ancilla_ccz_lowering_with_measured_uncompute": "family dv_angle not in ('dv_recon',)",
+    "bilinear_rank_resynthesis_karatsuba": "family dv_angle not in ('dv_recon',)"
+   },
+   "never_fired": [
+    "free_fermion_gaussian_resynthesis"
+   ]
+  },
+  {
+   "label": "qae_13",
+   "family": "dv_angle",
+   "t_count": 4526,
+   "qubits": 13,
+   "cx": 156,
+   "rotations": 88,
+   "err_rules": 9.53360664739235e-13,
+   "err_bound": 0.001,
+   "seconds": 3.19,
+   "applications": 62,
+   "attempts": 195,
+   "verify_failures": 0,
+   "priced_out": 133,
+   "certified": false,
+   "whole_checks": 3,
+   "order_choice": {
+    "gain": 4527,
+    "book": 4526,
+    "chosen": "book",
+    "solos": null
+   },
+   "excluded": {
+    "and_ancilla_ccz_lowering_with_measured_uncompute": "family dv_angle not in ('dv_recon',)",
+    "bilinear_rank_resynthesis_karatsuba": "family dv_angle not in ('dv_recon',)"
+   },
+   "never_fired": [
+    "free_fermion_gaussian_resynthesis"
+   ]
+  },
+  {
+   "label": "tfim_6",
+   "family": "dv_angle",
+   "t_count": 3354,
+   "qubits": 6,
+   "cx": 240,
+   "rotations": 66,
+   "err_rules": 7.825185115220957e-15,
+   "err_bound": 0.001,
+   "seconds": 0.36,
+   "applications": 1,
+   "attempts": 1,
+   "verify_failures": 0,
+   "priced_out": 0,
+   "certified": true,
+   "whole_checks": 1,
+   "order_choice": {
+    "chosen": "solo",
+    "reason": "only one rule fires on this circuit"
+   },
+   "excluded": {
+    "and_ancilla_ccz_lowering_with_measured_uncompute": "family dv_angle not in ('dv_recon',)",
+    "bilinear_rank_resynthesis_karatsuba": "family dv_angle not in ('dv_recon',)"
+   },
+   "never_fired": [
+    "pauli_exponential_commutation_merge",
+    "pauli_frame_rotation_merge",
+    "pauli_subalgebra_dimension_recompression",
+    "dpf_dyadic_angle_fixing"
+   ]
+  },
+  {
+   "label": "adder_8",
+   "family": "dv_recon",
+   "t_count": 216,
+   "qubits": 25,
+   "cx": 391,
+   "rotations": 0,
+   "err_rules": 0.0,
+   "err_bound": 0.0,
+   "seconds": 111.07,
+   "applications": 1,
+   "attempts": 1,
+   "verify_failures": 0,
+   "priced_out": 0,
+   "certified": false,
+   "whole_checks": 1,
+   "order_choice": {
+    "chosen": "solo",
+    "reason": "only one rule fires on this circuit"
+   },
+   "excluded": {
+    "dpf_dyadic_angle_fixing": "family dv_recon not in ('dv_angle',)",
+    "pauli_exponential_commutation_merge": "family dv_recon not in ('dv_angle',)",
+    "pauli_frame_rotation_merge": "family dv_recon not in ('dv_angle',)",
+    "free_fermion_gaussian_resynthesis": "family dv_recon not in ('dv_angle',)",
+    "pauli_subalgebra_dimension_recompression": "family dv_recon not in ('dv_angle',)"
+   },
+   "never_fired": [
+    "bilinear_rank_resynthesis_karatsuba"
+   ]
+  },
+  {
+   "label": "adder_6",
+   "family": "dv_recon",
+   "t_count": 77,
+   "qubits": 14,
+   "cx": 93,
+   "rotations": 0,
+   "err_rules": 0.0,
+   "err_bound": 0.0,
+   "seconds": 0.01,
+   "applications": 0,
+   "attempts": 1,
+   "verify_failures": 1,
+   "priced_out": 0,
+   "certified": true,
+   "whole_checks": 0,
+   "order_choice": {
+    "chosen": "solo",
+    "reason": "only one rule fires on this circuit"
+   },
+   "excluded": {
+    "dpf_dyadic_angle_fixing": "family dv_recon not in ('dv_angle',)",
+    "pauli_exponential_commutation_merge": "family dv_recon not in ('dv_angle',)",
+    "pauli_frame_rotation_merge": "family dv_recon not in ('dv_angle',)",
+    "free_fermion_gaussian_resynthesis": "family dv_recon not in ('dv_angle',)",
+    "pauli_subalgebra_dimension_recompression": "family dv_recon not in ('dv_angle',)"
+   },
+   "never_fired": [
+    "bilinear_rank_resynthesis_karatsuba",
+    "and_ancilla_ccz_lowering_with_measured_uncompute"
+   ]
+  },
+  {
+   "label": "mult_4",
+   "family": "dv_recon",
+   "t_count": 112,
+   "qubits": 12,
+   "cx": 99,
+   "rotations": 0,
+   "err_rules": 0.0,
+   "err_bound": 0.0,
+   "seconds": 0.01,
+   "applications": 0,
+   "attempts": 2,
+   "verify_failures": 2,
+   "priced_out": 0,
+   "certified": true,
+   "whole_checks": 0,
+   "order_choice": {
+    "gain": 112,
+    "book": 112,
+    "chosen": "gain",
+    "solos": null
+   },
+   "excluded": {
+    "dpf_dyadic_angle_fixing": "family dv_recon not in ('dv_angle',)",
+    "pauli_exponential_commutation_merge": "family dv_recon not in ('dv_angle',)",
+    "pauli_frame_rotation_merge": "family dv_recon not in ('dv_angle',)",
+    "free_fermion_gaussian_resynthesis": "family dv_recon not in ('dv_angle',)",
+    "pauli_subalgebra_dimension_recompression": "family dv_recon not in ('dv_angle',)"
+   },
+   "never_fired": [
+    "and_ancilla_ccz_lowering_with_measured_uncompute",
+    "bilinear_rank_resynthesis_karatsuba"
+   ]
+  },
+  {
+   "label": "mcx_10",
+   "family": "dv_recon",
+   "t_count": 224,
+   "qubits": 19,
+   "cx": 192,
+   "rotations": 0,
+   "err_rules": 0.0,
+   "err_bound": 0.0,
+   "seconds": 0.01,
+   "applications": 0,
+   "attempts": 1,
+   "verify_failures": 1,
+   "priced_out": 0,
+   "certified": true,
+   "whole_checks": 0,
+   "order_choice": {
+    "chosen": "solo",
+    "reason": "only one rule fires on this circuit"
+   },
+   "excluded": {
+    "dpf_dyadic_angle_fixing": "family dv_recon not in ('dv_angle',)",
+    "pauli_exponential_commutation_merge": "family dv_recon not in ('dv_angle',)",
+    "pauli_frame_rotation_merge": "family dv_recon not in ('dv_angle',)",
+    "free_fermion_gaussian_resynthesis": "family dv_recon not in ('dv_angle',)",
+    "pauli_subalgebra_dimension_recompression": "family dv_recon not in ('dv_angle',)"
+   },
+   "never_fired": [
+    "bilinear_rank_resynthesis_karatsuba",
+    "and_ancilla_ccz_lowering_with_measured_uncompute"
+   ]
+  },
+  {
+   "label": "modred_21",
+   "family": "dv_recon",
+   "t_count": 119,
+   "qubits": 11,
+   "cx": 105,
+   "rotations": 0,
+   "err_rules": 0.0,
+   "err_bound": 0.0,
+   "seconds": 0.0,
+   "applications": 0,
+   "attempts": 1,
+   "verify_failures": 1,
+   "priced_out": 0,
+   "certified": true,
+   "whole_checks": 0,
+   "order_choice": {
+    "chosen": "solo",
+    "reason": "only one rule fires on this circuit"
+   },
+   "excluded": {
+    "dpf_dyadic_angle_fixing": "family dv_recon not in ('dv_angle',)",
+    "pauli_exponential_commutation_merge": "family dv_recon not in ('dv_angle',)",
+    "pauli_frame_rotation_merge": "family dv_recon not in ('dv_angle',)",
+    "free_fermion_gaussian_resynthesis": "family dv_recon not in ('dv_angle',)",
+    "pauli_subalgebra_dimension_recompression": "family dv_recon not in ('dv_angle',)"
+   },
+   "never_fired": [
+    "bilinear_rank_resynthesis_karatsuba",
+    "and_ancilla_ccz_lowering_with_measured_uncompute"
+   ]
+  }
+ ],
+ "judge_cache": {
+  "reference_hits": 28,
+  "reference_misses": 161,
+  "ref_side_hits": 28,
+  "ref_side_misses": 160,
+  "window_hits": 72,
+  "window_misses": 189,
+  "whole_checks": 188,
+  "references": 161,
+  "ref_sides": 160,
+  "windows": 0,
+  "verdicts": 189
+ },
+ "memo": {
+  "mem_hits": 0,
+  "disk_hits": 0,
+  "misses": 10,
+  "seconds_saved": 0.0,
+  "entries": 10,
+  "disk_entries": 16
+ },
+ "frozen": {
+  "checked": true,
+  "files": 51,
+  "seconds": 0.005579249933362007,
+  "calls": 224
+ },
+ "frozen_rechecked": 51
+}

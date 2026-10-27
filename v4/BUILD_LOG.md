@@ -588,3 +588,52 @@ lowered from 1800 s to 900 s, because the one rule that hit the old cap
 (`hamming_weight_phasing_shared_angle_layers`) spent 30 minutes to produce `not_evaluated`, and a shorter
 cap reaches the same verdict four times sooner. A cap hit is still recorded as `not_evaluated`, never as
 a rejection.
+
+## The branch simulator's gadget semantics were its own, and both were wrong
+
+The false refutation above was not the only thing the P6 restart turned up. With it fixed,
+`and_monomial_phase_polynomial_resynthesis` - the rule that had ADMITTED with qft_8 1583 -> 1390 - came
+back REJECTED, which is the wrong direction for that fix. The reason was in `v4/judge/kraus.py`.
+
+The report was the tell: on qpe_8 the branch **state distance was 2.8e-15** - the rewrite is exact - while
+the **branch coefficient differed between inputs by 1.96**. A correct rewrite cannot do that, so the
+simulator was wrong, not the rule.
+
+`kraus.py` had hand-implemented the two gadgets. Against the frozen definitions in `ir.Circuit.expand`:
+
+| gadget | frozen | what was written | effect |
+|---|---|---|---|
+| `and_uncompute` | `h t; measure t -> c; cz(a,b) if c; **x t if c**` | `h t; measure t; cz(a,b) if outcome` | the final conditional `x` is what returns the target to |0>. Without it the ancilla sits in |1> on the outcome-1 branch, so the module's own ancilla-return and phase-consistency checks fired on a correct rewrite |
+| `and_compute` | Gidney's 13-gate Clifford+T sequence (`ir._AND_COMPUTE`) | a plain Toffoli | equal to a Toffoli only on the `t = |0>` subspace, not as a unitary |
+
+Fixed by removing the hand-rolled semantics entirely: `kraus.expand()` calls the frozen
+`expand("gadgets")` first and the simulator handles primitives only. The gadget semantics are now the
+frozen ones by construction and cannot drift.
+
+**And then the cross-check that should have existed from the start** (`v4/tests/test_p5.py`): every branch
+of this simulator against the frozen `circuitevolve.sim.run`, on every basis input, for a circuit with
+both gadgets, a Clifford+T circuit and a Toffoli-level one. **0 mismatches of 32** on the gadget circuit
+after the fix.
+
+That test also records the trap that cost the most time here. `circuitevolve/sim.py` indexes basis states
+with **bit q = qubit q** (LSB); `blocks/verify_block.py`, and therefore `kraus.py`, use **qubit 0 as the
+most significant** index. The first run of the cross-check reported 24 mismatches out of 32 against code
+that was already correct, because the harness remapped the output amplitudes and forgot the INPUT index.
+Both directions are remapped explicitly in the test now, with the reason written down.
+
+### What this says about the build
+
+Three bugs in a row in the same place - a false refutation, then two wrong gadget semantics - were all in
+NEW code that can ACCEPT a rewrite, and none of them were caught by the planted-bug gate. The gate checks
+that the judge rejects what it should; it cannot check that the judge computes what the frozen stack
+computes. Those are different properties and they need different tests:
+
+* **planted bugs** - does it reject a wrong rewrite? (`tools/planted_gate.py`, `tests/test_p4.py`)
+* **agreement with the authority** - does it compute the same thing the frozen code computes, where both
+  can run? (`tests/test_p5.py`, `tests/test_p0.py::test_cached_circuit_check_identical_to_frozen`)
+* **structural invariants** - can a sufficient-condition witness ever be reported as a refutation?
+  (`tests/test_p4.py::test_no_algebraic_verdict_is_ever_a_certified_refutation`)
+
+The second class is the one that was missing, and it is the one that found all three. P6 has been
+restarted three times in total as a result; each restart cost under an hour and replaced verdicts that
+would otherwise have been reported as findings.

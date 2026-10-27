@@ -19,6 +19,7 @@ falls through to the numeric check, so it costs time, never correctness.
 from __future__ import annotations
 
 import math
+from pathlib import Path
 
 import pytest
 
@@ -179,7 +180,7 @@ def test_unverifiable_is_a_third_verdict_not_a_rejection():
     assert "not a rejection" in rep["reason"]
     o = classify(rep, "qft_8")
     assert o.kind == "too_wide" and o.level == IMPL
-    assert "narrower" in o.feedback["summary"], "the feedback must say what to change"
+    assert "narrower" in o.feedback["summary"].lower(), "the feedback must say what to change"
 
 
 def test_a_too_wide_window_yields_unverifiable_not_false():
@@ -192,3 +193,57 @@ def test_a_too_wide_window_yields_unverifiable_not_false():
     cert = CC.certify_relaxed_window([], [], big_data, [], rule, 1e-8)
     assert not cert.ok and cert.unverifiable and cert.method == "too-wide"
     assert "NOT VERIFIABLE" in cert.reason
+
+
+def test_no_algebraic_verdict_is_ever_a_certified_refutation():
+    """A STRUCTURAL invariant, after the false refutation of `same_pauli_merge` on hhl_8.
+
+    The algebraic layer may only ACCEPT (a proof) or DECLINE. It must never return `ok=False` with
+    `certified=True`, because its witnesses are sufficient conditions, not necessary ones: matching every
+    phase-polynomial label is sufficient for equality but angle mass may legitimately move between the
+    two labels of one parity mask, and "the rotations between do not commute with the moved axis" means
+    the rewrite is not justified by THAT identity, not that the circuits differ. A disagreement must fall
+    through to the exact or numeric check, which is the authority.
+
+    Run over every window the floor's merge rule produces on every angle circuit, which is where the real
+    false refutation was found - not on hand-made cases."""
+    from v4 import book as B
+    from v4.runner import window
+    rule = _rule()
+    seen_decline = 0
+    for label in ANGLE:
+        cur = J.load(label)
+        for _ in range(120):
+            ms = rule.trigger(cur)
+            if not ms:
+                break
+            cand = rule.apply(cur, ms[0])
+            w = window(cur, cand)
+            if w is not None:
+                wo, wn, _qs, span = w
+                if span[1] != span[0] or span[2] != span[0]:
+                    cert = C.algebraic(wo, wn)
+                    assert not (cert.ok is False and cert.certified), \
+                        (label, cert.method, cert.reason[:200])
+                    if not cert.ok:
+                        assert cert.method == "declined", (label, cert.method)
+                        seen_decline += 1
+            cur = cand
+    assert seen_decline > 0, "no decline was exercised - the invariant was not actually tested"
+
+
+def test_every_cannot_check_method_is_reported_as_unverifiable():
+    """The same category error, in the two paths where it was NOT found by hand.
+
+    `skipped` (n above the dense limit), `infeasible` (too many basis inputs and no permutation-like
+    reference) and our own `too-wide` are the frozen verifier declining to run. All three must come back
+    `unverifiable`, or a rule gets rejected for being uncheckable."""
+    assert set(C.CANNOT_CHECK) == {"skipped", "infeasible", "too-wide"}
+    from v4.judge.dv import Verdict
+    rule = _rule()
+    for method in C.CANNOT_CHECK:
+        v = Verdict(False, "approx", distance=None, bound=1e-8, reason="n too large", method=method)
+        cert = C.Certificate("numeric_block", bool(v.ok), bool(v.certified), distance=v.distance,
+                             bound=v.bound, reason=v.reason, method=v.method,
+                             unverifiable=v.method in C.CANNOT_CHECK)
+        assert cert.unverifiable and not cert.ok, method

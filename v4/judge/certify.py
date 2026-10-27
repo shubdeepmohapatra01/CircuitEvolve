@@ -40,6 +40,16 @@ from ..api import pauli, phasepoly
 from . import dv as J, kraus
 
 KINDS = ("algebraic", "exact_ring", "numeric_block", "branch_kraus")
+
+# Methods the FROZEN verifier reports when it declined to run, as opposed to ran and said no. Every one
+# of these must come back as `unverifiable`, never as a rejection:
+#   'skipped'     n above the dense / statevector limit (approx: > 20 qubits; branch_kraus: > 22)
+#   'infeasible'  more basis inputs than the exact check will enumerate, and the reference is not
+#                 permutation-like, so there is nothing to sample
+#   'too-wide'    our own window limit (v4/judge/certify.py)
+# This was a real bug in two more places than the one that was found by hand: the numeric and exact
+# paths both reported `ok=False` for these, so a rule was rejected for being unverifiable.
+CANNOT_CHECK = ("skipped", "infeasible", "too-wide")
 STATS: dict = dict(algebraic_applied=0, algebraic_declined=0, algebraic_merge=0,
                    algebraic_phasepoly=0, exact_ring=0, numeric_block=0, branch_kraus=0,
                    algebraic_seconds=0.0, other_seconds=0.0)
@@ -230,7 +240,8 @@ def certify(old, new, rule, allowance: float, exact_tol: float = 1e-8) -> Certif
     dt = time.perf_counter() - t0
     STATS["other_seconds"] += dt
     return Certificate(kind, bool(v.ok), bool(v.certified), distance=v.distance, bound=v.bound,
-                       reason=v.reason, method=v.method, seconds=dt)
+                       reason=v.reason, method=v.method, seconds=dt,
+                       unverifiable=v.method in CANNOT_CHECK)
 
 
 def _kraus(old, new, allowance: float):

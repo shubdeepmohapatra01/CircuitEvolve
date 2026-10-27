@@ -25,7 +25,7 @@
      "after": 1583
     }
    ],
-   "seconds": 0.19
+   "seconds": 0.24
   },
   {
    "control": "same_pauli_merge_planted",
@@ -42,7 +42,7 @@
      "after": 1583
     }
    ],
-   "seconds": 0.12
+   "seconds": 0.15
   },
   {
    "control": "ancilla_parity_rotation_lowering",
@@ -77,6 +77,6 @@
    "ok": true
   }
  ],
- "seconds": 0.3,
+ "seconds": 0.4,
  "note": "CV-DV controls 2 and 3 of v3's P1 are replaced by the two ancilla + continuous-angle controls, which exercise the path P5 changed; CV-DV stays deferred"
 }

@@ -1,0 +1,148 @@
+{
+ "eps": 0.001,
+ "order": "min_all",
+ "floor": [
+  "dpf_dyadic_angle_fixing",
+  "pauli_exponential_commutation_merge",
+  "pauli_frame_rotation_merge"
+ ],
+ "rows": [
+  {
+   "label": "qft_8",
+   "floor_t": 1583,
+   "floor_qubits": 8,
+   "best_baseline_t": 1064,
+   "best_baseline": "DPF Synth",
+   "gap": 519,
+   "meets": false,
+   "err_bound": 0.001,
+   "order_choice": {
+    "gain": 1583,
+    "book": 1583,
+    "chosen": "gain",
+    "solos": {
+     "dpf_dyadic_angle_fixing": 2391,
+     "pauli_exponential_commutation_merge": 1597,
+     "pauli_frame_rotation_merge": 1583
+    }
+   },
+   "seconds": 0.62
+  },
+  {
+   "label": "qpe_8",
+   "floor_t": 11364,
+   "floor_qubits": 8,
+   "best_baseline_t": 7552,
+   "best_baseline": "DPF Synth",
+   "gap": 3812,
+   "meets": false,
+   "err_bound": 0.001,
+   "order_choice": {
+    "gain": 11364,
+    "book": 11487,
+    "chosen": "gain",
+    "solos": {
+     "dpf_dyadic_angle_fixing": 14583,
+     "pauli_exponential_commutation_merge": 11515,
+     "pauli_frame_rotation_merge": 11485
+    }
+   },
+   "seconds": 33.29
+  },
+  {
+   "label": "hhl_8",
+   "floor_t": 28411,
+   "floor_qubits": 8,
+   "best_baseline_t": 18701,
+   "best_baseline": "DPF Synth",
+   "gap": 9710,
+   "meets": false,
+   "err_bound": 0.001,
+   "order_choice": {
+    "gain": 28797,
+    "book": 28411,
+    "chosen": "book",
+    "solos": {
+     "dpf_dyadic_angle_fixing": 34842,
+     "pauli_exponential_commutation_merge": 29273,
+     "pauli_frame_rotation_merge": 29331
+    }
+   },
+   "seconds": 28.96
+  },
+  {
+   "label": "qae_13",
+   "floor_t": 4526,
+   "floor_qubits": 13,
+   "best_baseline_t": 4264,
+   "best_baseline": "DPF Synth",
+   "gap": 262,
+   "meets": false,
+   "err_bound": 0.001,
+   "order_choice": {
+    "gain": 4527,
+    "book": 4526,
+    "chosen": "book",
+    "solos": {
+     "dpf_dyadic_angle_fixing": 7363,
+     "pauli_exponential_commutation_merge": 4543,
+     "pauli_frame_rotation_merge": 4527
+    }
+   },
+   "seconds": 2.14
+  },
+  {
+   "label": "tfim_6",
+   "floor_t": 8560,
+   "floor_qubits": 6,
+   "best_baseline_t": 8560,
+   "best_baseline": "TKET",
+   "gap": 0,
+   "meets": true,
+   "err_bound": 0.001,
+   "order_choice": {
+    "gain": 8560,
+    "book": 8560,
+    "chosen": "gain",
+    "solos": {
+     "dpf_dyadic_angle_fixing": 8560
+    }
+   },
+   "seconds": 0.66
+  }
+ ],
+ "guarantee_met": false,
+ "met_on": [
+  "tfim_6"
+ ],
+ "missing": [
+  {
+   "label": "qft_8",
+   "floor": 1583,
+   "target": 1064,
+   "method": "DPF Synth",
+   "gap": 519
+  },
+  {
+   "label": "qpe_8",
+   "floor": 11364,
+   "target": 7552,
+   "method": "DPF Synth",
+   "gap": 3812
+  },
+  {
+   "label": "hhl_8",
+   "floor": 28411,
+   "target": 18701,
+   "method": "DPF Synth",
+   "gap": 9710
+  },
+  {
+   "label": "qae_13",
+   "floor": 4526,
+   "target": 4264,
+   "method": "DPF Synth",
+   "gap": 262
+  }
+ ]
+}

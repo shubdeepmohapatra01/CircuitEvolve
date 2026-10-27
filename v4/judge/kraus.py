@@ -50,7 +50,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from circuitevolve.blocks.verify_block import gate_matrix
-from circuitevolve.ir import Circuit as IRCircuit
+from circuitevolve.ir import GADGETS, Circuit as IRCircuit
 from circuitevolve.locks import NUMERIC_LOCK
 
 MAX_QUBITS = 22                  # 2^22 complex128 = 64 MB per state vector
@@ -102,72 +102,72 @@ def _apply(state: np.ndarray, M: np.ndarray, qubits, n: int) -> np.ndarray:
 
 
 _PROJ = (np.array([[1.0, 0.0], [0.0, 0.0]]), np.array([[0.0, 0.0], [0.0, 1.0]]))
+_CCX = np.eye(8)
+_CCX[[6, 7]] = _CCX[[7, 6]]
+_CCZ = np.eye(8)
+_CCZ[7, 7] = -1.0
 
 
-def _and_compute_matrix() -> np.ndarray:
-    """The temporary-AND gadget as a 3-qubit unitary on (x, y, target): target ^= x AND y, i.e. a
-    Toffoli. Costs 4 T; the frozen IR treats it as a gadget with a |0> precondition on the target."""
-    U = np.eye(8)
-    U[[6, 7]] = U[[7, 6]]
-    return U
+def expand(c: IRCircuit) -> IRCircuit:
+    """Gadget-expand with the FROZEN `ir.Circuit.expand('gadgets')` before simulating anything.
+
+    This module must not hold its own idea of what a gadget means. An earlier version hand-implemented
+    both, and both were wrong against the frozen definitions:
+
+      * `and_uncompute` expands to `h t; measure t -> c; cz(a, b) if c; **x t if c**`. That final
+        conditional `x` is what returns the target to |0>. Without it the ancilla sits in |1> on the
+        outcome-1 branch, which this module's own ancilla-return and phase-consistency checks then
+        duly report - so a CORRECT rewrite came back with a branch-coefficient spread of 1.96 against a
+        state distance of 2.8e-15, and `and_monomial_phase_polynomial_resynthesis` was rejected after
+        having admitted before the hand-rolled version existed.
+      * `and_compute` is Gidney's specific 13-gate Clifford+T sequence (`ir._AND_COMPUTE`), which equals
+        a Toffoli only on the t = |0> subspace, not as a unitary.
+
+    Expanding first makes the gadget semantics the frozen ones by construction, so they cannot drift,
+    and leaves this module simulating nothing but primitives. `v4/tests/test_p5.py` cross-checks every
+    branch of this simulator against the frozen `circuitevolve.sim.run` on exact circuits.
+    """
+    return c.expand("gadgets")
 
 
-def run_branch(c: IRCircuit, x: int, outcomes, n: int) -> tuple:
+def run_branch(c: IRCircuit, x: int, outcomes, n: int, expanded: bool = False) -> tuple:
     """(unnormalised state of branch `outcomes`, number of measurements consumed).
 
-    Measurement outcomes are FORCED, with no renormalisation, so the returned state's squared norm is
-    that branch's probability - which is what `|c_m|^2` must sum to 1 over. `and_uncompute` is the
-    measurement-based Gidney uncompute: it measures its target in the X basis and applies a corrective
-    CZ on the outcome, which is exactly a measurement plus a classically controlled gate."""
+    Measurement outcomes are FORCED and nothing is renormalised, so the returned state's squared norm is
+    that branch's probability - which is what `sum |c_m|^2 = 1` is about. Qubit 0 is the most
+    significant index, the convention `blocks.verify_block` uses on both sides of every comparison.
+    """
+    if not expanded:
+        c = expand(c)
     state = np.zeros(1 << n, dtype=complex)
     state[int(x)] = 1.0
     cbits: dict = {}
     k = 0
-    for g in _gates(c):
+    for g in c.gates:
         name, qs = g.name, tuple(int(q) for q in g.qubits)
-        if g.cond is not None:
-            bit, val = g.cond
-            if cbits.get(bit, 0) != val:
-                continue
+        if g.cond is not None and cbits.get(g.cond, 0) != 1:
+            continue                       # the frozen IR's `cond` is a cbit index, firing on outcome 1
         if name == "measure":
             o = int(outcomes[k]) if k < len(outcomes) else 0
             cbits[g.cbit if g.cbit is not None else k] = o
             k += 1
             state = _apply(state, _PROJ[o], qs, n)
             continue
-        if name == "and_compute":
-            state = _apply(state, _and_compute_matrix(), qs, n)
+        if name == "ccx":
+            state = _apply(state, _CCX, qs, n)
             continue
-        if name == "and_uncompute":
-            # H on the target, then measure it; on outcome 1 a CZ on the two controls
-            t = qs[-1]
-            state = _apply(state, gate_matrix("h"), (t,), n)
-            o = int(outcomes[k]) if k < len(outcomes) else 0
-            cbits[("and", k)] = o
-            k += 1
-            state = _apply(state, _PROJ[o], (t,), n)
-            if o == 1 and len(qs) >= 3:
-                state = _apply(state, gate_matrix("cz"), (qs[0], qs[1]), n)
+        if name == "ccz":
+            state = _apply(state, _CCZ, qs, n)
             continue
-        if name in ("ccx", "ccz"):
-            U = np.eye(8)
-            if name == "ccx":
-                U[[6, 7]] = U[[7, 6]]
-            else:
-                U[7, 7] = -1.0
-            state = _apply(state, U, qs, n)
-            continue
-        ang = None
-        for attr in ("angle", "param", "theta"):
-            if hasattr(g, attr):
-                ang = getattr(g, attr)
-                break
-        state = _apply(state, gate_matrix(name, ang), qs, n)
+        if name in GADGETS:
+            raise NotApplicable(f"{name} survived expansion; this module simulates primitives only")
+        state = _apply(state, gate_matrix(name, getattr(g, "angle", None)), qs, n)
     return state, k
 
 
 def n_branch_points(c: IRCircuit) -> int:
-    return sum(1 for g in _gates(c) if g.name in ("measure", "and_uncompute"))
+    """Measurements AFTER gadget expansion; each `and_uncompute` contributes exactly one."""
+    return sum(1 for g in expand(c).gates if g.name == "measure")
 
 
 # ------------------------------------------------------------------------------------------ the check
@@ -181,6 +181,7 @@ def check(candidate: IRCircuit, reference_state, n_data: int, allowance: float, 
     t0 = time.perf_counter()
     lim = dict(max_inputs=MAX_EXHAUSTIVE_INPUTS, sampled_inputs=SAMPLED_INPUTS,
                max_branches=MAX_EXHAUSTIVE_BRANCHES, sampled_branches=SAMPLED_BRANCHES, **(limits or {}))
+    candidate = expand(candidate)
     n = candidate.n_qubits
     if n > MAX_QUBITS:
         return KrausVerdict(False, False, reason=f"n={n} > {MAX_QUBITS}: not numerically verifiable",
@@ -237,7 +238,7 @@ def check(candidate: IRCircuit, reference_state, n_data: int, allowance: float, 
                                                          f"expected {n_in}", method="literal",
                                     bound=allowance)
             for m in branches:
-                st, _k = run_branch(candidate, full_x, m, n)
+                st, _k = run_branch(candidate, full_x, m, n, expanded=True)
                 p = float(np.vdot(st, st).real)
                 leak = float(np.vdot(st[~anc_ok], st[~anc_ok]).real)
                 worst_leak = max(worst_leak, math.sqrt(max(0.0, leak)))
@@ -298,8 +299,10 @@ def reference_state_from_circuit(ref, n_data: int):
         if any(g.name == "measure" or g.cond is not None for g in c.gates):
             raise NotApplicable("the reference measures; it cannot define a state map")
 
+        cc = expand(c)
+
         def f(x):
-            st, _ = run_branch(c, int(x), (), c.n_qubits)
+            st, _ = run_branch(cc, int(x), (), cc.n_qubits, expanded=True)
             return st
         return f
     ops, n = _ops_and_n(ref)
