@@ -29,6 +29,7 @@ DENSE_MAX = 8          # data qubits for the all-basis-inputs check
 STATE_MAX = 22         # data + ancilla qubits we are willing to simulate
 N_SAMPLES = 8
 MAX_BRANCHES = 4096
+MAX_AMPLITUDES = 2 ** 26   # ~1 GB of complex128 per simulated state block
 
 
 @dataclass(frozen=True)
@@ -159,8 +160,10 @@ def verify(old: Circuit, new: Circuit, req: Req = Req(), seed: int = 0) -> Verdi
         return Verdict(False, np.inf, "refused", reason="a bit measured in the changed segment is used outside it")
     if len(data) + len(fresh) > STATE_MAX:
         return Verdict(False, np.inf, "refused", support=len(touched), reason=f"support {len(touched)} > {STATE_MAX}")
-    d = len(data)
-    if d <= DENSE_MAX:
+    d, a = len(data), len(fresh)
+    if 2 ** (d + a) * N_SAMPLES > MAX_AMPLITUDES:
+        return Verdict(False, np.inf, "refused", support=len(touched), reason=f"segment too large to simulate ({d}+{a} qubits)")
+    if d <= DENSE_MAX and 2 ** (2 * d + a) <= MAX_AMPLITUDES:
         inputs, mode = np.eye(2 ** d, dtype=complex), "dense"
     else:
         rng = np.random.default_rng(seed)
