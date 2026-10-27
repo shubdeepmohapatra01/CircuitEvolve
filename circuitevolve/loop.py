@@ -164,7 +164,8 @@ def train(arm: str, circuits: list, ask, ideas: int = IDEAS, attempts: int = ATT
         try:
             found = agents.scout(ask_scout, arm, entry["family"], c, metric.EPS_LLM - eps_llm, book, ideas, zinit)
         except Exception as e:
-            log(dict(phase="scout", circuit=name, error=str(e)[-600:])); continue
+            log(dict(phase="scout", circuit=name, error=str(e)[-600:]))
+            log(dict(phase="end", circuit=name, t=t_cur, s=round(time.time() - start, 1), scout_failed=True)); continue
         log(dict(phase="scout", circuit=name, ideas=found))
         for idea in found:
             code, feedback = "", ""

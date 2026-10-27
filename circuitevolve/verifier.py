@@ -22,6 +22,7 @@ like a data qubit (so a rewrite may rely on it being |0> before first use, never
 """
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass
 
 import numpy as np
@@ -34,6 +35,8 @@ STATE_MAX = 22         # data + ancilla qubits we are willing to simulate
 N_SAMPLES = 8
 MAX_BRANCHES = 4096
 MAX_AMPLITUDES = 2 ** 26   # ~1 GB of complex128 per simulated state block
+MAX_WORK = 2 ** 31         # branches x amplitudes we are willing to simulate for one segment
+TIME_LIMIT = 60.0          # seconds for one check(); beyond that the application is refused (never accepted)
 
 
 @dataclass(frozen=True)
@@ -175,9 +178,13 @@ def verify(old: Circuit, new: Circuit, req: Req = Req(), seed: int = 0, zero_ini
     if len(data) + len(fresh) > STATE_MAX:
         return Verdict(False, np.inf, "refused", support=len(touched), reason=f"support {len(touched)} > {STATE_MAX}")
     d, a = len(data), len(fresh) + len(zinit)
+    m = sum(g.name in ("measure", "reset") for g in om) + sum(g.name in ("measure", "reset") for g in nm)
+    if 2 ** m > MAX_BRANCHES or 2 ** m * 2 ** (d + a) * (2 ** d if d <= DENSE_MAX else N_SAMPLES) > MAX_WORK and \
+            2 ** m * 2 ** (d + a) * N_SAMPLES > MAX_WORK:
+        return Verdict(False, np.inf, "refused", support=len(touched), reason=f"segment too expensive ({m} measurements, {d}+{a} qubits)")
     if 2 ** (d + a) * N_SAMPLES > MAX_AMPLITUDES:
         return Verdict(False, np.inf, "refused", support=len(touched), reason=f"segment too large to simulate ({d}+{a} qubits)")
-    if d <= DENSE_MAX and 2 ** (2 * d + a) <= MAX_AMPLITUDES:
+    if d <= DENSE_MAX and 2 ** (2 * d + a) <= MAX_AMPLITUDES and 2 ** m * 2 ** (2 * d + a) <= MAX_WORK:
         inputs, mode = np.eye(2 ** d, dtype=complex), "dense"
     else:
         rng = np.random.default_rng(seed)
@@ -203,9 +210,12 @@ def check(old: Circuit, new: Circuit, req: Req = Req(), zero_init=()) -> Verdict
     fall back to one verify() over the whole changed span."""
     import difflib
     ops = [o for o in difflib.SequenceMatcher(None, old.gates, new.gates, autojunk=False).get_opcodes() if o[0] != "equal"]
+    t0 = time.monotonic()
     if len(ops) > 1:
         cur, total, worst, shift = old, 0.0, None, 0
         for _, i1, i2, j1, j2 in ops:
+            if time.monotonic() - t0 > TIME_LIMIT:
+                return Verdict(False, np.inf, "refused", reason=f"verification exceeded {TIME_LIMIT:.0f} s")
             gates = cur.gates[: i1 + shift] + new.gates[j1:j2] + cur.gates[i2 + shift:]
             shift += (j2 - j1) - (i2 - i1)
             used = max((q for g in gates for q in g.qubits), default=-1) + 1
@@ -221,6 +231,8 @@ def check(old: Circuit, new: Circuit, req: Req = Req(), zero_init=()) -> Verdict
             assert cur.gates == new.gates
             if new.n - old.n <= req.ancillas and total <= max(req.eps, TOL):
                 return Verdict(True, total, "blockwise", reason=f"{len(ops)} blocks")
+    if time.monotonic() - t0 > TIME_LIMIT:
+        return Verdict(False, np.inf, "refused", reason=f"verification exceeded {TIME_LIMIT:.0f} s")
     whole = verify(old, new, req, zero_init=zero_init)
     if whole.ok or len(ops) <= 1:
         return whole

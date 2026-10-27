@@ -89,10 +89,10 @@ Answer with ONLY a JSON list:
   "expected_t_saving": 0}}]
 """
     text = ask(prompt)
-    m = re.search(r"\[.*\]", text, re.S)
-    if not m:
+    i = text.find("[")
+    if i < 0:
         raise ValueError(f"scout returned no JSON list: {text[:300]}")
-    ideas = json.loads(m.group(0))
+    ideas, _ = json.JSONDecoder().raw_decode(text[i:])        # first complete JSON list; ignores trailing text
     return [i for i in ideas if isinstance(i, dict) and "name" in i][:n]
 
 
