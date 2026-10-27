@@ -1,0 +1,6 @@
+{
+ "manual:_timing_noop.py": 1,
+ "manual:same_pauli_merge.py": 1,
+ "manual:same_pauli_merge_planted.py": 1,
+ "manual:harness_dryrun_planted.py": 1
+}

@@ -1,0 +1,73 @@
+{
+ "eps": 0.001,
+ "order": "best",
+ "book": [
+  "and_ancilla_ccz_lowering_with_measured_uncompute",
+  "bilinear_rank_resynthesis_karatsuba",
+  "free_fermion_gaussian_resynthesis",
+  "pauli_exponential_commutation_merge",
+  "pauli_frame_rotation_merge",
+  "pauli_subalgebra_dimension_recompression"
+ ],
+ "book_digest": "eb76552a3c3b538f",
+ "total_seconds": 1.14,
+ "rows": [
+  {
+   "label": "qft_8",
+   "family": "dv_angle",
+   "t_count": 1583,
+   "qubits": 8,
+   "cx": 68,
+   "rotations": 33,
+   "err_rules": 1.2124696055411382e-14,
+   "err_bound": 0.001,
+   "seconds": 1.14,
+   "applications": 19,
+   "attempts": 40,
+   "verify_failures": 0,
+   "priced_out": 21,
+   "certified": true,
+   "whole_checks": 1,
+   "order_choice": {
+    "gain": 1583,
+    "book": 1583,
+    "chosen": "gain",
+    "solos": null
+   },
+   "excluded": {},
+   "never_fired": [
+    "and_ancilla_ccz_lowering_with_measured_uncompute",
+    "bilinear_rank_resynthesis_karatsuba",
+    "free_fermion_gaussian_resynthesis"
+   ]
+  }
+ ],
+ "judge_cache": {
+  "reference_hits": 2,
+  "reference_misses": 41,
+  "ref_side_hits": 2,
+  "ref_side_misses": 41,
+  "window_hits": 37,
+  "window_misses": 43,
+  "whole_checks": 43,
+  "references": 41,
+  "ref_sides": 41,
+  "windows": 0,
+  "verdicts": 43
+ },
+ "memo": {
+  "mem_hits": 0,
+  "disk_hits": 0,
+  "misses": 1,
+  "seconds_saved": 0.0,
+  "entries": 1,
+  "disk_entries": 1
+ },
+ "frozen": {
+  "checked": true,
+  "files": 51,
+  "seconds": 0.0011952498462051153,
+  "calls": 51
+ },
+ "frozen_rechecked": 51
+}

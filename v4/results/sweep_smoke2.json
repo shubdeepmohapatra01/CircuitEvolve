@@ -1,0 +1,131 @@
+{
+ "eps": 0.001,
+ "order": "best",
+ "book": [
+  "and_ancilla_ccz_lowering_with_measured_uncompute",
+  "bilinear_rank_resynthesis_karatsuba",
+  "free_fermion_gaussian_resynthesis",
+  "pauli_exponential_commutation_merge",
+  "pauli_frame_rotation_merge",
+  "pauli_subalgebra_dimension_recompression"
+ ],
+ "book_digest": "eb76552a3c3b538f",
+ "total_seconds": 18.74,
+ "rows": [
+  {
+   "label": "qft_8",
+   "family": "dv_angle",
+   "t_count": 1583,
+   "qubits": 8,
+   "cx": 68,
+   "rotations": 33,
+   "err_rules": 1.2124696055411382e-14,
+   "err_bound": 0.001,
+   "seconds": 1.13,
+   "applications": 19,
+   "attempts": 40,
+   "verify_failures": 0,
+   "priced_out": 21,
+   "certified": true,
+   "whole_checks": 1,
+   "order_choice": {
+    "gain": 1583,
+    "book": 1583,
+    "chosen": "gain",
+    "solos": null
+   },
+   "excluded": {},
+   "never_fired": [
+    "and_ancilla_ccz_lowering_with_measured_uncompute",
+    "bilinear_rank_resynthesis_karatsuba",
+    "free_fermion_gaussian_resynthesis"
+   ]
+  },
+  {
+   "label": "qpe_8",
+   "family": "dv_angle",
+   "t_count": 11485,
+   "qubits": 8,
+   "cx": 268,
+   "rotations": 206,
+   "err_rules": 1.4022211854825416e-13,
+   "err_bound": 0.001,
+   "seconds": 17.43,
+   "applications": 67,
+   "attempts": 67,
+   "verify_failures": 0,
+   "priced_out": 0,
+   "certified": true,
+   "whole_checks": 1,
+   "order_choice": {
+    "gain": 11485,
+    "book": 11485,
+    "chosen": "gain",
+    "solos": null
+   },
+   "excluded": {},
+   "never_fired": [
+    "and_ancilla_ccz_lowering_with_measured_uncompute",
+    "bilinear_rank_resynthesis_karatsuba",
+    "free_fermion_gaussian_resynthesis"
+   ]
+  },
+  {
+   "label": "tfim_6",
+   "family": "dv_angle",
+   "t_count": 3354,
+   "qubits": 6,
+   "cx": 240,
+   "rotations": 66,
+   "err_rules": 7.825185115220957e-15,
+   "err_bound": 0.001,
+   "seconds": 0.18,
+   "applications": 1,
+   "attempts": 1,
+   "verify_failures": 0,
+   "priced_out": 0,
+   "certified": true,
+   "whole_checks": 1,
+   "order_choice": {
+    "chosen": "solo",
+    "reason": "only one rule fires on this circuit"
+   },
+   "excluded": {},
+   "never_fired": [
+    "and_ancilla_ccz_lowering_with_measured_uncompute",
+    "bilinear_rank_resynthesis_karatsuba",
+    "pauli_exponential_commutation_merge",
+    "pauli_frame_rotation_merge",
+    "pauli_subalgebra_dimension_recompression"
+   ]
+  }
+ ],
+ "judge_cache": {
+  "reference_hits": 7,
+  "reference_misses": 126,
+  "ref_side_hits": 7,
+  "ref_side_misses": 126,
+  "window_hits": 210,
+  "window_misses": 133,
+  "whole_checks": 133,
+  "references": 126,
+  "ref_sides": 126,
+  "windows": 0,
+  "verdicts": 133
+ },
+ "memo": {
+  "mem_hits": 0,
+  "disk_hits": 0,
+  "misses": 3,
+  "seconds_saved": 0.0,
+  "entries": 3,
+  "disk_entries": 3
+ },
+ "frozen": {
+  "checked": true,
+  "files": 51,
+  "seconds": 0.0012181249912828207,
+  "calls": 144
+ },
+ "frozen_rechecked": 51
+}
