@@ -49,7 +49,9 @@ def prepare(entry: dict, arm: str) -> tuple[Circuit, float]:
             c = library.pyzx_reduce(c)
         elif arm == "L2" and counts(c)["rz"]:
             from .dpf import dpf
-            c, eps = dpf(c, metric.EPS_TOTAL, label=entry.get("plot_name", entry["name"]))
+            # k=3: angles fixed to pi/4 multiples, no phase-kickback ancillas (the PK lowering fails verification
+            # upstream, see README); keeps every L2 input exactly checkable.
+            c, eps = dpf(c, metric.EPS_TOTAL, k=3, label=entry.get("plot_name", entry["name"]))
             assert eps <= metric.EPS_DPF, f"DPF spent {eps} > {metric.EPS_DPF}"
     os.makedirs(os.path.dirname(path), exist_ok=True)
     save(c, path + ".qasm")
@@ -145,7 +147,9 @@ def _logger(arm):
 
 
 # ---- training -----------------------------------------------------------------------------------------------------
-def train(arm: str, circuits: list, ask, ideas: int = IDEAS, attempts: int = ATTEMPTS):
+def train(arm: str, circuits: list, ask, ideas: int = IDEAS, attempts: int = ATTEMPTS, ask_scout=None):
+    """ask: implementer backend; ask_scout: scout backend (defaults to ask)."""
+    ask_scout = ask_scout or ask
     log = _logger(arm)
     for entry in circuits:
         start, name = time.time(), entry["name"]
@@ -158,7 +162,7 @@ def train(arm: str, circuits: list, ask, ideas: int = IDEAS, attempts: int = ATT
         log(dict(phase="start", circuit=name, t=t_cur, counts=counts(c)))
         book = [dict(name=os.path.basename(p)[4:-3], doc=_doc(p)) for p in playbook_rules(arm)]
         try:
-            found = agents.scout(ask, arm, entry["family"], c, metric.EPS_LLM - eps_llm, book, ideas, zinit)
+            found = agents.scout(ask_scout, arm, entry["family"], c, metric.EPS_LLM - eps_llm, book, ideas, zinit)
         except Exception as e:
             log(dict(phase="scout", circuit=name, error=str(e)[-600:])); continue
         log(dict(phase="scout", circuit=name, ideas=found))

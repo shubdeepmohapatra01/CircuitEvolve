@@ -31,11 +31,12 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["train", "test"])
     ap.add_argument("arm", choices=["L0", "L1", "L2"])
-    ap.add_argument("--family"), ap.add_argument("--only"), ap.add_argument("--model", default="sonnet")
+    ap.add_argument("--family"), ap.add_argument("--only"), ap.add_argument("--model", default="sonnet"), ap.add_argument("--scout-model", default="opus")
     ap.add_argument("--ideas", type=int, default=loop.IDEAS), ap.add_argument("--attempts", type=int, default=loop.ATTEMPTS)
     a = ap.parse_args()
     if a.cmd == "train":
-        loop.train(a.arm, circuits("train", a.arm, a.family, a.only), agents.claude_cli(a.model), a.ideas, a.attempts)
+        loop.train(a.arm, circuits("train", a.arm, a.family, a.only), agents.claude_cli(a.model), a.ideas, a.attempts,
+                   ask_scout=agents.claude_cli(a.scout_model))
     else:
         rows = loop.test(a.arm, circuits("test", a.arm, a.family, a.only))
         os.makedirs(os.path.join(loop.ROOT, "results"), exist_ok=True)
