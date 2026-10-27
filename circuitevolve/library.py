@@ -50,21 +50,37 @@ def name_gates(c: Circuit) -> Circuit:
 
 
 def load(path: str) -> Circuit:
-    """Our own QASM parser; falls back to pytket for gate sets we don't speak (u3, cp, ...).
-
-    The fallback rebases to {CX, H, Rz} WITHOUT running any optimization pass, so it changes
-    gate representation only, not gate count/structure beyond what the rebase itself requires.
-    """
+    """Our own QASM parser; falls back to pytket for gate sets we don't speak (u3, cp, custom `gate` blocks, several
+    registers). The fallback only unrolls/rebases to {CX, H, Rz}: no optimization pass.
+    Final measurements are stripped (T-count concerns the unitary part); mid-circuit measurements are kept."""
     try:
         c = C.load(path)
     except Exception:
         from pytket import OpType
-        from pytket.passes import AutoRebase
+        from pytket.passes import AutoRebase, DecomposeBoxes, RemoveBarriers
         from pytket.qasm import circuit_from_qasm, circuit_to_qasm_str
         tkc = circuit_from_qasm(path)
+        DecomposeBoxes().apply(tkc)            # user-defined `gate` blocks arrive as boxes
+        RemoveBarriers().apply(tkc)
+        tkc.flatten_registers()                # one q / one c register, as our parser expects
         AutoRebase({OpType.CX, OpType.H, OpType.Rz}).apply(tkc)
         c = from_qasm(circuit_to_qasm_str(tkc, maxwidth=10 ** 6))
-    return name_gates(c)
+    return name_gates(strip_final_measurements(c))
+
+
+def strip_final_measurements(c: Circuit) -> Circuit:
+    """Drop measurements that nothing acts on afterwards (no later gate on that qubit, bit not used by a condition)."""
+    keep, used_bits, busy = [], set(), set()
+    for g in reversed(c.gates):
+        if g.name == "measure" and g.qubits[0] not in busy and g.cbit not in used_bits:
+            continue
+        keep.append(g)
+        busy.update(g.qubits)
+        if g.cond is not None:
+            used_bits.add(g.cond)
+    gates = keep[::-1]
+    nonunitary = any(g.name in ("measure", "reset") or g.cond is not None for g in gates)
+    return Circuit(c.n, gates, c.nc if nonunitary else 0)
 
 
 def tket(c: Circuit) -> Circuit:
