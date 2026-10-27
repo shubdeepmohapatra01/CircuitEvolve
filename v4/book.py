@@ -159,6 +159,28 @@ best baseline, not against zero. Do not propose a floor rule's idea again.
 """
 
 
+def floor_table() -> str:
+    """The floor's own measured T next to the best baseline, from the last floor_gate run.
+
+    V4_README 4.4, "the trap": a floor tier silently changes what the scout sees. If the floor contains
+    pyzx-class fusion and DPF-class fixing but BOOK.md does not SAY what the floor already reaches, the
+    scout keeps proposing both and they come back as "no improvement beyond the book"."""
+    import json as _json
+    rows = []
+    for p in sorted(RESULTS.glob("floor_gate_*.json")):
+        rows = _json.loads(p.read_text())["rows"]
+        src = p.name
+    if not rows:
+        return "_No floor_gate run recorded yet._\n"
+    out = ["", f"## What the floor tier ALONE already reaches (eps 1e-3, from `results/{src}`)", "",
+           "Do not propose an idea whose whole effect is to reach a number in the 'floor' column.", "",
+           "| circuit | floor T | best baseline | its T | gap |", "|---|---|---|---|---|"]
+    for r in rows:
+        out.append(f"| {r['label']} | **{r['floor_t']}** | {r['best_baseline']} | {r['best_baseline_t']} | "
+                   f"{r['gap']:+d} |")
+    return "\n".join(out) + "\n"
+
+
 def write_book_md(bk=None, path=None) -> Path:
     bk = book() if bk is None else bk
     path = Path(path or BOOK_MD)
@@ -170,5 +192,5 @@ def write_book_md(bk=None, path=None) -> Path:
             ev = "; ".join(f"{k}: {v}" for k, v in ev.items())
         rows.append(f"| {r.tier} | {r.name} | {r.kind} | {r.error_class} | {r.resource_class} | {idea} | "
                     f"{ev} |")
-    path.write_text(HEAD + "\n".join(rows) + "\n")
+    path.write_text(HEAD + "\n".join(rows) + "\n" + floor_table())
     return path

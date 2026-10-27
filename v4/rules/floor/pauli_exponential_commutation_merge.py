@@ -1,50 +1,35 @@
-"""Pauli-exponential normal form: front-frame Paulis of all rotations, merge commuting-reachable equal-Pauli pairs."""
+"""Pauli-exponential normal form: front-frame Paulis of all rotations, merge commuting-reachable
+equal-Pauli pairs.
+
+v4 change (V4_README section 9): the front-frame Paulis come from `v4.api.pauli.frames`, one forward
+sweep over a Clifford tableau, instead of this rule's own `_records`, which conjugated each rotation's Z
+back through the whole Clifford prefix - O(rotations x ops). That hand-rolled pass was the single largest
+cost in the whole v3 book: 14.4 M calls to `pauli.conjugate`, 13.5 s of qpe_8's 27 s profiled run. The
+API version is 2.40 ms against 174.08 ms on hhl_8 and returns the same Paulis rotation for rotation
+(asserted in v4/tests/test_p3.py). The matches, and therefore every accepted rewrite, are unchanged.
+"""
 import math
 
 from v4.api import Precondition, Rule
 from v4.api import dv, pauli
 
-_INV = {"s": "sdg", "sdg": "s"}
-_CLIFF = ("h", "s", "sdg", "x", "z", "cx", "cz")
 _TOL = 1e-9
-_Q = math.pi / 4
-
-
-def _on_grid(theta):
-    r = theta / _Q
-    return abs(r - round(r)) < _TOL / _Q * 4
 
 
 def _reduce(theta):
-    t = math.fmod(theta, 2 * math.pi)
-    if t > math.pi:
-        t -= 2 * math.pi
-    elif t <= -math.pi:
-        t += 2 * math.pi
-    return t
-
-
-def _commute(a, b):
-    return (bin((a[0] & b[1]) ^ (a[1] & b[0])).count("1") & 1) == 0
+    return dv.reduce_angle(theta)
 
 
 def _records(ops):
-    """[(op position, theta, (x, z) key, eta)] with front-frame Pauli of every rotation op."""
-    recs = []
-    prefix = []                       # Clifford ops seen so far
-    for pos, op in enumerate(ops):
-        g, qs, _ = op
-        th = dv.rotation(op)
-        if th is None:
-            if g not in _CLIFF:
-                return None
-            prefix.append((_INV.get(g, g), qs))
-            continue
-        p = pauli.z_on(qs[0])
-        for gi, qi in reversed(prefix):
-            p = pauli.conjugate(p, gi, qi)
-        recs.append((pos, th, (p[0], p[1]), p[2], op[0] == "rz" and not _on_grid(th)))
-    return recs
+    """[(pos, theta, (x, z) axis, sign, needs_gridsynth)] - `pauli.frames` with this rule's field order.
+
+    `needs_gridsynth` is what the merge test keys on: a rotation already on the pi/4 grid is a Clifford
+    or T gate and merging it only pays if the RESULT is still on the grid, while an off-grid rotation
+    costs gridsynth and is always worth removing."""
+    recs = pauli.frames(ops)
+    if recs is None:
+        return None
+    return [(r.pos, r.theta, r.key, r.sign, not r.on_grid) for r in recs]
 
 
 def find_matches(c):
@@ -64,10 +49,10 @@ def find_matches(c):
                     eff = tj + s * tk
                     ok = True
                     if not (nj and nk):
-                        ok = _on_grid(eff)
+                        ok = dv.on_grid(eff, _TOL)
                     if ok:
                         cand.append((-(abs(tj) + abs(tk)), pj, pk, s))
-            elif not _commute((keyj[0], keyj[1]), (keyk[0], keyk[1])):
+            elif not pauli.commutes((keyj[0], keyj[1], 1), (keyk[0], keyk[1], 1)):
                 break
     cand.sort()
     out, used = [], set()
@@ -105,6 +90,12 @@ RULE = Rule(
          "one commutes with all rotation Paulis between them; the edit is made in place in the original op list.",
     precondition=Precondition(families=("dv_angle",), needs=("rotations",),
         note="front-frames the rotations of a Clifford+Rz op list"),
+    tier="floor",
+    evidence=dict(
+        baseline="pyzx full_reduce",
+        measured={"hhl_8": "29331 -> 29205 = pyzx exactly (with the frame rule);\n                            29273 alone from the TKET input"},
+        source="v3/results/p2/SUMMARY.md, attempt qpe_8 a2",
+        why_floor="takes hhl_8 to pyzx exactly, the one angle circuit the frame rule does not reach;\n                   V4_README section 4.1"),
     trigger=find_matches,
     apply=apply_match,
 )

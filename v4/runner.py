@@ -39,6 +39,7 @@ import traceback
 from dataclasses import dataclass, field
 
 from .api import describe
+from .api import budget as api_budget
 from .caps import OpcodeBudget, OpcodeExceeded
 from .judge import dv as J
 from .judge.frozen import check_frozen
@@ -146,7 +147,7 @@ def prefilter(circuit, book) -> tuple:
     return keep, out
 
 
-def trigger_prepass(circuit, book, opcode_budget=None) -> tuple:
+def trigger_prepass(circuit, book, opcode_budget=None, ledger=None) -> tuple:
     """(rules that match somewhere on this circuit, names that match nowhere, opcode report).
 
     V4_README section 0: `never_fires` cost 20.86 h of the P2 run to discover nothing, because
@@ -154,7 +155,7 @@ def trigger_prepass(circuit, book, opcode_budget=None) -> tuple:
     the whole suite x 6 rules costs 0.48 s."""
     keep, none, rep = [], [], {}
     for r in book:
-        ms, b = _call(r.trigger, circuit, r, opcode_budget, rep_ops := {})
+        ms, b = _call(r.trigger, circuit, r, opcode_budget, rep_ops := {}, ledger=ledger)
         rep[r.name] = dict(b, opcodes_total=rep_ops.get(r.name))
         if ms is None:
             none.append(r.name)
@@ -215,10 +216,11 @@ def optimize(circuit, book, eps: float, reference=None, pass_limit: int = PASS_L
 def _multi_order(circuit, book, eps, reference, pass_limit, label, order, ledger, ledger_total, solo,
                  opcode_budget, excluded, t0) -> Result:
     """'best' / 'gain' / 'min_all': the solo runs are computed ONCE here and shared by both orderings."""
-    base = _price_fn(circuit, eps, ledger, ledger_total)(circuit)
     total = ledger.total if ledger is not None else (eps if ledger_total is None else ledger_total)
+    base = _price_fn(circuit, eps, ledger, ledger_total, reference)(circuit)
     # trigger-only pre-pass: a rule that matches NOWHERE on this circuit needs no solo run (V4_README 5.1)
-    live, dead, _ = trigger_prepass(circuit, book, opcode_budget)
+    live, dead, _ = trigger_prepass(circuit, book, opcode_budget,
+                                    ledger or Ledger(total))
     if not live:
         led = ledger or Ledger(total)
         r = _finish(circuit, circuit, led, [], 0, t0, [], order_choice=dict(chosen="no rule triggers"))
@@ -265,10 +267,24 @@ def _multi_order(circuit, book, eps, reference, pass_limit, label, order, ledger
     return best
 
 
-def _price_fn(circuit, eps, ledger, ledger_total):
+def _price_fn(circuit, eps, ledger, ledger_total, price_ref=None):
+    """Pricing while optimising, at the eps_rz of the circuit the run is MEASURED AGAINST.
+
+    The frozen metric's convention (core/metric.py) is eps_rz = eps_synth / N_Rz, and the runner prices
+    candidates at the INPUT's eps_rz because N_Rz only ever drops, so the synthesis bound N_Rz * eps_rz
+    still holds. `price_ref` is that input: the ORIGINAL circuit, which is also the verification
+    reference - NOT whatever intermediate circuit this particular call happens to start from.
+
+    This matters, and it bit this build. `check_on_target` applies a candidate to the book's cached
+    residual, which has fewer rotations than the original (qft_8: 33 vs 48) and therefore a COARSER
+    eps_rz. Pricing there made gridsynth words shorter and turned two merges on qft_8 into a 6 T
+    "improvement" that a run from the original does not see. Pricing against the reference removes the
+    dependence on where the search happens to start.
+    """
     exact = J.is_exact
     total = (ledger.total if ledger is not None else (eps if ledger_total is None else ledger_total))
-    eps_rz_in = None if exact(circuit) else J.measure(circuit, total)["eps_rz"]
+    base = circuit if price_ref is None else price_ref
+    eps_rz_in = None if exact(base) else J.measure(base, total)["eps_rz"]
 
     def price(c):
         return J.measure(c) if exact(c) else J.measure(c, total, eps_rz=eps_rz_in)
@@ -282,7 +298,7 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
     led = ledger if ledger is not None else Ledger(eps if ledger_total is None else ledger_total)
     ref = circuit if reference is None else reference
     exact = J.is_exact
-    price = _price_fn(circuit, eps, led, ledger_total)
+    price = _price_fn(circuit, eps, led, ledger_total, reference)
 
     def check(cand, refc, rule, budget):
         """Verdict of cand vs refc under the rule's two tags."""
@@ -311,7 +327,8 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
             changed = True
             while changed:
                 changed = False
-                matches, rep = _call(rule.trigger, cur, rule, opcode_budget, opcodes)
+                matches, rep = _call(rule.trigger, cur, rule, opcode_budget, opcodes,
+                                    ledger=led)
                 if matches is None:
                     log.append(dict(rule=rule.name, pass_=passes, match=None, accepted=False, verified=False,
                                     reason=rep["reason"], traceback=rep.get("traceback", "")))
@@ -319,7 +336,9 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
                     break
                 for i, m in enumerate(matches):
                     entry = dict(rule=rule.name, pass_=passes, match=i, accepted=False)
-                    cand, rep = _call(rule.apply, cur, rule, opcode_budget, opcodes, m)
+                    spent_before = led.draws.get(rule.name, 0.0)
+                    cand, rep = _call(rule.apply, cur, rule, opcode_budget, opcodes, m,
+                                      ledger=led)
                     if cand is None:
                         entry.update(verified=False, reason=rep["reason"], traceback=rep.get("traceback", ""))
                         log.append(entry)
@@ -336,6 +355,9 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
                         break
                     entry["cost"] = {k: c_cost[k] for k in ("t_count", "rotations", "cx", "qubits")}
                     if not dv_key(c_cost) < dv_key(cur_cost):
+                        back = led.draws.get(rule.name, 0.0) - spent_before
+                        if back > 0:
+                            led.refund(rule.name, back)           # dropped: the rule keeps no error
                         entry.update(verified=None, reason="no cost decrease", priced_out=True)
                         log.append(entry)
                         continue
@@ -367,6 +389,11 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
                         disabled.add(rule.name)
                         break
                     if entry["verified"]:
+                        # a rule that drew its own error already spent it; the runner charges only the
+                        # difference between the MEASURED distance and what the rule reserved
+                        drawn = led.draws.get(rule.name, 0.0) - spent_before
+                        d_charge = max(0.0, d_charge - drawn)
+                        entry["rule_drew"] = drawn
                         if d_charge and not led.draw(rule.name, d_charge):
                             entry.update(accepted=False, reason=f"draw {d_charge:.3e} exceeds the remaining "
                                                                 f"rule budget {led.remaining:.3e}")
@@ -390,20 +417,26 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
     return res
 
 
-def _call(fn, circuit, rule, budget, opcodes, *extra):
-    """Call rule code, optionally under an opcode budget.
+def _call(fn, circuit, rule, opbudget, opcodes, *extra, ledger=None):
+    """Call rule code, under an opcode budget and with the live error ledger installed.
+
+    `v4.api.budget` is how a rule sees the shared error budget (V4_README section 8): `remaining()` and
+    `draw(amount)`. The ledger is installed here, around every call into rule code, so a rule can decide
+    how much of the 5e-4 its own rewrite is worth - and so a rule running OUTSIDE a runner sees 0.0 and
+    a refused draw, and must then do the exact rewrite or nothing.
 
     -> (value, {}) on success, or (None, {'reason': ...}) when the rule raised or ran out of budget."""
     try:
-        if budget:
-            b = OpcodeBudget(budget)
-            try:
-                with b:
-                    out = fn(circuit, *extra)
-            finally:
-                opcodes[rule.name] = opcodes.get(rule.name, 0) + b.used
-            return out, b.report()
-        return fn(circuit, *extra), {}
+        with api_budget.installed(ledger, rule.name):
+            if opbudget:
+                b = OpcodeBudget(opbudget)
+                try:
+                    with b:
+                        out = fn(circuit, *extra)
+                finally:
+                    opcodes[rule.name] = opcodes.get(rule.name, 0) + b.used
+                return out, b.report()
+            return fn(circuit, *extra), {}
     except OpcodeExceeded as e:
         return None, dict(reason=str(e))
     except Exception as e:                                               # noqa: BLE001 (rule code)

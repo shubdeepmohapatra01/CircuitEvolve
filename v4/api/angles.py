@@ -42,8 +42,21 @@ def on_grid(theta, tol: float = GRID_TOL) -> bool:
 
 
 def rz_distance(dtheta: float) -> float:
-    """Phase-aligned operator distance between rz(theta) and rz(theta + dtheta): |sin(dtheta / 2)|."""
-    return abs(math.sin(float(dtheta) / 2.0))
+    """Phase-aligned operator distance between rz(theta) and rz(theta + dtheta).
+
+    Derivation (and it is NOT |sin(dtheta/2)|, which is what a first guess gives and what this function
+    returned until a test compared it against the judge):
+
+        rz(t) = diag(e^-it/2, e^+it/2),  so  V^dag U = diag(e^+id/2, e^-id/2)  with d = dtheta,
+        Tr = 2 cos(d/2), the aligning phase is c = sign(cos(d/2)), and both diagonal entries of
+        U - c V have modulus sqrt(2 - 2 |cos(d/2)|).
+
+    So the distance is `sqrt(2 - 2 |cos(d/2)|)`. It agrees with |dtheta|/2 to first order, which is why
+    the wrong formula looked right at 1e-3 and was 8e-5 relative off at 0.05; and unlike |sin(d/2)| it
+    correctly gives 0 at d = 2 pi, where rz differs only by a global phase. Checked against the judge's
+    own measurement in v4/tests/test_p3.py.
+    """
+    return math.sqrt(max(0.0, 2.0 - 2.0 * abs(math.cos(float(dtheta) / 2.0))))
 
 
 def dyadic(theta: float, m: int) -> Dyadic:

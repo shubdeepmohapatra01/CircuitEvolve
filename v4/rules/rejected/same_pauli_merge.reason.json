@@ -1,0 +1,12 @@
+{
+ "rule": "same_pauli_merge",
+ "decision": "reject",
+ "level": "idea",
+ "reason": "fires and verifies, but lowers the primary metric on no circuit beyond the floor tier",
+ "measured": {
+  "qft_8": "1583 -> 1583; the trigger matches twice and both applications are priced out (no T decrease)",
+  "note": "V4_README 4.1 reports 1577 for this class. It is not reachable: see v4/BUILD_LOG.md P2."
+ },
+ "why_not_floor": "The forward-push direction finds no merge the two backward-push floor rules miss. The 6 T between the floor's 1583 and pyzx's 1577 on qft_8 is therefore NOT in the phase-folding class.",
+ "kept_for": "the P1 planted-bug control pair (same_pauli_merge / same_pauli_merge_planted), re-run in P5"
+}
