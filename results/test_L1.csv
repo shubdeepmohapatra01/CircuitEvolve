@@ -1,0 +1,14 @@
+circuit,arm,t,qubits,rz,measure,eps_used,eps_gridsynth,t_no_playbook,e2e_check,e2e_mode,e2e_reason,s
+adder_6,L1,46,15,0,1,0.0,0.0,47,ok,sampled,,4.0
+mult_4,L1,68,12,0,0,0.0,0.0,68,ok,nochange,,3.5
+adder_8,L1,177,24,0,0,0.0,0.0,177,ok,nochange,,16.0
+mcx_10,L1,141,20,0,1,0.0,0.0,100,ok,sampled,,9.3
+modred_21,L1,84,12,0,1,0.0,0.0,73,ok,sampled,,3.9
+qft_8,L1,1577,8,33,0,0.0,0.001,1577,ok,nochange,,1.6
+qpe_8,L1,11547,8,206,0,0.0,0.001,11547,ok,nochange,,1.3
+hhl_8,L1,29510,8,492,0,0.0,0.001,29510,ok,nochange,,7.0
+qae_13,L1,4527,13,88,0,0.0,0.001,4527,ok,nochange,,0.9
+tfim_6,L1,8560,6,160,0,0.0,0.001,8560,ok,nochange,,0.8
+heisenberg_6,L1,8200,6,150,0,0.0,0.001,8200,ok,nochange,,0.6
+hubbard_8,L1,4312,8,84,0,0.0,0.001,4312,ok,nochange,,1.2
+qml_13,L1,6326,13,118,0,0.0,0.001,6326,ok,nochange,,1.8
