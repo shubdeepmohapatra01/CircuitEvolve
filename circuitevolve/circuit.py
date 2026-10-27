@@ -125,7 +125,6 @@ def to_qasm(c: Circuit) -> str:
 
 
 _ALIAS = {"u1": "rz", "p": "rz", "cnot": "cx", "toffoli": "ccx", "tdag": "tdg", "sdag": "sdg"}
-_LINE = re.compile(r"^(?:if\(c\[(\d+)\]==1\)\s*)?(\w+)(?:\(([^)]*)\))?\s+(.+?)(?:\s*->\s*c\[(\d+)\])?$")
 
 
 def _angle(expr: str) -> float:
@@ -137,25 +136,30 @@ def _angle(expr: str) -> float:
 
 def from_qasm(text: str) -> Circuit:
     """Parse OPENQASM 2 in our gate set (also accepts pyzx/tket output: u1/p as rz, angles with pi).
-    rz/u1/p differ only by a global phase, which the verifier ignores. One qreg q and one creg c."""
-    n = nc = 0
-    gates = []
+    rz/u1/p differ only by a global phase, which the verifier ignores. Several named qreg/creg are
+    concatenated in declaration order (e.g. qreg eval[3]; qreg q[3]; -> eval = 0..2, q = 3..5)."""
+    qoff, coff, n, nc, gates = {}, {}, 0, 0, []
+    ref = re.compile(r"(\w+)\[(\d+)\]")
     for raw in re.sub(r"//.*", "", text).split(";"):
         line = " ".join(raw.split())
         if not line or line.startswith(("OPENQASM", "include", "barrier")):
             continue
-        if line.startswith("qreg"):
-            n += int(re.search(r"\[(\d+)\]", line).group(1)); continue
-        if line.startswith("creg"):
-            nc += int(re.search(r"\[(\d+)\]", line).group(1)); continue
-        m = _LINE.match(line)
+        if line.startswith(("qreg", "creg")):
+            name, size = ref.search(line).groups()
+            if line.startswith("qreg"):
+                qoff[name], n = n, n + int(size)
+            else:
+                coff[name], nc = nc, nc + int(size)
+            continue
+        m = re.match(r"^(?:if\((\w+)\[(\d+)\]==1\)\s*)?(\w+)(?:\(([^)]*)\))?\s+(.+?)(?:\s*->\s*(\w+)\[(\d+)\])?$", line)
         if not m:
             raise ValueError(f"cannot parse: {line!r}")
-        cond, name, arg, qs, cbit = m.groups()
+        creg, cidx, name, arg, qs, mreg, midx = m.groups()
         name = _ALIAS.get(name.lower(), name.lower())
-        qubits = tuple(int(x) for x in re.findall(r"\[(\d+)\]", qs))
+        qubits = tuple(qoff[r] + int(i) for r, i in ref.findall(qs))
         gates.append(Gate(name, qubits, theta=_angle(arg) if name == "rz" else None,
-                          cbit=int(cbit) if cbit else None, cond=int(cond) if cond else None))
+                          cbit=coff[mreg] + int(midx) if mreg else None,
+                          cond=coff[creg] + int(cidx) if creg else None))
     return Circuit(n, gates, nc)
 
 

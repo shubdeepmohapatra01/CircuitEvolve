@@ -141,7 +141,10 @@ def train(arm: str, circuits: list, ask, ideas: int = IDEAS, attempts: int = ATT
                 try:
                     code = agents.implement(ask, arm, c, metric.EPS_LLM - eps_llm, book, idea, feedback, code)
                 except Exception as e:
-                    feedback = f"implementer error: {e}"; continue
+                    feedback = f"implementer error: {e}"
+                    log(dict(phase="attempt", circuit=name, idea=idea["name"], attempt=k, accepted=False,
+                             verdict="implementer_error", reason=str(e)[-600:]))
+                    continue
                 os.makedirs(os.path.join(ROOT, ".cache", "candidates"), exist_ok=True)
                 with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False, dir=os.path.join(ROOT, ".cache", "candidates")) as f:
                     f.write(code)
