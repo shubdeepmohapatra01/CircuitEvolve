@@ -471,3 +471,72 @@ implementation level with feedback that is actually actionable and actually true
 That is a better route to a verifiable PKAC card than hand-writing one: the agent is told precisely what
 to change, and `relaxed_window` means a narrower construction only has to fit in its own window rather
 than in the whole circuit.
+
+## Three bugs the first live LLM attempt found
+
+One real attempt was run against tfim_6 before committing 60 to an unattended night. It cost ~$1, the
+whole path worked end to end, and it found three things.
+
+### 1. The prefilter killed the best card the scout produced
+
+The card (kept as `v4/tests/fixtures/card_tfim6_gaussian.json`) was the Jordan-Wigner / Givens
+free-fermion idea - the one that gave **-60.8%** in v3 - correctly citing the fingerprint
+(`free_fermion=true, majorana_planes=12`), correctly arguing that the floor's phase-gadget fusion cannot
+reach it ("the 22 distinct axis classes here are genuinely distinct as Paulis - they are only redundant
+as Majorana bilinears, which is a relation ZX calculus does not have"), with sources.
+
+The prefilter rejected it. Its test for V4_README 7's "proposes to improve rotation synthesis" was a
+substring match for `"gridsynth"`, and the card's cost estimate says *"gridsynth's ~3*log2(1/eps_rz) cost
+per rotation falls slightly too, to ~52 T"*. Reasoning about what the synthesiser costs is not proposing
+to replace it.
+
+Fixed: an improvement verb must sit next to the synthesiser noun, and the check never fires unless the
+card's lever is `angle_cost` (the synthesiser IS that lever). It leans deliberately towards letting cards
+through, because the errors are not symmetric - a false positive burns a whole attempt AND loses the
+idea, while a false negative costs one implementation attempt that the judge settles. Verified on 7 cases
+(3 real proposals blocked, 4 legitimate cards passed, including the real one); the one residual miss
+("gridsynth is not optimal here" passes) is a false negative, the safe direction.
+
+### 2. The fingerprint's rotation-count headroom was an estimate, and it was badly wrong
+
+`foldable_remaining` was derived from phase-polynomial class sizes, pooled across Hadamard-free segments -
+but a parity label only means anything WITHIN its own segment. On tfim_6 it reported **152** foldable
+rotations. The truth is **0**: pyzx, TKET and BQSKit-FT all sit at 8560 there, and the floor's merge
+rules find nothing.
+
+It is now MEASURED - the floor's own merge triggers are run on the circuit and the matches counted, which
+costs milliseconds - and it reproduces V4_README section 7's table:
+
+| circuit (raw input) | foldable, measured | class-size bound | exactly dyadic at best K | free fermion |
+|---|---|---|---|---|
+| qft_8 | 12 | 21 | 48 | no |
+| qae_13 | 36 | 67 | 120 | no |
+| qpe_8 | 51 | 356 | 6 | no |
+| hhl_8 | 102 | 643 | 24 | no |
+| **tfim_6** | **0** | 138 | **0** | **yes** |
+
+And on the residual the scout actually sees, after the floor:
+
+| circuit | rotation_count | angle_cost | algebraic_structure | ancilla |
+|---|---|---|---|---|
+| qft_8 | 2 | 66 | 0 | 0 |
+| qae_13 | 1 | 151 | 0 | 0 |
+| qpe_8 | 0 | 30 | 149 | 0 |
+| hhl_8 | 0 | 27 | 333 | 0 |
+| **tfim_6** | **0** | **0** | **150** | 0 |
+
+tfim_6's row is the project's thesis in one line - both baseline levers exactly empty, lever (c) wide
+open - and the estimate would have sent the scout at the one lever that is closed there. The loose bound
+is kept as `foldable`, labelled as a bound.
+
+### 3. The loop had no resume
+
+An unattended run can be stopped by the STOP file, a usage limit, a kill, or the machine sleeping. The
+BOOK survived on disk either way (`rules/accepted/` + `BOOK.md`), but the attempt counter and every
+circuit's HISTORY reset - so the scout would be handed an empty history and re-propose ideas that had
+already failed, which is the one thing `history.json` exists to prevent.
+
+`Loop._resume()` now rebuilds both from the append-only `attempts.jsonl`: spent attempts count against
+the global budget, each circuit's cards and outcomes are restored, a circuit already attempted in the
+current global loop is not redone, and a truncated final line from a kill mid-write is skipped rather
+than crashing the restart. Re-running with the same `--tag` continues the same run.

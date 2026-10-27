@@ -298,3 +298,48 @@ def test_a_real_rule_is_admitted_and_the_book_and_BOOK_md_both_change(tmp_path):
         Path("v4/rules/BOOK.md").write_text(before)
         if dst.exists():
             dst.unlink()
+
+
+# ------------------------------------------------------------------------------------------ prefilter precision
+def test_the_prefilter_does_not_kill_the_real_tfim6_free_fermion_card():
+    """A REGRESSION TEST ON A REAL CARD, kept as a fixture because the first prefilter killed it.
+
+    `fixtures/card_tfim6_gaussian.json` is what the scout actually produced for tfim_6 in the first live
+    attempt: the Jordan-Wigner / Givens free-fermion idea - the one that gave -60.8% in v3 - correctly
+    citing the fingerprint and correctly arguing that the floor's phase-gadget fusion cannot reach it.
+    The prefilter rejected it, because it tested whether the card's text CONTAINED "gridsynth" and the
+    card's cost estimate reasons about what gridsynth costs.
+
+    The asymmetry is the point: a false positive burns a whole attempt AND loses the idea, while a false
+    negative costs one implementation attempt that the judge settles. So this must pass."""
+    import json
+    from v4 import book as B, fingerprint as FP
+    card = json.loads(Path("v4/tests/fixtures/card_tfim6_gaussian.json").read_text())
+    rep = FP.report("tfim_6", 1e-3, B.floor_tier())
+    assert FP.prefilter(card, rep) == "", "the prefilter must not reject this card"
+    assert card["lever"] == "algebraic_structure"
+    assert rep.headroom("algebraic_structure") > 0, "lever (c) must have headroom on tfim_6"
+    assert rep.headroom("angle_cost") == 0 and rep.headroom("rotation_count") == 0, \
+        "and both baseline levers must have NONE - this is the row that is the project's thesis"
+
+
+def test_the_prefilter_still_blocks_a_card_that_really_proposes_a_better_synthesiser():
+    import json
+    from v4 import book as B, fingerprint as FP
+    base = json.loads(Path("v4/tests/fixtures/card_tfim6_gaussian.json").read_text())
+    rep = FP.report("qft_8", 1e-3, B.floor_tier())        # qft_8 HAS angle_cost headroom
+    for over in (dict(identity="use a better gridsynth implementation for every rz"),
+                 dict(identity="replace Ross-Selinger with our own synthesiser"),
+                 dict(expected_effect="we can beat rz synthesis by 20%")):
+        card = dict(base, lever="angle_cost", expected_t_saving_on_target=10)
+        card.update(over)
+        assert "improve rotation synthesis" in FP.prefilter(card, rep), over
+    # ... and does NOT block a card that merely reasons about what gridsynth costs
+    ok = dict(base, lever="angle_cost", expected_t_saving_on_target=10,
+              identity="snap angles onto the dyadic grid, paying from the ledger",
+              expected_effect="gridsynth's ~3*log2(1/eps_rz) cost per rotation falls slightly too")
+    assert FP.prefilter(ok, rep) == "", FP.prefilter(ok, rep)
+    # ... and never fires when the lever is not angle_cost
+    other = dict(base, lever="rotation_count", expected_t_saving_on_target=10,
+                 identity="use a better gridsynth for every rz")
+    assert FP.prefilter(other, rep) == ""

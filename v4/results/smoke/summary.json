@@ -1,0 +1,14 @@
+{
+ "loops": 1,
+ "attempts_used": 1,
+ "book": [
+  "dpf_dyadic_angle_fixing",
+  "pauli_exponential_commutation_merge",
+  "pauli_frame_rotation_merge"
+ ],
+ "book_digest": "115920fb1d409785",
+ "seconds": 65.8,
+ "final": {
+  "tfim_6": 8560
+ }
+}

@@ -65,18 +65,33 @@ CIRCUIT_ORDER = ("tfim_6", "hhl_8", "qpe_8", "qae_13", "qft_8", "adder_8", "mult
 class LoopConfig:
     eps: float = 1e-3
     circuit_order: tuple = CIRCUIT_ORDER
-    max_attempts_per_circuit: int = 3          # the `attempt in (1, 2, 3)` of section 5
+    max_attempts_per_circuit: int = 3          # the implementer retries of section 5's `attempt in 1..3`
     global_budget_attempts: int = 60           # ONE global budget, not per-circuit quotas
     global_budget_usd: float | None = None
-    max_loops: int = 4
+    max_loops: int = 6
     retire_after_loops: int = 2
     opcode_budget: int = DEFAULT_BUDGET
     subprocess_limit_s: float = 1800.0         # LLM / candidate wall clock: infrastructure, not science
     order_on_admission: str = "min_all"        # section 5.2
     tag: str = "p7"
+    reachable_attempts: int = 0                # derived in __post_init__
+    binding_bound: str = ""                    # which of the two bounds will actually stop the run
+
+    def __post_init__(self):
+        """Keep the two bounds coherent, and record it when they are not.
+
+        An attempt is one scout call plus up to `max_attempts_per_circuit` implementer calls, on ONE
+        circuit. One global loop is one attempt per circuit, so the loop can never use more than
+        `max_loops * len(circuit_order)` attempts: `global_budget_attempts` above that is slack and the
+        run stops early on the loop count instead. Setting `--budget 60 --loops 4` over 10 circuits
+        looks like 60 attempts and delivers 40."""
+        self.reachable_attempts = self.max_loops * len(self.circuit_order)
+        self.binding_bound = ("global_budget_attempts" if self.global_budget_attempts <
+                              self.reachable_attempts else "max_loops")
 
     def to_dict(self) -> dict:
-        return asdict(self)
+        return dict(asdict(self), reachable_attempts=self.reachable_attempts,
+                    binding_bound=self.binding_bound)
 
 
 @dataclass
@@ -210,10 +225,53 @@ class Loop:
         self.attempts_used = 0
         self.loop = 0
         self.history: dict = {lab: [] for lab in cfg.circuit_order}
+        self._resume()
         (self.dir / "config.json").write_text(json.dumps(
             dict(cfg.to_dict(), starting_book=[r.name for r in self.book],
                  starting_book_digest=B.digest(self.book),
                  floor_tier=[r.name for r in B.floor_tier()]), default=str, indent=1) + "\n")
+
+    # ---------------------------------------------------------------- resume
+    def _resume(self) -> None:
+        """Pick up where an interrupted run left off, from `attempts.jsonl`.
+
+        An unattended run can be stopped by anything - the STOP file, a usage limit, the machine going
+        to sleep, a kill. The BOOK survives on disk either way (`rules/accepted/` plus `BOOK.md`), but
+        without this the attempt counter and every circuit's HISTORY would reset, and the scout would be
+        handed an empty history and cheerfully re-propose the ideas that already failed. Re-running with
+        the same `--tag` therefore continues the same run: the attempts already spent are counted
+        against the global budget, and each circuit's cards and outcomes are restored.
+
+        `attempts.jsonl` is append-only, so this reads rather than rewrites, and a truncated last line
+        (a kill mid-write) is skipped instead of crashing the restart."""
+        f = self.dir / "attempts.jsonl"
+        if not f.is_file():
+            return
+        rows, bad = [], 0
+        for line in f.read_text().splitlines():
+            if not line.strip():
+                continue
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError:
+                bad += 1
+        if not rows:
+            return
+        for r in rows:
+            lab = r.get("label")
+            if lab in self.history:
+                self.history[lab].append(dict(attempt=r.get("attempt"), kind=r.get("kind"),
+                                              level=r.get("level"), card=r.get("card"),
+                                              summary=(r.get("feedback") or {}).get("summary"),
+                                              estimate=(r.get("card") or {}).get(
+                                                  "expected_t_saving_on_target"),
+                                              measured=(r.get("admission") or {}).get("helped")))
+        self.attempts_used = len(rows)
+        self.loop = max((r.get("loop") or 0) for r in rows)
+        self._append("resumed.jsonl", dict(time=time.time(), attempts_restored=self.attempts_used,
+                                           loop=self.loop, truncated_lines_skipped=bad,
+                                           book=[r.name for r in self.book],
+                                           per_circuit={k: len(v) for k, v in self.history.items()}))
 
     # ---------------------------------------------------------------- bookkeeping
     def _append(self, name: str, row: dict) -> None:
@@ -290,7 +348,7 @@ class Loop:
                    headroom=ctx["fingerprint"].get("headroom"),
                    admission=o.report.get("admission"), harness=o.report.get("reason"))
         self.history[label].append(dict(attempt=k, kind=o.kind, level=o.level, card=card,
-                                        summary=o.feedback.get("summary"),
+                                        loop_done=self.loop, summary=o.feedback.get("summary"),
                                         estimate=(card or {}).get("expected_t_saving_on_target"),
                                         measured=o.report.get("admission", {}).get("helped")))
         self._append("attempts.jsonl", row)
@@ -306,6 +364,8 @@ class Loop:
             for label in self.cfg.circuit_order:
                 if not self.budget_remains():
                     break
+                if any(h.get("loop_done") == self.loop for h in self.history[label]):
+                    continue                      # already attempted in this global loop (resumed run)
                 o = self.attempt(label, len(self.history[label]) + 1)
                 if o.admitted:
                     used_names.add(o.report["admission"]["rule"])

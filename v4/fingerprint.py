@@ -114,6 +114,21 @@ def _angle_levers(angs, eps_each: float, levels=(2, 3, 4, 5, 6, 7, 8, 9, 10, 12,
     return exact, frac, fix
 
 
+def _measured_foldable(circuit, fallback: int) -> int:
+    """How many rotation merges the floor's own merge rules still find on THIS circuit.
+
+    Measured, not estimated: the trigger pre-pass over the whole suite costs 0.48 s, so there is no
+    reason to guess. Falls back to the class-size bound only if the floor cannot be loaded."""
+    from . import book as B
+    try:
+        rules = [r for r in B.floor_tier() if "merge" in r.name]
+        if not rules:
+            return fallback
+        return max(len(r.trigger(circuit)) for r in rules)
+    except Exception:                                      # noqa: BLE001 (a missing floor is not fatal)
+        return fallback
+
+
 def report(label: str, eps: float = 1e-3, book=None, circuit=None, cost=None) -> LeverReport:
     """The fingerprint of the circuit AFTER `book` (default: the live book)."""
     from . import baselines as Ba, book as B
@@ -134,24 +149,42 @@ def report(label: str, eps: float = 1e-3, book=None, circuit=None, cost=None) ->
         r.offgrid_rotations = sum(1 for a in angs if not dv.on_grid(a))
         r.distinct_angles = len({round(dv.reduce_angle(a), 10) for a in angs if not dv.on_grid(a)})
 
-        # (a) rotation count
+        # ---- (a) rotation count. Two numbers, and they are not the same kind of thing.
+        #
+        # `foldable` is an UPPER BOUND from class sizes: a set of k rotations about one front-frame axis
+        # can lose at most k-1 of them. It is loose, because merging two also needs everything between
+        # them to commute with that axis.
+        #
+        # `foldable_remaining` is MEASURED: it runs the floor's own merge triggers on this circuit and
+        # counts the matches they actually find. That is what "how much of this lever is left" means, and
+        # it is what `headroom` uses. The estimate and the measurement disagree sharply, which is why the
+        # measurement is the one that counts: on tfim_6 the class-size bound says 152 and the truth is 0 -
+        # its axes repeat, but non-commuting rotations sit between every pair, so nothing merges. That 0
+        # is the whole reason tfim_6 is the project's thesis row, and an estimate of 152 would have sent
+        # the scout at the one lever that is empty there.
+        #
+        # Labels are also only comparable WITHIN one Hadamard-free segment - an earlier version pooled
+        # them across segments, which is what produced the 152.
         recs = pauli.frames(ops)
         if recs is not None:
             axes = {}
             for rec in recs:
                 axes.setdefault(rec.key, []).append(rec)
             r.pauli_axis_classes = len(axes)
-            # a class of size k can lose at most k-1 rotations to merging
             r.foldable = sum(len(v) - 1 for v in axes.values() if len(v) > 1)
-        labs = {}
+        seg_classes, seg_foldable = 0, 0
         for lo, hi in dv.segments(ops, cut=("h",)):
             rl = phasepoly.rotation_labels(ops[lo:hi])
-            if rl:
-                for _pos, _th, lab in rl:
-                    labs.setdefault(lab, 0)
-                    labs[lab] += 1
-        r.parity_classes = len(labs)
-        r.foldable_remaining = sum(v - 1 for v in labs.values() if v > 1)
+            if not rl:
+                continue
+            labs: dict = {}
+            for _pos, _th, lab in rl:
+                if lab[0]:
+                    labs[lab] = labs.get(lab, 0) + 1
+            seg_classes += len(labs)
+            seg_foldable += sum(v - 1 for v in labs.values() if v > 1)
+        r.parity_classes = seg_classes
+        r.foldable_remaining = _measured_foldable(circuit, seg_foldable)
 
         # (b) angle cost - per-angle allowance if the whole rule share went to one angle each
         r.exactly_dyadic, r.dyadic_fraction, r.fixable_at_k = _angle_levers(
@@ -197,13 +230,9 @@ def prefilter(card: dict, rep: LeverReport) -> str:
     if rep.headroom(lever) <= 0:
         return (f"lever {lever!r} has no headroom left on {rep.label} "
                 f"(consumed by {rep.lever_consumed_by.get(lever)})")
-    text = " ".join(str(card.get(k, "")) for k in ("identity", "idea", "expected_effect", "trigger"))
-    low = text.lower()
-    for bad in ("gridsynth", "ross-selinger", "ross selinger", "rotation synthesis",
-                "synthesize rotations better", "better synthesis of rz"):
-        if bad in low:
-            return ("proposes to improve rotation synthesis: gridsynth is within a small additive "
-                    "constant of optimal, so this lever has zero headroom by construction")
+    why = _proposes_better_synthesis(card)
+    if why:
+        return why
     est = card.get("expected_t_saving_on_target")
     if isinstance(est, (int, float)) and est > 0:
         if est > rep.current_t:
@@ -212,6 +241,40 @@ def prefilter(card: dict, rep: LeverReport) -> str:
         if bound is not None and est > bound:
             return (f"predicted saving {est} exceeds the computed upper bound {bound} for lever "
                     f"{lever!r} on {rep.label}")
+    return ""
+
+
+# Improving the ROTATION SYNTHESISER has zero headroom (gridsynth is within a small additive constant of
+# optimal), so V4_README section 7 asks the prefilter to reject cards that propose it. The test has to be
+# precise, and the first version was not: it rejected any card whose text CONTAINED "gridsynth", which
+# killed the best card the scout produced in the smoke run - the tfim_6 free-fermion idea, the one that
+# gave -60.8% in v3 - because its cost estimate said "gridsynth's ~3*log2(1/eps_rz) cost per rotation
+# falls slightly too". Merely reasoning about what gridsynth costs is not proposing to replace it.
+#
+# The asymmetry matters: a false positive burns a whole attempt AND loses a good idea, while a false
+# negative costs one implementation attempt that the judge will settle. So this leans towards letting
+# cards through: it fires only when an improvement verb sits next to the synthesiser, and never on a
+# card whose lever is not `angle_cost` (the synthesiser IS the angle-cost lever).
+_IMPROVE = r"(?:improv\w*|better|beat\w*|replac\w*|outperform\w*|superior|cheaper|optimal\w*|" \
+           r"optimis\w*|optimiz\w*|our own|custom|new|hand-?written)"
+_SYNTH = r"(?:grid\s?synth\w*|ross[-\s]?selinger|rotation synthesi[sz]\w*|synthesi[sz]\w* of (?:the )?" \
+         r"(?:rz|rotations?)|rz synthesi[sz]\w*)"
+
+
+def _proposes_better_synthesis(card: dict) -> str:
+    import re
+    if card.get("lever") != "angle_cost":
+        return ""                      # the synthesiser is the angle-cost lever and nothing else
+    text = " ".join(str(card.get(k, "")) for k in
+                    ("identity", "idea", "expected_effect", "trigger", "correctness"))
+    low = " ".join(text.lower().split())
+    for pat in (rf"{_IMPROVE}\W{{0,24}}{_SYNTH}", rf"{_SYNTH}\W{{0,24}}(?:is |are )?{_IMPROVE}"):
+        m = re.search(pat, low)
+        if m:
+            return ("proposes to improve rotation synthesis itself (matched "
+                    f"{m.group(0)[:60]!r}): gridsynth is within a small additive constant of optimal, so "
+                    "that lever has zero headroom by construction. Propose a rule that removes or "
+                    "cheapens ROTATIONS, not one that synthesises them better.")
     return ""
 
 
