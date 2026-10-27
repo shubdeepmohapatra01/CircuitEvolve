@@ -157,3 +157,38 @@ def test_certificate_kinds_are_recorded_on_every_accepted_application():
     r = optimize(c, B.book(), 1e-3, reference=c)
     kinds = {e.get("certificate") for e in r.log if e["accepted"]}
     assert kinds and kinds <= set(C.KINDS) | {"identical"}, kinds
+
+
+# ------------------------------------------------------------------------------------------ three verdicts
+def test_unverifiable_is_a_third_verdict_not_a_rejection():
+    """`ok=False, unverifiable=True` must never be reported as a verification failure.
+
+    v3 collapsed "could not check" into "failed the check": its `relaxed` mode returned
+    `method='skipped'` and the harness recorded a verification FAILURE. That is the same category error
+    that lost it eight rules to `rz(...) is not a multiple of pi/4`, and it is the error this test
+    guards against. The phase-gradient rule is the live example: its candidate is 34 qubits on qft_8,
+    which no dense branch-wise check can take, and the identity may be perfectly correct."""
+    from v4.loop import IMPL, classify
+    from v4.tools.evaluate import evaluate
+    p = Path("v4/rules/candidates/phase_gradient_addition_for_dyadic_rotation_cascades.py")
+    if not p.is_file():
+        pytest.skip("the phase-gradient candidate has been moved out of candidates/")
+    rep = evaluate(p, target="qft_8", small_only=True, stop_at_first_failure=True)
+    assert rep["decision"] == "not_verifiable", rep["decision"]
+    assert rep["level"] == IMPL
+    assert "not a rejection" in rep["reason"]
+    o = classify(rep, "qft_8")
+    assert o.kind == "too_wide" and o.level == IMPL
+    assert "narrower" in o.feedback["summary"], "the feedback must say what to change"
+
+
+def test_a_too_wide_window_yields_unverifiable_not_false():
+    """The Certificate itself, directly."""
+    import pathlib
+    from v4 import book as B
+    from v4.judge import certify as CC, kraus as K
+    rule = B.load_rule(pathlib.Path("v4/rules/floor/pauli_frame_rotation_merge.py"))
+    big_data = list(range(K.MAX_QUBITS + 1))
+    cert = CC.certify_relaxed_window([], [], big_data, [], rule, 1e-8)
+    assert not cert.ok and cert.unverifiable and cert.method == "too-wide"
+    assert "NOT VERIFIABLE" in cert.reason

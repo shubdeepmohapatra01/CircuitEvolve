@@ -107,6 +107,12 @@ FEEDBACK = {
     "exception": ("The rule raised. Fix the implementation, not the idea.", IMPL),
     "opcode": ("The rule exhausted its opcode budget - it looped or scaled badly. Fix the "
                "implementation, not the idea.", IMPL),
+    "too_wide": ("The construction could NOT BE VERIFIED at this width, so nothing was accepted. This "
+                 "is not a rejection of the idea and the identity may well be correct: the judge's "
+                 "branch-wise check needs 2^(data + ancilla) amplitudes, and your rewrite asked for more "
+                 "qubits than that allows. Keep the idea and make the construction NARROWER - fewer "
+                 "register bits, or rewrite one group at a time instead of a whole cascade - so that the "
+                 "changed window plus its own ancillas stays inside the limit.", IMPL),
 }
 
 
@@ -121,7 +127,9 @@ def classify(rep: dict, target: str | None = None) -> Outcome:
     if dec == "admit":
         return Outcome("admitted", None, report=rep)
     reason = rep.get("reason") or ""
-    if dec == "never_fires":
+    if dec == "not_verifiable":
+        kind = "too_wide"
+    elif dec == "never_fires":
         excluded_here = target is not None and target in (rep.get("excluded") or {})
         kind = "excluded" if (excluded_here or not rep.get("triggers_on_input")) else "no_trigger"
     elif "opcode budget" in reason:

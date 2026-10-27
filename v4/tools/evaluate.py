@@ -79,8 +79,10 @@ def check_on_target(rule: Rule, label: str, bk, eps: float, opcode_budget=None) 
                 verify_methods=sorted({e.get("method") for e in mine if e.get("method")}),
                 err_rules=res.err_rules, err_bound=res.err_bound,
                 ledger=res.ledger.report() if res.ledger else None,
+                unverifiable=sum(1 for e in mine if e.get("unverifiable")),
                 first_failure=(dict(match=fails[0]["match"], mode=fails[0].get("mode"),
                                     method=fails[0].get("method"), distance=fails[0].get("distance"),
+                                    unverifiable=bool(fails[0].get("unverifiable")),
                                     reason=fails[0].get("reason"))) if fails else None,
                 opcodes=res.opcodes, seconds=round(res.seconds, 2), result=res)
 
@@ -141,8 +143,15 @@ def evaluate(path, bk=None, eps: float = EPS, target=None, small_only: bool = Fa
 
     rows = out["circuits"]
     failed = [r for r in rows if r["first_failure"]]
-    if failed:
+    if failed and all(r["first_failure"]["unverifiable"] for r in failed):
+        # the check could not RUN. Not a rejection: the rule is neither admitted nor branded wrong, and
+        # the actionable feedback is "make the construction narrower", not "the identity is false".
         r = failed[0]
+        out.update(decision="not_verifiable", level=IMPL,
+                   reason=f"NOT VERIFIABLE on {r['label']} (eps {r['eps']}), so nothing was accepted: "
+                          f"{r['first_failure']['reason']}")
+    elif failed:
+        r = next(x for x in failed if not x["first_failure"]["unverifiable"])
         out.update(decision="reject", level=IMPL,
                    reason=f"verification failed on {r['label']} (eps {r['eps']}): {r['first_failure']}")
     elif not any(r["fired"] for r in rows):

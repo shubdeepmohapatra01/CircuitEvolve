@@ -47,6 +47,18 @@ STATS: dict = dict(algebraic_applied=0, algebraic_declined=0, algebraic_merge=0,
 
 @dataclass
 class Certificate:
+    """The verdict of one check.
+
+    THREE outcomes, not two. `ok=True` is a pass; `ok=False` with `unverifiable=False` is a REFUTATION;
+    `ok=False` with `unverifiable=True` means the check could not RUN - too wide, or refused - and must
+    never be read as a rejection. A rule that cannot be checked at this width is not a rule that failed
+    a check. v3 collapsed the two: its `relaxed` mode returned `method='skipped'` and the harness
+    recorded a verification FAILURE, which is the same category error that lost eight of its rules to
+    `rz(...) is not a multiple of pi/4`. The application is still NOT kept either way - nothing
+    unverified is ever accepted - but the rule is not branded wrong, and the feedback says what to
+    change: make the construction narrower.
+    """
+
     kind: str
     ok: bool
     certified: bool                 # True only when the check is a PROOF
@@ -56,6 +68,7 @@ class Certificate:
     method: str = ""
     witness: dict = field(default_factory=dict)
     seconds: float = 0.0
+    unverifiable: bool = False      # the check could not RUN (too wide, refused), not "the rule is wrong"
 
     def __bool__(self):
         return self.ok
@@ -64,7 +77,8 @@ class Certificate:
         return dict(verified=self.ok, mode=("exact" if self.kind in ("algebraic", "exact_ring")
                                             else ("relaxed" if self.kind == "branch_kraus" else "approx")),
                     distance=self.distance, reason=self.reason, method=self.method,
-                    certified=self.certified, certificate=self.kind)
+                    certified=self.certified, certificate=self.kind,
+                    unverifiable=self.unverifiable)
 
 
 def _local(ops):
@@ -141,9 +155,12 @@ def certify_relaxed_window(old_local, new_local, data_wires, anc_wires, rule,
     n = len(data_wires) + len(anc_wires)
     STATS["branch_kraus"] += 1
     if n > kraus.MAX_QUBITS:
-        return Certificate("branch_kraus", False, False, method="skipped", bound=allowance,
-                           reason=f"window has {n} qubits > {kraus.MAX_QUBITS}: a dense branch-wise "
-                                  f"check does not fit in memory",
+        return Certificate("branch_kraus", False, False, method="too-wide", bound=allowance,
+                           unverifiable=True,
+                           reason=f"NOT VERIFIABLE (not a rejection): the window has {n} qubits > "
+                                  f"{kraus.MAX_QUBITS}, and a dense branch-wise check needs "
+                                  f"2^{n} amplitudes per state. Make the construction narrower - fewer "
+                                  f"register bits, or one group at a time instead of a whole cascade.",
                            seconds=time.perf_counter() - t0)
     allow = min(exact_tol, allowance) if rule.error_class == "exact" else allowance
     ref = kraus.reference_state_of(list(old_local), len(data_wires)) \
@@ -199,6 +216,12 @@ def certify(old, new, rule, allowance: float, exact_tol: float = 1e-8) -> Certif
             kv = _kraus(old, new, allow)
             dt = time.perf_counter() - t0
             STATS["other_seconds"] += dt
+            if kv.method == "skipped":
+                return Certificate("branch_kraus", False, False, method="too-wide", bound=kv.bound,
+                                   unverifiable=True,
+                                   reason=f"NOT VERIFIABLE (not a rejection): {kv.reason}. Make the "
+                                          f"construction narrower, or rewrite one group at a time "
+                                          f"instead of a whole cascade.", seconds=dt)
             return Certificate("branch_kraus", kv.ok, kv.certified, distance=kv.distance,
                                bound=kv.bound, reason=kv.reason, method=kv.method,
                                witness=dict(leak=kv.leak, phase_spread=kv.phase_spread,

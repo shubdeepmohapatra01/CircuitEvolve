@@ -76,8 +76,9 @@ class Result:
     def summary(self) -> dict:
         return dict(cost=self.cost, err_rules=self.err_rules, err_bound=self.err_bound, passes=self.passes,
                     applications=sum(e["accepted"] for e in self.log), attempts=len(self.log),
-                    verify_failures=sum(not e.get("verified", True) for e in self.log
-                                        if e.get("verified") is not None),
+                    verify_failures=sum(1 for e in self.log if e.get("verified") is False
+                                        and not e.get("unverifiable")),
+                    unverifiable=sum(1 for e in self.log if e.get("unverifiable")),
                     priced_out=sum(1 for e in self.log if e.get("reason") == "no cost decrease"),
                     certified=all(e.get("certified", False) for e in self.log if e["accepted"]) and
                     all(w.get("certified", False) for w in self.whole_checks),

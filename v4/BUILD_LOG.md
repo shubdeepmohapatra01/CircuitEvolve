@@ -438,3 +438,36 @@ next piece of work, not a parameter sweep, and it is the only thing between v4 a
 
 Until then, `SCOPE.md`'s honest statement of the contract stands, with gap A reclassified: it is blocked
 on a verification-width problem with a known route, not on the verifier's expressiveness.
+
+## A third verdict: "could not be checked" is not "failed the check"
+
+Found while probing gap A, and it is the same category error that cost v3 eight rules.
+
+`v4/judge/kraus.py` refuses a window wider than 22 qubits, and the frozen numeric path refuses above 20,
+both returning `method='skipped'`. The harness recorded that as a **verification failure**: the rule was
+rejected, the agent was told its identity was wrong, and the real message - "this is too wide to check" -
+was lost. That is exactly how v3 lost the phase-gradient family: eight rules were branded as failing
+verification when the verifier had simply declined.
+
+So `Certificate` now has three outcomes, not two:
+
+| verdict | meaning | the application | the rule |
+|---|---|---|---|
+| `ok=True` | the check passed | kept | may be admitted |
+| `ok=False, unverifiable=False` | the check REFUTED it | dropped | rejected, and it is wrong |
+| `ok=False, unverifiable=True` | the check could not RUN | dropped | **not rejected, and may be correct** |
+
+Nothing unverified is ever accepted either way - that part does not change. What changes is what is
+recorded and what the agent is told. `evaluate` returns `decision='not_verifiable'`, `admit` leaves the
+file in `candidates/` rather than moving it to `rejected/`, and the loop classifies it as `too_wide` at
+implementation level with feedback that is actually actionable and actually true:
+
+> The construction could NOT BE VERIFIED at this width, so nothing was accepted. This is not a rejection
+> of the idea and the identity may well be correct: the judge's branch-wise check needs
+> 2^(data + ancilla) amplitudes, and your rewrite asked for more qubits than that allows. Keep the idea
+> and make the construction NARROWER - fewer register bits, or rewrite one group at a time instead of a
+> whole cascade - so that the changed window plus its own ancillas stays inside the limit.
+
+That is a better route to a verifiable PKAC card than hand-writing one: the agent is told precisely what
+to change, and `relaxed_window` means a narrower construction only has to fit in its own window rather
+than in the whole circuit.
