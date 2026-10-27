@@ -154,12 +154,18 @@ def verify(old: Circuit, new: Circuit, req: Req = Req(), seed: int = 0, zero_ini
     if not req.measure and not new.is_unitary() and old.is_unitary():
         return Verdict(False, np.inf, "refused", reason="non-unitary ops but req.measure is False")
     p, sfx = _segment(old, new)
-    om, nm = old.gates[p:len(old.gates) - sfx], new.gates[p:len(new.gates) - sfx]
-    if not om and not nm:
+    if p == len(old.gates) - sfx and p == len(new.gates) - sfx:
         return Verdict(True, 0.0, "nochange")
+    zset = set(zero_init)
+    while True:   # a clean ancilla used by the segment but touched by the shared prefix: start the segment earlier
+        seg_q = {q for g in old.gates[p:len(old.gates) - sfx] + new.gates[p:len(new.gates) - sfx] for q in g.qubits}
+        first = [i for i, g in enumerate(old.gates[:p]) if zset & seg_q & set(g.qubits)]
+        if not first:
+            break
+        p = first[0]
+    om, nm = old.gates[p:len(old.gates) - sfx], new.gates[p:len(new.gates) - sfx]
     touched = sorted({q for g in om + nm for q in g.qubits})
-    before = {q for g in old.gates[:p] for q in g.qubits}
-    zinit = [q for q in touched if q in set(zero_init) and q not in before]     # still |0> at segment start
+    zinit = [q for q in touched if q in zset]                                     # |0> at segment start
     data = [q for q in touched if q < old.n and q not in zinit]  # prefix/suffix are shared with old: no fresh qubits
     fresh = [q for q in touched if q >= old.n]
     seg_bits = {g.cbit for g in om + nm if g.name == "measure"}

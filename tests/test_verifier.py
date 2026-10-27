@@ -174,3 +174,12 @@ def test_zero_init_not_assumed_after_qubit_was_touched():
     old.gates.insert(0, Gate("cx", (3, 2)))
     new.gates.insert(0, Gate("cx", (3, 2)))                # q2 no longer |0> when the rewrite starts
     assert not check(old, new, Req(measure=True), zero_init=[2]).ok
+
+
+def test_zero_init_when_shared_prefix_touches_the_ancilla():
+    """Old and new both start with `h t`: the shared prefix must not hide that t starts in |0>."""
+    old = C(4, [("h", (2,)), ("ccz", (0, 1, 2)), ("h", (2,)), ("cx", (2, 3)), ("ccx", (0, 1, 2))])
+    new = C(4, gidney_and(0, 1, 2) + [("cx", (2, 3)), ("h", (2,)), Gate("measure", (2,), cbit=0),
+                                      Gate("cz", (0, 1), cond=0), Gate("x", (2,), cond=0)], nc=1)
+    assert new.gates[0] == old.gates[0]
+    assert check(old, new, Req(measure=True), zero_init=[2]).ok

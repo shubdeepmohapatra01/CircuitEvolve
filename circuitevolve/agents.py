@@ -47,7 +47,7 @@ def _context(arm: str, family: str, c: Circuit, eps_left: float, playbook: list,
     rules = "\n".join(f"- {r['name']}: {r['doc']}" for r in playbook) or "(none yet)"
     anc = (f"Qubits {list(zinit)} are CLEAN ANCILLAS of this benchmark: they start in |0> and the circuit returns them "
            f"to |0>. The verifier knows this: a rewrite may rely on such a qubit being |0> before its first use "
-           f"(e.g. to replace a compute/uncompute pair), never on anything else." if zinit else
+           f"(e.g. to replace a compute/uncompute pair), never on anything else. In Python they are `c.zero_init`." if zinit else
            "This circuit has no declared clean ancillas; all its qubits may hold any input.")
     reprs = "\n".join(repr(g) for g in c.gates[:12])
     return f"""# Setting

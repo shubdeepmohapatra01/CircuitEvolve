@@ -66,9 +66,10 @@ class Circuit:
     n: int
     gates: list = field(default_factory=list)
     nc: int = 0                  # classical bits
+    zero_init: tuple = ()        # benchmark spec: clean-ancilla qubits, |0> at the start (not stored in QASM)
 
     def copy(self) -> "Circuit":
-        return Circuit(self.n, list(self.gates), self.nc)
+        return Circuit(self.n, list(self.gates), self.nc, self.zero_init)
 
     def is_unitary(self) -> bool:
         return all(g.name in UNITARY and g.cond is None for g in self.gates)

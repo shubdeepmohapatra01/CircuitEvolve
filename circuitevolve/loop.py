@@ -76,20 +76,25 @@ def run_rule(rule_path: str, c: Circuit, timeout: int = RULE_TIMEOUT) -> tuple[C
     with tempfile.TemporaryDirectory() as d:
         src, dst = os.path.join(d, "in.qasm"), os.path.join(d, "out.qasm")
         save(c, src)
-        r = subprocess.run([sys.executable, "-m", "circuitevolve.loop", "--apply", rule_path, src, dst],
+        r = subprocess.run([sys.executable, "-m", "circuitevolve.loop", "--apply", rule_path, src, dst,
+                            json.dumps(list(c.zero_init))],
                            capture_output=True, text=True, timeout=timeout, cwd=ROOT)
         if r.returncode != 0:
             raise RuntimeError((r.stderr or r.stdout)[-1500:])
         req = json.load(open(dst + ".req.json"))
-        return load(dst), Req(**req)
+        out = load(dst)
+        out.zero_init = c.zero_init
+        return out, Req(**req)
 
 
-def _worker(rule_path, src, dst):
+def _worker(rule_path, src, dst, zinit="[]"):
     import importlib.util
     spec = importlib.util.spec_from_file_location("rule", rule_path)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    out, req = mod.rewrite(load(src))
+    c = load(src)
+    c.zero_init = tuple(json.loads(zinit))
+    out, req = mod.rewrite(c)
     save(out, dst)
     json.dump(dict(eps=float(req.eps), ancillas=int(req.ancillas), measure=bool(req.measure)), open(dst + ".req.json", "w"))
 
@@ -147,6 +152,7 @@ def train(arm: str, circuits: list, ask, ideas: int = IDEAS, attempts: int = ATT
         sc = lambda x, e, fam=entry["family"]: score(arm, fam, x, e)
         c, eps = prepare(entry, arm)
         zinit = entry.get("zero_init", [])
+        c.zero_init = tuple(zinit)
         c, eps, eps_llm = apply_playbook(arm, c, eps, log, name, sc, zinit)
         t_cur = sc(c, eps)
         log(dict(phase="start", circuit=name, t=t_cur, counts=counts(c)))
@@ -204,6 +210,7 @@ def test(arm: str, circuits: list) -> list:
         sc = lambda x, e: score(arm, fam, x, e)
         c0, eps0 = prepare(entry, arm)
         zinit = entry.get("zero_init", [])
+        c0.zero_init = tuple(zinit)
         c, eps, _ = apply_playbook(arm, c0, eps0, lambda r: log(r | dict(split="test")), entry["name"], sc, zinit)
         v = check(c0, c, Req(eps=metric.EPS_LLM, ancillas=c.n - c0.n, measure=True), zero_init=zinit)   # end-to-end
         rows.append(dict(circuit=entry.get("plot_name", entry["name"]), arm=arm, **metric.final(finish(arm, fam, c), eps),
@@ -215,4 +222,4 @@ def test(arm: str, circuits: list) -> list:
 
 if __name__ == "__main__":
     if sys.argv[1] == "--apply":
-        _worker(*sys.argv[2:5])
+        _worker(*sys.argv[2:6])
