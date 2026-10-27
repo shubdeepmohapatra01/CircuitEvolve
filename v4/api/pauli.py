@@ -318,3 +318,91 @@ def residual_clifford(ops, cliffords=CLIFFORDS) -> list:
 
 __all__ = ["CLIFFORDS", "Record", "Tableau", "axis_eq", "commutes", "commutes_with_z", "conjugate", "frames", "is_z",
            "key", "on_grid", "pauli_string", "residual_clifford", "sign", "weight", "x_on", "y_on", "z_on"]
+
+
+# ------------------------------------------------------------------------------------------ witness
+def merge_witness(old_ops, new_ops, tol: float = 1e-9) -> tuple:
+    """The `algebraic` certificate for the Pauli-merge class - V4_README 6.2, O(ops), no matrices.
+
+    Every admitted angle rule in v3 is in this class: a Z-rotation is transported through the Clifford
+    skeleton as a signed Pauli exponential and merged with an earlier rotation about the same axis. The
+    identity being used is
+
+        exp(-i a/2 P) exp(-i b/2 P) = exp(-i (a+b)/2 P)          (same axis: angles add)
+        exp(-i a/2 P) exp(-i b/2 Q) = exp(-i b/2 Q) exp(-i a/2 P)  when [P, Q] = 0
+
+    so the rewrite is justified exactly when (1) the Clifford skeleton is untouched, (2) the new op list
+    is the old one with ONE rotation deleted and ONE earlier rotation's angle changed by the signed
+    deleted angle, and (3) every rotation strictly between them commutes with the moved axis. All three
+    are checked here on the front-frame records, in one pass.
+
+    -> (ok, reason, detail). `ok` is a PROOF of equality up to global phase. A `False` with reason
+    "class does not apply" is a decline, not a refutation: the caller falls through to a numeric check.
+    Angles are compared modulo 2 pi, which is exact up to global phase because
+    exp(-i (theta + 2 pi)/2 P) = -exp(-i theta/2 P) for P^2 = I.
+    """
+    a, b = list(old_ops), list(new_ops)
+    ra, rb = frames(a), frames(b)
+    if ra is None or rb is None:
+        return False, "class does not apply: not Clifford + Z-rotations", {}
+    ca = [(g, tuple(q)) for g, q, _ in a if g in CLIFFORDS]
+    cb = [(g, tuple(q)) for g, q, _ in b if g in CLIFFORDS]
+    if ca != cb:
+        return False, "class does not apply: the Clifford skeleton changed", {}
+    if len(rb) != len(ra) - 1:
+        return False, (f"class does not apply: {len(ra)} rotations became {len(rb)}, "
+                       f"expected exactly one deletion"), {}
+    keys_a = [(r.x, r.z, r.sign) for r in ra]
+    keys_b = [(r.x, r.z, r.sign) for r in rb]
+    # Locate the deletion. Removing index d from `old` makes the AXIS streams line up iff
+    #     keys_a[:d] == keys_b[:d]   and   keys_a[d+1:] == keys_b[d:]
+    # so d must be at most the common prefix length L and at least len(ra)-1-R for the common suffix
+    # length R. That bounds the candidates to a short range, computed in one pass each - the angles are
+    # compared separately, because the host rotation's angle is MEANT to change.
+    L = 0
+    while L < len(rb) and keys_a[L] == keys_b[L]:
+        L += 1
+    R = 0
+    while R < len(rb) and keys_a[len(ra) - 1 - R] == keys_b[len(rb) - 1 - R]:
+        R += 1
+    for deleted in range(max(0, len(ra) - 1 - R), min(L, len(ra) - 1) + 1):
+        rest_a = ra[:deleted] + ra[deleted + 1:]
+        if [(r.x, r.z, r.sign) for r in rest_a] != keys_b:
+            continue
+        diff = [k for k in range(len(rb)) if abs(rest_a[k].theta - rb[k].theta) > tol]
+        if len(diff) > 1:
+            continue
+        gone = ra[deleted]
+        if not diff:
+            # the deleted rotation was itself a no-op: theta = 0 mod 2 pi
+            d = gone.theta / (2 * math.pi)
+            if abs(d - round(d)) * 2 * math.pi > tol:
+                continue
+            return True, "", dict(kind="deleted-identity", pos=gone.pos,
+                                  axis=pauli_string(gone.p, _nq(a)))
+        k = diff[0]
+        host = rest_a[k]
+        if (host.x, host.z) != (gone.x, gone.z):
+            return False, ("the changed rotation is not about the deleted rotation's axis "
+                           f"({pauli_string(host.p, _nq(a))} vs {pauli_string(gone.p, _nq(a))})"), {}
+        s_rel = host.sign * gone.sign
+        want = host.theta + s_rel * gone.theta
+        d = (rb[k].theta - want) / (2 * math.pi)
+        if abs(d - round(d)) * 2 * math.pi > tol:
+            return False, (f"angles do not add: host {host.theta:.12g} + sign {s_rel} x deleted "
+                           f"{gone.theta:.12g} = {want:.12g}, but the new angle is "
+                           f"{rb[k].theta:.12g}"), {}
+        lo, hi = (min(host.pos, gone.pos), max(host.pos, gone.pos))
+        between = [r for r in ra if lo < r.pos < hi]
+        bad = [r for r in between if not commutes(r.p, gone.p)]
+        if bad:
+            return False, (f"rotation at op {bad[0].pos} ({pauli_string(bad[0].p, _nq(a))}) does not "
+                           f"commute with the moved axis {pauli_string(gone.p, _nq(a))}, so the two "
+                           f"exponentials cannot be brought together"), {}
+        return True, "", dict(kind="merge", deleted=gone.pos, host=host.pos, sign=s_rel,
+                              axis=pauli_string(gone.p, _nq(a)), passed=len(between))
+    return False, "class does not apply: the two op lists do not differ by one rotation merge", {}
+
+
+def _nq(ops) -> int:
+    return 1 + max((q for op in ops for q in op[1]), default=-1)

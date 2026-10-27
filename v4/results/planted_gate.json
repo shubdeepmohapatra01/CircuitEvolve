@@ -1,0 +1,82 @@
+{
+ "gate": "planted-bug (P5 re-run)",
+ "decisions": 4,
+ "correct": 4,
+ "passed": true,
+ "verdicts": {
+  "same_pauli_merge": true,
+  "same_pauli_merge_planted": true,
+  "ancilla_parity_rotation_lowering": true,
+  "ancilla_parity_rotation_leak": true
+ },
+ "rows": [
+  {
+   "control": "same_pauli_merge",
+   "kind": "full admission (empty book)",
+   "want": "admit",
+   "got": "admit",
+   "ok": true,
+   "level": null,
+   "reason": "lowers the primary metric on qft_8@0.001: 2391 -> 1583",
+   "circuits": [
+    {
+     "label": "qft_8",
+     "before": 2391,
+     "after": 1583
+    }
+   ],
+   "seconds": 0.44
+  },
+  {
+   "control": "same_pauli_merge_planted",
+   "kind": "full admission (empty book)",
+   "want": "reject",
+   "got": "reject",
+   "ok": true,
+   "level": "implementation",
+   "reason": "verification failed on qft_8 (eps 0.001): {'match': 1, 'mode': 'exact', 'method': 'pauli-merge', 'distance': None, 'reason': 'angles do not add: host 0.392699081699 + sign 1 x deleted 0.343611696486 = 0.736310778185, but the new angle is 0.0490873852123'}",
+   "circuits": [
+    {
+     "label": "qft_8",
+     "before": 2391,
+     "after": 1583
+    }
+   ],
+   "seconds": 0.18
+  },
+  {
+   "control": "ancilla_parity_rotation_lowering",
+   "label": "qft_8",
+   "applications": 1,
+   "verified": true,
+   "certificate": "branch_kraus",
+   "method": "branch-kraus-exhaustive",
+   "certified": true,
+   "distance": 1.6699540590904642e-15,
+   "reason": " | no cost decrease",
+   "witness": null,
+   "kind": "verification only",
+   "want": "verified",
+   "got": "verified",
+   "ok": true
+  },
+  {
+   "control": "ancilla_parity_rotation_leak",
+   "label": "qft_8",
+   "applications": 1,
+   "verified": false,
+   "certificate": "branch_kraus",
+   "method": "branch-kraus-exhaustive",
+   "certified": true,
+   "distance": 1.2071067811865475,
+   "reason": "branch state distance 1.207e+00 > allowance 1.000e-08; ancilla population left outside |0>: 7.071e-01 > 1.000e-08; branch probabilities sum to 0.250000, not 1 | no cost decrease",
+   "witness": null,
+   "kind": "verification only",
+   "want": "rejected (ancilla return)",
+   "got": "rejected",
+   "ok": true
+  }
+ ],
+ "seconds": 2.0,
+ "note": "CV-DV controls 2 and 3 of v3's P1 are replaced by the two ancilla + continuous-angle controls, which exercise the path P5 changed; CV-DV stays deferred"
+}

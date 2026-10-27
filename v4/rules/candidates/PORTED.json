@@ -1,0 +1,92 @@
+{
+ "and_monomial_phase_polynomial_resynthesis": {
+  "group": "verifier_blocked",
+  "v3_reason": "verification failed on qft_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(0.024543692606169287) is not a multiple of pi/4'}",
+  "source": "v3/rules/rejected/and_monomial_phase_polynomial_resynthesis.py"
+ },
+ "controlled_phase_and_ancilla_single_rotation_lowering": {
+  "group": "verifier_blocked",
+  "v3_reason": "verification failed on qft_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(7.841709787671397) is not a multiple of pi/4'}",
+  "source": "v3/rules/rejected/controlled_phase_and_ancilla_single_rotation_lowering.py"
+ },
+ "hamming_weight_phasing_on_equal_angle_phase_gadgets": {
+  "group": "verifier_blocked",
+  "v3_reason": "verification failed on qft_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(7.841709787671397) is not a multiple of pi/4'}",
+  "source": "v3/rules/rejected/hamming_weight_phasing_on_equal_angle_phase_gadgets.py"
+ },
+ "hamming_weight_phasing_same_angle_group": {
+  "group": "verifier_blocked",
+  "v3_reason": "verification failed on hhl_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(12.035814816574787) is not a multiple of pi/4'}",
+  "source": "v3/rules/rejected/hamming_weight_phasing_same_angle_group.py"
+ },
+ "hamming_weight_phasing_shared_angle_layers": {
+  "group": "verifier_blocked",
+  "v3_reason": "verification failed on qft_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(7.841709787671397) is not a multiple of pi/4'}",
+  "source": "v3/rules/rejected/hamming_weight_phasing_shared_angle_layers.py"
+ },
+ "multilinear_phase_polynomial_and_ancilla_resynthesis": {
+  "group": "verifier_blocked",
+  "v3_reason": "verification failed on qft_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(0.024543692606169287) is not a multiple of pi/4'}",
+  "source": "v3/rules/rejected/multilinear_phase_polynomial_and_ancilla_resynthesis.py"
+ },
+ "phase_gradient_addition_for_dyadic_rotation_cascades": {
+  "group": "verifier_blocked",
+  "v3_reason": "verification failed on qft_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(-0.01227184630308513) is not a multiple of pi/4'}",
+  "source": "v3/rules/rejected/phase_gradient_addition_for_dyadic_rotation_cascades.py"
+ },
+ "phase_gradient_catalysis_dyadic_rotations": {
+  "group": "verifier_blocked",
+  "v3_reason": "verification failed on qft_8 (eps 0.001): {'match': 0, 'mode': 'relaxed', 'method': 'literal', 'distance': None, 'reason': 'candidate not exact: rz(0.01227184630308513) is not a multiple of pi/4'}",
+  "source": "v3/rules/rejected/phase_gradient_catalysis_dyadic_rotations.py"
+ },
+ "generator_equality_angle_teleportation": {
+  "group": "timeout",
+  "v3_reason": "runtime limit 300.0s exceeded on hhl_8",
+  "source": "v3/rules/rejected/generator_equality_angle_teleportation.py"
+ },
+ "joint_budget_direct_rotation_synthesis": {
+  "group": "timeout",
+  "v3_reason": "runtime limit 300.0s exceeded on qpe_8",
+  "source": "v3/rules/rejected/joint_budget_direct_rotation_synthesis.py"
+ },
+ "linear_glue_cnot_resynthesis_across_and_gadgets": {
+  "group": "timeout",
+  "v3_reason": "runtime limit 300.0s exceeded on adder_8",
+  "source": "v3/rules/rejected/linear_glue_cnot_resynthesis_across_and_gadgets.py"
+ },
+ "mcx_and_tree_resynthesis": {
+  "group": "timeout",
+  "v3_reason": "runtime limit 300.0s exceeded on mcx_10",
+  "source": "v3/rules/rejected/mcx_and_tree_resynthesis.py"
+ },
+ "mcx_truthtable_recognition_and_ladder_resynthesis": {
+  "group": "timeout",
+  "v3_reason": "runtime limit 300.0s exceeded on qft_8",
+  "source": "v3/rules/rejected/mcx_truthtable_recognition_and_ladder_resynthesis.py"
+ },
+ "shared_and_by_control_product_anf": {
+  "group": "timeout",
+  "v3_reason": "runtime limit 300.0s exceeded on adder_6",
+  "source": "v3/rules/rejected/shared_and_by_control_product_anf.py"
+ },
+ "staircase_knapsack_exact_angle_assignment": {
+  "group": "timeout",
+  "v3_reason": "runtime limit 300.0s exceeded on qpe_8",
+  "source": "v3/rules/rejected/staircase_knapsack_exact_angle_assignment.py"
+ },
+ "window_angle_refit_to_clifford_grid": {
+  "group": "timeout",
+  "v3_reason": "runtime limit 300.0s exceeded on qpe_8",
+  "source": "v3/rules/rejected/window_angle_refit_to_clifford_grid.py"
+ },
+ "xag_multiplicative_complexity_resynthesis": {
+  "group": "timeout",
+  "v3_reason": "runtime limit 300.0s exceeded on adder_6",
+  "source": "v3/rules/rejected/xag_multiplicative_complexity_resynthesis.py"
+ },
+ "budgeted_pi_over_4_grid_snapping_of_residual_rotations": {
+  "group": "other",
+  "v3_reason": "verification failed on qae_13 (eps 0.001): {'match': 0, 'mode': 'approx', 'method': 'unitary', 'distance': 0.00038349519462140637, 'reason': 'distance 3.835e-04 > eps 1.165e-04'}",
+  "source": "v3/rules/rejected/budgeted_pi_over_4_grid_snapping_of_residual_rotations.py"
+ }
+}

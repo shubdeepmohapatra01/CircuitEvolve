@@ -42,6 +42,7 @@ from .api import describe
 from .api import budget as api_budget
 from .caps import OpcodeBudget, OpcodeExceeded
 from .judge import dv as J
+from .judge.certify import certify
 from .judge.frozen import check_frozen
 from .ledger import Ledger
 
@@ -187,9 +188,19 @@ def gain_order(circuit, book, base_t: int, solo: dict) -> tuple:
 def optimize(circuit, book, eps: float, reference=None, pass_limit: int = PASS_LIMIT,
              label: str | None = None, order: str = "best", ledger: Ledger | None = None,
              ledger_total: float | None = None, solo: dict | None = None,
-             opcode_budget: int | None = None, skip_prepass: bool = False) -> Result:
+             opcode_budget: int | None = None, skip_prepass: bool = False,
+             price_first: bool = True) -> Result:
     """Run `book` on `circuit`. `ledger` continues an existing budget (the book's draws are already in it);
-    `ledger_total` starts a fresh one at that total (default: eps)."""
+    `ledger_total` starts a fresh one at that total (default: eps).
+
+    `price_first=True` (the default, V4_README 6.4) drops an application that does not lower the cost
+    WITHOUT verifying it: qft_8 attempts 40 and keeps 19, pricing costs 1.4 ms and a whole-circuit check
+    48 ms, and acceptance only ever depended on the kept ones.
+
+    `price_first=False` restores v3's order - verify, then price - which verifies every application the
+    rule proposes. It is slower by exactly the work P0 removed and is here for AUDITS: the planted-bug
+    gate (v4/tools/planted_gate.py) needs to observe the verifier's verdict on a control rule that does
+    not improve anything, and a correctness sweep over a rule's whole match set needs the same."""
     check_frozen()
     t0 = time.time()
     book = list(book)
@@ -208,13 +219,13 @@ def optimize(circuit, book, eps: float, reference=None, pass_limit: int = PASS_L
 
     if order in ("best", "gain", "min_all") and len(book) > 1:
         return _multi_order(circuit, book, eps, reference, pass_limit, label, order, ledger, ledger_total,
-                            solo, opcode_budget, excluded, t0)
+                            solo, opcode_budget, excluded, t0, price_first)
     return _run(circuit, ordered(book), eps, reference, pass_limit, ledger, ledger_total, opcode_budget,
-                excluded, never, t0)
+                excluded, never, t0, price_first)
 
 
 def _multi_order(circuit, book, eps, reference, pass_limit, label, order, ledger, ledger_total, solo,
-                 opcode_budget, excluded, t0) -> Result:
+                 opcode_budget, excluded, t0, price_first=True) -> Result:
     """'best' / 'gain' / 'min_all': the solo runs are computed ONCE here and shared by both orderings."""
     total = ledger.total if ledger is not None else (eps if ledger_total is None else ledger_total)
     base = _price_fn(circuit, eps, ledger, ledger_total, reference)(circuit)
@@ -244,7 +255,8 @@ def _multi_order(circuit, book, eps, reference, pass_limit, label, order, ledger
 
     def run(order_book, gains=None):
         r = _run(circuit, order_book, eps, reference, pass_limit,
-                 None if ledger is None else ledger.copy(), ledger_total, opcode_budget, excluded, never, t0)
+                 None if ledger is None else ledger.copy(), ledger_total, opcode_budget, excluded, never,
+                 t0, price_first)
         if gains is not None:
             r.solo_gains = gains
         return r
@@ -293,7 +305,7 @@ def _price_fn(circuit, eps, ledger, ledger_total, price_ref=None):
 
 # ------------------------------------------------------------------------------------------------ the loop
 def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode_budget, excluded, never,
-         t0) -> Result:
+         t0, price_first=True) -> Result:
     opcodes: dict = {}
     led = ledger if ledger is not None else Ledger(eps if ledger_total is None else ledger_total)
     ref = circuit if reference is None else reference
@@ -301,17 +313,15 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
     price = _price_fn(circuit, eps, led, ledger_total, reference)
 
     def check(cand, refc, rule, budget):
-        """Verdict of cand vs refc under the rule's two tags."""
-        if rule.resource_class != "unitary":
-            return J.verify_memo(cand, refc, mode="relaxed")
-        if exact(cand) and exact(refc):
-            return J.verify_memo(cand, refc, mode="exact")
-        allow = min(EXACT_TOL, budget) if rule.error_class == "exact" else budget
-        return J.verify_memo(cand, refc, mode="approx", eps=allow)
+        """Verdict of cand vs refc under the rule's two tags, via the cheapest certificate that applies
+        (v4/judge/certify.py): `algebraic` for the phase-folding class - O(ops), no matrices, and a
+        proof - then `exact_ring`, `branch_kraus` or `numeric_block`."""
+        return certify(cand if False else refc, cand, rule, budget, EXACT_TOL)
 
     def record(entry, v, scope):
-        entry.update(verified=bool(v.ok), mode=v.mode, distance=v.distance, reason=v.reason, method=v.method,
-                     certified=bool(v.certified), n_inputs=v.n_inputs, scope=scope)
+        """`v` is a Certificate (window / whole-circuit check) - see v4/judge/certify.py."""
+        entry.update(v.to_verdict_fields())
+        entry["scope"] = scope
 
     log, whole, passes, cur = [], [], 0, circuit
     cur_cost = price(circuit)
@@ -344,8 +354,9 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
                         log.append(entry)
                         disabled.add(rule.name)
                         break
-                    # ---- PRICE BEFORE VERIFY (V4_README 6.4): a candidate that does not lower the cost is
-                    # dropped here, for 1.4 ms, instead of after a 48 ms whole-circuit check.
+                    # ---- PRICE BEFORE VERIFY (V4_README 6.4): a candidate that does not lower the
+                    # cost is dropped here, for 1.4 ms, instead of after a 48 ms whole-circuit check.
+                    # With price_first=False the two steps swap, which verifies every application.
                     try:
                         c_cost = price(cand)
                     except Exception as e:                               # noqa: BLE001 (rule output)
@@ -354,20 +365,21 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
                         disabled.add(rule.name)
                         break
                     entry["cost"] = {k: c_cost[k] for k in ("t_count", "rotations", "cx", "qubits")}
-                    if not dv_key(c_cost) < dv_key(cur_cost):
+                    improves = dv_key(c_cost) < dv_key(cur_cost)
+                    if price_first and not improves:
                         back = led.draws.get(rule.name, 0.0) - spent_before
                         if back > 0:
                             led.refund(rule.name, back)           # dropped: the rule keeps no error
                         entry.update(verified=None, reason="no cost decrease", priced_out=True)
                         log.append(entry)
                         continue
-                    # ---- verify the application we would keep
+                    # ---- verify the application
                     try:
                         w = None if rule.resource_class != "unitary" else window(cur, cand)
                         if w is None:
                             v = check(cand, ref, rule, led.remaining)
                             record(entry, v, "whole")
-                            d = float(v.distance or 0.0) if v.mode == "approx" else 0.0
+                            d = float(v.distance or 0.0) if v.kind == "numeric_block" else 0.0
                             d_charge = max(0.0, d - led.spent) if v.ok else 0.0
                         else:
                             wo, wn, qs, span = w
@@ -375,12 +387,13 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
                                                    new_ops=span[2] - span[0], at=span[0])
                             if span[1] == span[0] and span[2] == span[0]:
                                 entry.update(verified=True, mode="identical", method="identical",
-                                             certified=True, scope="window", distance=0.0, reason="")
+                                             certified=True, scope="window", distance=0.0, reason="",
+                                             certificate="identical")
                                 d_charge = 0.0
                             else:
                                 v = check(wn, wo, rule, led.remaining)
                                 record(entry, v, "window")
-                                d_charge = float(v.distance or 0.0) if v.mode == "approx" else 0.0
+                                d_charge = float(v.distance or 0.0) if v.kind == "numeric_block" else 0.0
                     except Exception as e:                               # noqa: BLE001 (rule code)
                         entry.update(verified=False,
                                      reason=f"exception in apply/verify: {type(e).__name__}: {e}",
@@ -388,6 +401,14 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
                         log.append(entry)
                         disabled.add(rule.name)
                         break
+                    if not improves:
+                        back = led.draws.get(rule.name, 0.0) - spent_before
+                        if back > 0:
+                            led.refund(rule.name, back)
+                        entry.update(accepted=False, priced_out=True,
+                                     reason=(entry.get("reason") or "") + " | no cost decrease")
+                        log.append(entry)
+                        continue
                     if entry["verified"]:
                         # a rule that drew its own error already spent it; the runner charges only the
                         # difference between the MEASURED distance and what the rule reserved
@@ -456,8 +477,9 @@ def _pass_check(rule, ref, snaps, start, start_cost, check, led, whole, disabled
     def ok_at(k):
         c = snaps[k][1]
         v = check(c, ref, rule, min(led.rule_share, led.spent + EXACT_TOL))
-        whole.append(dict(rule=rule.name, pass_=passes, after_application=k, ok=bool(v.ok), method=v.method,
-                          certified=bool(v.certified), distance=v.distance, reason=v.reason))
+        whole.append(dict(rule=rule.name, pass_=passes, after_application=k, ok=bool(v.ok),
+                          method=v.method, certificate=v.kind, certified=bool(v.certified),
+                          distance=v.distance, reason=v.reason))
         return v.ok
 
     if ok_at(len(snaps) - 1):
