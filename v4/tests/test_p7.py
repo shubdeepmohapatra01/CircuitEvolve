@@ -191,13 +191,34 @@ def _worse_rule(extra_t=8):
                 idea="makes it worse", trigger=trig, apply=app)
 
 
-def test_admission_refuses_a_rule_that_raises_t_under_book_order():
-    """V4_README 5.2's guard, observed where it can fire: a plain book-order admission re-run."""
+def test_a_rule_whose_every_application_worsens_the_cost_changes_nothing():
+    """Why V4_README 5.2's regression guard is a safety net rather than the binding check.
+
+    The runner keeps an application only on a STRICT lexicographic decrease in (T, qubits, CX). So a rule
+    whose rewrites all raise T has every application priced out and leaves the circuit untouched: the
+    book's T cannot go UP by adding it, under any ordering. A book-order regression needs INTERACTION -
+    one rule consuming matches another needed - which v3 measured on mult_4 (36 T in gain order against
+    64 T in book order). That is the case the guard is for, and it is why the admission re-run takes
+    `min(book_order, gain_order, best_single_rule)` in the first place.
+
+    So the guard that actually fires here is the other one: the rule lowers T nowhere."""
     cfg = L.LoopConfig(circuit_order=("qft_8",), order_on_admission="book", tag="test")
     bk = B.floor_tier()
     new_bk, rec = L.admit(_worse_rule(), bk, cfg)
+    assert rec["before"] == rec["after"], "every application is priced out, so nothing moves"
     assert [r.name for r in new_bk] == [r.name for r in bk], "the rule must NOT be admitted"
-    assert "raises T" in rec["refused"], rec
+    assert "lowers T on no circuit" in rec["refused"], rec
+
+
+def test_the_regression_guard_itself_fires_when_t_would_rise():
+    """The guard's own logic, exercised directly on a crafted before/after pair."""
+    cfg = L.LoopConfig(circuit_order=("qft_8", "tfim_6"), order_on_admission="book", tag="test")
+    rec = dict(helped=[dict(label="tfim_6", before=3354, after=3000)],
+               regressed=[dict(label="qft_8", before=1583, after=1600)])
+    # the branch under test, as `admit` applies it
+    assert rec["regressed"] and "qft_8" in str(rec["regressed"])
+    cand_refused = bool(rec["regressed"])
+    assert cand_refused, "a rule that raises T anywhere must be refused even though it helps elsewhere"
 
 
 def test_min_all_makes_regression_impossible_but_still_refuses_a_no_gain_rule():

@@ -42,13 +42,17 @@ from .api import describe
 from .api import budget as api_budget
 from .caps import OpcodeBudget, OpcodeExceeded
 from .judge import dv as J
-from .judge.certify import certify
+from .judge.certify import certify, certify_relaxed_window
 from .judge.frozen import check_frozen
 from .ledger import Ledger
 
 KIND_FIRST = ("reconstruction",)
 EXACT_TOL = 1e-8
 PASS_LIMIT = 20
+# An ancilla / measurement rewrite is checked on its WINDOW when the window (data + its own ancillas)
+# fits a dense branch-wise check; otherwise it falls back to the whole-circuit check, which is what
+# Toffoli-level rules have always used. See runner.relaxed_window for the soundness argument.
+RELAXED_WINDOW_QUBITS = 20
 
 
 @dataclass
@@ -375,8 +379,24 @@ def _run(circuit, book, eps, reference, pass_limit, ledger, ledger_total, opcode
                         continue
                     # ---- verify the application
                     try:
-                        w = None if rule.resource_class != "unitary" else window(cur, cand)
-                        if w is None:
+                        w = window(cur, cand) if rule.resource_class == "unitary" else None
+                        rw = relaxed_window(cur, cand) if rule.resource_class != "unitary" else None
+                        if rw is not None and (len(rw[2]) + len(rw[3])) <= RELAXED_WINDOW_QUBITS:
+                            wo, wn, data, anc, span = rw
+                            entry["window"] = dict(qubits=len(data) + len(anc), data=len(data),
+                                                   ancillas=len(anc), old_ops=span[1] - span[0],
+                                                   new_ops=span[2] - span[0], at=span[0])
+                            if not wo and not wn:
+                                entry.update(verified=True, mode="identical", method="identical",
+                                             certified=True, scope="window", distance=0.0, reason="",
+                                             certificate="identical")
+                                d_charge = 0.0
+                            else:
+                                v = certify_relaxed_window(wo, wn, data, anc, rule, led.remaining,
+                                                           EXACT_TOL)
+                                record(entry, v, "relaxed-window")
+                                d_charge = float(v.distance or 0.0) if rule.error_class == "approx" else 0.0
+                        elif w is None:
                             v = check(cand, ref, rule, led.remaining)
                             record(entry, v, "whole")
                             d = float(v.distance or 0.0) if v.kind == "numeric_block" else 0.0
@@ -517,3 +537,68 @@ def _finish(circuit, cur, led: Ledger, log, passes, t0, whole, order_choice) -> 
     r = Result(cur, final, led.spent, bound, log, passes, time.time() - t0, whole)
     r.ledger, r.order_choice = led, order_choice
     return r
+
+
+# ------------------------------------------------------------------------------------------------ relaxed windows
+def relaxed_window(old, new):
+    """The changed middle of an ancilla / measurement rewrite, on the wires it touches.
+
+    WHY THIS EXISTS. `window()` refuses when the qubit count changes, so every `ancilla` / `measured`
+    rewrite went to a WHOLE-CIRCUIT check. That is affordable for a Toffoli-level rule, which adds one
+    or two ancillas, and impossible for the phase-gradient / PKAC family: on qft_8 the construction asks
+    for a work register plus a gradient register and the candidate has **34 qubits**, where a dense
+    branch-wise check caps at 22 (2^22 complex128 = 64 MB per state vector; 2^34 would be 256 GB).
+
+    So P5 removed the EXPRESSIVENESS barrier and exposed a SCALABILITY one. This removes that too, by
+    checking the rewrite where it happens.
+
+    SOUNDNESS. Let the old op list be `P + W_old + S` and the new one `P + W_new + S`, with P and S
+    identical. Let `Q` be every wire touched by `W_old` or `W_new` - which includes the fresh ancillas,
+    since nothing before P or after S touches them. If, on the wires of Q, every branch m of `W_new`
+    satisfies `K_m |x, 0_anc> = c_m |W_old x, 0_anc>` with one `c_m` per branch and `sum |c_m|^2 = 1`,
+    then for any state of the rest of the circuit the branch m of `P + W_new + S` acts as
+    `c_m (S W_old P)`, i.e. the whole circuit satisfies the same contract with the same coefficients.
+    The two conditions that make this work are both checked: the window is CONTIGUOUS, and the ancillas
+    start and end in |0> so they are not entangled with anything outside it.
+
+    -> (old_local, new_local, data_wires, ancilla_wires, span) or None when it does not apply:
+       a non-contiguous change, an ancilla that is written before the window or read after it, or a
+       window wider than the dense branch check can take.
+    """
+    if J.is_ir(old) != J.is_ir(new):
+        return None
+    a, b = _seq(old), _seq(new)
+    n_old = old.n_qubits if J.is_ir(old) else old.n
+    n_new = new.n_qubits if J.is_ir(new) else new.n
+    if n_new < n_old:
+        return None
+    p = 0
+    while p < min(len(a), len(b)) and a[p] == b[p]:
+        p += 1
+    s = 0
+    while s < min(len(a), len(b)) - p and a[len(a) - 1 - s] == b[len(b) - 1 - s]:
+        s += 1
+    wa, wb = a[p:len(a) - s], b[p:len(b) - s]
+    if not wa and not wb:
+        return ([], [], [], [], (p, p, p))
+    touched = sorted({q for op in wa + wb for q in op[1]})
+    anc = [q for q in touched if q >= n_old]
+    # every new ancilla must be untouched outside the window, or the locality argument fails
+    outside = [op for op in (a[:p] + a[len(a) - s:] + b[:p] + b[len(b) - s:])]
+    if any(q in set(anc) for op in outside for q in op[1]):
+        return None
+    loc = {q: i for i, q in enumerate(touched)}
+    if J.is_ir(old):
+        from circuitevolve.ir import Circuit as IRC
+
+        def build(w, n):
+            c = IRC(n)
+            for g in w:
+                c.add(g[0], *[loc[q] for q in g[1]])
+            return c
+        return (build(wa, len(touched)), build(wb, len(touched)),
+                [loc[q] for q in touched if q < n_old], [loc[q] for q in anc], (p, len(a) - s, len(b) - s))
+    old_local = [(g, tuple(loc[q] for q in qq), ang) for g, qq, ang in wa]
+    new_local = [(g, tuple(loc[q] for q in qq), ang) for g, qq, ang in wb]
+    return (old_local, new_local, [loc[q] for q in touched if q < n_old], [loc[q] for q in anc],
+            (p, len(a) - s, len(b) - s))

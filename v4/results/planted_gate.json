@@ -25,7 +25,7 @@
      "after": 1583
     }
    ],
-   "seconds": 0.44
+   "seconds": 0.19
   },
   {
    "control": "same_pauli_merge_planted",
@@ -42,7 +42,7 @@
      "after": 1583
     }
    ],
-   "seconds": 0.18
+   "seconds": 0.11
   },
   {
    "control": "ancilla_parity_rotation_lowering",
@@ -50,9 +50,9 @@
    "applications": 1,
    "verified": true,
    "certificate": "branch_kraus",
-   "method": "branch-kraus-exhaustive",
+   "method": "branch-kraus-exhaustive-window",
    "certified": true,
-   "distance": 1.6699540590904642e-15,
+   "distance": 0.0,
    "reason": " | no cost decrease",
    "witness": null,
    "kind": "verification only",
@@ -66,10 +66,10 @@
    "applications": 1,
    "verified": false,
    "certificate": "branch_kraus",
-   "method": "branch-kraus-exhaustive",
+   "method": "branch-kraus-exhaustive-window",
    "certified": true,
-   "distance": 1.2071067811865475,
-   "reason": "branch state distance 1.207e+00 > allowance 1.000e-08; ancilla population left outside |0>: 7.071e-01 > 1.000e-08; branch probabilities sum to 0.250000, not 1 | no cost decrease",
+   "distance": 1.0,
+   "reason": "branch state distance 1.000e+00 > allowance 1.000e-08; ancilla population left outside |0>: 1.000e+00 > 1.000e-08; branch coefficient differs between inputs by 1.000e+00 > 1.000e-08 (relative phase is observable) | no cost decrease",
    "witness": null,
    "kind": "verification only",
    "want": "rejected (ancilla return)",
@@ -77,6 +77,6 @@
    "ok": true
   }
  ],
- "seconds": 2.0,
+ "seconds": 0.3,
  "note": "CV-DV controls 2 and 3 of v3's P1 are replaced by the two ancilla + continuous-angle controls, which exercise the path P5 changed; CV-DV stays deferred"
 }

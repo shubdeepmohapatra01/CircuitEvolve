@@ -130,6 +130,44 @@ def algebraic(old, new) -> Certificate:
                        reason=f"no algebraic class applies ({why})", seconds=dt)
 
 
+def certify_relaxed_window(old_local, new_local, data_wires, anc_wires, rule,
+                           allowance: float, exact_tol: float = 1e-8) -> Certificate:
+    """`branch_kraus` on a WINDOW of an ancilla / measurement rewrite (see runner.relaxed_window).
+
+    The window carries its own ancillas, so the data register is `data_wires` and everything in
+    `anc_wires` must start and end in |0>. This is what makes the phase-gradient family checkable: the
+    whole candidate has 34 qubits on qft_8, the window has far fewer."""
+    t0 = time.perf_counter()
+    n = len(data_wires) + len(anc_wires)
+    STATS["branch_kraus"] += 1
+    if n > kraus.MAX_QUBITS:
+        return Certificate("branch_kraus", False, False, method="skipped", bound=allowance,
+                           reason=f"window has {n} qubits > {kraus.MAX_QUBITS}: a dense branch-wise "
+                                  f"check does not fit in memory",
+                           seconds=time.perf_counter() - t0)
+    allow = min(exact_tol, allowance) if rule.error_class == "exact" else allowance
+    ref = kraus.reference_state_of(list(old_local), len(data_wires)) \
+        if _measurement_free(old_local) else None
+    if ref is None:
+        return Certificate("branch_kraus", False, False, method="declined", bound=allowance,
+                           reason="the window's OLD side measures; it cannot define a state map",
+                           seconds=time.perf_counter() - t0)
+    cand = _ops_to_ir_numeric(new_local, n)
+    kv = kraus.check(cand, ref, len(data_wires), allow, data_map=list(data_wires))
+    dt = time.perf_counter() - t0
+    STATS["other_seconds"] += dt
+    return Certificate("branch_kraus", kv.ok, kv.certified, distance=kv.distance, bound=kv.bound,
+                       reason=kv.reason, method=kv.method + "-window",
+                       witness=dict(leak=kv.leak, phase_spread=kv.phase_spread,
+                                    prob_error=kv.prob_error, n_inputs=kv.n_inputs,
+                                    n_branches=kv.n_branches, data_qubits=len(data_wires),
+                                    ancillas=len(anc_wires)), seconds=dt)
+
+
+def _measurement_free(ops) -> bool:
+    return not any((op[0] in ("measure", "and_uncompute")) for op in ops)
+
+
 def certify(old, new, rule, allowance: float, exact_tol: float = 1e-8) -> Certificate:
     """The verdict on `new` vs `old` under `rule`'s two tags, by the cheapest certificate that applies.
 

@@ -385,3 +385,56 @@ right that v3's report did not: the DPF column is **B4 = DPF Synth** with its se
 ancilla count, not the retired B3g arm; **hatching is on `resource_class`**, so a DPF result with K* = 3
 and zero ancillas is no longer mislabelled relaxed; and the gap to the best baseline is **attributed**
 per circuit to a named mechanism with a measured size (`SCOPE.md`).
+
+## Gap A (the PKAC card): the expressiveness barrier is gone and a WIDTH barrier is now the blocker
+
+V4_README 4.2b asks for a hand-written phase-gradient / PKAC floor card, gated on P5. Two things changed
+that plan, both measured.
+
+**1. The card already existed.** `phase_gradient_addition_for_dyadic_rotation_cascades` and
+`phase_gradient_catalysis_dyadic_rotations` are v3 LLM rules that implement exactly the construction
+4.2b describes - CNOT loading of parity bits into a work register, one ripple-carry addition into a
+shared phase-gradient catalyst, everything Clifford+T except the gradient preparation. Both were
+rejected in v3 on `candidate not exact: rz(...) is not a multiple of pi/4`. So the right move was to
+re-run them, not to rewrite them.
+
+**2. Under the new verifier they get past that message and hit a different, named wall.** Measured, on
+the floor's residual at eps 1e-3:
+
+| rule | circuit | verdict | why |
+|---|---|---|---|
+| `phase_gradient_addition_for_dyadic_rotation_cascades` | qft_8 | not verifiable | the candidate has **34 qubits** (8 data + 26 register), the dense branch check caps at **22** |
+| | qae_13 | not verifiable | **51 qubits** |
+| narrowed to `E_MAX=7` | qft_8 / qae_13 | not verifiable | 28 / 33 qubits |
+| narrowed to `E_MAX=6` | qft_8 / qae_13 | not verifiable | **25 / 30** qubits |
+| narrowed to `E_MAX=5` | qft_8 / qae_13 | never fires | fewer than 4 distinct exponents remain in range |
+
+The cap is not arbitrary: 2^22 complex128 is 64 MB per state vector, and the check iterates
+(basis inputs x branches) of them. 2^25 is 512 MB each, which is not a tuning away - it is a different
+algorithm.
+
+**So P5 removed the EXPRESSIVENESS barrier and exposed a SCALABILITY one**, and the two should not be
+confused. The expressiveness fix is real and is demonstrated twice over: the planted-bug gate's control 3
+(a correct ancilla + continuous-angle identity) now VERIFIES where it could not be expressed before, and
+`and_monomial_phase_polynomial_resynthesis` - another of the eight rules blocked by that one message -
+now ADMITS and gives qft_8 **1390**, which is 187 T below pyzx.
+
+**What was tried and did not help.** `runner.relaxed_window` was added so that an ancilla / measurement
+rewrite is checked on the window it changes rather than on the whole circuit, with the soundness argument
+written out in its docstring (a contiguous window whose fresh ancillas are untouched outside it, and
+whose every branch acts as `c_m` times the old window on the data wires, splices into any surrounding
+circuit with the same coefficients). It is sound, it is kept, and it does not rescue PKAC: this rewrite
+replaces a whole rotation cascade at once, so the window IS 34 qubits wide. It will matter for narrower
+ancilla rules.
+
+**The route that would work, named rather than attempted.** PKAC's correctness is a composition of three
+factors that are each small: (i) CNOT loading of parity bits, affine and exactly checkable by
+`phasepoly.witness`; (ii) a Gidney ripple-carry adder, pure Clifford+T and checkable on its own few
+qubits by the frozen exact `relaxed` mode; (iii) the phase-gradient kickback identity, which is a
+one-register statement independent of the data width. That is the `algebraic` certificate of V4_README
+6.2 applied to this family - "the rule supplies a witness; the frozen checker re-derives it" - and it
+needs a `witness=` hook on `Rule` so a rule can hand its factorisation to the judge. It is a well-defined
+next piece of work, not a parameter sweep, and it is the only thing between v4 and DPF's qft_8 = 1064.
+
+Until then, `SCOPE.md`'s honest statement of the contract stands, with gap A reclassified: it is blocked
+on a verification-width problem with a known route, not on the verifier's expressiveness.
