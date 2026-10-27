@@ -68,6 +68,14 @@ All 39 test outputs re-verified end to end.
 - A hand-written Gidney reference rule (`tests/fixtures/gidney_pairs.py`) gives tof_4 23->15 under L1. The LLM rules reached 21,
   so the mechanism is reachable but the LLM implementations are partial.
 
+## Pitfall found: a verified rule can make the final T-count worse
+In L1 test, rule `004_shared_control_and_caching_across_toffoli_fanout` (accepted on barenco_tof_3, 16 -> 15) raised
+mcx_10 from 100 to 141 and modred_21 from 73 to 84. Both applications were correct (verified), but the rule inserts
+measurement gadgets BEFORE pyzx; pyzx then runs piecewise between the measurements and loses the phase folding across
+them, giving back more T than the rule saved. The loop currently keeps such applications (by design, logged as
+t_before < t_after in playbook/L1/log.jsonl). Fix for later: skip any application whose final T-count is higher, which
+guarantees every arm is never worse than its own baseline, or let a rule-selection agent decide.
+
 ## Known issues / later
 - B2 (PKAC DPF Synth) outputs with ancillas (qft_8, qae_13) fail an equivalence check upstream (bqskit-ft greedy_ntro @c04a322):
   missing |A> preps (75 on qft_8, fixed in our lowering) plus an unresolved ancilla leak. Stored values are shown, hatched.
