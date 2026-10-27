@@ -261,3 +261,40 @@ def test_the_loop_terminates_on_the_global_budget(tmp_path):
     lp = L.Loop(_cfg(tmp_path, budget=5, loops=99), scout, lambda c, x: None, tmp_path)
     out = lp.run()
     assert out["attempts_used"] == 5 and len(n) == 5
+
+
+# ------------------------------------------------------------------------------------------ end to end
+def test_a_real_rule_is_admitted_and_the_book_and_BOOK_md_both_change(tmp_path):
+    """The whole chain with stubs for the two LLM calls but a REAL rule and a REAL admission.
+
+    Started from an EMPTY book (the `book=[]` ablation hook) so that `same_pauli_merge` - which the floor
+    tier already subsumes - has something to find: qft_8 2391 -> 1583."""
+    import shutil
+    src = Path("v4/rules/handwritten/same_pauli_merge.py")
+    dst = Path("v4/rules/candidates/t_e2e_merge.py")
+    dst.write_text(src.read_text().replace('name="same_pauli_merge"', 'name="t_e2e_merge"'))
+
+    def scout(ctx):
+        return _card("t_e2e_merge", lever="rotation_count")
+
+    def implement(card, ctx):
+        return dst
+    cfg = L.LoopConfig(circuit_order=("qft_8",), global_budget_attempts=1, max_loops=1, tag="test")
+    before = Path("v4/rules/BOOK.md").read_text()
+    lp = L.Loop(cfg, scout, implement, tmp_path, book=[])
+    try:
+        out = lp.run()
+        assert [r.name for r in lp.book] == ["t_e2e_merge"], [r.name for r in lp.book]
+        assert out["final"]["qft_8"] == 1583, out["final"]
+        rows = [json.loads(x) for x in (tmp_path / "attempts.jsonl").read_text().splitlines()]
+        assert rows[0]["kind"] == "admitted" and rows[0]["level"] is None
+        adm = rows[0]["admission"]
+        assert adm["helped"] == [dict(label="qft_8", before=2391, after=1583)], adm
+        assert not adm["regressed"]
+        assert "t_e2e_merge" in Path("v4/rules/BOOK.md").read_text()
+        saved = json.loads((tmp_path / "config.json").read_text())
+        assert saved["starting_book"] == [] and saved["floor_tier"], "the ablation must be recorded"
+    finally:
+        Path("v4/rules/BOOK.md").write_text(before)
+        if dst.exists():
+            dst.unlink()

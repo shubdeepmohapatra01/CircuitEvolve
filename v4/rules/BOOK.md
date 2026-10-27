@@ -10,10 +10,7 @@ best baseline, not against zero. Do not propose a floor rule's idea again.
 
 | tier | name | kind | error | resources | idea | measured |
 |---|---|---|---|---|---|---|
-| floor | dpf_dyadic_angle_fixing | procedure | approx | unitary | Partition to width 4 and give each block an equal share of the remaining error budget. Keep the block's Clifford skeleton, free its rotation angles, and greedily pin angles onto the pi/4 grid (or to 0, deleting the rotation), refitting the rest by least squares against the block's original unitary after each pin and keeping a pin only while the block's phase-aligned distance stays inside its share. Each pinned angle is one rotation gridsynth no longer pays for. The distance used is drawn from the shared ledger. |  |
-| floor | pauli_exponential_commutation_merge | procedure | exact | unitary | Move every rotation to the circuit front as a signed n-qubit Pauli exponential (X/Y/Z-type, multi-qubit), so Hadamards do not cut. Two rotations with equal Paulis merge (angles add with sign) if the later one commutes with all rotation Paulis between them; the edit is made in place in the original op list. | hhl_8: 29331 -> 29205 = pyzx exactly (with the frame rule);
-                            29273 alone from the TKET input |
-| floor | pauli_frame_rotation_merge | procedure | exact | unitary | Move a later Z-rotation backwards through the Clifford ops between (its axis becomes C^dag P C per op) and past rotations whose Z commutes with that axis; if it lands as +-Z on an earlier rotation's qubit, the two angles add (a_i + s a_j) and the later op is deleted. Exact up to global phase. |  |
+
 
 ## What the floor tier ALONE already reaches (eps 1e-3, from `results/floor_gate_p3.json`)
 

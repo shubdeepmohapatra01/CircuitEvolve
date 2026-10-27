@@ -196,17 +196,24 @@ class Loop:
         implement(card, ctx)  -> Path to a candidate .py (or None)
     """
 
-    def __init__(self, cfg: LoopConfig, scout, implement, out_dir: Path | None = None):
+    def __init__(self, cfg: LoopConfig, scout, implement, out_dir: Path | None = None, book=None):
+        """`book` overrides the starting book. It defaults to the floor tier, which is the point of the
+        design; passing `[]` runs the loop with NO floor, which is the ablation the floor guarantee is
+        an answer to ("does pretraining the playbook with the baselines change what the LLM finds, or
+        only what it is scored against?"). Recorded in config.json either way."""
         self.cfg = cfg
         self.scout = scout
         self.implement = implement
         self.dir = Path(out_dir or (RESULTS / cfg.tag))
         self.dir.mkdir(parents=True, exist_ok=True)
-        self.book = B.floor_tier()
+        self.book = B.floor_tier() if book is None else list(book)
         self.attempts_used = 0
         self.loop = 0
         self.history: dict = {lab: [] for lab in cfg.circuit_order}
-        (self.dir / "config.json").write_text(json.dumps(cfg.to_dict(), default=str, indent=1) + "\n")
+        (self.dir / "config.json").write_text(json.dumps(
+            dict(cfg.to_dict(), starting_book=[r.name for r in self.book],
+                 starting_book_digest=B.digest(self.book),
+                 floor_tier=[r.name for r in B.floor_tier()]), default=str, indent=1) + "\n")
 
     # ---------------------------------------------------------------- bookkeeping
     def _append(self, name: str, row: dict) -> None:
