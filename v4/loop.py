@@ -47,7 +47,7 @@ from .judge import dv as J
 from .judge.frozen import check_frozen, recheck_frozen
 from .ledger import Ledger
 from .memo import optimize_memo, residual
-from .paths import RESULTS
+from .paths import ACCEPTED, RESULTS
 from .runner import dv_key, optimize
 from .tools.evaluate import check_on_target
 
@@ -221,7 +221,7 @@ class Loop:
         self.implement = implement
         self.dir = Path(out_dir or (RESULTS / cfg.tag))
         self.dir.mkdir(parents=True, exist_ok=True)
-        self.book = B.floor_tier() if book is None else list(book)
+        self.book = B.book() if book is None else list(book)
         self.attempts_used = 0
         self.loop = 0
         self.history: dict = {lab: [] for lab in cfg.circuit_order}
@@ -230,6 +230,26 @@ class Loop:
             dict(cfg.to_dict(), starting_book=[r.name for r in self.book],
                  starting_book_digest=B.digest(self.book),
                  floor_tier=[r.name for r in B.floor_tier()]), default=str, indent=1) + "\n")
+
+    # ---------------------------------------------------------------- persistence
+    def _persist(self, path: Path) -> str:
+        """Move an admitted candidate into `rules/accepted/` so the book SURVIVES this process.
+
+        Without this the admission lived only in `self.book`: the file stayed in `candidates/`, so
+        `book.book()` did not see it, the sweep and the report were computed against a book that did not
+        contain it, and a restart lost it entirely. The first live loop run hit exactly that - it admitted
+        `gaussian_majorana_global_resynthesis` (tfim_6 8560 -> 3354, reproducing v3's free-fermion result)
+        and the rule was still sitting in `candidates/` afterwards."""
+        import shutil
+        dest = ACCEPTED / path.name
+        ACCEPTED.mkdir(parents=True, exist_ok=True)
+        if path.resolve() != dest.resolve():
+            shutil.move(str(path), dest)
+        B.write_book_md(self.book)
+        self._append("admitted.jsonl", dict(time=time.time(), rule=path.stem,
+                                            moved_to=str(dest.relative_to(ACCEPTED.parent.parent)),
+                                            book=[r.name for r in self.book]))
+        return str(dest)
 
     # ---------------------------------------------------------------- resume
     def _resume(self) -> None:
@@ -325,6 +345,7 @@ class Loop:
                 if rec.get("refused"):
                     o = Outcome("no_gain", IDEA, feedback=dict(summary=rec["refused"]), report=o.report)
                 else:
+                    rec["persisted_to"] = self._persist(Path(path))
                     self._record(label, k, card, o, t0, ctx, tries)
                     return o
             self._record(label, k, card, o, t0, ctx, tries)

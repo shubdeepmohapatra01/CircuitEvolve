@@ -1,0 +1,15 @@
+{
+ "rule": "gaussian_majorana_global_resynthesis",
+ "origin": "the FIRST live training-loop attempt (tag run1_EARLY, tfim_6, attempt 1, 338.9 s, 1 implementer try)",
+ "decision": "reject",
+ "level": "idea",
+ "reason": "admission refused: under order=min_all the rule lowers T on no circuit. It is a duplicate of the accepted free_fermion_gaussian_resynthesis.",
+ "measured": {
+  "with_the_full_book":    {"tfim_6": 3354, "qpe_8": 11364, "hhl_8": 27745, "qft_8": 1583, "qae_13": 4526},
+  "with_it_added":         {"tfim_6": 3354, "qpe_8": 11364, "hhl_8": 27745, "qft_8": 1583, "qae_13": 4526},
+  "note": "identical on every circuit, so the book is no better with it than without"
+ },
+ "why_it_admitted_at_the_time": "the loop's starting book was the FLOOR TIER ONLY (3 rules), so free_fermion_gaussian_resynthesis was absent and tfim_6 sat at 8560. The loop then took it to 3354. With the loop's default starting book corrected to the LIVE book (floor + accepted), tfim_6 already reads 3354 and the duplicate is correctly refused.",
+ "what_it_is_evidence_OF": "RECALL, and it is a real result. Given only the residual circuit, the lever fingerprint (free_fermion=true, majorana_planes=12, both baseline levers at zero headroom) and the baselines, the scout proposed Jordan-Wigner / Givens free-fermion resynthesis on its FIRST attempt at tfim_6, cited the right sources, correctly argued that the floor's phase-gadget fusion cannot reach it, and the implementer got it verified and improving in ONE try, reaching 8560 -> 3354 = the same -60.8% v3 found. It is not a new rule; it is a measurement of how well the fingerprint points.",
+ "see_also": "v4/tests/fixtures/card_tfim6_gaussian.json is that attempt's card, kept as a prefilter regression fixture"
+}

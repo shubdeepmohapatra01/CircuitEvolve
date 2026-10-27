@@ -1,0 +1,11 @@
+{
+ "stopped": "the implementer changed files outside rules/candidates/: ['BUILD_LOG.md']",
+ "loops": 1,
+ "attempts_used": 2,
+ "book": [
+  "dpf_dyadic_angle_fixing",
+  "pauli_exponential_commutation_merge",
+  "pauli_frame_rotation_merge",
+  "gaussian_majorana_global_resynthesis"
+ ]
+}

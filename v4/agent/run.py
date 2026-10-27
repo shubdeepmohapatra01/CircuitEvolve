@@ -57,14 +57,20 @@ class Fatal(RuntimeError):
 
 
 # ------------------------------------------------------------------------------------------ integrity
-SKIP = ("rules/candidates/", "results/", ".cache/", "__pycache__")
+# What the integrity snapshot IGNORES. The guard exists to stop an implementer touching the judge, the
+# api, the runner, the loop or the rule book - anything that could change what gets accepted. The
+# top-level prose files cannot, and including them means any edit to BUILD_LOG.md while a run is in
+# flight kills the run: that happened, with "the implementer changed files outside rules/candidates/:
+# ['BUILD_LOG.md']", after two perfectly good attempts.
+SKIP = ("rules/candidates/", "results/", ".cache/", "__pycache__", "tests/fixtures/")
+SKIP_FILES = ("BUILD_LOG.md", "README.md", "SCOPE.md", "V4_README.md")
 
 
 def tree_digest() -> dict:
     out = {}
     for p in sorted(V4.rglob("*")):
         rel = p.relative_to(V4).as_posix()
-        if p.is_file() and not any(s in rel for s in SKIP):
+        if p.is_file() and not any(s in rel for s in SKIP) and rel not in SKIP_FILES:
             out[rel] = hashlib.sha256(p.read_bytes()).hexdigest()
     return out
 
