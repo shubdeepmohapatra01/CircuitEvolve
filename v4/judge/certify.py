@@ -119,29 +119,25 @@ def algebraic(old, new) -> Certificate:
         STATS["algebraic_seconds"] += dt
         return Certificate("algebraic", True, True, distance=0.0, bound=0.0, method="pauli-merge",
                            witness=dict(det, ops=len(a_ops), qubits=na), seconds=dt)
-    merge_refuted = not why.startswith("class does not apply")
     if phasepoly.is_hadamard_free(a_ops) and phasepoly.is_hadamard_free(b_ops):
         ok2, why2 = phasepoly.witness(a_ops, b_ops, na)
-        dt = time.perf_counter() - t0
-        STATS["algebraic_applied"] += 1
-        STATS["algebraic_seconds"] += dt
         if ok2:
+            dt = time.perf_counter() - t0
+            STATS["algebraic_applied"] += 1
             STATS["algebraic_phasepoly"] += 1
+            STATS["algebraic_seconds"] += dt
             pa = phasepoly.polynomial(a_ops, na)
             return Certificate("algebraic", True, True, distance=0.0, bound=0.0,
                                method="phase-polynomial",
                                witness=dict(labels=len(pa[0]),
                                             affine=dict(p=list(pa[1].p), c=list(pa[1].c)),
                                             ops=len(a_ops), qubits=na), seconds=dt)
-        return Certificate("algebraic", False, True, method="phase-polynomial", reason=why2, seconds=dt)
+        why = why2 or why
     dt = time.perf_counter() - t0
     STATS["algebraic_seconds"] += dt
-    if merge_refuted:
-        STATS["algebraic_applied"] += 1
-        return Certificate("algebraic", False, True, method="pauli-merge", reason=why, seconds=dt)
     STATS["algebraic_declined"] += 1
     return Certificate("algebraic", False, False, method="declined",
-                       reason=f"no algebraic class applies ({why})", seconds=dt)
+                       reason=f"no algebraic witness applies ({why})", seconds=dt)
 
 
 def certify_relaxed_window(old_local, new_local, data_wires, anc_wires, rule,
@@ -194,13 +190,8 @@ def certify(old, new, rule, allowance: float, exact_tol: float = 1e-8) -> Certif
     want = getattr(rule, "certificate", "auto")
     if want in ("auto", "algebraic") and rule.resource_class == "unitary":
         c = algebraic(old, new)
-        if c.method != "declined":
-            if c.ok or want == "algebraic":
-                return c
-            # the witness proved them different: no cheaper check can rescue that, and for an `exact`
-            # rule it is the answer. An `approx` rule may still be inside its allowance, so fall through.
-            if rule.error_class == "exact":
-                return c
+        if c.ok:
+            return c
     t0 = time.perf_counter()
     if rule.resource_class != "unitary":
         STATS["branch_kraus"] += 1

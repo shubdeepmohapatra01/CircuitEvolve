@@ -336,8 +336,13 @@ def merge_witness(old_ops, new_ops, tol: float = 1e-9) -> tuple:
     deleted angle, and (3) every rotation strictly between them commutes with the moved axis. All three
     are checked here on the front-frame records, in one pass.
 
-    -> (ok, reason, detail). `ok` is a PROOF of equality up to global phase. A `False` with reason
-    "class does not apply" is a decline, not a refutation: the caller falls through to a numeric check.
+    -> (ok, reason, detail). `ok` is a PROOF of equality up to global phase. **`False` is never a
+    refutation**: it means this witness does not establish equality, and the caller must fall through to
+    the exact or numeric check, which is the authority. Several of the `False` reasons genuinely cannot
+    refute - two circuits whose merge is not justified by THIS identity can still be equal for another
+    reason - and treating any of them as a refutation would reject correct rules. It did: an earlier
+    version returned the phase-polynomial mismatch as a certified refutation and rejected
+    `same_pauli_merge` on hhl_8, a rule v3 verified and this project's own planted-bug gate admits.
     Angles are compared modulo 2 pi, which is exact up to global phase because
     exp(-i (theta + 2 pi)/2 P) = -exp(-i theta/2 P) for P^2 = I.
     """

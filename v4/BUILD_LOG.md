@@ -540,3 +540,51 @@ already failed, which is the one thing `history.json` exists to prevent.
 the global budget, each circuit's cards and outcomes are restored, a circuit already attempted in the
 current global loop is not redone, and a truncated final line from a kill mid-write is skipped rather
 than crashing the restart. Re-running with the same `--tag` continues the same run.
+
+## A FALSE REFUTATION in the certificate layer, and why the algebraic layer now only accepts or declines
+
+Found by the end-to-end admission test, and it is the most serious bug of the build.
+
+`same_pauli_merge` - a rule v3 verified, which this project's own planted-bug gate admits as control 1 -
+was being **REJECTED** on hhl_8, by the phase-polynomial witness, with "phase polynomial differs".
+
+The rule is correct. The witness was wrong to refute it, for a reason that was written down in
+`phasepoly.witness`'s own design note and then not respected by the caller. The witness compares the
+phase polynomial **label by label**, and the labels are not independent: for a parity mask `p`, the
+indicators of `(p, 0)` and `(p, 1)` differ by a constant, because `v_(p,1) = 1 - v_(p,0)`. So the
+observable phase depends only on the DIFFERENCES `theta_(p,0) - theta_(p,1)`, and angle mass may move
+between the two labels of one mask without changing the circuit at all. Matching every label is
+*sufficient* for equality and deliberately conservative - but `certify.algebraic` was returning the
+mismatch as `ok=False, certified=True`, i.e. a **certified refutation**, and the runner then disabled the
+rule.
+
+The same applies to parts of the merge witness: "the rotations in between do not commute with the moved
+axis" means the rewrite is not justified by THAT identity, not that the circuits differ.
+
+**The rule now is: the algebraic layer only ever ACCEPTS or DECLINES. It never refutes.** A decline falls
+through to the exact or numeric check, which is the authority. The cost is one numeric check on the rare
+mismatch; the alternative was rejecting correct rules on a technicality, which is the single worst failure
+mode this whole design is meant to remove.
+
+After the fix, the control rule reproduces v3's P1 reference row (`v3/results/p1/handwritten_reference.csv`)
+exactly, application for application:
+
+| circuit | before -> after | applications | v3's reference row |
+|---|---|---|---|
+| qft_8 | 2391 -> 1583 | 19 | 2391 -> 1583, 19 |
+| qpe_8 | 14761 -> 11485 | 67 | 14761 -> 11485, 67 |
+| hhl_8 | 35450 -> 29331 | 131 | 35450 -> 29331, 131 |
+| qae_13 | 7821 -> 4527 | 67 | 7821 -> 4527, 67 |
+
+The planted-bug gate still passes 4/4; the planted sign bug is now caught by the numeric check
+(distance 3.419e-01) rather than by the algebraic one, which is the correct division of labour - the cheap
+witness proves correct rewrites correct, and the authority on a disagreement is the exact check.
+
+**Consequence for P6.** The first eight re-evaluations had already run under the bug, and one of them
+(`generator_equality_angle_teleportation`) was rejected with `method: 'pauli-merge'` - exactly the
+suspect path. Those partial results are set aside as `results/reevaluate_p6_PREFIX_BUGGY.*` rather than
+deleted, and the whole re-evaluation was restarted against the fixed layer. The subprocess cap was also
+lowered from 1800 s to 900 s, because the one rule that hit the old cap
+(`hamming_weight_phasing_shared_angle_layers`) spent 30 minutes to produce `not_evaluated`, and a shorter
+cap reaches the same verdict four times sooner. A cap hit is still recorded as `not_evaluated`, never as
+a rejection.

@@ -83,20 +83,25 @@ def _cleanup(names):
 
 # ------------------------------------------------------------------------------------------ outcomes
 def test_no_trigger_is_an_idea_level_failure(tmp_path):
+    """Only qft_8, and only the `rotation_count` lever, because the fingerprint is now MEASURED and no
+    single lever has headroom on both test circuits: after the floor, qft_8 has rotation_count 2 /
+    angle_cost 66 / algebraic 0, and tfim_6 has 0 / 0 / 150. A card on a zero-headroom lever is
+    correctly PREFILTERED before the trigger ever runs, which is a different outcome from this one."""
     names = []
 
     def scout(ctx):
         n = f"t_noop_{ctx['label']}_{len(names)}"
         names.append(n)
-        return _card(n)
-    lp = L.Loop(_cfg(tmp_path, budget=2, loops=1), scout, _writer(tmp_path, NOOP), tmp_path)
+        return _card(n, lever="rotation_count")
+    cfg = L.LoopConfig(circuit_order=("qft_8",), global_budget_attempts=2, max_loops=2, tag="test")
+    lp = L.Loop(cfg, scout, _writer(tmp_path, NOOP), tmp_path)
     try:
         out = lp.run()
         rows = [json.loads(x) for x in (tmp_path / "attempts.jsonl").read_text().splitlines()]
         assert {r["kind"] for r in rows} == {"no_trigger"}
         assert {r["level"] for r in rows} == {L.IDEA}
         assert out["attempts_used"] == 2
-        assert lp.book == B.floor_tier() or [r.name for r in lp.book] == [r.name for r in B.floor_tier()]
+        assert [r.name for r in lp.book] == [r.name for r in B.floor_tier()]
     finally:
         _cleanup(names)
 

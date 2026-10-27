@@ -34,7 +34,7 @@
    "got": "reject",
    "ok": true,
    "level": "implementation",
-   "reason": "verification failed on qft_8 (eps 0.001): {'match': 1, 'mode': 'exact', 'method': 'pauli-merge', 'distance': None, 'reason': 'angles do not add: host 0.392699081699 + sign 1 x deleted 0.343611696486 = 0.736310778185, but the new angle is 0.0490873852123'}",
+   "reason": "verification failed on qft_8 (eps 0.001): {'match': 1, 'mode': 'approx', 'method': 'unitary', 'distance': 0.34192377752060266, 'unverifiable': False, 'reason': 'distance 3.419e-01 > eps 1.000e-08'}",
    "circuits": [
     {
      "label": "qft_8",
@@ -42,7 +42,7 @@
      "after": 1583
     }
    ],
-   "seconds": 0.11
+   "seconds": 0.12
   },
   {
    "control": "ancilla_parity_rotation_lowering",

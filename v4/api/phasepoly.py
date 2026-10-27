@@ -146,8 +146,19 @@ def witness(old_ops, new_ops, n: int, tol: float = 1e-12) -> tuple:
     """The `algebraic` certificate for the phase-folding class: both sides Hadamard-free with the same
     phase polynomial (modulo 2pi per label) and the same affine label map.
 
-    -> (ok, reason). O(ops), no matrices, and a PROOF: a Hadamard-free circuit is exactly
-    (diagonal phase polynomial) composed with (affine permutation), and both factors are compared here.
+    -> (ok, reason). `ok=True` is a PROOF: a Hadamard-free circuit is exactly (diagonal phase
+    polynomial) composed with (affine permutation), and both factors are compared here, in O(ops) with no
+    matrices.
+
+    **`ok=False` is NOT a refutation.** The comparison is label-wise, and the labels are not independent:
+    for a parity mask p, the indicators of (p, 0) and (p, 1) differ by a constant, since
+    v_(p,1) = 1 - v_(p,0). So the observable phase depends only on the DIFFERENCES
+    theta_(p,0) - theta_(p,1), and angle mass may legitimately move between the two labels of one mask
+    without changing the circuit at all. Requiring each label to match is sufficient for equality and
+    deliberately conservative; a mismatch means "this witness does not establish equality", and the
+    caller must fall through to the exact or numeric check. An earlier version of the certificate layer
+    reported this mismatch as a certified refutation, and rejected `same_pauli_merge` on hhl_8 - a rule
+    v3 verified and the planted-bug gate admits.
     """
     a, b = polynomial(old_ops, n), polynomial(new_ops, n)
     if a is None or b is None:
