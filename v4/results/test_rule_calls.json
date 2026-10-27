@@ -2,5 +2,7 @@
  "manual:_timing_noop.py": 2,
  "manual:same_pauli_merge.py": 2,
  "manual:same_pauli_merge_planted.py": 1,
- "manual:harness_dryrun_planted.py": 1
+ "manual:harness_dryrun_planted.py": 1,
+ "tfim_6_a1_t1:gaussian_majorana_global_resynthesis.py": 5,
+ "hhl_8_a1_t1:commuting_pauli_cluster_diagonalization.py": 2
 }

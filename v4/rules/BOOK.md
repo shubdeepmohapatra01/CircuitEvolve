@@ -14,8 +14,9 @@ best baseline, not against zero. Do not propose a floor rule's idea again.
 | floor | pauli_exponential_commutation_merge | procedure | exact | unitary | Move every rotation to the circuit front as a signed n-qubit Pauli exponential (X/Y/Z-type, multi-qubit), so Hadamards do not cut. Two rotations with equal Paulis merge (angles add with sign) if the later one commutes with all rotation Paulis between them; the edit is made in place in the original op list. | hhl_8: 29331 -> 29205 = pyzx exactly (with the frame rule);
                             29273 alone from the TKET input |
 | floor | pauli_frame_rotation_merge | procedure | exact | unitary | Move a later Z-rotation backwards through the Clifford ops between (its axis becomes C^dag P C per op) and past rotations whose Z commutes with that axis; if it lands as +-Z on an earlier rotation's qubit, the two angles add (a_i + s a_j) and the later op is deleted. Exact up to global phase. |  |
+| accepted | gaussian_majorana_global_resynthesis | procedure | exact | unitary | A Gaussian circuit is one R in O(2n) on the Majoranas; compose all ops into R, Givens-factor it into at most n(2n-1) adjacent-plane rotations plus a sign Pauli, re-emit with the residual Clifford. |  |
 
-## What the floor tier ALONE already reaches (eps 1e-3, from `results/floor_gate_p3.json`)
+## What the floor tier ALONE already reaches (eps 1e-3, from `results/floor_gate_p6.json`)
 
 Do not propose an idea whose whole effect is to reach a number in the 'floor' column.
 
@@ -23,6 +24,6 @@ Do not propose an idea whose whole effect is to reach a number in the 'floor' co
 |---|---|---|---|---|
 | qft_8 | **1583** | DPF Synth | 1064 | +519 |
 | qpe_8 | **11364** | DPF Synth | 7552 | +3812 |
-| hhl_8 | **28413** | DPF Synth | 18701 | +9712 |
+| hhl_8 | **28411** | DPF Synth | 18701 | +9710 |
 | qae_13 | **4526** | DPF Synth | 4264 | +262 |
 | tfim_6 | **8560** | TKET | 8560 | +0 |

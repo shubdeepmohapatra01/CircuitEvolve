@@ -562,6 +562,14 @@ def relaxed_window(old, new):
     The two conditions that make this work are both checked: the window is CONTIGUOUS, and the ancillas
     start and end in |0> so they are not entangled with anything outside it.
 
+    The second condition is automatic for a FRESH ancilla, which is the only kind this produces: the
+    original op list has no op on that wire, so every op touching it differs from the original and
+    therefore cannot be part of the common prefix or the common suffix. All of its uses land inside the
+    changed middle by construction - including a use at the very end of the circuit, which simply breaks
+    the suffix match and extends the window to cover it. The explicit guard below is kept as a defence
+    for any future caller that passes a wire that is not fresh
+    (v4/tests/test_p5.py::test_a_fresh_ancilla_can_never_appear_outside_the_changed_middle).
+
     -> (old_local, new_local, data_wires, ancilla_wires, span) or None when it does not apply:
        a non-contiguous change, an ancilla that is written before the window or read after it, or a
        window wider than the dense branch check can take.

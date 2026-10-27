@@ -161,3 +161,97 @@ def test_too_wide_is_reported_as_skipped_not_as_a_failure():
     big.add("h", 0)
     v = K.check(big, ref, 1, 1e-9)
     assert not v.ok and v.method == "skipped" and "not numerically verifiable" in v.reason
+
+
+# --------------------------------------------------------------------- relaxed windows vs whole circuits
+def _small(n: int = 4):
+    """A small Clifford+Rz circuit: small enough that the WHOLE-circuit branch check is feasible, so a
+    window verdict can be compared against it."""
+    from v4.api import dv
+    ops = [("h", (0,), None), ("cx", (0, 1), None), ("rz", (1,), 0.31), ("h", (2,), None),
+           ("cx", (2, 3), None), ("rz", (3,), 1.17), ("cx", (0, 2), None), ("rz", (2,), -0.44),
+           ("h", (1,), None)]
+    return dv.Circuit(n, dv.normalize(ops), {})
+
+
+@pytest.mark.parametrize("rule_name,expect_ok", [("ancilla_parity_rotation_lowering", True),
+                                                 ("ancilla_parity_rotation_leak", False)])
+def test_a_relaxed_window_verdict_agrees_with_the_whole_circuit_verdict(rule_name, expect_ok):
+    """The soundness of `runner.relaxed_window`, checked rather than only argued.
+
+    It exists because the phase-gradient family is 34 qubits wide on qft_8 and a dense branch check caps
+    at 22, so an ancilla rewrite is checked on the window it changes. The argument is in its docstring: a
+    contiguous window whose fresh ancillas are untouched outside it, every branch of which acts as `c_m`
+    times the old window on the data wires, splices into any surrounding circuit with the same
+    coefficients. This test compares the two verdicts where BOTH can run - a 4-qubit circuit - for a
+    correct ancilla rewrite and for one that leaks its ancilla. If the window ever accepted something the
+    whole circuit rejects, that argument would be wrong and a bad rule could be admitted."""
+    from pathlib import Path
+    from v4 import book as B
+    from v4.judge import certify as C
+    from v4.runner import relaxed_window
+    rule = B.load_rule(Path(f"v4/rules/handwritten/{rule_name}.py"))
+    cur = _small()
+    ms = rule.trigger(cur)
+    assert ms, "the control rule must fire on this circuit"
+    cand = rule.apply(cur, ms[0])
+    assert cand.n == cur.n + 1, "the rewrite must add exactly one ancilla"
+
+    whole = C.certify(cur, cand, rule, 1e-8)
+    assert whole.kind == "branch_kraus" and not whole.unverifiable, whole.reason
+
+    rw = relaxed_window(cur, cand)
+    assert rw is not None, "the window must be extractable for this rewrite"
+    wo, wn, data, anc, _span = rw
+    assert len(anc) == 1 and len(data) >= 1
+    win = C.certify_relaxed_window(wo, wn, data, anc, rule, 1e-8)
+    assert not win.unverifiable, win.reason
+
+    assert bool(win.ok) == bool(whole.ok) == expect_ok, \
+        (rule_name, "window", win.ok, win.reason[:160], "| whole", whole.ok, whole.reason[:160])
+    if not expect_ok:
+        assert "ancilla population left outside" in win.reason
+
+
+def test_a_fresh_ancilla_can_never_appear_outside_the_changed_middle():
+    """Why `relaxed_window`'s locality precondition holds automatically for a fresh ancilla.
+
+    The soundness argument needs the window's ancillas to be untouched outside it. For an ancilla on a
+    NEW wire that is free: the original op list has no op on that wire at all, so every op touching it
+    differs from the original and therefore cannot be part of the common prefix or the common suffix.
+    All of its uses land inside the changed middle by construction.
+
+    This is checked rather than assumed, on a candidate that deliberately uses the ancilla both early and
+    at the very END of the circuit - the shape that looks like it should escape the window. It does not:
+    the trailing use breaks the suffix match, so the window simply extends to cover it, and the ancilla's
+    return to |0> is then part of what gets checked. The explicit guard in `relaxed_window` stays as a
+    defence for any future caller that passes a non-fresh wire."""
+    from v4.api import dv
+    from v4.runner import relaxed_window
+    cur = _small(4)
+    ops = list(cur.ops)
+    new_ops = ops[:3] + [("cx", (1, 4), None), ("rz", (4,), 0.31), ("cx", (1, 4), None)] + ops[3:] \
+        + [("cx", (0, 4), None)]
+    cand = dv.Circuit(5, dv.normalize(new_ops), {})
+    rw = relaxed_window(cur, cand)
+    assert rw is not None, "the window must still be offered"
+    wo, wn, data, anc, span = rw
+    assert anc == [4], anc
+    # every use of the ancilla is inside the window
+    uses_in_window = sum(1 for op in wn if 4 in op[1])
+    uses_total = sum(1 for op in cand.ops if 4 in op[1])
+    assert uses_in_window == uses_total == 4, (uses_in_window, uses_total)
+    # and the trailing cx leaves it entangled, so the window check must REJECT
+    from v4 import book as B
+    from v4.judge import certify as C
+    from pathlib import Path as _P
+    rule = B.load_rule(_P("v4/rules/handwritten/ancilla_parity_rotation_lowering.py"))
+    win = C.certify_relaxed_window(wo, wn, data, anc, rule, 1e-8)
+    assert not win.ok and "ancilla population left outside" in win.reason, win.reason
+
+
+def test_relaxed_window_reports_identity_for_an_unchanged_rewrite():
+    from v4.runner import relaxed_window
+    cur = _small(4)
+    rw = relaxed_window(cur, cur)
+    assert rw is not None and rw[0] == [] and rw[1] == []

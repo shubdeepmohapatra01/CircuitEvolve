@@ -637,3 +637,41 @@ computes. Those are different properties and they need different tests:
 The second class is the one that was missing, and it is the one that found all three. P6 has been
 restarted three times in total as a result; each restart cost under an hour and replaced verdicts that
 would otherwise have been reported as findings.
+
+## RETRACTION: `and_monomial_phase_polynomial_resynthesis` does NOT give qft_8 = 1390
+
+Earlier in this build log, and in the session, the first result of P6 was reported as:
+
+> `and_monomial_phase_polynomial_resynthesis` now ADMITS, qft_8 1583 -> **1390** (187 T below pyzx),
+> qpe_8 11364 -> 11289, qae_13 4526 -> 4414.
+
+**That was a false accept and it is withdrawn.** It was produced by the version of `v4/judge/kraus.py`
+that had its own (wrong) gadget semantics. With the gadget semantics taken from the frozen
+`ir.Circuit.expand` and the cross-check of `tests/test_p5.py` in place, the rule is **REJECTED**, and the
+rejection is right.
+
+The evidence, built so as not to depend on the module under suspicion:
+
+* the rule fires twice on qpe_8. **Application 1 is exact**: c_m = 0.831470 - 0.555570j, bit-identical
+  for all 256 basis inputs, |c| = 1, residual 4.5e-14, ancilla leak 6.6e-32. A clean global phase.
+* **Application 2 is not.** |c| = 1 for every input, residual 2.8e-15 - so each input's output is
+  *some* unit phase times the right state - but that phase **varies with the input**, spread 1.962.
+  An input-dependent phase is exactly what CLAUDE.md invariant 6 says is observable.
+* independently, on that application's window (6 qubits, no ancillas, no measurements), the **frozen**
+  `blocks/verify_block.distance` reports a phase-aligned operator distance of **1.9993**. The frozen
+  authority and `branch_kraus` agree.
+
+So the rule is correct once and wrong the second time it fires, and `branch_kraus`'s phase-consistency
+check caught precisely the thing it exists for.
+
+### What this changes about P5's result
+
+It does not change that the verifier limitation was real: eight v3 rules died on
+`rz(...) is not a multiple of pi/4` without ever being checked, and P5 means they get checked. What it
+changes is the expectation. **Unblocking the verifier does not turn those eight into eight wins** - it
+turns them into eight verdicts, and this one is a genuine rejection that v3 could never have reached.
+That is the correct outcome of a verifier-first design, and reporting the false accept as a 187 T win
+would have been the worst kind of error this project can make.
+
+The claim "qft_8 below pyzx" is therefore withdrawn until some rule earns it under the cross-checked
+verifier. The floor's qft_8 number stands at 1583.
