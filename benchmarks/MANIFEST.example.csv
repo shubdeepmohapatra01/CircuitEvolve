@@ -1,0 +1,3 @@
+name,family,source,commit_url,license,qubits,qregs_in_source,barriers_removed,gates,cx,ccx_in_source,arbitrary_rz,path
+tfim_4,hamsim,circuits/ (= BQSKit qseed copy): qasm/tfim/tfim_4.qasm,https://github.com/mtweiden/qseed @ eb9ccab7a0736ba9c8793899b155dd4c20c5ccb1 qasm/,none declared (research-use copy),4,1,0,1776,120,0,140,benchmarks/hamsim/tfim_4.qasm
+tfim_6,hamsim,circuits/ (= BQSKit qseed copy): qasm/tfim/tfim_6.qasm,https://github.com/mtweiden/qseed @ eb9ccab7a0736ba9c8793899b155dd4c20c5ccb1 qasm/,none declared (research-use copy),6,1,0,2954,200,0,240,benchmarks/hamsim/tfim_6.qasm
