@@ -1,9 +1,46 @@
-.venv/
+# Python
 __pycache__/
 *.pyc
-.pytest_cache/
 *.egg-info/
-results/runs/
-.cache/
+.pytest_cache/
+
+# Virtual environments
+.venv/
 .venv*/
+
+# Benchmarks: only the two small TFIM circuits are committed, as a familiarisation set. The full suite is built
+# locally by benchmarks/build_suite.py, which writes the family folders, MANIFEST.csv, DROPPED.csv and build_log.txt.
+# MANIFEST.example.csv holds the two committed rows; copy it to MANIFEST.csv to run the suite scripts on them.
+benchmarks/*
+!benchmarks/build_suite.py
+!benchmarks/MANIFEST.example.csv
+!benchmarks/hamsim/
+benchmarks/hamsim/*
+!benchmarks/hamsim/tfim_4.qasm
+!benchmarks/hamsim/tfim_6.qasm
+
+# The rule library: grown per machine by agent.py, one folder per accepted round. Not committed -- a clone starts
+# with an empty playbook and builds its own. examples/givens_rule/ is the one entry that ships, as a reference.
+playbook/
+
+# Results: every table, figure and circuit under results/ is output of a campaign over one benchmark suite, so a
+# clone starts empty and writes its own. The scripts that produce them are in sweep/ and baselines/.
+results/
+
+# Campaign artefacts: kept on disk, never committed.
+# runs/   one folder per agent run: the workspace the agent worked in, every script it wrote,
+#         transcript.jsonl, and the per-round circuits. Hundreds of MB after a full campaign.
+# logs/   the chronological harness log of every stage (.md readable, .jsonl structured).
+# test_out/  scratch output of tests/test_playbook.py and tests/test_ancilla_arm.py.
+# .cache/claude_config  the Claude Code CLI session store; `--resume` needs it to persist between rounds.
+runs/
+logs/
+test_out/
+.cache/
+
+# The planner study (selecting and composing stored rules): local only, not part of this repository. Its tables are
+# tied to the earlier benchmark suite and its run folders are ~90 MB.
+planner/
+
+# Scratch
 handoff/

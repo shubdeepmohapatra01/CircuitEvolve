@@ -1,0 +1,25 @@
+# Everything the harness needs. Python 3.11 or newer.
+#   python3.11 -m venv .venv && .venv/bin/pip install -r requirements.txt
+# (`pip install -e .` reads the same list from pyproject.toml and additionally puts the root modules on the path.)
+#
+# The four pinned versions below are the ones every published number was produced with. The T-count metric and both
+# verifiers depend on them exactly: a different gridsynth or a different TKET pass means different circuits, so pin
+# them in any environment whose numbers are meant to be comparable.
+qiskit==2.5.2            # circuits, QASM 2 I/O, Operator (the no-ancilla verifier)
+pytket==2.18.5           # TKET FullPeepholeOptimise baseline, and the loader's fallback path
+pyzx==0.10.7             # ZX full_reduce baseline
+pygridsynth==2.0.0       # rz -> Clifford+T synthesis: the T-count metric
+
+# Loose: any recent version works. numpy and scipy are also what the agent's own technique.py scripts may import,
+# so they are not optional even though the harness itself only needs numpy.
+mpmath>=1.3              # gridsynth runs at 128 decimal digits
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8          # draw.py figures only
+
+# NOT in this file, needed only for the BQSKit-FT DPF baseline (pipeline.bqskit_dpf). It is not on PyPI, and it does
+# not run out of the box -- see the DPF note in README.md before installing it:
+#   pip install --no-deps "bqskit-ft @ git+https://github.com/BQSKit/bqskit-ft@2e99ba614d48970b9afefc0b8c32860c3a3dc9f1"
+#
+# NOT a Python package: agent runs need the Claude Code CLI (`claude`) on PATH, a logged-in session
+# (CLAUDE_CODE_OAUTH_TOKEN) and network access. Every other stage runs offline.

@@ -5,7 +5,7 @@ TKET start, and the circuit's result is the lowest-T valid output (TKET start if
     python sweep/sweep_anc.py TAG PLAYBOOK_DIR[,DIR2...] [circuit ... | --family F]   (default: all of MANIFEST.csv)
 -> results/sweep_anc_<TAG>.csv (one row per circuit x rule + one BEST row per circuit), best circuits in
    results/sweep_anc_<TAG>/<circuit>_best.qasm; columns T_pyzx / T_noanc_final come from results/final_all_76.csv
-   when that table exists (it is the no-ancilla campaign's output), and are left empty otherwise."""
+   or final_all_76.csv when one exists (the no-ancilla campaign's output), and are left empty otherwise."""
 import csv, glob, os, shutil, sys, tempfile, time
 from multiprocessing import Pool
 
@@ -17,8 +17,10 @@ from pipeline import HERE, load, logical, t_count, tket
 from playbook import find_circuit, try_rule, valid_rules
 
 WORKERS = 4                     # verifier_anc peaks at ~3 GiB on 10 data + 6 ancilla qubits
-_prev = os.path.join(HERE, "results", "final_all_76.csv")
-PREV = {r["circuit"]: r for r in csv.DictReader(open(_prev))} if os.path.exists(_prev) else {}
+# The no-ancilla final table, for the comparison columns only; empty until final_sweep.py has written one.
+_prev = [p for p in (os.path.join(HERE, "results", f) for f in ("final_all.csv", "final_all_76.csv"))
+         if os.path.exists(p)]
+PREV = {r["circuit"]: r for r in csv.DictReader(open(_prev[0]))} if _prev else {}
 
 
 def job(args):
