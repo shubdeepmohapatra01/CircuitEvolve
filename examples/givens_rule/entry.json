@@ -1,0 +1,29 @@
+{
+ "circuit": "tfim_6",
+ "run": "tfim_6_20261030_112857",
+ "round": 2,
+ "T_before": 8560,
+ "T_after": 3354,
+ "files": [
+  "an.py",
+  "ev.py",
+  "gauss.py",
+  "gauss2.py",
+  "nc.py",
+  "nc2.py",
+  "nc3.py",
+  "opt.py",
+  "technique.md",
+  "technique.py"
+ ],
+ "replay": {
+  "ran": true,
+  "returncode": 0,
+  "stderr": "",
+  "equivalent": true,
+  "distance": 3.6617216910619935e-14,
+  "T": 3354,
+  "rotations": 66
+ },
+ "card": "# Free-fermion (Gaussian) re-synthesis\n\nPull all Cliffords to the end, so the circuit becomes Clifford \u00b7 (product of Pauli rotations). Absorb the \u03c0/2 part of\nevery rz into the Clifford so only the remainder angle stays as a rotation. If every remaining Pauli is quadratic in\nJordan-Wigner Majoranas (XX, YY, XY, single Z, Z..Z-strings between two sites), the product is a Gaussian unitary. It is\nfully described by one orthogonal matrix R in SO(2n). Re-decompose R with Givens elimination into at most n(2n-1)\nrotations in adjacent Majorana planes. Each one is a single Pauli rotation, so it costs one rz, and the remaining\nClifford is synthesized for free. The count of arbitrary rotations drops from the original (160) to \u2264 n(2n-1) (66 for n=6).\n\n**Applies when:** the circuit is a long Trotter/Floquet sequence of free-fermion terms (XX+YY / XY chains, TFIM-like\nHamiltonians that map to quadratic fermions, Z fields), with many more arbitrary rotations than n(2n-1) and few\nqubits (dense 2^n checks, n \u2264 10). Check: the Lie algebra of the rotation generators is a subalgebra of so(2n).\n\n**Does not apply when:** any rotation Pauli is not quadratic (ZZ-with-X interacting terms, 3-body, odd-weight\nMajorana), when the circuit has t/tdg gates, or when the rotation count is already \u2264 n(2n-1). The script then\ncopies the input. A further reduction (number-conserving u(n), ~n\u00b2 params) was checked and did not hold here\nbecause the rotation ordering breaks number conservation.\n\n**Scripts:** `technique.py` (general, self-verifying; this is the one to reuse). The exploration scripts were\n`opt.py` (Pauli-rotation extraction + merge), `gauss.py`/`gauss2.py` (the Givens decomposition on this circuit).\nResult here: T-count 8560 -> 3354 (160 -> 66 arbitrary rotations).\n"
+}
